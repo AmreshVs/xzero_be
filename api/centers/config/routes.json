@@ -1,0 +1,57 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/centers",
+      "handler": "centers.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/centers/count",
+      "handler": "centers.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/centers/:id",
+      "handler": "centers.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/centers",
+      "handler": "centers.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/centers/:id",
+      "handler": "centers.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/centers/:id",
+      "handler": "centers.delete",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/top_centers",
+      "handler": "centers.top_centers"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "host": "localhost",
+  "port": 1337,
+  "proxy":{
+    "enabled": true,
+    "ssl": true,
+    "host": "xzero.app",
+    "port": 3000
+  }
+}

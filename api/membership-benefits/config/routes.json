@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/membership-benefits",
+      "handler": "membership-benefits.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/membership-benefits",
+      "handler": "membership-benefits.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/membership-benefits",
+      "handler": "membership-benefits.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

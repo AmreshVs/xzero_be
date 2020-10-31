@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "membership_transactions",
+  "info": {
+    "name": "Membership Transactions"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "membership_id": {
+      "type": "integer"
+    },
+    "serial": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "amount": {
+      "type": "integer"
+    },
+    "expiry": {
+      "type": "datetime"
+    }
+  }
+}

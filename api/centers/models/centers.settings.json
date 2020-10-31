@@ -1,0 +1,62 @@
+{
+  "kind": "collectionType",
+  "collectionName": "centers",
+  "info": {
+    "name": "Centers"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title_en": {
+      "type": "string",
+      "required": true
+    },
+    "title_ar": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "model": "categories"
+    },
+    "featured_img": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "files",
+        "images",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": true
+    },
+    "mobile_number": {
+      "type": "biginteger"
+    },
+    "place": {
+      "type": "string",
+      "required": true
+    },
+    "city": {
+      "type": "enumeration",
+      "enum": [
+        "Abu_Dhabi",
+        "Ajman",
+        "Dubai",
+        "Fujairah",
+        "Ras_Al_Khaimah",
+        "Sharjah",
+        "Umm_Al_Quwain"
+      ]
+    },
+    "homescreen": {
+      "type": "boolean",
+      "default": false
+    },
+    "offers": {
+      "via": "center",
+      "collection": "offers"
+    }
+  }
+}

@@ -1,0 +1,2200 @@
+type AdminUser {
+  id: ID!
+  username: String
+}
+
+input BannerInput {
+  banner_img: ID
+  created_by: ID
+  updated_by: ID
+}
+
+type Banners {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  banner_img: UploadFile
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type BannersAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type BannersConnection {
+  values: [Banners]
+  groupBy: BannersGroupBy
+  aggregate: BannersAggregator
+}
+
+type BannersConnectionBanner_img {
+  key: ID
+  connection: BannersConnection
+}
+
+type BannersConnectionCreated_at {
+  key: DateTime
+  connection: BannersConnection
+}
+
+type BannersConnectionCreated_by {
+  key: ID
+  connection: BannersConnection
+}
+
+type BannersConnectionId {
+  key: ID
+  connection: BannersConnection
+}
+
+type BannersConnectionUpdated_at {
+  key: DateTime
+  connection: BannersConnection
+}
+
+type BannersConnectionUpdated_by {
+  key: ID
+  connection: BannersConnection
+}
+
+type BannersGroupBy {
+  id: [BannersConnectionId]
+  created_at: [BannersConnectionCreated_at]
+  updated_at: [BannersConnectionUpdated_at]
+  banner_img: [BannersConnectionBanner_img]
+  created_by: [BannersConnectionCreated_by]
+  updated_by: [BannersConnectionUpdated_by]
+}
+
+type BasicMembershipAmount {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  currency_code: String
+  amount: Int
+  multiplier: Int
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+input BasicMembershipAmountInput {
+  currency_code: String
+  amount: Int
+  multiplier: Int
+  created_by: ID
+  updated_by: ID
+}
+
+type Categories {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title_en: String
+  featured_img: UploadFile
+  title_ar: String
+  enabled: Boolean!
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type CategoriesAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type CategoriesConnection {
+  values: [Categories]
+  groupBy: CategoriesGroupBy
+  aggregate: CategoriesAggregator
+}
+
+type CategoriesConnectionCreated_at {
+  key: DateTime
+  connection: CategoriesConnection
+}
+
+type CategoriesConnectionCreated_by {
+  key: ID
+  connection: CategoriesConnection
+}
+
+type CategoriesConnectionEnabled {
+  key: Boolean
+  connection: CategoriesConnection
+}
+
+type CategoriesConnectionFeatured_img {
+  key: ID
+  connection: CategoriesConnection
+}
+
+type CategoriesConnectionId {
+  key: ID
+  connection: CategoriesConnection
+}
+
+type CategoriesConnectionTitle_ar {
+  key: String
+  connection: CategoriesConnection
+}
+
+type CategoriesConnectionTitle_en {
+  key: String
+  connection: CategoriesConnection
+}
+
+type CategoriesConnectionUpdated_at {
+  key: DateTime
+  connection: CategoriesConnection
+}
+
+type CategoriesConnectionUpdated_by {
+  key: ID
+  connection: CategoriesConnection
+}
+
+type CategoriesGroupBy {
+  id: [CategoriesConnectionId]
+  created_at: [CategoriesConnectionCreated_at]
+  updated_at: [CategoriesConnectionUpdated_at]
+  title_en: [CategoriesConnectionTitle_en]
+  featured_img: [CategoriesConnectionFeatured_img]
+  title_ar: [CategoriesConnectionTitle_ar]
+  enabled: [CategoriesConnectionEnabled]
+  created_by: [CategoriesConnectionCreated_by]
+  updated_by: [CategoriesConnectionUpdated_by]
+}
+
+input CategoryInput {
+  title_en: String
+  featured_img: ID
+  title_ar: String
+  enabled: Boolean
+  created_by: ID
+  updated_by: ID
+}
+
+input CenterInput {
+  title_en: String!
+  title_ar: String!
+  category: ID
+  featured_img: ID
+  mobile_number: Long
+  place: String!
+  city: ENUM_CENTERS_CITY
+  homescreen: Boolean
+  offers: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+type Centers {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title_en: String!
+  title_ar: String!
+  category: Categories
+  featured_img: UploadFile
+  mobile_number: Long
+  place: String!
+  city: ENUM_CENTERS_CITY
+  homescreen: Boolean
+  created_by: AdminUser
+  updated_by: AdminUser
+  offers(sort: String, limit: Int, start: Int, where: JSON): [Offers]
+}
+
+type CentersAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type CentersConnection {
+  values: [Centers]
+  groupBy: CentersGroupBy
+  aggregate: CentersAggregator
+}
+
+type CentersConnectionCategory {
+  key: ID
+  connection: CentersConnection
+}
+
+type CentersConnectionCity {
+  key: String
+  connection: CentersConnection
+}
+
+type CentersConnectionCreated_at {
+  key: DateTime
+  connection: CentersConnection
+}
+
+type CentersConnectionCreated_by {
+  key: ID
+  connection: CentersConnection
+}
+
+type CentersConnectionFeatured_img {
+  key: ID
+  connection: CentersConnection
+}
+
+type CentersConnectionHomescreen {
+  key: Boolean
+  connection: CentersConnection
+}
+
+type CentersConnectionId {
+  key: ID
+  connection: CentersConnection
+}
+
+type CentersConnectionMobile_number {
+  key: ID
+  connection: CentersConnection
+}
+
+type CentersConnectionPlace {
+  key: String
+  connection: CentersConnection
+}
+
+type CentersConnectionTitle_ar {
+  key: String
+  connection: CentersConnection
+}
+
+type CentersConnectionTitle_en {
+  key: String
+  connection: CentersConnection
+}
+
+type CentersConnectionUpdated_at {
+  key: DateTime
+  connection: CentersConnection
+}
+
+type CentersConnectionUpdated_by {
+  key: ID
+  connection: CentersConnection
+}
+
+type CentersGroupBy {
+  id: [CentersConnectionId]
+  created_at: [CentersConnectionCreated_at]
+  updated_at: [CentersConnectionUpdated_at]
+  title_en: [CentersConnectionTitle_en]
+  title_ar: [CentersConnectionTitle_ar]
+  category: [CentersConnectionCategory]
+  featured_img: [CentersConnectionFeatured_img]
+  mobile_number: [CentersConnectionMobile_number]
+  place: [CentersConnectionPlace]
+  city: [CentersConnectionCity]
+  homescreen: [CentersConnectionHomescreen]
+  created_by: [CentersConnectionCreated_by]
+  updated_by: [CentersConnectionUpdated_by]
+}
+
+input createBannerInput {
+  data: BannerInput
+}
+
+type createBannerPayload {
+  banner: Banners
+}
+
+input createCategoryInput {
+  data: CategoryInput
+}
+
+type createCategoryPayload {
+  category: Categories
+}
+
+input createCenterInput {
+  data: CenterInput
+}
+
+type createCenterPayload {
+  center: Centers
+}
+
+input createMembershipInput {
+  data: MembershipInput
+}
+
+type createMembershipPayload {
+  membership: Membership
+}
+
+input createMembershipTransactionInput {
+  data: MembershipTransactionInput
+}
+
+type createMembershipTransactionPayload {
+  membershipTransaction: MembershipTransactions
+}
+
+input createNotificationInput {
+  data: NotificationInput
+}
+
+type createNotificationPayload {
+  notification: Notifications
+}
+
+input createOfferInput {
+  data: OfferInput
+}
+
+type createOfferPayload {
+  offer: Offers
+}
+
+input createRoleInput {
+  data: RoleInput
+}
+
+type createRolePayload {
+  role: UsersPermissionsRole
+}
+
+input createSpecialistInput {
+  data: SpecialistInput
+}
+
+type createSpecialistPayload {
+  specialist: Specialist
+}
+
+input createUserInput {
+  data: UserInput
+}
+
+type createUserPayload {
+  user: UsersPermissionsUser
+}
+
+type CreateUserPayload {
+  jwt: String
+  user: UsersPermissionsUser!
+}
+
+"""
+A date string, such as 2007-12-03, compliant with the `full-date` format
+outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for
+representation of dates and times using the Gregorian calendar.
+"""
+scalar Date
+
+"""
+A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
+`date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO
+8601 standard for representation of dates and times using the Gregorian calendar.
+"""
+scalar DateTime
+
+input deleteBannerInput {
+  where: InputID
+}
+
+type deleteBannerPayload {
+  banner: Banners
+}
+
+type deleteBasicMembershipAmountPayload {
+  basicMembershipAmount: BasicMembershipAmount
+}
+
+input deleteCategoryInput {
+  where: InputID
+}
+
+type deleteCategoryPayload {
+  category: Categories
+}
+
+input deleteCenterInput {
+  where: InputID
+}
+
+type deleteCenterPayload {
+  center: Centers
+}
+
+type deleteMembershipBenefitPayload {
+  membershipBenefit: MembershipBenefits
+}
+
+type deleteMembershipCardInfoPayload {
+  membershipCardInfo: MembershipCardInfo
+}
+
+input deleteMembershipInput {
+  where: InputID
+}
+
+type deleteMembershipPayload {
+  membership: Membership
+}
+
+input deleteMembershipTransactionInput {
+  where: InputID
+}
+
+type deleteMembershipTransactionPayload {
+  membershipTransaction: MembershipTransactions
+}
+
+input deleteNotificationInput {
+  where: InputID
+}
+
+type deleteNotificationPayload {
+  notification: Notifications
+}
+
+input deleteOfferInput {
+  where: InputID
+}
+
+type deleteOfferPayload {
+  offer: Offers
+}
+
+type deletePrivacyPolicyPayload {
+  privacyPolicy: PrivacyPolicy
+}
+
+input deleteRoleInput {
+  where: InputID
+}
+
+type deleteRolePayload {
+  role: UsersPermissionsRole
+}
+
+type deleteSpecialistHelpPayload {
+  specialistHelp: SpecialistHelp
+}
+
+input deleteSpecialistInput {
+  where: InputID
+}
+
+type deleteSpecialistPayload {
+  specialist: Specialist
+}
+
+type deleteTermsAndConditionPayload {
+  termsAndCondition: TermsAndConditions
+}
+
+input deleteUserInput {
+  where: InputID
+}
+
+type deleteUserPayload {
+  user: UsersPermissionsUser
+}
+
+input editBannerInput {
+  banner_img: ID
+  created_by: ID
+  updated_by: ID
+}
+
+input editBasicMembershipAmountInput {
+  currency_code: String
+  amount: Int
+  multiplier: Int
+  created_by: ID
+  updated_by: ID
+}
+
+input editCategoryInput {
+  title_en: String
+  featured_img: ID
+  title_ar: String
+  enabled: Boolean
+  created_by: ID
+  updated_by: ID
+}
+
+input editCenterInput {
+  title_en: String
+  title_ar: String
+  category: ID
+  featured_img: ID
+  mobile_number: Long
+  place: String
+  city: ENUM_CENTERS_CITY
+  homescreen: Boolean
+  offers: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input editFileInput {
+  name: String
+  alternativeText: String
+  caption: String
+  width: Int
+  height: Int
+  formats: JSON
+  hash: String
+  ext: String
+  mime: String
+  size: Float
+  url: String
+  previewUrl: String
+  provider: String
+  provider_metadata: JSON
+  related: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input editMembershipBenefitInput {
+  text_en: String
+  text_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+input editMembershipCardInfoInput {
+  text_en: String
+  text_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+input editMembershipInput {
+  user: ID
+  serial: String
+  expiry: DateTime
+  membership_transactions: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input editMembershipTransactionInput {
+  membership_id: Int
+  serial: String
+  type: String
+  amount: Int
+  expiry: DateTime
+  created_by: ID
+  updated_by: ID
+}
+
+input editNotificationInput {
+  title_en: String
+  title_ar: String
+  desc_en: String
+  desc_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+input editOfferInput {
+  title_en: String
+  title_ar: String
+  discount: Int
+  desc_en: String
+  desc_ar: String
+  country: ENUM_OFFERS_COUNTRY
+  city: ENUM_OFFERS_CITY
+  expiry: DateTime
+  mobile_number: Long
+  latitude: Float
+  longitude: Float
+  status: Boolean
+  actual_price: Int
+  discounted_price: Int
+  place: String
+  featured_img: ID
+  center: ID
+  created_by: ID
+  updated_by: ID
+}
+
+input editPrivacyPolicyInput {
+  privacy_en: String
+  privacy_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+input editRoleInput {
+  name: String
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input editSpecialistHelpInput {
+  title_en: String
+  title_ar: String
+  featured_img: ID
+  created_by: ID
+  updated_by: ID
+}
+
+input editSpecialistInput {
+  name_en: String
+  name_ar: String
+  desc_en: String
+  desc_ar: String
+  mobile_number: Long
+  category: ID
+  center: ID
+  featured_img: ID
+  specialization_en: String
+  specialization_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+input editTermsAndConditionInput {
+  terms_en: String
+  terms_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+input editUserInput {
+  username: String
+  email: String
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+  language: String
+  notification_token: String
+  mobile_number: Long
+  favourites: String
+  created_by: ID
+  updated_by: ID
+}
+
+enum ENUM_CENTERS_CITY {
+  Abu_Dhabi
+  Ajman
+  Dubai
+  Fujairah
+  Ras_Al_Khaimah
+  Sharjah
+  Umm_Al_Quwain
+}
+
+enum ENUM_OFFERS_CITY {
+  Abu_Dhabi
+  Ajman
+  Dubai
+  Fujairah
+  Ras_Al_Khaimah
+  Sharjah
+  Umm_Al_Quwain
+}
+
+enum ENUM_OFFERS_COUNTRY {
+  United_Arab_Emirates
+}
+
+input FileInfoInput {
+  name: String
+  alternativeText: String
+  caption: String
+}
+
+input FileInput {
+  name: String!
+  alternativeText: String
+  caption: String
+  width: Int
+  height: Int
+  formats: JSON
+  hash: String!
+  ext: String
+  mime: String!
+  size: Float!
+  url: String!
+  previewUrl: String
+  provider: String!
+  provider_metadata: JSON
+  related: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input InputID {
+  id: ID!
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""The `Long` scalar type represents 52-bit integers"""
+scalar Long
+
+type Membership {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  user: UsersPermissionsUser
+  serial: String
+  expiry: DateTime
+  created_by: AdminUser
+  updated_by: AdminUser
+  membership_transactions(sort: String, limit: Int, start: Int, where: JSON): [MembershipTransactions]
+}
+
+type MembershipAggregator {
+  count: Int
+  totalCount: Int
+}
+
+input MembershipBenefitInput {
+  text_en: String
+  text_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+type MembershipBenefits {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  text_en: String
+  text_ar: String
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type MembershipCardInfo {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  text_en: String
+  text_ar: String
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+input MembershipCardInfoInput {
+  text_en: String
+  text_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+type MembershipConnection {
+  values: [Membership]
+  groupBy: MembershipGroupBy
+  aggregate: MembershipAggregator
+}
+
+type MembershipConnectionCreated_at {
+  key: DateTime
+  connection: MembershipConnection
+}
+
+type MembershipConnectionCreated_by {
+  key: ID
+  connection: MembershipConnection
+}
+
+type MembershipConnectionExpiry {
+  key: DateTime
+  connection: MembershipConnection
+}
+
+type MembershipConnectionId {
+  key: ID
+  connection: MembershipConnection
+}
+
+type MembershipConnectionSerial {
+  key: String
+  connection: MembershipConnection
+}
+
+type MembershipConnectionUpdated_at {
+  key: DateTime
+  connection: MembershipConnection
+}
+
+type MembershipConnectionUpdated_by {
+  key: ID
+  connection: MembershipConnection
+}
+
+type MembershipConnectionUser {
+  key: ID
+  connection: MembershipConnection
+}
+
+type MembershipGroupBy {
+  id: [MembershipConnectionId]
+  created_at: [MembershipConnectionCreated_at]
+  updated_at: [MembershipConnectionUpdated_at]
+  user: [MembershipConnectionUser]
+  serial: [MembershipConnectionSerial]
+  expiry: [MembershipConnectionExpiry]
+  created_by: [MembershipConnectionCreated_by]
+  updated_by: [MembershipConnectionUpdated_by]
+}
+
+input MembershipInput {
+  user: ID
+  serial: String
+  expiry: DateTime
+  membership_transactions: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input MembershipTransactionInput {
+  membership_id: Int
+  serial: String
+  type: String
+  amount: Int
+  expiry: DateTime
+  created_by: ID
+  updated_by: ID
+}
+
+type MembershipTransactions {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  membership_id: Int
+  serial: String
+  type: String
+  amount: Int
+  expiry: DateTime
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type MembershipTransactionsAggregator {
+  count: Int
+  totalCount: Int
+  sum: MembershipTransactionsAggregatorSum
+  avg: MembershipTransactionsAggregatorAvg
+  min: MembershipTransactionsAggregatorMin
+  max: MembershipTransactionsAggregatorMax
+}
+
+type MembershipTransactionsAggregatorAvg {
+  membership_id: Float
+  amount: Float
+}
+
+type MembershipTransactionsAggregatorMax {
+  membership_id: Float
+  amount: Float
+}
+
+type MembershipTransactionsAggregatorMin {
+  membership_id: Float
+  amount: Float
+}
+
+type MembershipTransactionsAggregatorSum {
+  membership_id: Float
+  amount: Float
+}
+
+type MembershipTransactionsConnection {
+  values: [MembershipTransactions]
+  groupBy: MembershipTransactionsGroupBy
+  aggregate: MembershipTransactionsAggregator
+}
+
+type MembershipTransactionsConnectionAmount {
+  key: Int
+  connection: MembershipTransactionsConnection
+}
+
+type MembershipTransactionsConnectionCreated_at {
+  key: DateTime
+  connection: MembershipTransactionsConnection
+}
+
+type MembershipTransactionsConnectionCreated_by {
+  key: ID
+  connection: MembershipTransactionsConnection
+}
+
+type MembershipTransactionsConnectionExpiry {
+  key: DateTime
+  connection: MembershipTransactionsConnection
+}
+
+type MembershipTransactionsConnectionId {
+  key: ID
+  connection: MembershipTransactionsConnection
+}
+
+type MembershipTransactionsConnectionMembership_id {
+  key: Int
+  connection: MembershipTransactionsConnection
+}
+
+type MembershipTransactionsConnectionSerial {
+  key: String
+  connection: MembershipTransactionsConnection
+}
+
+type MembershipTransactionsConnectionType {
+  key: String
+  connection: MembershipTransactionsConnection
+}
+
+type MembershipTransactionsConnectionUpdated_at {
+  key: DateTime
+  connection: MembershipTransactionsConnection
+}
+
+type MembershipTransactionsConnectionUpdated_by {
+  key: ID
+  connection: MembershipTransactionsConnection
+}
+
+type MembershipTransactionsGroupBy {
+  id: [MembershipTransactionsConnectionId]
+  created_at: [MembershipTransactionsConnectionCreated_at]
+  updated_at: [MembershipTransactionsConnectionUpdated_at]
+  membership_id: [MembershipTransactionsConnectionMembership_id]
+  serial: [MembershipTransactionsConnectionSerial]
+  type: [MembershipTransactionsConnectionType]
+  amount: [MembershipTransactionsConnectionAmount]
+  expiry: [MembershipTransactionsConnectionExpiry]
+  created_by: [MembershipTransactionsConnectionCreated_by]
+  updated_by: [MembershipTransactionsConnectionUpdated_by]
+}
+
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | CreateUserPayload | Banners | BannersConnection | BannersAggregator | BannersGroupBy | BannersConnectionId | BannersConnectionCreated_at | BannersConnectionUpdated_at | BannersConnectionBanner_img | BannersConnectionCreated_by | BannersConnectionUpdated_by | createBannerPayload | updateBannerPayload | deleteBannerPayload | BasicMembershipAmount | updateBasicMembershipAmountPayload | deleteBasicMembershipAmountPayload | Categories | CategoriesConnection | CategoriesAggregator | CategoriesGroupBy | CategoriesConnectionId | CategoriesConnectionCreated_at | CategoriesConnectionUpdated_at | CategoriesConnectionTitle_en | CategoriesConnectionFeatured_img | CategoriesConnectionTitle_ar | CategoriesConnectionEnabled | CategoriesConnectionCreated_by | CategoriesConnectionUpdated_by | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Centers | CentersConnection | CentersAggregator | CentersGroupBy | CentersConnectionId | CentersConnectionCreated_at | CentersConnectionUpdated_at | CentersConnectionTitle_en | CentersConnectionTitle_ar | CentersConnectionCategory | CentersConnectionFeatured_img | CentersConnectionMobile_number | CentersConnectionPlace | CentersConnectionCity | CentersConnectionHomescreen | CentersConnectionCreated_by | CentersConnectionUpdated_by | createCenterPayload | updateCenterPayload | deleteCenterPayload | MembershipBenefits | updateMembershipBenefitPayload | deleteMembershipBenefitPayload | MembershipCardInfo | updateMembershipCardInfoPayload | deleteMembershipCardInfoPayload | MembershipTransactions | MembershipTransactionsConnection | MembershipTransactionsAggregator | MembershipTransactionsAggregatorSum | MembershipTransactionsAggregatorAvg | MembershipTransactionsAggregatorMin | MembershipTransactionsAggregatorMax | MembershipTransactionsGroupBy | MembershipTransactionsConnectionId | MembershipTransactionsConnectionCreated_at | MembershipTransactionsConnectionUpdated_at | MembershipTransactionsConnectionMembership_id | MembershipTransactionsConnectionSerial | MembershipTransactionsConnectionType | MembershipTransactionsConnectionAmount | MembershipTransactionsConnectionExpiry | MembershipTransactionsConnectionCreated_by | MembershipTransactionsConnectionUpdated_by | createMembershipTransactionPayload | updateMembershipTransactionPayload | deleteMembershipTransactionPayload | Membership | MembershipConnection | MembershipAggregator | MembershipGroupBy | MembershipConnectionId | MembershipConnectionCreated_at | MembershipConnectionUpdated_at | MembershipConnectionUser | MembershipConnectionSerial | MembershipConnectionExpiry | MembershipConnectionCreated_by | MembershipConnectionUpdated_by | createMembershipPayload | updateMembershipPayload | deleteMembershipPayload | Notifications | NotificationsConnection | NotificationsAggregator | NotificationsGroupBy | NotificationsConnectionId | NotificationsConnectionCreated_at | NotificationsConnectionUpdated_at | NotificationsConnectionTitle_en | NotificationsConnectionTitle_ar | NotificationsConnectionDesc_en | NotificationsConnectionDesc_ar | NotificationsConnectionCreated_by | NotificationsConnectionUpdated_by | createNotificationPayload | updateNotificationPayload | deleteNotificationPayload | Offers | OffersConnection | OffersAggregator | OffersAggregatorSum | OffersAggregatorAvg | OffersAggregatorMin | OffersAggregatorMax | OffersGroupBy | OffersConnectionId | OffersConnectionCreated_at | OffersConnectionUpdated_at | OffersConnectionTitle_en | OffersConnectionTitle_ar | OffersConnectionDiscount | OffersConnectionDesc_en | OffersConnectionDesc_ar | OffersConnectionCountry | OffersConnectionCity | OffersConnectionExpiry | OffersConnectionMobile_number | OffersConnectionLatitude | OffersConnectionLongitude | OffersConnectionStatus | OffersConnectionActual_price | OffersConnectionDiscounted_price | OffersConnectionPlace | OffersConnectionFeatured_img | OffersConnectionCenter | OffersConnectionCreated_by | OffersConnectionUpdated_by | createOfferPayload | updateOfferPayload | deleteOfferPayload | PrivacyPolicy | updatePrivacyPolicyPayload | deletePrivacyPolicyPayload | SpecialistHelp | updateSpecialistHelpPayload | deleteSpecialistHelpPayload | Specialist | SpecialistConnection | SpecialistAggregator | SpecialistGroupBy | SpecialistConnectionId | SpecialistConnectionCreated_at | SpecialistConnectionUpdated_at | SpecialistConnectionName_en | SpecialistConnectionName_ar | SpecialistConnectionDesc_en | SpecialistConnectionDesc_ar | SpecialistConnectionMobile_number | SpecialistConnectionCategory | SpecialistConnectionCenter | SpecialistConnectionFeatured_img | SpecialistConnectionSpecialization_en | SpecialistConnectionSpecialization_ar | SpecialistConnectionCreated_by | SpecialistConnectionUpdated_by | createSpecialistPayload | updateSpecialistPayload | deleteSpecialistPayload | TermsAndConditions | updateTermsAndConditionPayload | deleteTermsAndConditionPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionLanguage | UsersPermissionsUserConnectionNotification_token | UsersPermissionsUserConnectionMobile_number | UsersPermissionsUserConnectionFavourites | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
+
+type Mutation {
+  createBanner(input: createBannerInput): createBannerPayload
+  updateBanner(input: updateBannerInput): updateBannerPayload
+  deleteBanner(input: deleteBannerInput): deleteBannerPayload
+  updateBasicMembershipAmount(input: updateBasicMembershipAmountInput): updateBasicMembershipAmountPayload
+  deleteBasicMembershipAmount: deleteBasicMembershipAmountPayload
+  createCategory(input: createCategoryInput): createCategoryPayload
+  updateCategory(input: updateCategoryInput): updateCategoryPayload
+  deleteCategory(input: deleteCategoryInput): deleteCategoryPayload
+  createCenter(input: createCenterInput): createCenterPayload
+  updateCenter(input: updateCenterInput): updateCenterPayload
+  deleteCenter(input: deleteCenterInput): deleteCenterPayload
+  updateMembershipBenefit(input: updateMembershipBenefitInput): updateMembershipBenefitPayload
+  deleteMembershipBenefit: deleteMembershipBenefitPayload
+  updateMembershipCardInfo(input: updateMembershipCardInfoInput): updateMembershipCardInfoPayload
+  deleteMembershipCardInfo: deleteMembershipCardInfoPayload
+  createMembershipTransaction(input: createMembershipTransactionInput): createMembershipTransactionPayload
+  updateMembershipTransaction(input: updateMembershipTransactionInput): updateMembershipTransactionPayload
+  deleteMembershipTransaction(input: deleteMembershipTransactionInput): deleteMembershipTransactionPayload
+  createMembership(input: createMembershipInput): createMembershipPayload
+  updateMembership(input: updateMembershipInput): updateMembershipPayload
+  deleteMembership(input: deleteMembershipInput): deleteMembershipPayload
+  createNotification(input: createNotificationInput): createNotificationPayload
+  updateNotification(input: updateNotificationInput): updateNotificationPayload
+  deleteNotification(input: deleteNotificationInput): deleteNotificationPayload
+  createOffer(input: createOfferInput): createOfferPayload
+  updateOffer(input: updateOfferInput): updateOfferPayload
+  deleteOffer(input: deleteOfferInput): deleteOfferPayload
+  updatePrivacyPolicy(input: updatePrivacyPolicyInput): updatePrivacyPolicyPayload
+  deletePrivacyPolicy: deletePrivacyPolicyPayload
+  updateSpecialistHelp(input: updateSpecialistHelpInput): updateSpecialistHelpPayload
+  deleteSpecialistHelp: deleteSpecialistHelpPayload
+  createSpecialist(input: createSpecialistInput): createSpecialistPayload
+  updateSpecialist(input: updateSpecialistInput): updateSpecialistPayload
+  deleteSpecialist(input: deleteSpecialistInput): deleteSpecialistPayload
+  updateTermsAndCondition(input: updateTermsAndConditionInput): updateTermsAndConditionPayload
+  deleteTermsAndCondition: deleteTermsAndConditionPayload
+
+  """Create a new role"""
+  createRole(input: createRoleInput): createRolePayload
+
+  """Update an existing role"""
+  updateRole(input: updateRoleInput): updateRolePayload
+
+  """Delete an existing role"""
+  deleteRole(input: deleteRoleInput): deleteRolePayload
+
+  """Create a new user"""
+  createUser(input: createUserInput): createUserPayload
+
+  """Update an existing user"""
+  updateUser(input: updateUserInput): updateUserPayload
+
+  """Delete an existing user"""
+  deleteUser(input: deleteUserInput): deleteUserPayload
+  generateMembership(user_id: ID!, amount: Int!): Membership!
+  addFavourite(user_id: Int!, offer_id: Int!): JSON!
+  upload(refId: ID, ref: String, field: String, source: String, file: Upload!): UploadFile!
+  multipleUpload(refId: ID, ref: String, field: String, source: String, files: [Upload]!): [UploadFile]!
+  updateFileInfo(id: ID!, info: FileInfoInput!): UploadFile!
+  login(input: UsersPermissionsLoginInput!): UsersPermissionsLoginPayload!
+  register(input: UsersPermissionsRegisterInput!): UsersPermissionsLoginPayload!
+  forgotPassword(email: String!): UserPermissionsPasswordPayload
+  resetPassword(password: String!, passwordConfirmation: String!, code: String!): UsersPermissionsLoginPayload
+  emailConfirmation(confirmation: String!): UsersPermissionsLoginPayload
+  createNewUser(username: String!, email: String!, password: String!, mobile_number: Long!, notification_token: String!): CreateUserPayload!
+  userlogin(input: UsersPermissionsLoginInput!): CreateUserPayload!
+}
+
+input NotificationInput {
+  title_en: String
+  title_ar: String
+  desc_en: String
+  desc_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+type Notifications {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title_en: String
+  title_ar: String
+  desc_en: String
+  desc_ar: String
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type NotificationsAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type NotificationsConnection {
+  values: [Notifications]
+  groupBy: NotificationsGroupBy
+  aggregate: NotificationsAggregator
+}
+
+type NotificationsConnectionCreated_at {
+  key: DateTime
+  connection: NotificationsConnection
+}
+
+type NotificationsConnectionCreated_by {
+  key: ID
+  connection: NotificationsConnection
+}
+
+type NotificationsConnectionDesc_ar {
+  key: String
+  connection: NotificationsConnection
+}
+
+type NotificationsConnectionDesc_en {
+  key: String
+  connection: NotificationsConnection
+}
+
+type NotificationsConnectionId {
+  key: ID
+  connection: NotificationsConnection
+}
+
+type NotificationsConnectionTitle_ar {
+  key: String
+  connection: NotificationsConnection
+}
+
+type NotificationsConnectionTitle_en {
+  key: String
+  connection: NotificationsConnection
+}
+
+type NotificationsConnectionUpdated_at {
+  key: DateTime
+  connection: NotificationsConnection
+}
+
+type NotificationsConnectionUpdated_by {
+  key: ID
+  connection: NotificationsConnection
+}
+
+type NotificationsGroupBy {
+  id: [NotificationsConnectionId]
+  created_at: [NotificationsConnectionCreated_at]
+  updated_at: [NotificationsConnectionUpdated_at]
+  title_en: [NotificationsConnectionTitle_en]
+  title_ar: [NotificationsConnectionTitle_ar]
+  desc_en: [NotificationsConnectionDesc_en]
+  desc_ar: [NotificationsConnectionDesc_ar]
+  created_by: [NotificationsConnectionCreated_by]
+  updated_by: [NotificationsConnectionUpdated_by]
+}
+
+input OfferInput {
+  title_en: String
+  title_ar: String
+  discount: Int
+  desc_en: String
+  desc_ar: String
+  country: ENUM_OFFERS_COUNTRY
+  city: ENUM_OFFERS_CITY
+  expiry: DateTime
+  mobile_number: Long
+  latitude: Float
+  longitude: Float
+  status: Boolean
+  actual_price: Int
+  discounted_price: Int
+  place: String
+  featured_img: ID
+  center: ID
+  created_by: ID
+  updated_by: ID
+}
+
+type Offers {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title_en: String
+  title_ar: String
+  discount: Int
+  desc_en: String
+  desc_ar: String
+  country: ENUM_OFFERS_COUNTRY!
+  city: ENUM_OFFERS_CITY!
+  expiry: DateTime
+  mobile_number: Long
+  latitude: Float
+  longitude: Float
+  status: Boolean!
+  actual_price: Int
+  discounted_price: Int
+  place: String
+  featured_img: UploadFile
+  center: Centers
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type OffersAggregator {
+  count: Int
+  totalCount: Int
+  sum: OffersAggregatorSum
+  avg: OffersAggregatorAvg
+  min: OffersAggregatorMin
+  max: OffersAggregatorMax
+}
+
+type OffersAggregatorAvg {
+  discount: Float
+  latitude: Float
+  longitude: Float
+  actual_price: Float
+  discounted_price: Float
+}
+
+type OffersAggregatorMax {
+  discount: Float
+  latitude: Float
+  longitude: Float
+  actual_price: Float
+  discounted_price: Float
+}
+
+type OffersAggregatorMin {
+  discount: Float
+  latitude: Float
+  longitude: Float
+  actual_price: Float
+  discounted_price: Float
+}
+
+type OffersAggregatorSum {
+  discount: Float
+  latitude: Float
+  longitude: Float
+  actual_price: Float
+  discounted_price: Float
+}
+
+type OffersConnection {
+  values: [Offers]
+  groupBy: OffersGroupBy
+  aggregate: OffersAggregator
+}
+
+type OffersConnectionActual_price {
+  key: Int
+  connection: OffersConnection
+}
+
+type OffersConnectionCenter {
+  key: ID
+  connection: OffersConnection
+}
+
+type OffersConnectionCity {
+  key: String
+  connection: OffersConnection
+}
+
+type OffersConnectionCountry {
+  key: String
+  connection: OffersConnection
+}
+
+type OffersConnectionCreated_at {
+  key: DateTime
+  connection: OffersConnection
+}
+
+type OffersConnectionCreated_by {
+  key: ID
+  connection: OffersConnection
+}
+
+type OffersConnectionDesc_ar {
+  key: String
+  connection: OffersConnection
+}
+
+type OffersConnectionDesc_en {
+  key: String
+  connection: OffersConnection
+}
+
+type OffersConnectionDiscount {
+  key: Int
+  connection: OffersConnection
+}
+
+type OffersConnectionDiscounted_price {
+  key: Int
+  connection: OffersConnection
+}
+
+type OffersConnectionExpiry {
+  key: DateTime
+  connection: OffersConnection
+}
+
+type OffersConnectionFeatured_img {
+  key: ID
+  connection: OffersConnection
+}
+
+type OffersConnectionId {
+  key: ID
+  connection: OffersConnection
+}
+
+type OffersConnectionLatitude {
+  key: Float
+  connection: OffersConnection
+}
+
+type OffersConnectionLongitude {
+  key: Float
+  connection: OffersConnection
+}
+
+type OffersConnectionMobile_number {
+  key: ID
+  connection: OffersConnection
+}
+
+type OffersConnectionPlace {
+  key: String
+  connection: OffersConnection
+}
+
+type OffersConnectionStatus {
+  key: Boolean
+  connection: OffersConnection
+}
+
+type OffersConnectionTitle_ar {
+  key: String
+  connection: OffersConnection
+}
+
+type OffersConnectionTitle_en {
+  key: String
+  connection: OffersConnection
+}
+
+type OffersConnectionUpdated_at {
+  key: DateTime
+  connection: OffersConnection
+}
+
+type OffersConnectionUpdated_by {
+  key: ID
+  connection: OffersConnection
+}
+
+type OffersGroupBy {
+  id: [OffersConnectionId]
+  created_at: [OffersConnectionCreated_at]
+  updated_at: [OffersConnectionUpdated_at]
+  title_en: [OffersConnectionTitle_en]
+  title_ar: [OffersConnectionTitle_ar]
+  discount: [OffersConnectionDiscount]
+  desc_en: [OffersConnectionDesc_en]
+  desc_ar: [OffersConnectionDesc_ar]
+  country: [OffersConnectionCountry]
+  city: [OffersConnectionCity]
+  expiry: [OffersConnectionExpiry]
+  mobile_number: [OffersConnectionMobile_number]
+  latitude: [OffersConnectionLatitude]
+  longitude: [OffersConnectionLongitude]
+  status: [OffersConnectionStatus]
+  actual_price: [OffersConnectionActual_price]
+  discounted_price: [OffersConnectionDiscounted_price]
+  place: [OffersConnectionPlace]
+  featured_img: [OffersConnectionFeatured_img]
+  center: [OffersConnectionCenter]
+  created_by: [OffersConnectionCreated_by]
+  updated_by: [OffersConnectionUpdated_by]
+}
+
+type PrivacyPolicy {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  privacy_en: String
+  privacy_ar: String
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+input PrivacyPolicyInput {
+  privacy_en: String
+  privacy_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+type Query {
+  banner(id: ID!): Banners
+  banners(sort: String, limit: Int, start: Int, where: JSON): [Banners]
+  bannersConnection(sort: String, limit: Int, start: Int, where: JSON): BannersConnection
+  basicMembershipAmount: BasicMembershipAmount
+  category(id: ID!): Categories
+  categories(sort: String, limit: Int, start: Int, where: JSON): [Categories]
+  categoriesConnection(sort: String, limit: Int, start: Int, where: JSON): CategoriesConnection
+  center(id: ID!): Centers
+  centers(sort: String, limit: Int, start: Int, where: JSON): [Centers]
+  centersConnection(sort: String, limit: Int, start: Int, where: JSON): CentersConnection
+  membershipBenefit: MembershipBenefits
+  membershipCardInfo: MembershipCardInfo
+  membershipTransaction(id: ID!): MembershipTransactions
+  membershipTransactions(sort: String, limit: Int, start: Int, where: JSON): [MembershipTransactions]
+  membershipTransactionsConnection(sort: String, limit: Int, start: Int, where: JSON): MembershipTransactionsConnection
+  membership(id: ID!): Membership
+  memberships(sort: String, limit: Int, start: Int, where: JSON): [Membership]
+  membershipsConnection(sort: String, limit: Int, start: Int, where: JSON): MembershipConnection
+  notification(id: ID!): Notifications
+  notifications(sort: String, limit: Int, start: Int, where: JSON): [Notifications]
+  notificationsConnection(sort: String, limit: Int, start: Int, where: JSON): NotificationsConnection
+  offer(id: ID!): Offers
+  offers(sort: String, limit: Int, start: Int, where: JSON): [Offers]
+  offersConnection(sort: String, limit: Int, start: Int, where: JSON): OffersConnection
+  privacyPolicy: PrivacyPolicy
+  specialistHelp: SpecialistHelp
+  specialist(id: ID!): Specialist
+  specialists(sort: String, limit: Int, start: Int, where: JSON): [Specialist]
+  specialistsConnection(sort: String, limit: Int, start: Int, where: JSON): SpecialistConnection
+  termsAndCondition: TermsAndConditions
+  files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+  filesConnection(sort: String, limit: Int, start: Int, where: JSON): UploadFileConnection
+  role(id: ID!): UsersPermissionsRole
+
+  """
+  Retrieve all the existing roles. You can't apply filters on this query.
+  """
+  roles(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsRole]
+  rolesConnection(sort: String, limit: Int, start: Int, where: JSON): UsersPermissionsRoleConnection
+  user(id: ID!): UsersPermissionsUser
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+  usersConnection(sort: String, limit: Int, start: Int, where: JSON): UsersPermissionsUserConnection
+  categoriesWithCenterCount(specialist: Boolean): JSON!
+  topCenters(where: JSON): JSON!
+  offerListWithFavourites(where: JSON, user_id: Int): JSON!
+  offerIsFavourite(id: Int, user_id: Int): Boolean!
+  favouritesByUser(user_id: Int!): [Offers]
+  me: UsersPermissionsMe
+}
+
+input RoleInput {
+  name: String!
+  description: String
+  type: String
+  permissions: [ID]
+  users: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+type Specialist {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name_en: String
+  name_ar: String
+  desc_en: String
+  desc_ar: String
+  mobile_number: Long
+  category: Categories
+  center: Centers
+  featured_img: UploadFile
+  specialization_en: String
+  specialization_ar: String
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type SpecialistAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type SpecialistConnection {
+  values: [Specialist]
+  groupBy: SpecialistGroupBy
+  aggregate: SpecialistAggregator
+}
+
+type SpecialistConnectionCategory {
+  key: ID
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionCenter {
+  key: ID
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionCreated_at {
+  key: DateTime
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionCreated_by {
+  key: ID
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionDesc_ar {
+  key: String
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionDesc_en {
+  key: String
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionFeatured_img {
+  key: ID
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionId {
+  key: ID
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionMobile_number {
+  key: ID
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionName_ar {
+  key: String
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionName_en {
+  key: String
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionSpecialization_ar {
+  key: String
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionSpecialization_en {
+  key: String
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionUpdated_at {
+  key: DateTime
+  connection: SpecialistConnection
+}
+
+type SpecialistConnectionUpdated_by {
+  key: ID
+  connection: SpecialistConnection
+}
+
+type SpecialistGroupBy {
+  id: [SpecialistConnectionId]
+  created_at: [SpecialistConnectionCreated_at]
+  updated_at: [SpecialistConnectionUpdated_at]
+  name_en: [SpecialistConnectionName_en]
+  name_ar: [SpecialistConnectionName_ar]
+  desc_en: [SpecialistConnectionDesc_en]
+  desc_ar: [SpecialistConnectionDesc_ar]
+  mobile_number: [SpecialistConnectionMobile_number]
+  category: [SpecialistConnectionCategory]
+  center: [SpecialistConnectionCenter]
+  featured_img: [SpecialistConnectionFeatured_img]
+  specialization_en: [SpecialistConnectionSpecialization_en]
+  specialization_ar: [SpecialistConnectionSpecialization_ar]
+  created_by: [SpecialistConnectionCreated_by]
+  updated_by: [SpecialistConnectionUpdated_by]
+}
+
+type SpecialistHelp {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title_en: String
+  title_ar: String
+  featured_img: UploadFile
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+input SpecialistHelpInput {
+  title_en: String
+  title_ar: String
+  featured_img: ID
+  created_by: ID
+  updated_by: ID
+}
+
+input SpecialistInput {
+  name_en: String
+  name_ar: String
+  desc_en: String
+  desc_ar: String
+  mobile_number: Long
+  category: ID
+  center: ID
+  featured_img: ID
+  specialization_en: String
+  specialization_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+input TermsAndConditionInput {
+  terms_en: String
+  terms_ar: String
+  created_by: ID
+  updated_by: ID
+}
+
+type TermsAndConditions {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  terms_en: String
+  terms_ar: String
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+"""A time string with format: HH:mm:ss.SSS"""
+scalar Time
+
+input updateBannerInput {
+  where: InputID
+  data: editBannerInput
+}
+
+type updateBannerPayload {
+  banner: Banners
+}
+
+input updateBasicMembershipAmountInput {
+  data: editBasicMembershipAmountInput
+}
+
+type updateBasicMembershipAmountPayload {
+  basicMembershipAmount: BasicMembershipAmount
+}
+
+input updateCategoryInput {
+  where: InputID
+  data: editCategoryInput
+}
+
+type updateCategoryPayload {
+  category: Categories
+}
+
+input updateCenterInput {
+  where: InputID
+  data: editCenterInput
+}
+
+type updateCenterPayload {
+  center: Centers
+}
+
+input updateMembershipBenefitInput {
+  data: editMembershipBenefitInput
+}
+
+type updateMembershipBenefitPayload {
+  membershipBenefit: MembershipBenefits
+}
+
+input updateMembershipCardInfoInput {
+  data: editMembershipCardInfoInput
+}
+
+type updateMembershipCardInfoPayload {
+  membershipCardInfo: MembershipCardInfo
+}
+
+input updateMembershipInput {
+  where: InputID
+  data: editMembershipInput
+}
+
+type updateMembershipPayload {
+  membership: Membership
+}
+
+input updateMembershipTransactionInput {
+  where: InputID
+  data: editMembershipTransactionInput
+}
+
+type updateMembershipTransactionPayload {
+  membershipTransaction: MembershipTransactions
+}
+
+input updateNotificationInput {
+  where: InputID
+  data: editNotificationInput
+}
+
+type updateNotificationPayload {
+  notification: Notifications
+}
+
+input updateOfferInput {
+  where: InputID
+  data: editOfferInput
+}
+
+type updateOfferPayload {
+  offer: Offers
+}
+
+input updatePrivacyPolicyInput {
+  data: editPrivacyPolicyInput
+}
+
+type updatePrivacyPolicyPayload {
+  privacyPolicy: PrivacyPolicy
+}
+
+input updateRoleInput {
+  where: InputID
+  data: editRoleInput
+}
+
+type updateRolePayload {
+  role: UsersPermissionsRole
+}
+
+input updateSpecialistHelpInput {
+  data: editSpecialistHelpInput
+}
+
+type updateSpecialistHelpPayload {
+  specialistHelp: SpecialistHelp
+}
+
+input updateSpecialistInput {
+  where: InputID
+  data: editSpecialistInput
+}
+
+type updateSpecialistPayload {
+  specialist: Specialist
+}
+
+input updateTermsAndConditionInput {
+  data: editTermsAndConditionInput
+}
+
+type updateTermsAndConditionPayload {
+  termsAndCondition: TermsAndConditions
+}
+
+input updateUserInput {
+  where: InputID
+  data: editUserInput
+}
+
+type updateUserPayload {
+  user: UsersPermissionsUser
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+type UploadFile {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String!
+  alternativeText: String
+  caption: String
+  width: Int
+  height: Int
+  formats: JSON
+  hash: String!
+  ext: String
+  mime: String!
+  size: Float!
+  url: String!
+  previewUrl: String
+  provider: String!
+  provider_metadata: JSON
+  created_by: AdminUser
+  updated_by: AdminUser
+  related(sort: String, limit: Int, start: Int, where: JSON): [Morph]
+}
+
+type UploadFileAggregator {
+  count: Int
+  totalCount: Int
+  sum: UploadFileAggregatorSum
+  avg: UploadFileAggregatorAvg
+  min: UploadFileAggregatorMin
+  max: UploadFileAggregatorMax
+}
+
+type UploadFileAggregatorAvg {
+  width: Float
+  height: Float
+  size: Float
+}
+
+type UploadFileAggregatorMax {
+  width: Float
+  height: Float
+  size: Float
+}
+
+type UploadFileAggregatorMin {
+  width: Float
+  height: Float
+  size: Float
+}
+
+type UploadFileAggregatorSum {
+  width: Float
+  height: Float
+  size: Float
+}
+
+type UploadFileConnection {
+  values: [UploadFile]
+  groupBy: UploadFileGroupBy
+  aggregate: UploadFileAggregator
+}
+
+type UploadFileConnectionAlternativeText {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionCaption {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionCreated_at {
+  key: DateTime
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionCreated_by {
+  key: ID
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionExt {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionFormats {
+  key: JSON
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionHash {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionHeight {
+  key: Int
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionId {
+  key: ID
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionMime {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionName {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionPreviewUrl {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionProvider {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionProvider_metadata {
+  key: JSON
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionSize {
+  key: Float
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUpdated_at {
+  key: DateTime
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUpdated_by {
+  key: ID
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionUrl {
+  key: String
+  connection: UploadFileConnection
+}
+
+type UploadFileConnectionWidth {
+  key: Int
+  connection: UploadFileConnection
+}
+
+type UploadFileGroupBy {
+  id: [UploadFileConnectionId]
+  created_at: [UploadFileConnectionCreated_at]
+  updated_at: [UploadFileConnectionUpdated_at]
+  name: [UploadFileConnectionName]
+  alternativeText: [UploadFileConnectionAlternativeText]
+  caption: [UploadFileConnectionCaption]
+  width: [UploadFileConnectionWidth]
+  height: [UploadFileConnectionHeight]
+  formats: [UploadFileConnectionFormats]
+  hash: [UploadFileConnectionHash]
+  ext: [UploadFileConnectionExt]
+  mime: [UploadFileConnectionMime]
+  size: [UploadFileConnectionSize]
+  url: [UploadFileConnectionUrl]
+  previewUrl: [UploadFileConnectionPreviewUrl]
+  provider: [UploadFileConnectionProvider]
+  provider_metadata: [UploadFileConnectionProvider_metadata]
+  created_by: [UploadFileConnectionCreated_by]
+  updated_by: [UploadFileConnectionUpdated_by]
+}
+
+input UserInput {
+  username: String!
+  email: String!
+  provider: String
+  password: String
+  resetPasswordToken: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: ID
+  language: String
+  notification_token: String
+  mobile_number: Long
+  favourites: String
+  created_by: ID
+  updated_by: ID
+}
+
+type UserPermissionsPasswordPayload {
+  ok: Boolean!
+}
+
+input UsersPermissionsLoginInput {
+  identifier: String!
+  password: String!
+  provider: String = "local"
+}
+
+type UsersPermissionsLoginPayload {
+  jwt: String
+  user: UsersPermissionsMe!
+}
+
+type UsersPermissionsMe {
+  id: ID!
+  username: String!
+  email: String!
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsMeRole
+}
+
+type UsersPermissionsMeRole {
+  id: ID!
+  name: String!
+  description: String
+  type: String
+}
+
+type UsersPermissionsPermission {
+  id: ID!
+  type: String!
+  controller: String!
+  action: String!
+  enabled: Boolean!
+  policy: String
+  role: UsersPermissionsRole
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+input UsersPermissionsRegisterInput {
+  username: String!
+  email: String!
+  password: String!
+}
+
+type UsersPermissionsRole {
+  id: ID!
+  name: String!
+  description: String
+  type: String
+  created_by: AdminUser
+  updated_by: AdminUser
+  permissions(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsPermission]
+  users(sort: String, limit: Int, start: Int, where: JSON): [UsersPermissionsUser]
+}
+
+type UsersPermissionsRoleAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type UsersPermissionsRoleConnection {
+  values: [UsersPermissionsRole]
+  groupBy: UsersPermissionsRoleGroupBy
+  aggregate: UsersPermissionsRoleAggregator
+}
+
+type UsersPermissionsRoleConnectionCreated_by {
+  key: ID
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionDescription {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionId {
+  key: ID
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionName {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionType {
+  key: String
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleConnectionUpdated_by {
+  key: ID
+  connection: UsersPermissionsRoleConnection
+}
+
+type UsersPermissionsRoleGroupBy {
+  id: [UsersPermissionsRoleConnectionId]
+  name: [UsersPermissionsRoleConnectionName]
+  description: [UsersPermissionsRoleConnectionDescription]
+  type: [UsersPermissionsRoleConnectionType]
+  created_by: [UsersPermissionsRoleConnectionCreated_by]
+  updated_by: [UsersPermissionsRoleConnectionUpdated_by]
+}
+
+type UsersPermissionsUser {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  username: String!
+  email: String!
+  provider: String
+  confirmed: Boolean
+  blocked: Boolean
+  role: UsersPermissionsRole
+  language: String
+  notification_token: String
+  mobile_number: Long
+  favourites: String
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type UsersPermissionsUserAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type UsersPermissionsUserConnection {
+  values: [UsersPermissionsUser]
+  groupBy: UsersPermissionsUserGroupBy
+  aggregate: UsersPermissionsUserAggregator
+}
+
+type UsersPermissionsUserConnectionBlocked {
+  key: Boolean
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionConfirmed {
+  key: Boolean
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionCreated_at {
+  key: DateTime
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionCreated_by {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionEmail {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionFavourites {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionId {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionLanguage {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionMobile_number {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionNotification_token {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionProvider {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionRole {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionUpdated_at {
+  key: DateTime
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionUpdated_by {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionUsername {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserGroupBy {
+  id: [UsersPermissionsUserConnectionId]
+  created_at: [UsersPermissionsUserConnectionCreated_at]
+  updated_at: [UsersPermissionsUserConnectionUpdated_at]
+  username: [UsersPermissionsUserConnectionUsername]
+  email: [UsersPermissionsUserConnectionEmail]
+  provider: [UsersPermissionsUserConnectionProvider]
+  confirmed: [UsersPermissionsUserConnectionConfirmed]
+  blocked: [UsersPermissionsUserConnectionBlocked]
+  role: [UsersPermissionsUserConnectionRole]
+  language: [UsersPermissionsUserConnectionLanguage]
+  notification_token: [UsersPermissionsUserConnectionNotification_token]
+  mobile_number: [UsersPermissionsUserConnectionMobile_number]
+  favourites: [UsersPermissionsUserConnectionFavourites]
+  created_by: [UsersPermissionsUserConnectionCreated_by]
+  updated_by: [UsersPermissionsUserConnectionUpdated_by]
+}

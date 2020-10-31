@@ -1,0 +1,89 @@
+{
+  "kind": "collectionType",
+  "collectionName": "offers",
+  "info": {
+    "name": "Offers"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title_en": {
+      "type": "string"
+    },
+    "title_ar": {
+      "type": "string"
+    },
+    "discount": {
+      "type": "integer"
+    },
+    "desc_en": {
+      "type": "richtext"
+    },
+    "desc_ar": {
+      "type": "richtext"
+    },
+    "country": {
+      "type": "enumeration",
+      "enum": [
+        "United_Arab_Emirates"
+      ],
+      "default": "United_Arab_Emirates",
+      "required": true
+    },
+    "city": {
+      "type": "enumeration",
+      "enum": [
+        "Abu_Dhabi",
+        "Ajman",
+        "Dubai",
+        "Fujairah",
+        "Ras_Al_Khaimah",
+        "Sharjah",
+        "Umm_Al_Quwain"
+      ],
+      "default": "Dubai",
+      "required": true
+    },
+    "expiry": {
+      "type": "datetime"
+    },
+    "mobile_number": {
+      "type": "biginteger"
+    },
+    "latitude": {
+      "type": "float"
+    },
+    "longitude": {
+      "type": "float"
+    },
+    "status": {
+      "type": "boolean",
+      "default": true,
+      "required": true
+    },
+    "actual_price": {
+      "type": "integer"
+    },
+    "discounted_price": {
+      "type": "integer"
+    },
+    "place": {
+      "type": "string"
+    },
+    "featured_img": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images"
+      ],
+      "plugin": "upload",
+      "required": true
+    },
+    "center": {
+      "model": "centers",
+      "via": "offers"
+    }
+  }
+}

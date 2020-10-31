@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "membership_benefits",
+  "info": {
+    "name": "Membership Benefits"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "text_en": {
+      "type": "richtext"
+    },
+    "text_ar": {
+      "type": "richtext"
+    }
+  }
+}

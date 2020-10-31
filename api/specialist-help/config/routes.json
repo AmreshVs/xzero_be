@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/specialist-help",
+      "handler": "specialist-help.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/specialist-help",
+      "handler": "specialist-help.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/specialist-help",
+      "handler": "specialist-help.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

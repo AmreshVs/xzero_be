@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/membership-card-info",
+      "handler": "membership-card-info.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/membership-card-info",
+      "handler": "membership-card-info.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/membership-card-info",
+      "handler": "membership-card-info.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

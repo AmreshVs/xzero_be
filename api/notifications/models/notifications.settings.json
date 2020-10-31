@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notifications",
+  "info": {
+    "name": "Notifications"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title_en": {
+      "type": "string"
+    },
+    "title_ar": {
+      "type": "string"
+    },
+    "desc_en": {
+      "type": "text"
+    },
+    "desc_ar": {
+      "type": "text"
+    }
+  }
+}

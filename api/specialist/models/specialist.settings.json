@@ -1,0 +1,51 @@
+{
+  "kind": "collectionType",
+  "collectionName": "specialists",
+  "info": {
+    "name": "Specialist"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name_en": {
+      "type": "string"
+    },
+    "name_ar": {
+      "type": "string"
+    },
+    "desc_en": {
+      "type": "text"
+    },
+    "desc_ar": {
+      "type": "text"
+    },
+    "mobile_number": {
+      "type": "biginteger"
+    },
+    "category": {
+      "model": "categories"
+    },
+    "center": {
+      "model": "centers"
+    },
+    "featured_img": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "specialization_en": {
+      "type": "string"
+    },
+    "specialization_ar": {
+      "type": "string"
+    }
+  }
+}

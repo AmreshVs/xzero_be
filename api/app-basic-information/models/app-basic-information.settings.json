@@ -1,0 +1,32 @@
+{
+  "kind": "singleType",
+  "collectionName": "app_basic_informations",
+  "info": {
+    "name": "App Basic Information"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "app_version": {
+      "type": "string"
+    },
+    "version_check": {
+      "type": "boolean",
+      "default": false
+    },
+    "android_app_version": {
+      "type": "string"
+    },
+    "android_version_check": {
+      "type": "boolean"
+    },
+    "iso_app_version": {
+      "type": "string"
+    },
+    "ios_version_check": {
+      "type": "boolean"
+    }
+  }
+}

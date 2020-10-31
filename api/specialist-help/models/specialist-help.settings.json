@@ -1,0 +1,30 @@
+{
+  "kind": "singleType",
+  "collectionName": "specialist_helps",
+  "info": {
+    "name": "Specialist Help"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title_en": {
+      "type": "string"
+    },
+    "title_ar": {
+      "type": "string"
+    },
+    "featured_img": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    }
+  }
+}

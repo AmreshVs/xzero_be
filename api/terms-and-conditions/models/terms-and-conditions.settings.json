@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "terms_and_conditions",
+  "info": {
+    "name": "Terms and Conditions"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "terms_en": {
+      "type": "richtext"
+    },
+    "terms_ar": {
+      "type": "richtext"
+    }
+  }
+}
