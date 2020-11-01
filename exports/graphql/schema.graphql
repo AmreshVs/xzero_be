@@ -3,6 +3,31 @@ type AdminUser {
   username: String
 }
 
+type AppBasicInformation {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  app_version: String
+  version_check: Boolean
+  android_app_version: String
+  android_version_check: Boolean
+  iso_app_version: String
+  ios_version_check: Boolean
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+input AppBasicInformationInput {
+  app_version: String
+  version_check: Boolean
+  android_app_version: String
+  android_version_check: Boolean
+  iso_app_version: String
+  ios_version_check: Boolean
+  created_by: ID
+  updated_by: ID
+}
+
 input BannerInput {
   banner_img: ID
   created_by: ID
@@ -355,6 +380,14 @@ type createOfferPayload {
   offer: Offers
 }
 
+input createQrCodeInput {
+  data: QrCodeInput
+}
+
+type createQrCodePayload {
+  qrCode: QrCodes
+}
+
 input createRoleInput {
   data: RoleInput
 }
@@ -397,6 +430,10 @@ A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the
 8601 standard for representation of dates and times using the Gregorian calendar.
 """
 scalar DateTime
+
+type deleteAppBasicInformationPayload {
+  appBasicInformation: AppBasicInformation
+}
 
 input deleteBannerInput {
   where: InputID
@@ -470,6 +507,14 @@ type deletePrivacyPolicyPayload {
   privacyPolicy: PrivacyPolicy
 }
 
+input deleteQrCodeInput {
+  where: InputID
+}
+
+type deleteQrCodePayload {
+  qrCode: QrCodes
+}
+
 input deleteRoleInput {
   where: InputID
 }
@@ -500,6 +545,17 @@ input deleteUserInput {
 
 type deleteUserPayload {
   user: UsersPermissionsUser
+}
+
+input editAppBasicInformationInput {
+  app_version: String
+  version_check: Boolean
+  android_app_version: String
+  android_version_check: Boolean
+  iso_app_version: String
+  ios_version_check: Boolean
+  created_by: ID
+  updated_by: ID
 }
 
 input editBannerInput {
@@ -630,6 +686,14 @@ input editPrivacyPolicyInput {
   updated_by: ID
 }
 
+input editQrCodeInput {
+  Name: String
+  Status: Boolean
+  user: ID
+  created_by: ID
+  updated_by: ID
+}
+
 input editRoleInput {
   name: String
   description: String
@@ -683,6 +747,10 @@ input editUserInput {
   notification_token: String
   mobile_number: Long
   favourites: String
+  dob: Date
+  birthday: DateTime
+  platform: String
+  app_version: String
   created_by: ID
   updated_by: ID
 }
@@ -987,9 +1055,11 @@ type MembershipTransactionsGroupBy {
   updated_by: [MembershipTransactionsConnectionUpdated_by]
 }
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | CreateUserPayload | Banners | BannersConnection | BannersAggregator | BannersGroupBy | BannersConnectionId | BannersConnectionCreated_at | BannersConnectionUpdated_at | BannersConnectionBanner_img | BannersConnectionCreated_by | BannersConnectionUpdated_by | createBannerPayload | updateBannerPayload | deleteBannerPayload | BasicMembershipAmount | updateBasicMembershipAmountPayload | deleteBasicMembershipAmountPayload | Categories | CategoriesConnection | CategoriesAggregator | CategoriesGroupBy | CategoriesConnectionId | CategoriesConnectionCreated_at | CategoriesConnectionUpdated_at | CategoriesConnectionTitle_en | CategoriesConnectionFeatured_img | CategoriesConnectionTitle_ar | CategoriesConnectionEnabled | CategoriesConnectionCreated_by | CategoriesConnectionUpdated_by | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Centers | CentersConnection | CentersAggregator | CentersGroupBy | CentersConnectionId | CentersConnectionCreated_at | CentersConnectionUpdated_at | CentersConnectionTitle_en | CentersConnectionTitle_ar | CentersConnectionCategory | CentersConnectionFeatured_img | CentersConnectionMobile_number | CentersConnectionPlace | CentersConnectionCity | CentersConnectionHomescreen | CentersConnectionCreated_by | CentersConnectionUpdated_by | createCenterPayload | updateCenterPayload | deleteCenterPayload | MembershipBenefits | updateMembershipBenefitPayload | deleteMembershipBenefitPayload | MembershipCardInfo | updateMembershipCardInfoPayload | deleteMembershipCardInfoPayload | MembershipTransactions | MembershipTransactionsConnection | MembershipTransactionsAggregator | MembershipTransactionsAggregatorSum | MembershipTransactionsAggregatorAvg | MembershipTransactionsAggregatorMin | MembershipTransactionsAggregatorMax | MembershipTransactionsGroupBy | MembershipTransactionsConnectionId | MembershipTransactionsConnectionCreated_at | MembershipTransactionsConnectionUpdated_at | MembershipTransactionsConnectionMembership_id | MembershipTransactionsConnectionSerial | MembershipTransactionsConnectionType | MembershipTransactionsConnectionAmount | MembershipTransactionsConnectionExpiry | MembershipTransactionsConnectionCreated_by | MembershipTransactionsConnectionUpdated_by | createMembershipTransactionPayload | updateMembershipTransactionPayload | deleteMembershipTransactionPayload | Membership | MembershipConnection | MembershipAggregator | MembershipGroupBy | MembershipConnectionId | MembershipConnectionCreated_at | MembershipConnectionUpdated_at | MembershipConnectionUser | MembershipConnectionSerial | MembershipConnectionExpiry | MembershipConnectionCreated_by | MembershipConnectionUpdated_by | createMembershipPayload | updateMembershipPayload | deleteMembershipPayload | Notifications | NotificationsConnection | NotificationsAggregator | NotificationsGroupBy | NotificationsConnectionId | NotificationsConnectionCreated_at | NotificationsConnectionUpdated_at | NotificationsConnectionTitle_en | NotificationsConnectionTitle_ar | NotificationsConnectionDesc_en | NotificationsConnectionDesc_ar | NotificationsConnectionCreated_by | NotificationsConnectionUpdated_by | createNotificationPayload | updateNotificationPayload | deleteNotificationPayload | Offers | OffersConnection | OffersAggregator | OffersAggregatorSum | OffersAggregatorAvg | OffersAggregatorMin | OffersAggregatorMax | OffersGroupBy | OffersConnectionId | OffersConnectionCreated_at | OffersConnectionUpdated_at | OffersConnectionTitle_en | OffersConnectionTitle_ar | OffersConnectionDiscount | OffersConnectionDesc_en | OffersConnectionDesc_ar | OffersConnectionCountry | OffersConnectionCity | OffersConnectionExpiry | OffersConnectionMobile_number | OffersConnectionLatitude | OffersConnectionLongitude | OffersConnectionStatus | OffersConnectionActual_price | OffersConnectionDiscounted_price | OffersConnectionPlace | OffersConnectionFeatured_img | OffersConnectionCenter | OffersConnectionCreated_by | OffersConnectionUpdated_by | createOfferPayload | updateOfferPayload | deleteOfferPayload | PrivacyPolicy | updatePrivacyPolicyPayload | deletePrivacyPolicyPayload | SpecialistHelp | updateSpecialistHelpPayload | deleteSpecialistHelpPayload | Specialist | SpecialistConnection | SpecialistAggregator | SpecialistGroupBy | SpecialistConnectionId | SpecialistConnectionCreated_at | SpecialistConnectionUpdated_at | SpecialistConnectionName_en | SpecialistConnectionName_ar | SpecialistConnectionDesc_en | SpecialistConnectionDesc_ar | SpecialistConnectionMobile_number | SpecialistConnectionCategory | SpecialistConnectionCenter | SpecialistConnectionFeatured_img | SpecialistConnectionSpecialization_en | SpecialistConnectionSpecialization_ar | SpecialistConnectionCreated_by | SpecialistConnectionUpdated_by | createSpecialistPayload | updateSpecialistPayload | deleteSpecialistPayload | TermsAndConditions | updateTermsAndConditionPayload | deleteTermsAndConditionPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionLanguage | UsersPermissionsUserConnectionNotification_token | UsersPermissionsUserConnectionMobile_number | UsersPermissionsUserConnectionFavourites | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | CreateUserPayload | AppBasicInformation | updateAppBasicInformationPayload | deleteAppBasicInformationPayload | Banners | BannersConnection | BannersAggregator | BannersGroupBy | BannersConnectionId | BannersConnectionCreated_at | BannersConnectionUpdated_at | BannersConnectionBanner_img | BannersConnectionCreated_by | BannersConnectionUpdated_by | createBannerPayload | updateBannerPayload | deleteBannerPayload | BasicMembershipAmount | updateBasicMembershipAmountPayload | deleteBasicMembershipAmountPayload | Categories | CategoriesConnection | CategoriesAggregator | CategoriesGroupBy | CategoriesConnectionId | CategoriesConnectionCreated_at | CategoriesConnectionUpdated_at | CategoriesConnectionTitle_en | CategoriesConnectionFeatured_img | CategoriesConnectionTitle_ar | CategoriesConnectionEnabled | CategoriesConnectionCreated_by | CategoriesConnectionUpdated_by | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | Centers | CentersConnection | CentersAggregator | CentersGroupBy | CentersConnectionId | CentersConnectionCreated_at | CentersConnectionUpdated_at | CentersConnectionTitle_en | CentersConnectionTitle_ar | CentersConnectionCategory | CentersConnectionFeatured_img | CentersConnectionMobile_number | CentersConnectionPlace | CentersConnectionCity | CentersConnectionHomescreen | CentersConnectionCreated_by | CentersConnectionUpdated_by | createCenterPayload | updateCenterPayload | deleteCenterPayload | MembershipBenefits | updateMembershipBenefitPayload | deleteMembershipBenefitPayload | MembershipCardInfo | updateMembershipCardInfoPayload | deleteMembershipCardInfoPayload | MembershipTransactions | MembershipTransactionsConnection | MembershipTransactionsAggregator | MembershipTransactionsAggregatorSum | MembershipTransactionsAggregatorAvg | MembershipTransactionsAggregatorMin | MembershipTransactionsAggregatorMax | MembershipTransactionsGroupBy | MembershipTransactionsConnectionId | MembershipTransactionsConnectionCreated_at | MembershipTransactionsConnectionUpdated_at | MembershipTransactionsConnectionMembership_id | MembershipTransactionsConnectionSerial | MembershipTransactionsConnectionType | MembershipTransactionsConnectionAmount | MembershipTransactionsConnectionExpiry | MembershipTransactionsConnectionCreated_by | MembershipTransactionsConnectionUpdated_by | createMembershipTransactionPayload | updateMembershipTransactionPayload | deleteMembershipTransactionPayload | Membership | MembershipConnection | MembershipAggregator | MembershipGroupBy | MembershipConnectionId | MembershipConnectionCreated_at | MembershipConnectionUpdated_at | MembershipConnectionUser | MembershipConnectionSerial | MembershipConnectionExpiry | MembershipConnectionCreated_by | MembershipConnectionUpdated_by | createMembershipPayload | updateMembershipPayload | deleteMembershipPayload | Notifications | NotificationsConnection | NotificationsAggregator | NotificationsGroupBy | NotificationsConnectionId | NotificationsConnectionCreated_at | NotificationsConnectionUpdated_at | NotificationsConnectionTitle_en | NotificationsConnectionTitle_ar | NotificationsConnectionDesc_en | NotificationsConnectionDesc_ar | NotificationsConnectionCreated_by | NotificationsConnectionUpdated_by | createNotificationPayload | updateNotificationPayload | deleteNotificationPayload | Offers | OffersConnection | OffersAggregator | OffersAggregatorSum | OffersAggregatorAvg | OffersAggregatorMin | OffersAggregatorMax | OffersGroupBy | OffersConnectionId | OffersConnectionCreated_at | OffersConnectionUpdated_at | OffersConnectionTitle_en | OffersConnectionTitle_ar | OffersConnectionDiscount | OffersConnectionDesc_en | OffersConnectionDesc_ar | OffersConnectionCountry | OffersConnectionCity | OffersConnectionExpiry | OffersConnectionMobile_number | OffersConnectionLatitude | OffersConnectionLongitude | OffersConnectionStatus | OffersConnectionActual_price | OffersConnectionDiscounted_price | OffersConnectionPlace | OffersConnectionFeatured_img | OffersConnectionCenter | OffersConnectionCreated_by | OffersConnectionUpdated_by | createOfferPayload | updateOfferPayload | deleteOfferPayload | PrivacyPolicy | updatePrivacyPolicyPayload | deletePrivacyPolicyPayload | QrCodes | QrCodesConnection | QrCodesAggregator | QrCodesGroupBy | QrCodesConnectionId | QrCodesConnectionCreated_at | QrCodesConnectionUpdated_at | QrCodesConnectionName | QrCodesConnectionStatus | QrCodesConnectionUser | QrCodesConnectionCreated_by | QrCodesConnectionUpdated_by | createQrCodePayload | updateQrCodePayload | deleteQrCodePayload | SpecialistHelp | updateSpecialistHelpPayload | deleteSpecialistHelpPayload | Specialist | SpecialistConnection | SpecialistAggregator | SpecialistGroupBy | SpecialistConnectionId | SpecialistConnectionCreated_at | SpecialistConnectionUpdated_at | SpecialistConnectionName_en | SpecialistConnectionName_ar | SpecialistConnectionDesc_en | SpecialistConnectionDesc_ar | SpecialistConnectionMobile_number | SpecialistConnectionCategory | SpecialistConnectionCenter | SpecialistConnectionFeatured_img | SpecialistConnectionSpecialization_en | SpecialistConnectionSpecialization_ar | SpecialistConnectionCreated_by | SpecialistConnectionUpdated_by | createSpecialistPayload | updateSpecialistPayload | deleteSpecialistPayload | TermsAndConditions | updateTermsAndConditionPayload | deleteTermsAndConditionPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionLanguage | UsersPermissionsUserConnectionNotification_token | UsersPermissionsUserConnectionMobile_number | UsersPermissionsUserConnectionFavourites | UsersPermissionsUserConnectionDob | UsersPermissionsUserConnectionBirthday | UsersPermissionsUserConnectionPlatform | UsersPermissionsUserConnectionApp_version | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
+  updateAppBasicInformation(input: updateAppBasicInformationInput): updateAppBasicInformationPayload
+  deleteAppBasicInformation: deleteAppBasicInformationPayload
   createBanner(input: createBannerInput): createBannerPayload
   updateBanner(input: updateBannerInput): updateBannerPayload
   deleteBanner(input: deleteBannerInput): deleteBannerPayload
@@ -1019,6 +1089,9 @@ type Mutation {
   deleteOffer(input: deleteOfferInput): deleteOfferPayload
   updatePrivacyPolicy(input: updatePrivacyPolicyInput): updatePrivacyPolicyPayload
   deletePrivacyPolicy: deletePrivacyPolicyPayload
+  createQrCode(input: createQrCodeInput): createQrCodePayload
+  updateQrCode(input: updateQrCodeInput): updateQrCodePayload
+  deleteQrCode(input: deleteQrCodeInput): deleteQrCodePayload
   updateSpecialistHelp(input: updateSpecialistHelpInput): updateSpecialistHelpPayload
   deleteSpecialistHelp: deleteSpecialistHelpPayload
   createSpecialist(input: createSpecialistInput): createSpecialistPayload
@@ -1054,7 +1127,7 @@ type Mutation {
   forgotPassword(email: String!): UserPermissionsPasswordPayload
   resetPassword(password: String!, passwordConfirmation: String!, code: String!): UsersPermissionsLoginPayload
   emailConfirmation(confirmation: String!): UsersPermissionsLoginPayload
-  createNewUser(username: String!, email: String!, password: String!, mobile_number: Long!, notification_token: String!): CreateUserPayload!
+  createNewUser(username: String!, email: String!, password: String!, mobile_number: Long!, notification_token: String!, dob: String, birthday: DateTime): CreateUserPayload!
   userlogin(input: UsersPermissionsLoginInput!): CreateUserPayload!
 }
 
@@ -1393,7 +1466,89 @@ input PrivacyPolicyInput {
   updated_by: ID
 }
 
+input QrCodeInput {
+  Name: String
+  Status: Boolean
+  user: ID
+  created_by: ID
+  updated_by: ID
+}
+
+type QrCodes {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  Name: String
+  Status: Boolean
+  user: UsersPermissionsUser
+  created_by: AdminUser
+  updated_by: AdminUser
+}
+
+type QrCodesAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type QrCodesConnection {
+  values: [QrCodes]
+  groupBy: QrCodesGroupBy
+  aggregate: QrCodesAggregator
+}
+
+type QrCodesConnectionCreated_at {
+  key: DateTime
+  connection: QrCodesConnection
+}
+
+type QrCodesConnectionCreated_by {
+  key: ID
+  connection: QrCodesConnection
+}
+
+type QrCodesConnectionId {
+  key: ID
+  connection: QrCodesConnection
+}
+
+type QrCodesConnectionName {
+  key: String
+  connection: QrCodesConnection
+}
+
+type QrCodesConnectionStatus {
+  key: Boolean
+  connection: QrCodesConnection
+}
+
+type QrCodesConnectionUpdated_at {
+  key: DateTime
+  connection: QrCodesConnection
+}
+
+type QrCodesConnectionUpdated_by {
+  key: ID
+  connection: QrCodesConnection
+}
+
+type QrCodesConnectionUser {
+  key: ID
+  connection: QrCodesConnection
+}
+
+type QrCodesGroupBy {
+  id: [QrCodesConnectionId]
+  created_at: [QrCodesConnectionCreated_at]
+  updated_at: [QrCodesConnectionUpdated_at]
+  Name: [QrCodesConnectionName]
+  Status: [QrCodesConnectionStatus]
+  user: [QrCodesConnectionUser]
+  created_by: [QrCodesConnectionCreated_by]
+  updated_by: [QrCodesConnectionUpdated_by]
+}
+
 type Query {
+  appBasicInformation: AppBasicInformation
   banner(id: ID!): Banners
   banners(sort: String, limit: Int, start: Int, where: JSON): [Banners]
   bannersConnection(sort: String, limit: Int, start: Int, where: JSON): BannersConnection
@@ -1419,6 +1574,9 @@ type Query {
   offers(sort: String, limit: Int, start: Int, where: JSON): [Offers]
   offersConnection(sort: String, limit: Int, start: Int, where: JSON): OffersConnection
   privacyPolicy: PrivacyPolicy
+  qrCode(id: ID!): QrCodes
+  qrCodes(sort: String, limit: Int, start: Int, where: JSON): [QrCodes]
+  qrCodesConnection(sort: String, limit: Int, start: Int, where: JSON): QrCodesConnection
   specialistHelp: SpecialistHelp
   specialist(id: ID!): Specialist
   specialists(sort: String, limit: Int, start: Int, where: JSON): [Specialist]
@@ -1630,6 +1788,14 @@ type TermsAndConditions {
 """A time string with format: HH:mm:ss.SSS"""
 scalar Time
 
+input updateAppBasicInformationInput {
+  data: editAppBasicInformationInput
+}
+
+type updateAppBasicInformationPayload {
+  appBasicInformation: AppBasicInformation
+}
+
 input updateBannerInput {
   where: InputID
   data: editBannerInput
@@ -1723,6 +1889,15 @@ input updatePrivacyPolicyInput {
 
 type updatePrivacyPolicyPayload {
   privacyPolicy: PrivacyPolicy
+}
+
+input updateQrCodeInput {
+  where: InputID
+  data: editQrCodeInput
+}
+
+type updateQrCodePayload {
+  qrCode: QrCodes
 }
 
 input updateRoleInput {
@@ -1963,6 +2138,10 @@ input UserInput {
   notification_token: String
   mobile_number: Long
   favourites: String
+  dob: Date
+  birthday: DateTime
+  platform: String
+  app_version: String
   created_by: ID
   updated_by: ID
 }
@@ -2091,6 +2270,10 @@ type UsersPermissionsUser {
   notification_token: String
   mobile_number: Long
   favourites: String
+  dob: Date
+  birthday: DateTime
+  platform: String
+  app_version: String
   created_by: AdminUser
   updated_by: AdminUser
 }
@@ -2104,6 +2287,16 @@ type UsersPermissionsUserConnection {
   values: [UsersPermissionsUser]
   groupBy: UsersPermissionsUserGroupBy
   aggregate: UsersPermissionsUserAggregator
+}
+
+type UsersPermissionsUserConnectionApp_version {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionBirthday {
+  key: DateTime
+  connection: UsersPermissionsUserConnection
 }
 
 type UsersPermissionsUserConnectionBlocked {
@@ -2122,6 +2315,11 @@ type UsersPermissionsUserConnectionCreated_at {
 }
 
 type UsersPermissionsUserConnectionCreated_by {
+  key: ID
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionDob {
   key: ID
   connection: UsersPermissionsUserConnection
 }
@@ -2152,6 +2350,11 @@ type UsersPermissionsUserConnectionMobile_number {
 }
 
 type UsersPermissionsUserConnectionNotification_token {
+  key: String
+  connection: UsersPermissionsUserConnection
+}
+
+type UsersPermissionsUserConnectionPlatform {
   key: String
   connection: UsersPermissionsUserConnection
 }
@@ -2195,6 +2398,10 @@ type UsersPermissionsUserGroupBy {
   notification_token: [UsersPermissionsUserConnectionNotification_token]
   mobile_number: [UsersPermissionsUserConnectionMobile_number]
   favourites: [UsersPermissionsUserConnectionFavourites]
+  dob: [UsersPermissionsUserConnectionDob]
+  birthday: [UsersPermissionsUserConnectionBirthday]
+  platform: [UsersPermissionsUserConnectionPlatform]
+  app_version: [UsersPermissionsUserConnectionApp_version]
   created_by: [UsersPermissionsUserConnectionCreated_by]
   updated_by: [UsersPermissionsUserConnectionUpdated_by]
 }

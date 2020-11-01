@@ -13,5 +13,21 @@ module.exports = {
         },
       },
     }
-  }
+  },
+
+  // mutation: `
+  // CheckSerialExist(user_id: ID!): Membership!
+  // `,
+  // resolver: {
+  //   Mutation: {
+  //     generateMembership: {
+  //       description: 'Check user details',
+  //       policies: ['plugins::users-permissions.isAuthenticated'],
+  //       resolverOf: 'application::membership.membership.find',
+  //       resolver: async (obj, options, ctx) => {
+  //         return await strapi.api.membership.controllers.membership.CheckSerialExist(options.user_id);
+  //       },
+  //     },
+  //   }
+  // }
 }

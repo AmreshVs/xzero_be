@@ -47,6 +47,9 @@ module.exports = {
       return result;
     }
 
+  
+    
+
     let checkUserExist = await strapi.query('membership').findOne({ user: user_id });
 
     if (checkUserExist === null) {
@@ -62,5 +65,22 @@ module.exports = {
       await strapi.query('membership-transactions').create({ membership_id: checkUserExist.id, serial: serial, type: 'Renewal', expiry: checkUserExist.expiry, amount });
       return await strapi.query('membership').update({ user: user_id }, { serial: serial, expiry: new Date(checkUserExist.expiry).addDays(365) });
     }
-  }
+  },
+
+
+  // function CheckSerialExist(serialhash) {
+  //   let checkUserExist = await strapi.query('membership').findOne({ user: user_id });
+  //   let SerialExist = await strapi.query('membership').findOne({ serial: serialhash }); 
+  //   if(empty(SerialExist)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
+
+  // async CheckSerialExist(user_id) {
+  //   let checkUserExist = await strapi.query('membership').findOne({ user: user_id });
+  //   return checkUserExist;
+  // }
+
 };

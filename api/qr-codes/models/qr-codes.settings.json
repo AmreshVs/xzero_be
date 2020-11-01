@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "qr_codes",
+  "info": {
+    "name": "QR Codes"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "Name": {
+      "type": "string"
+    },
+    "Status": {
+      "type": "boolean"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}
