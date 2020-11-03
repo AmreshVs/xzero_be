@@ -625,6 +625,9 @@
               }
             }
           },
+          "qrcode_url": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -727,6 +730,9 @@
             "type": "datetime"
           },
           "membership_transactions": {
+            "type": "string"
+          },
+          "qrcode_url": {
             "type": "string"
           },
           "created_by": {

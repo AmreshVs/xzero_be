@@ -21,6 +21,9 @@
     },
     "membership_transactions": {
       "collection": "membership-transactions"
+    },
+    "qrcode_url": {
+      "type": "string"
     }
   }
 }
