@@ -29,7 +29,8 @@
       "type": "integer"
     },
     "limit": {
-      "type": "biginteger"
+      "type": "biginteger",
+      "default": "0"
     }
   }
 }

@@ -12,8 +12,6 @@ let fs = require('fs');
 const membershipEmailTemplate = require('../membershipEmailTemplate');
 const membershipRenewalEmailTemplate = require('../membershipRenewalEmailTemplate');
 
-
-
 Date.prototype.addDays = function (days) {
   var date = new Date(this.valueOf());
   date.setDate(date.getDate() + days);
@@ -56,7 +54,6 @@ async function sendMail(user_id, status) {
 module.exports = {
   async generateMembership(user_id, amount, plan) {
     
-
     function generateMemberId(length) {
       var randomChars  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
       var result = '';
@@ -113,6 +110,7 @@ module.exports = {
     let total_offer_limit = 0;
     let checkUserExist = await strapi.query('membership').findOne({ user: user_id });
     let packageSelected = await strapi.query('membership-plans').findOne({ id: plan });
+  
   
     if(packageSelected!==null) {
       offer_limit = packageSelected.limit;
