@@ -21,6 +21,15 @@
     },
     "membership_transactions": {
       "collection": "membership-transactions"
+    },
+    "qrcode_url": {
+      "type": "string"
+    },
+    "package": {
+      "type": "integer"
+    },
+    "limit": {
+      "type": "biginteger"
     }
   }
 }

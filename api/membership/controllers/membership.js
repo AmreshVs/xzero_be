@@ -68,19 +68,6 @@ module.exports = {
   },
 
 
-  // function CheckSerialExist(serialhash) {
-  //   let checkUserExist = await strapi.query('membership').findOne({ user: user_id });
-  //   let SerialExist = await strapi.query('membership').findOne({ serial: serialhash }); 
-  //   if(empty(SerialExist)) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
-  // async CheckSerialExist(user_id) {
-  //   let checkUserExist = await strapi.query('membership').findOne({ user: user_id });
-  //   return checkUserExist;
-  // }
+ 
 
 };

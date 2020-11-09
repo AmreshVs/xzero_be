@@ -625,6 +625,15 @@
               }
             }
           },
+          "qrcode_url": {
+            "type": "string"
+          },
+          "package": {
+            "type": "integer"
+          },
+          "limit": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -728,6 +737,15 @@
           },
           "membership_transactions": {
             "type": "string"
+          },
+          "qrcode_url": {
+            "type": "string"
+          },
+          "package": {
+            "type": "integer"
+          },
+          "limit": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

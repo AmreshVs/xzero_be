@@ -11,6 +11,8 @@
   },
   "devDependencies": {},
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "branded-qr-code": "^1.3.0",
     "knex": "<0.20.0",
     "koa-sslify": "^4.0.3",
     "mysql": "latest",
