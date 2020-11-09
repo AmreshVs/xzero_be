@@ -1,6 +1,6 @@
 module.exports = {
   mutation: `
-    generateMembership(user_id: ID!, amount: Int!): Membership!
+    generateMembership(user_id: ID!, amount: Int!, package_id :Int!): Membership!
   `,
   resolver: {
     Mutation: {
@@ -9,25 +9,11 @@ module.exports = {
         policies: ['plugins::users-permissions.isAuthenticated'],
         resolverOf: 'application::membership.membership.create',
         resolver: async (obj, options, ctx) => {
-          return await strapi.api.membership.controllers.membership.generateMembership(options.user_id, options.amount);
+          return await strapi.api.membership.controllers.membership.generateMembership(options.user_id, options.amount, options.package_id);
         },
       },
     }
   },
 
-  // mutation: `
-  // CheckSerialExist(user_id: ID!): Membership!
-  // `,
-  // resolver: {
-  //   Mutation: {
-  //     generateMembership: {
-  //       description: 'Check user details',
-  //       policies: ['plugins::users-permissions.isAuthenticated'],
-  //       resolverOf: 'application::membership.membership.find',
-  //       resolver: async (obj, options, ctx) => {
-  //         return await strapi.api.membership.controllers.membership.CheckSerialExist(options.user_id);
-  //       },
-  //     },
-  //   }
-  // }
+  
 }

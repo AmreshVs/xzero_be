@@ -1361,7 +1361,7 @@ type Mutation {
 
   """Delete an existing user"""
   deleteUser(input: deleteUserInput): deleteUserPayload
-  generateMembership(user_id: ID!, amount: Int!): Membership!
+  generateMembership(user_id: ID!, amount: Int!, package_id: Int!): Membership!
   addFavourite(user_id: Int!, offer_id: Int!): JSON!
   partnerLogin(input: PartnerLoginInput!): PartnerLoginPaylod!
   upload(refId: ID, ref: String, field: String, source: String, file: Upload!): UploadFile!
