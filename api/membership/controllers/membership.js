@@ -54,7 +54,7 @@ async function sendMail(user_id, status) {
 
 
 module.exports = {
-  async generateMembership(user_id, amount, package_id) {
+  async generateMembership(user_id, amount, plan) {
     
 
     function generateMemberId(length) {
@@ -112,7 +112,7 @@ module.exports = {
     let offer_limit = 0;
     let total_offer_limit = 0;
     let checkUserExist = await strapi.query('membership').findOne({ user: user_id });
-    let packageSelected = await strapi.query('membership-plans').findOne({ id: package_id });
+    let packageSelected = await strapi.query('membership-plans').findOne({ id: plan });
   
     if(packageSelected!==null) {
       offer_limit = packageSelected.limit;
@@ -125,7 +125,7 @@ module.exports = {
       let serial = await generateSerial();
       var userinfo = {userid:user_id, serial : serial };
       let qrcodefile = await createQR(userinfo);
-      let membership = await strapi.query('membership').create({ serial: serial, qrcode_url: qrcodefile,  user: user_id, package:package_id, limit:offer_limit, expiry: expiry_date.addDays(365) });
+      let membership = await strapi.query('membership').create({ serial: serial, qrcode_url: qrcodefile,  user: user_id, package:plan, limit:offer_limit, expiry: expiry_date.addDays(365) });
       await strapi.query('membership-transactions').create({ membership_id: membership.id, serial: serial, type: 'New', expiry: expiry_date, amount });
       //sendMail(user_id, "create");
       return membership;
@@ -136,7 +136,7 @@ module.exports = {
       let qrcodefile = await createQR(userinfo);
       //console.log(qrcodefile); return false;
       await strapi.query('membership-transactions').create({ membership_id: checkUserExist.id, serial: serial, type: 'Renewal',  expiry: checkUserExist.expiry, amount });
-      let membership =  await strapi.query('membership').update({ user: user_id }, { serial: serial, qrcode_url: qrcodefile, package:package_id, limit:total_offer_limit, expiry: new Date(checkUserExist.expiry).addDays(365) });
+      let membership =  await strapi.query('membership').update({ user: user_id }, { serial: serial, qrcode_url: qrcodefile, package:plan, limit:total_offer_limit, expiry: new Date(checkUserExist.expiry).addDays(365) });
       //sendMail(user_id, "renewal");
       return membership;
     } 
