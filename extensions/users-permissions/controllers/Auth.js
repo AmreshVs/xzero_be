@@ -102,10 +102,10 @@ module.exports = {
     try {
       params.confirmed = true;
       params.provider = 'local';
-      
+
       let userDate = params.dob !== '' ? new Date(params.dob) : '';
-      params.dob = params.dob !== '' ? new Date( userDate.getTime() + Math.abs(userDate.getTimezoneOffset()*60000) ) : null;
-    
+      params.dob = params.dob !== '' ? new Date(userDate.getTime() + Math.abs(userDate.getTimezoneOffset() * 60000)) : null;
+
       const user = await strapi.query('user', 'users-permissions').create(params);
 
       const jwt = strapi.plugins['users-permissions'].services.jwt.issue(
@@ -157,6 +157,100 @@ module.exports = {
         createError.code = 400;
         throw createError;
       }
+    }
+  },
+
+  async userLogin(ctx) {
+
+    const params = ctx.request.body;
+
+    const store = await strapi.store({
+      environment: '',
+      type: 'plugin',
+      name: 'users-permissions',
+    });
+
+
+    // The password is required.
+    if (!params.password) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'Auth.form.error.password.provide',
+          message: 'Please provide your password.',
+        })
+      );
+    }
+
+    const query = {};
+
+    // Check if the provided identifier is an email or not.
+    const isEmail = emailRegExp.test(params.identifier);
+
+    // Set the identifier to the appropriate query field.
+    if (isEmail) {
+      query.email = params.identifier.toLowerCase();
+    } else {
+      query.username = params.identifier;
+    }
+
+    // Check if the user exists.
+    const user = await strapi.query('user', 'users-permissions').findOne(query);
+
+    if (!user) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'Auth.form.error.invalid',
+          message: 'Identifier or password invalid.',
+        })
+      );
+    }
+
+    if (
+      _.get(await store.get({ key: 'advanced' }), 'email_confirmation') &&
+      user.confirmed !== true
+    ) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'Auth.form.error.confirmed',
+          message: 'Your account email is not confirmed',
+        })
+      );
+    }
+
+    if (user.blocked === true) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'Auth.form.error.blocked',
+          message: 'Your account has been blocked by an administrator',
+        })
+      );
+    }
+
+    const validPassword = await strapi.plugins[
+      'users-permissions'
+    ].services.user.validatePassword(params.password, user.password);
+
+    if (!validPassword) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'Auth.form.error.invalid',
+          message: 'Email or password invalid!',
+        })
+      );
+    } else {
+      ctx.send({
+        jwt: strapi.plugins['users-permissions'].services.jwt.issue({
+          id: user.id,
+        }),
+        user: sanitizeEntity(user.toJSON ? user.toJSON() : user, {
+          model: strapi.query('user', 'users-permissions').model,
+        }),
+      });
     }
   },
 };

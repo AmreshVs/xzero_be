@@ -781,6 +781,37 @@
               }
             }
           },
+          "partner": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "center": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -914,6 +945,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "partner": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

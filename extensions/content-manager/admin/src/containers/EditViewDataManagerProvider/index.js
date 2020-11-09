@@ -448,27 +448,27 @@ const EditViewDataManagerProvider = ({
             }
             return false;
           })
-            
-          try{
-              await fetch('https://exp.host/--/api/v2/push/send', {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                  'accept': 'application/json',
-                  'accept-encoding': 'gzip, deflate',
-                  'content-type': 'application/json',
-                },
-                body: JSON.stringify({
-                  to: expoTokens,
-                  title: cleanedData.title_en,
-                  body: cleanedData.desc_en,
-                  sound: 'default',
-                  priority: 'high'
-                })
-              });
+
+          try {
+            await fetch('https://exp.host/--/api/v2/push/send', {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: {
+                'accept': 'application/json',
+                'accept-encoding': 'gzip, deflate',
+                'content-type': 'application/json',
+              },
+              body: JSON.stringify({
+                to: expoTokens,
+                title: cleanedData.title_en,
+                body: cleanedData.desc_en,
+                sound: 'default',
+                priority: 'high'
+              })
+            });
           }
-          catch(e){
-              console.log('Notification Push', e)
+          catch (e) {
+            console.log('Notification Push', e)
           }
         }
 

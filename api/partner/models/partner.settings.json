@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "partners",
+  "info": {
+    "name": "partner"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "username": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "password": {
+      "type": "password"
+    },
+    "mobile_number": {
+      "type": "biginteger"
+    },
+    "center": {
+      "model": "centers",
+      "via": "partner"
+    }
+  }
+}

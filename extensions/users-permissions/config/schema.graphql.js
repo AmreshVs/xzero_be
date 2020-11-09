@@ -38,13 +38,10 @@ module.exports = {
       userlogin: {
         resolverOf: 'plugins::users-permissions.auth.callback',
         resolver: async (obj, options, { context }) => {
-          context.params = {
-            ...context.params,
-            provider: options.input.provider,
-          };
+
           context.request.body = _.toPlainObject(options.input);
 
-          await strapi.plugins['users-permissions'].controllers.auth.callback(context);
+          await strapi.plugins['users-permissions'].controllers.auth.userLogin(context);
           let output = context.body.toJSON ? context.body.toJSON() : context.body;
 
           checkBadRequest(output);
