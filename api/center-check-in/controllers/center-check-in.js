@@ -48,7 +48,7 @@ module.exports = {
               transaction_id: trid,
               discounted_price: offersavailable.discounted_price,
               original_price: offersavailable.actual_price,
-              offer: offersavailable.discount,
+              discount: offersavailable.discount,
             });
           iteratecount = index + 1;
         }

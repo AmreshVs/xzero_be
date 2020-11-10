@@ -672,7 +672,7 @@
                 "original_price": {
                   "type": "number"
                 },
-                "offer": {
+                "discount": {
                   "type": "number"
                 },
                 "created_by": {
