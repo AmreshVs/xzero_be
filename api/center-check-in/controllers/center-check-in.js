@@ -17,9 +17,7 @@ async function generateTransactionId() {
       } 
 }
 
-
 module.exports = {
-
     //insert check-in data and update limit in membership table
     async Checkin(user_id, center_id, offers) {
         let membership  =  await strapi.query('membership').findOne({ user: 132 });
@@ -93,13 +91,13 @@ module.exports = {
         return usercheckinsAvailed;
     },
 
-
-
     async getCenterHomeData(center_id) {
-        let centeroffers = await strapi.query('offers').find({center: center_id});
+        let CenterOffers = await strapi.query('offers').find({center: center_id});
+        let RecentUsers = await strapi.query('center-check-in').find({center: center_id, _limit: 10, _sort: 'id:desc'});
         let profilelabelcount = {offer:12, visit:13, favourites:123};
+        
         //console.log({ profilecount:profilelabelcount, offers:centeroffers}); return false;
-        return { profilecount:profilelabelcount, offers:centeroffers};
+        return { profilecount:profilelabelcount, offers:CenterOffers, recentusers: RecentUsers};
     }   
 
 };

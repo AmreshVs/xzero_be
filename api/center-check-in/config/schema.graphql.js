@@ -16,7 +16,8 @@ module.exports = {
         },
         type CenterProfile {
             profilecount: JSON!,
-            offers: [Offers]
+            offers: [Offers], 
+            recentusers: [CenterCheckIn]
         }
         `,
            

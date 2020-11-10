@@ -368,6 +368,7 @@ input CenterInput {
 type CenterProfile {
   profilecount: JSON!
   offers: [Offers]
+  recentusers: [CenterCheckIn]
 }
 
 type Centers {

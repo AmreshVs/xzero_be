@@ -88,7 +88,7 @@ module.exports = {
     async function createQR(userinfo) {
 
       let filename = "qr_"+userinfo.userid+".png";
-      let logo = "../../../public/qrcode/logoold.png";
+      let logo = "../../../public/qrcode/logo.png";
 
       let serial = JSON.stringify({serial:userinfo.serial})
       await brandedQRCode.generate({text: serial, path: logo, ratio: 6,
