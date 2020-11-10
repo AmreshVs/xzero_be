@@ -8,8 +8,7 @@ var fs = require('fs');
 
 
 async function generateTransactionId() {
-    let trid =  Math.random().toString(10).substr(2, 12);
-    console.log(trid); return false;
+    let trid =  Math.random().toString(10).substr(2,8);
     let TRNExist =  await strapi.query('center-check-in').findOne({ transaction_id: trid }); 
     if(TRNExist === null) {
         return trid.toUpperCase();
