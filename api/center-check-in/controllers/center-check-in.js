@@ -109,7 +109,7 @@ module.exports = {
   async getOffers(center_id) {
     let offersbycenter = await strapi
       .query("offers")
-      .find({ center: center_id });
+      .find({ center: center_id, _sort: "id:desc" });
     return offersbycenter;
   },
 
