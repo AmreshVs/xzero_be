@@ -76,6 +76,10 @@
     },
     "app_version": {
       "type": "string"
+    },
+    "center_check_ins": {
+      "via": "user_id",
+      "collection": "center-check-in"
     }
   }
 }

@@ -1,18 +1,19 @@
 {
   "paths": {
-    "/offers": {
+    "/center-check-ins": {
       "get": {
         "deprecated": false,
-        "description": "Find all the offers's records",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve offers document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Offers"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Offers"
+          "Center-check-in"
         ],
         "parameters": [
           {
@@ -194,79 +195,16 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new offers record",
+        "description": "Create a new record",
         "responses": {
           "200": {
-            "description": "Retrieve offers document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Offers"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Offers"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewOffers"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/offers/count": {
-      "get": {
-        "deprecated": false,
-        "description": "Retrieve the numver of offers documents",
-        "responses": {
-          "200": {
-            "description": "Retrieve offers document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,122 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "Offers"
-        ],
-        "parameters": []
-      }
-    },
-    "/offers/{id}": {
-      "get": {
-        "deprecated": false,
-        "description": "Find one offers record",
-        "responses": {
-          "200": {
-            "description": "Retrieve offers document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Offers"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Offers"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "put": {
-        "deprecated": false,
-        "description": "Update a single offers record",
-        "responses": {
-          "200": {
-            "description": "Retrieve offers document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Offers"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Offers"
+          "Center-check-in"
         ],
         "requestBody": {
           "description": "",
@@ -429,89 +252,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewOffers"
+                "$ref": "#/components/schemas/NewCenter-check-in"
               }
             }
           }
-        },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "delete": {
-        "deprecated": false,
-        "description": "Delete a single offers record",
-        "responses": {
-          "200": {
-            "description": "deletes a single offers based on the ID supplied",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "integer",
-                  "format": "int64"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Offers"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        }
       }
     },
-    "/offerListWithFavourites": {
+    "/center-check-ins/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -563,144 +311,293 @@
         },
         "summary": "",
         "tags": [
-          "Offers"
+          "Center-check-in"
         ],
         "parameters": []
+      }
+    },
+    "/center-check-ins/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Center-check-in"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "put": {
+        "deprecated": false,
+        "description": "Update a record",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Center-check-in"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewCenter-check-in"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "deprecated": false,
+        "description": "Delete a record",
+        "responses": {
+          "200": {
+            "description": "deletes a single record based on the ID supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Center-check-in"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     }
   },
   "components": {
     "schemas": {
-      "Offers": {
+      "Center-check-in": {
         "required": [
-          "id",
-          "country",
-          "city",
-          "status",
-          "featured_img"
+          "id"
         ],
         "properties": {
           "id": {
             "type": "string"
           },
-          "title_en": {
-            "type": "string"
-          },
-          "title_ar": {
-            "type": "string"
-          },
-          "discount": {
-            "type": "integer"
-          },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string",
-            "default": "United_Arab_Emirates",
-            "enum": [
-              "United_Arab_Emirates"
-            ]
-          },
-          "city": {
-            "type": "string",
-            "default": "Dubai",
-            "enum": [
-              "Abu_Dhabi",
-              "Ajman",
-              "Dubai",
-              "Fujairah",
-              "Ras_Al_Khaimah",
-              "Sharjah",
-              "Umm_Al_Quwain"
-            ]
-          },
-          "expiry": {
-            "type": "datetime"
-          },
-          "mobile_number": {
-            "type": "integer"
-          },
-          "latitude": {
-            "type": "number"
-          },
-          "longitude": {
-            "type": "number"
-          },
-          "status": {
-            "type": "boolean",
-            "default": true
-          },
-          "actual_price": {
-            "type": "integer"
-          },
-          "discounted_price": {
-            "type": "integer"
-          },
-          "place": {
-            "type": "string"
-          },
-          "featured_img": {
+          "user_id": {
             "required": [
               "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
+              "username",
+              "email"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "name": {
+              "username": {
                 "type": "string"
               },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
+              "email": {
                 "type": "string"
               },
               "provider": {
                 "type": "string"
               },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
+              "password": {
                 "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "notification_token": {
+                "type": "string"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "favourites": {
+                "type": "string"
+              },
+              "dob": {
+                "type": "string"
+              },
+              "birthday": {
+                "type": "datetime"
+              },
+              "platform": {
+                "type": "string"
+              },
+              "app_version": {
+                "type": "string"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -763,48 +660,137 @@
               }
             }
           },
-          "center_check_ins": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "user_id": {
-                  "type": "string"
-                },
-                "center": {
-                  "type": "string"
-                },
-                "membership": {
-                  "type": "string"
-                },
-                "offer_id": {
-                  "type": "string"
-                },
-                "transaction_id": {
-                  "type": "string"
-                },
-                "discounted_price": {
-                  "type": "number"
-                },
-                "original_price": {
-                  "type": "number"
-                },
-                "offer": {
-                  "type": "number"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
+          "membership": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "serial": {
+                "type": "string"
+              },
+              "expiry": {
+                "type": "datetime"
+              },
+              "membership_transactions": {
+                "type": "string"
+              },
+              "qrcode_url": {
+                "type": "string"
+              },
+              "package": {
+                "type": "integer"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
                   "type": "string"
                 }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
               }
             }
+          },
+          "offer_id": {
+            "required": [
+              "id",
+              "country",
+              "city",
+              "status",
+              "featured_img"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title_en": {
+                "type": "string"
+              },
+              "title_ar": {
+                "type": "string"
+              },
+              "discount": {
+                "type": "integer"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "expiry": {
+                "type": "datetime"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "actual_price": {
+                "type": "integer"
+              },
+              "discounted_price": {
+                "type": "integer"
+              },
+              "place": {
+                "type": "string"
+              },
+              "featured_img": {
+                "type": "string"
+              },
+              "center": {
+                "type": "string"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "transaction_id": {
+            "type": "string"
+          },
+          "discounted_price": {
+            "type": "number"
+          },
+          "original_price": {
+            "type": "number"
+          },
+          "offer": {
+            "type": "number"
           },
           "created_by": {
             "required": [
@@ -896,81 +882,31 @@
           }
         }
       },
-      "NewOffers": {
-        "required": [
-          "country",
-          "city",
-          "status"
-        ],
+      "NewCenter-check-in": {
         "properties": {
-          "title_en": {
-            "type": "string"
-          },
-          "title_ar": {
-            "type": "string"
-          },
-          "discount": {
-            "type": "integer"
-          },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "country": {
-            "type": "string",
-            "default": "United_Arab_Emirates",
-            "enum": [
-              "United_Arab_Emirates"
-            ]
-          },
-          "city": {
-            "type": "string",
-            "default": "Dubai",
-            "enum": [
-              "Abu_Dhabi",
-              "Ajman",
-              "Dubai",
-              "Fujairah",
-              "Ras_Al_Khaimah",
-              "Sharjah",
-              "Umm_Al_Quwain"
-            ]
-          },
-          "expiry": {
-            "type": "datetime"
-          },
-          "mobile_number": {
-            "type": "integer"
-          },
-          "latitude": {
-            "type": "number"
-          },
-          "longitude": {
-            "type": "number"
-          },
-          "status": {
-            "type": "boolean",
-            "default": true
-          },
-          "actual_price": {
-            "type": "integer"
-          },
-          "discounted_price": {
-            "type": "integer"
-          },
-          "place": {
+          "user_id": {
             "type": "string"
           },
           "center": {
             "type": "string"
           },
-          "center_check_ins": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
+          "membership": {
+            "type": "string"
+          },
+          "offer_id": {
+            "type": "string"
+          },
+          "transaction_id": {
+            "type": "string"
+          },
+          "discounted_price": {
+            "type": "number"
+          },
+          "original_price": {
+            "type": "number"
+          },
+          "offer": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"
@@ -982,9 +918,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Offers"
-    }
-  ]
+  "tags": []
 }

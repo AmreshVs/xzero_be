@@ -1275,6 +1275,49 @@
           "app_version": {
             "type": "string"
           },
+          "center_check_ins": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "user_id": {
+                  "type": "string"
+                },
+                "center": {
+                  "type": "string"
+                },
+                "membership": {
+                  "type": "string"
+                },
+                "offer_id": {
+                  "type": "string"
+                },
+                "transaction_id": {
+                  "type": "string"
+                },
+                "discounted_price": {
+                  "type": "number"
+                },
+                "original_price": {
+                  "type": "number"
+                },
+                "offer": {
+                  "type": "number"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -1423,6 +1466,12 @@
           },
           "app_version": {
             "type": "string"
+          },
+          "center_check_ins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

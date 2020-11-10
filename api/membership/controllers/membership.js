@@ -3,7 +3,7 @@
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
  * to customize this controller
  */
-var QRCode = require('qrcode');
+
 require('babel-polyfill');
 var brandedQRCode = require('branded-qr-code');
 let fs = require('fs');
@@ -91,14 +91,13 @@ module.exports = {
       let logo = "../../../public/qrcode/logoold.png";
 
       let serial = JSON.stringify({serial:userinfo.serial})
-      let qrcode = await brandedQRCode.generate({text: serial, path: logo, ratio: 6,
+      await brandedQRCode.generate({text: serial, path: logo, ratio: 6,
         opt: { color: {dark: '#000', light : '#fff'}, width : 200,  errorCorrectionLevel: 'H'} })
         .then((buf) => {
           fs.writeFile("public/qrcode/"+filename, buf, (err) => {
             if (err) {
               throw err
             }
-            return filename;
           });
         });
 
@@ -110,18 +109,18 @@ module.exports = {
     let total_offer_limit = 0;
     let checkUserExist = await strapi.query('membership').findOne({ user: user_id });
     let packageSelected = await strapi.query('membership-plans').findOne({ id: plan });
-  
-  
-    if(packageSelected!==null) {
+
+    // updating the limit upon renewal
+    if(packageSelected !== null) {
       offer_limit = packageSelected.limit;
-      total_offer_limit = parseInt(packageSelected.limit+checkUserExist.limit);
+      total_offer_limit = parseInt(packageSelected.limit + checkUserExist.limit);
     } 
     
     
     if (checkUserExist === null) {
       let expiry_date = new Date();
       let serial = await generateSerial();
-      var userinfo = {userid:user_id, serial : serial };
+      var userinfo = { userid: user_id, serial: serial };
       let qrcodefile = await createQR(userinfo);
       let membership = await strapi.query('membership').create({ serial: serial, qrcode_url: qrcodefile,  user: user_id, package:plan, limit:offer_limit, expiry: expiry_date.addDays(365) });
       await strapi.query('membership-transactions').create({ membership_id: membership.id, serial: serial, type: 'New', expiry: expiry_date, amount });

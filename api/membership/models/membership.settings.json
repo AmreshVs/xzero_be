@@ -31,6 +31,10 @@
     "limit": {
       "type": "biginteger",
       "default": "0"
+    },
+    "center_check_ins": {
+      "via": "membership",
+      "collection": "center-check-in"
     }
   }
 }

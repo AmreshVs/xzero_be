@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/center-check-ins",
+      "handler": "center-check-in.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/center-check-ins/count",
+      "handler": "center-check-in.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/center-check-ins/:id",
+      "handler": "center-check-in.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/center-check-ins",
+      "handler": "center-check-in.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/center-check-ins/:id",
+      "handler": "center-check-in.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/center-check-ins/:id",
+      "handler": "center-check-in.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
