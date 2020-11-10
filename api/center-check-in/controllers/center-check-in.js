@@ -129,7 +129,13 @@ module.exports = {
       .query("center-check-in")
       .find({ center: center_id, _limit: 10, _sort: "id:desc" });
     //queries to get the count
-    let offersCount = await strapi.query("offers").count({ center: center_id });
+
+    let offersCount = await strapi.query("center-check-in").count({ center: center_id, _limit: 5, _sort: "id:desc" });
+    if(offersCount === null) {
+        let offersCount = await strapi.query("offers").count({ center: center_id, _limit: 5, _sort: "id:desc" });
+    }
+
+
     let visitsCount = await strapi.query("center-check-in").count({ center: center_id });
     let counts = { offers: offersCount, visits: visitsCount, favourites: 123 };
     return {
