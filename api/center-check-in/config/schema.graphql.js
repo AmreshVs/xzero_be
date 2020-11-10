@@ -18,7 +18,7 @@ module.exports = {
             counts: JSON!,
             offers: [Offers], 
             recentUsers: [CenterCheckIn],
-            centers: [Centers]
+            center: Centers
 
         }
         `,

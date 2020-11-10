@@ -369,7 +369,7 @@ type CenterProfile {
   counts: JSON!
   offers: [Offers]
   recentUsers: [CenterCheckIn]
-  centers: [Centers]
+  center: Centers
 }
 
 type Centers {

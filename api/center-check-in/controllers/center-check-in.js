@@ -124,16 +124,16 @@ module.exports = {
   //Return the center home data including the counts, center offers and the recent users
   async getCenterHomeData(center_id) {
     let CenterOffers = await strapi.query("offers").find({ center: center_id });
-    let centers = await strapi.query("centers").find({ id: center_id });
+    let centers = await strapi.query("centers").findOne({ id: center_id });
     let RecentUsers = await strapi
       .query("center-check-in")
       .find({ center: center_id, _limit: 10, _sort: "id:desc" });
-    let counts = { offer: 12, visit: 13, favourites: 123 };
+    let counts = { offers: 12, visits: 13, favourites: 123 };
     return {
       counts: counts,
       offers: CenterOffers,
       recentUsers: RecentUsers,
-      centers: centers
+      center: centers
     };
   },
 };
