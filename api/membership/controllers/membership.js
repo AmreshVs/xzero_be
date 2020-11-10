@@ -64,6 +64,7 @@ module.exports = {
       return result;
     }
 
+    //Generate the serialhash
     async function generateSerial() {
       let serialnew = generateMemberId(16);
       let SerialExist = await strapi
@@ -77,10 +78,11 @@ module.exports = {
       }
     }
 
-    async function createQR(userinfo) {
-      let filename = "qr_" + userinfo.userid + ".png";
+    //Generate the QRCode image 
+    async function createQR(userInfo) {
+      let fileName = "qr_" + userInfo.userid + ".png";
       let logo = "../../../public/qrcode/logo.png";
-      let serial = JSON.stringify({ serial: userinfo.serial });
+      let serial = JSON.stringify({ serial: userInfo.serial });
       await brandedQRCode
         .generate({
           text: serial,
@@ -93,18 +95,18 @@ module.exports = {
           },
         })
         .then((buf) => {
-          fs.writeFile("public/qrcode/" + filename, buf, (err) => {
+          fs.writeFile("public/qrcode/" + fileName, buf, (err) => {
             if (err) {
               throw err;
             }
           });
         });
 
-      return filename;
+      return fileName;
     }
 
-    let offer_limit = 0;
-    let total_offer_limit = 0;
+    let offerLimit = 0;
+    let totalOfferLimit = 0;
     let checkUserExist = await strapi
       .query("membership")
       .findOne({ user: user_id });
@@ -114,26 +116,26 @@ module.exports = {
 
     // updating the limit upon renewal
     if (packageSelected !== null) {
-      offer_limit = packageSelected.limit;
-      total_offer_limit = parseInt(
+      offerLimit = packageSelected.limit;
+      totalOfferLimit = parseInt(
         packageSelected.limit + checkUserExist.limit
       );
     }
 
     if (checkUserExist === null) {
-      let expiry_date = new Date();
+      let expiryDate = new Date();
       let serial = await generateSerial();
-      var userinfo = { userid: user_id, serial: serial };
-      let qrcodefile = await createQR(userinfo);
+      var userInfo = { userid: user_id, serial: serial };
+      let qrCodeFile = await createQR(userInfo);
       let membership = await strapi
         .query("membership")
         .create({
           serial: serial,
-          qrcode_url: qrcodefile,
+          qrcode_url: qrCodeFile,
           user: user_id,
           package: plan,
-          limit: offer_limit,
-          expiry: expiry_date.addDays(365),
+          limit: offerLimit,
+          expiry: expiryDate.addDays(365),
         });
       await strapi
         .query("membership-transactions")
@@ -141,19 +143,15 @@ module.exports = {
           membership_id: membership.id,
           serial: serial,
           type: "New",
-          expiry: expiry_date,
+          expiry: expiryDate,
           amount,
         });
       //sendMail(user_id, "create");
       return membership;
     } else {
       let serial = await generateSerial();
-      var userinfo = {
-        userid: user_id,
-        email: checkUserExist.user.email,
-        serial: serial,
-      };
-      let qrcodefile = await createQR(userinfo);
+      var userInfo = { userid: user_id, serial: serial };;
+      let qrCodeFile = await createQR(userInfo);
       
       await strapi
         .query("membership-transactions")
@@ -170,9 +168,9 @@ module.exports = {
           { user: user_id },
           {
             serial: serial,
-            qrcode_url: qrcodefile,
+            qrcode_url: qrCodeFile,
             package: plan,
-            limit: total_offer_limit,
+            limit: totalOfferLimit,
             expiry: new Date(checkUserExist.expiry).addDays(365),
           }
         );
