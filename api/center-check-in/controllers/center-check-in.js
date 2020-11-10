@@ -43,7 +43,7 @@ module.exports = {
             .query("center-check-in")
             .create({
               user_id: user_id,
-              center_id: center_id,
+              center: center,
               offer_id: offerArray[index],
               transaction_id: trid,
               discounted_price: offersavailable.discounted_price,
@@ -128,7 +128,10 @@ module.exports = {
     let RecentUsers = await strapi
       .query("center-check-in")
       .find({ center: center_id, _limit: 10, _sort: "id:desc" });
-    let counts = { offers: 12, visits: 13, favourites: 123 };
+    //queries to get the count
+    let offersCount = await strapi.query("offers").count({ center: center_id });
+    let visitsCount = await strapi.query("center-check-in").count({ center: center_id });
+    let counts = { offers: offersCount, visits: visitsCount, favourites: 123 };
     return {
       counts: counts,
       offers: CenterOffers,
