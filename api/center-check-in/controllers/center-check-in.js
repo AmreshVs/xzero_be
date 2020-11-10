@@ -54,7 +54,6 @@ module.exports = {
             console.log("empty params")
         }
     }, 
-
     
     //returning the offers availed and the membership info
     async getMembershipInfo( user_id, condition) {
@@ -63,41 +62,41 @@ module.exports = {
         return { offer: offers, membership :memberships};   
     },
     
+    //Returning the center check in details for a user
     async getuserCheckinDetails(user_id, condition) {
         let centers = await strapi.query('center-check-in').find({user_id: user_id, center_id : condition.center});
-        //let userdetails = await strapi.query('user', 'users-permissions').findOne({ id: user_id });
         return {center : centers};
     }, 
 
+    //Return the center check in by transaction id
     async CenterCheckinByTransactionId(user_id, transaction_id) {
         let centercheckins = await strapi.query('center-check-in').find({transaction_id: transaction_id});
-        //let userdetails = await strapi.query('user', 'users-permissions').findOne({ id: user_id });
-        //console.log({centercheckin : centercheckins, user: userdetails}); return false;
         return {centercheckin : centercheckins};
     },
 
+    //Return the recent users
     async RecentUsers(center_id) {
         let recentusers = await strapi.query('center-check-in').find({center: center_id, _limit: 10, _sort: 'id:desc'});
         return recentusers;
     },
 
+    //Return the offers for a particular center
     async getOffers(center_id) {
         let offersbycenter = await strapi.query('offers').find({center: center_id});
         return offersbycenter;
     },
 
+    //Return the usercheckins for a specific center
     async UserCheckins(center_id) {
         let usercheckinsAvailed = await strapi.query('center-check-in').find({center: center_id});
         return usercheckinsAvailed;
     },
 
+    //Return the center home data including the counts, center offers and the recent users
     async getCenterHomeData(center_id) {
         let CenterOffers = await strapi.query('offers').find({center: center_id});
         let RecentUsers = await strapi.query('center-check-in').find({center: center_id, _limit: 10, _sort: 'id:desc'});
         let profilelabelcount = {offer:12, visit:13, favourites:123};
-        
-        //console.log({ profilecount:profilelabelcount, offers:centeroffers}); return false;
         return { profilecount:profilelabelcount, offers:CenterOffers, recentusers: RecentUsers};
     }   
-
 };
