@@ -114,12 +114,11 @@ module.exports = {
       .query("membership-plans")
       .findOne({ id: plan });
 
+
     // updating the limit upon renewal
     if (packageSelected !== null) {
       offerLimit = packageSelected.limit;
-      totalOfferLimit = parseInt(
-        packageSelected.limit + checkUserExist.limit
-      );
+      totalOfferLimit =  parseInt(packageSelected.limit) + parseInt(checkUserExist.limit);
     }
 
     if (checkUserExist === null) {

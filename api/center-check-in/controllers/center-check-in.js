@@ -21,7 +21,7 @@ async function generateTransactionId() {
 module.exports = {
   //insert check-in data and update limit in membership table
   async Checkin(user_id, center_id, offers) {
-    let membership = await strapi.query("membership").findOne({ user: 132 });
+    let membership = await strapi.query("membership").findOne({ user: user_id });
     if (membership === null || new Date() > new Date(membership.expiry)) {
       console.log("User not exist or membership expired!");
       return false;
@@ -43,7 +43,7 @@ module.exports = {
             .query("center-check-in")
             .create({
               user_id: user_id,
-              center: center,
+              center: center_id,
               offer_id: offerArray[index],
               transaction_id: trid,
               discounted_price: offersavailable.discounted_price,
@@ -52,8 +52,12 @@ module.exports = {
             });
           iteratecount = index + 1;
         }
-        let limitBecom = parseInt(membership.limit - iteratecount);
+        let limitBecom = parseInt(membership.limit) - parseInt(iteratecount);
         if (limitBecom >= 0) {
+            await strapi.query("membership").update({ user: user_id }, {
+            limit: limitBecom
+          }
+        );
           return centeradd;
         }
         return centeradd;
