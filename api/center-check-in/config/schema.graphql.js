@@ -28,7 +28,7 @@ module.exports = {
             RecentUsers(center_id: Int!): [CenterCheckIn]!,
             getOffers(center_id: Int!): [Offers]!,
             UserCheckins(center_id: Int!): [CenterCheckIn],
-            getCenterProfileData(center_id: Int!): CenterProfile!
+            getCenterHomeData(center_id: Int!): CenterProfile!
         `, 
     
 
@@ -90,11 +90,11 @@ module.exports = {
             },    
           },
 
-          getCenterProfileData: {
+          getCenterHomeData: {
             description: 'Return the data required for the profile',
             resolverOf: 'application::offers.offers.find',
             resolver: async (obj, options, ctx) => {
-                return await strapi.api['center-check-in'].controllers['center-check-in'].getCenterProfileData(options.center_id);
+                return await strapi.api['center-check-in'].controllers['center-check-in'].getCenterHomeData(options.center_id);
             },
           }
 

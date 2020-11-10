@@ -2054,7 +2054,7 @@ type Query {
   RecentUsers(center_id: Int!): [CenterCheckIn]!
   getOffers(center_id: Int!): [Offers]!
   UserCheckins(center_id: Int!): [CenterCheckIn]
-  getCenterProfileData(center_id: Int!): CenterProfile!
+  getCenterHomeData(center_id: Int!): CenterProfile!
   topCenters(where: JSON): JSON!
   offerListWithFavourites(where: JSON, user_id: Int): JSON!
   offerIsFavourite(id: Int, user_id: Int): Boolean!

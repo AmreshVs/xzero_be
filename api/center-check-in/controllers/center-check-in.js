@@ -96,7 +96,7 @@ module.exports = {
 
 
 
-    async getCenterProfileData(center_id) {
+    async getCenterHomeData(center_id) {
         let centeroffers = await strapi.query('offers').find({center: center_id});
         let profilelabelcount = {offer:12, visit:13, favourites:123};
         //console.log({ profilecount:profilelabelcount, offers:centeroffers}); return false;
