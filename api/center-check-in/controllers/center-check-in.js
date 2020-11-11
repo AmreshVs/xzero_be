@@ -26,7 +26,6 @@ module.exports = {
       console.log("User not exist or membership expired!");
       return false;
     }
-    let msg;
     if (user_id !== null && center_id !== null) {
       let centeradd;
       let limit = 0;
@@ -95,10 +94,17 @@ module.exports = {
 
   //Return the center check in by transaction id
   async CenterCheckinByTransactionId(transaction_id) {
-    let centercheckins = await strapi
+    let offers = [];
+    let centerCheckIns = await strapi
       .query("center-check-in")
       .find({ transaction_id: transaction_id });
-    return { centercheckin: centercheckins };
+    let userInfo = centerCheckIns[0].user_id;
+
+    await centerCheckIns.map((center) => {
+      offers.push({ ...center.offer_id, discounted_price: center.discounted_price, original_price: center.original_price, discount: center.discount });
+    });
+
+    return { userInfo, offers };
   },
 
   //Return the recent users
@@ -136,9 +142,10 @@ module.exports = {
     }
     else {
       centerOffers.map((center) => {
-        // console.log(center)
-        offers.push(...center.offer_ids);
-        recentUsers.push({ ...center.user_id, checked_in: center.created_at });
+        if (center.offer_id !== null) {
+          offers.push(center.offer_id);
+        }
+        recentUsers.push({ ...center.user_id, transaction_id: center.transaction_id, checked_in: center.created_at });
         return null;
       });
     }

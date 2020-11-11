@@ -10,14 +10,31 @@ module.exports = {
       centercheckin: CenterCheckIn,
     }
 
+    type UserInfo {
+      username: String
+      email: String
+      mobile_number: Long
+      created_at: DateTime
+    }
+
+    type OffersInfo {
+      title_en: String
+      title_ar: String
+      original_price: Int
+      discounted_price: Int
+      discount: Int
+    }
+
     type UserandCenterCheckin {
-      centercheckin: [CenterCheckIn]
+      userInfo: UserInfo
+      offers: [OffersInfo]
     }
 
     type UserPayload {
       id: Int!
       username: String
       checked_in: DateTime
+      transaction_id: String
     }
 
     type CenterProfile {
@@ -32,7 +49,7 @@ module.exports = {
   query: `
     getMembershipInfo(user_id: Int, where: JSON):GetMembershipInfo!,
     getuserCheckinDetails(user_id: Int, where: JSON):OfferandUserInfo!, 
-    CenterCheckinByTransactionId( transaction_id: String!):UserandCenterCheckin!,
+    CenterCheckinByTransactionId( transaction_id: String!): UserandCenterCheckin!,
     RecentUsers(center_id: Int!): [CenterCheckIn]!,
     getOffers(center_id: Int!): [Offers]!,
     UserCheckins(center_id: Int!): [CenterCheckIn],

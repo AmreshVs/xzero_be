@@ -1294,20 +1294,20 @@
                 "membership": {
                   "type": "string"
                 },
-                "offer_ids": {
+                "offer_id": {
                   "type": "string"
                 },
                 "transaction_id": {
                   "type": "string"
                 },
                 "discounted_price": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "original_price": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "discount": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"

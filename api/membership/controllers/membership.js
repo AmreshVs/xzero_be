@@ -114,11 +114,10 @@ module.exports = {
       .query("membership-plans")
       .findOne({ id: plan });
 
-
     // updating the limit upon renewal
-    if (packageSelected !== null) {
+    if (packageSelected !== null && checkUserExist !== null) {
       offerLimit = packageSelected.limit;
-      totalOfferLimit =  parseInt(packageSelected.limit) + parseInt(checkUserExist.limit);
+      totalOfferLimit = parseInt(packageSelected.limit) + parseInt(checkUserExist.limit);
     }
 
     if (checkUserExist === null) {
@@ -151,7 +150,7 @@ module.exports = {
       let serial = await generateSerial();
       var userInfo = { userid: user_id, serial: serial };;
       let qrCodeFile = await createQR(userInfo);
-      
+
       await strapi
         .query("membership-transactions")
         .create({

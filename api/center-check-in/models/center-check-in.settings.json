@@ -21,20 +21,21 @@
       "model": "membership",
       "via": "center_check_ins"
     },
-    "offer_ids": {
-      "collection": "offers"
+    "offer_id": {
+      "model": "offers",
+      "via": "center_check_ins"
     },
     "transaction_id": {
       "type": "string"
     },
     "discounted_price": {
-      "type": "decimal"
+      "type": "integer"
     },
     "original_price": {
-      "type": "decimal"
+      "type": "integer"
     },
     "discount": {
-      "type": "decimal"
+      "type": "integer"
     }
   }
 }

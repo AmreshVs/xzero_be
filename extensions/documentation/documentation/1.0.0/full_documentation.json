@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/11/2020 5:33:01 PM"
+    "x-generation-date": "11/11/2020 11:03:58 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -11603,13 +11603,13 @@
             "type": "string"
           },
           "discounted_price": {
-            "type": "number"
+            "type": "integer"
           },
           "original_price": {
-            "type": "number"
+            "type": "integer"
           },
           "discount": {
-            "type": "number"
+            "type": "integer"
           },
           "created_by": {
             "required": [
@@ -11719,13 +11719,13 @@
             "type": "string"
           },
           "discounted_price": {
-            "type": "number"
+            "type": "integer"
           },
           "original_price": {
-            "type": "number"
+            "type": "integer"
           },
           "discount": {
-            "type": "number"
+            "type": "integer"
           },
           "created_by": {
             "type": "string"
@@ -11849,28 +11849,114 @@
               }
             }
           },
-          "offer_ids": {
+          "mobile_number": {
+            "type": "integer"
+          },
+          "place": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string",
+            "enum": [
+              "Abu_Dhabi",
+              "Ajman",
+              "Dubai",
+              "Fujairah",
+              "Ras_Al_Khaimah",
+              "Sharjah",
+              "Umm_Al_Quwain"
+            ]
+          },
+          "homescreen": {
+            "type": "boolean",
+            "default": false
+          },
+          "offers": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "country",
+                "city",
+                "status",
+                "featured_img"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "title_en": {
+                  "type": "string"
+                },
+                "title_ar": {
+                  "type": "string"
+                },
+                "discount": {
+                  "type": "integer"
+                },
+                "desc_en": {
+                  "type": "string"
+                },
+                "desc_ar": {
+                  "type": "string"
+                },
+                "country": {
+                  "type": "string"
+                },
+                "city": {
+                  "type": "string"
+                },
+                "expiry": {
+                  "type": "datetime"
+                },
+                "mobile_number": {
+                  "type": "integer"
+                },
+                "latitude": {
+                  "type": "number"
+                },
+                "longitude": {
+                  "type": "number"
+                },
+                "status": {
+                  "type": "boolean"
+                },
+                "actual_price": {
+                  "type": "integer"
+                },
+                "discounted_price": {
+                  "type": "integer"
+                },
+                "place": {
+                  "type": "string"
+                },
+                "featured_img": {
+                  "type": "string"
+                },
+                "center": {
+                  "type": "string"
+                },
+                "center_check_ins": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "partner": {
             "required": [
-              "id",
-              "country",
-              "city",
-              "status",
-              "featured_img"
+              "id"
             ],
             "properties": {
               "id": {
-                "type": "string"
-              },
-              "title_en": {
-                "type": "string"
-              },
-              "title_ar": {
-                "type": "string"
-              },
-              "discount": {
-                "type": "integer"
-              },
-              "desc_en": {
                 "type": "string"
               },
               "username": {
@@ -12034,9 +12120,6 @@
             "type": "string"
           },
           "category": {
-            "type": "string"
-          },
-          "offer_ids": {
             "type": "string"
           },
           "mobile_number": {
@@ -13058,20 +13141,20 @@
                 "membership": {
                   "type": "string"
                 },
-                "offer_ids": {
+                "offer_id": {
                   "type": "string"
                 },
                 "transaction_id": {
                   "type": "string"
                 },
                 "discounted_price": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "original_price": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "discount": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"
@@ -13540,6 +13623,49 @@
               }
             }
           },
+          "center_check_ins": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "user_id": {
+                  "type": "string"
+                },
+                "center": {
+                  "type": "string"
+                },
+                "membership": {
+                  "type": "string"
+                },
+                "offer_id": {
+                  "type": "string"
+                },
+                "transaction_id": {
+                  "type": "string"
+                },
+                "discounted_price": {
+                  "type": "integer"
+                },
+                "original_price": {
+                  "type": "integer"
+                },
+                "discount": {
+                  "type": "integer"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -13699,6 +13825,12 @@
           },
           "center": {
             "type": "string"
+          },
+          "center_check_ins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"
@@ -15016,20 +15148,20 @@
                 "membership": {
                   "type": "string"
                 },
-                "offer_ids": {
+                "offer_id": {
                   "type": "string"
                 },
                 "transaction_id": {
                   "type": "string"
                 },
                 "discounted_price": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "original_price": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "discount": {
-                  "type": "number"
+                  "type": "integer"
                 },
                 "created_by": {
                   "type": "string"
