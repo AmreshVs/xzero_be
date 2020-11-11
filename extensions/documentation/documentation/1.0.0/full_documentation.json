@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/11/2020 10:27:33 AM"
+    "x-generation-date": "11/11/2020 5:08:48 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -10999,7 +10999,7 @@
               }
             }
           },
-          "offer_id": {
+          "offer_ids": {
             "required": [
               "id",
               "country",
@@ -11061,12 +11061,6 @@
               },
               "center": {
                 "type": "string"
-              },
-              "center_check_ins": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "created_by": {
                 "type": "string"
@@ -11189,7 +11183,7 @@
           "membership": {
             "type": "string"
           },
-          "offer_id": {
+          "offer_ids": {
             "type": "string"
           },
           "transaction_id": {
@@ -11412,12 +11406,6 @@
                 },
                 "center": {
                   "type": "string"
-                },
-                "center_check_ins": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
                 },
                 "created_by": {
                   "type": "string"
@@ -12272,7 +12260,7 @@
                 "membership": {
                   "type": "string"
                 },
-                "offer_id": {
+                "offer_ids": {
                   "type": "string"
                 },
                 "transaction_id": {
@@ -12748,49 +12736,6 @@
               }
             }
           },
-          "center_check_ins": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "user_id": {
-                  "type": "string"
-                },
-                "center": {
-                  "type": "string"
-                },
-                "membership": {
-                  "type": "string"
-                },
-                "offer_id": {
-                  "type": "string"
-                },
-                "transaction_id": {
-                  "type": "string"
-                },
-                "discounted_price": {
-                  "type": "number"
-                },
-                "original_price": {
-                  "type": "number"
-                },
-                "discount": {
-                  "type": "number"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
           "created_by": {
             "required": [
               "id",
@@ -12950,12 +12895,6 @@
           },
           "center": {
             "type": "string"
-          },
-          "center_check_ins": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
           },
           "created_by": {
             "type": "string"
@@ -14255,7 +14194,7 @@
                 "membership": {
                   "type": "string"
                 },
-                "offer_id": {
+                "offer_ids": {
                   "type": "string"
                 },
                 "transaction_id": {

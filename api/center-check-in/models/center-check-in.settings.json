@@ -21,9 +21,8 @@
       "model": "membership",
       "via": "center_check_ins"
     },
-    "offer_id": {
-      "model": "offers",
-      "via": "center_check_ins"
+    "offer_ids": {
+      "collection": "offers"
     },
     "transaction_id": {
       "type": "string"

@@ -703,7 +703,7 @@
               }
             }
           },
-          "offer_id": {
+          "offer_ids": {
             "required": [
               "id",
               "country",
@@ -765,12 +765,6 @@
               },
               "center": {
                 "type": "string"
-              },
-              "center_check_ins": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
               },
               "created_by": {
                 "type": "string"
@@ -893,7 +887,7 @@
           "membership": {
             "type": "string"
           },
-          "offer_id": {
+          "offer_ids": {
             "type": "string"
           },
           "transaction_id": {

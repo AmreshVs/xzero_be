@@ -136,7 +136,8 @@ module.exports = {
     }
     else {
       centerOffers.map((center) => {
-        offers.push(center.offer_id);
+        // console.log(center)
+        offers.push(...center.offer_ids);
         recentUsers.push({ ...center.user_id, checked_in: center.created_at });
         return null;
       });
@@ -151,7 +152,7 @@ module.exports = {
 
     return {
       counts: counts,
-      offers: offers,
+      offers: [...new Map(offers.map(item => [item['id'], item])).values()].slice(0, 4),
       recentUsers: recentUsers,
       center: center
     };

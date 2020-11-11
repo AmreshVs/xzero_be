@@ -660,7 +660,7 @@
                 "membership": {
                   "type": "string"
                 },
-                "offer_id": {
+                "offer_ids": {
                   "type": "string"
                 },
                 "transaction_id": {

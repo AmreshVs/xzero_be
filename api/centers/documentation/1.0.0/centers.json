@@ -772,12 +772,6 @@
                 "center": {
                   "type": "string"
                 },
-                "center_check_ins": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "created_by": {
                   "type": "string"
                 },
