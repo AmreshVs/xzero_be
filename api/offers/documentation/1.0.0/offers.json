@@ -755,6 +755,12 @@
               "partner": {
                 "type": "string"
               },
+              "favourites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -796,6 +802,40 @@
                 },
                 "discount": {
                   "type": "number"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "favourites": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "offer": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "boolean"
+                },
+                "membership_plan": {
+                  "type": "string"
+                },
+                "center": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -967,6 +1007,12 @@
             "type": "string"
           },
           "center_check_ins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "favourites": {
             "type": "array",
             "items": {
               "type": "string"

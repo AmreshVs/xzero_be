@@ -80,6 +80,10 @@
     "center_check_ins": {
       "via": "user_id",
       "collection": "center-check-in"
+    },
+    "favourite": {
+      "via": "user",
+      "collection": "favourites"
     }
   }
 }

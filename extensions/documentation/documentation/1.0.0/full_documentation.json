@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/11/2020 10:27:33 AM"
+    "x-generation-date": "11/11/2020 1:54:02 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -2781,6 +2781,517 @@
           "Centers"
         ],
         "parameters": []
+      }
+    },
+    "/favourites": {
+      "get": {
+        "deprecated": false,
+        "description": "Find all the favourites's records",
+        "responses": {
+          "200": {
+            "description": "Retrieve favourites document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Favourites"
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Favourites"
+        ],
+        "parameters": [
+          {
+            "name": "_limit",
+            "in": "query",
+            "required": false,
+            "description": "Maximum number of results possible",
+            "schema": {
+              "type": "integer"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_sort",
+            "in": "query",
+            "required": false,
+            "description": "Sort according to a specific field.",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_start",
+            "in": "query",
+            "required": false,
+            "description": "Skip a specific number of entries (especially useful for pagination)",
+            "schema": {
+              "type": "integer"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "=",
+            "in": "query",
+            "required": false,
+            "description": "Get entries that matches exactly your input",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_ne",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are not equals to something",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_lt",
+            "in": "query",
+            "required": false,
+            "description": "Get record that are lower than a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_lte",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are lower than or equal to a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_gt",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are greater than a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_gte",
+            "in": "query",
+            "required": false,
+            "description": "Get records that are greater than  or equal a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_contains",
+            "in": "query",
+            "required": false,
+            "description": "Get records that contains a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_containss",
+            "in": "query",
+            "required": false,
+            "description": "Get records that contains (case sensitive) a value",
+            "schema": {
+              "type": "string"
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_in",
+            "in": "query",
+            "required": false,
+            "description": "Get records that matches any value in the array of values",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "deprecated": false
+          },
+          {
+            "name": "_nin",
+            "in": "query",
+            "required": false,
+            "description": "Get records that doesn't match any value in the array of values",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "deprecated": false
+          }
+        ]
+      },
+      "post": {
+        "deprecated": false,
+        "description": "Create a new favourites record",
+        "responses": {
+          "200": {
+            "description": "Retrieve favourites document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favourites"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Favourites"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFavourites"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/favourites/count": {
+      "get": {
+        "deprecated": false,
+        "description": "Retrieve the numver of favourites documents",
+        "responses": {
+          "200": {
+            "description": "Retrieve favourites document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Favourites"
+        ],
+        "parameters": []
+      }
+    },
+    "/favourites/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "Find one favourites record",
+        "responses": {
+          "200": {
+            "description": "Retrieve favourites document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favourites"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Favourites"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "put": {
+        "deprecated": false,
+        "description": "Update a single favourites record",
+        "responses": {
+          "200": {
+            "description": "Retrieve favourites document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Favourites"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Favourites"
+        ],
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewFavourites"
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      "delete": {
+        "deprecated": false,
+        "description": "Delete a single favourites record",
+        "responses": {
+          "200": {
+            "description": "deletes a single favourites based on the ID supplied",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int64"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Favourites"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     },
     "/membership-benefits": {
@@ -10895,6 +11406,12 @@
                   "type": "string"
                 }
               },
+              "favourite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -10947,6 +11464,12 @@
               },
               "partner": {
                 "type": "string"
+              },
+              "favourites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -11063,6 +11586,12 @@
                 "type": "string"
               },
               "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "favourites": {
                 "type": "array",
                 "items": {
                   "type": "string"
@@ -11419,6 +11948,12 @@
                     "type": "string"
                   }
                 },
+                "favourites": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -11456,6 +11991,40 @@
               },
               "updated_by": {
                 "type": "string"
+              }
+            }
+          },
+          "favourites": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "offer": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "boolean"
+                },
+                "membership_plan": {
+                  "type": "string"
+                },
+                "center": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
@@ -11594,6 +12163,392 @@
             }
           },
           "partner": {
+            "type": "string"
+          },
+          "favourites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "created_by": {
+            "type": "string"
+          },
+          "updated_by": {
+            "type": "string"
+          }
+        }
+      },
+      "Favourites": {
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "notification_token": {
+                "type": "string"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "favourites": {
+                "type": "string"
+              },
+              "dob": {
+                "type": "string"
+              },
+              "birthday": {
+                "type": "datetime"
+              },
+              "platform": {
+                "type": "string"
+              },
+              "app_version": {
+                "type": "string"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "favourite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "offer": {
+            "required": [
+              "id",
+              "country",
+              "city",
+              "status",
+              "featured_img"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title_en": {
+                "type": "string"
+              },
+              "title_ar": {
+                "type": "string"
+              },
+              "discount": {
+                "type": "integer"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "country": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "expiry": {
+                "type": "datetime"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "latitude": {
+                "type": "number"
+              },
+              "longitude": {
+                "type": "number"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "actual_price": {
+                "type": "integer"
+              },
+              "discounted_price": {
+                "type": "integer"
+              },
+              "place": {
+                "type": "string"
+              },
+              "featured_img": {
+                "type": "string"
+              },
+              "center": {
+                "type": "string"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "favourites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "membership_plan": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "price": {
+                "type": "number"
+              },
+              "expiry": {
+                "type": "datetime"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "center": {
+            "required": [
+              "id",
+              "title_en",
+              "title_ar",
+              "featured_img",
+              "place"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title_en": {
+                "type": "string"
+              },
+              "title_ar": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
+              },
+              "featured_img": {
+                "type": "string"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "place": {
+                "type": "string"
+              },
+              "city": {
+                "type": "string"
+              },
+              "homescreen": {
+                "type": "boolean"
+              },
+              "offers": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "partner": {
+                "type": "string"
+              },
+              "favourites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "created_by": {
+            "required": [
+              "id",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "firstname": {
+                "type": "string"
+              },
+              "lastname": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "registrationToken": {
+                "type": "string"
+              },
+              "isActive": {
+                "type": "boolean"
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "blocked": {
+                "type": "boolean"
+              }
+            }
+          },
+          "updated_by": {
+            "required": [
+              "id",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "firstname": {
+                "type": "string"
+              },
+              "lastname": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "registrationToken": {
+                "type": "string"
+              },
+              "isActive": {
+                "type": "boolean"
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "blocked": {
+                "type": "boolean"
+              }
+            }
+          }
+        }
+      },
+      "NewFavourites": {
+        "properties": {
+          "user": {
+            "type": "string"
+          },
+          "offer": {
+            "type": "string"
+          },
+          "status": {
+            "type": "boolean"
+          },
+          "membership_plan": {
+            "type": "string"
+          },
+          "center": {
             "type": "string"
           },
           "created_by": {
@@ -12198,6 +13153,12 @@
                   "type": "string"
                 }
               },
+              "favourite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -12740,6 +13701,12 @@
               "partner": {
                 "type": "string"
               },
+              "favourites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -12781,6 +13748,40 @@
                 },
                 "discount": {
                   "type": "number"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "favourites": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "offer": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "boolean"
+                },
+                "membership_plan": {
+                  "type": "string"
+                },
+                "center": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -12957,6 +13958,12 @@
               "type": "string"
             }
           },
+          "favourites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "created_by": {
             "type": "string"
           },
@@ -13029,6 +14036,12 @@
               },
               "partner": {
                 "type": "string"
+              },
+              "favourites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               },
               "created_by": {
                 "type": "string"
@@ -13557,6 +14570,12 @@
               "partner": {
                 "type": "string"
               },
+              "favourites": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
               "created_by": {
                 "type": "string"
               },
@@ -14011,6 +15030,12 @@
                     "type": "string"
                   }
                 },
+                "favourite": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
                 "created_by": {
                   "type": "string"
                 },
@@ -14279,6 +15304,40 @@
               }
             }
           },
+          "favourite": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "offer": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "boolean"
+                },
+                "membership_plan": {
+                  "type": "string"
+                },
+                "center": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -14434,6 +15493,12 @@
               "type": "string"
             }
           },
+          "favourite": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
           "created_by": {
             "type": "string"
           },
@@ -14475,6 +15540,9 @@
     },
     {
       "name": "Centers"
+    },
+    {
+      "name": "Favourites"
     },
     {
       "name": "Membership"
