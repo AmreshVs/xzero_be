@@ -54,10 +54,10 @@ module.exports = {
         }
         let limitBecom = parseInt(membership.limit) - parseInt(iteratecount);
         if (limitBecom >= 0) {
-            await strapi.query("membership").update({ user: user_id }, {
+          await strapi.query("membership").update({ user: user_id }, {
             limit: limitBecom
           }
-        );
+          );
           return centeradd;
         }
         return centeradd;
@@ -127,25 +127,33 @@ module.exports = {
 
   //Return the center home data including the counts, center offers and the recent users
   async getCenterHomeData(center_id) {
-    let CenterOffers = await strapi.query("center-check-in").find({ center: center_id, _limit: 5, _sort: "id:desc" });
-    if(CenterOffers === null) {
-           CenterOffers = await strapi.query("offers").find({ center: center_id, _limit: 5, _sort: "id:desc" });
-    }
-    let centers = await strapi.query("centers").findOne({ id: center_id });
-    let RecentUsers = await strapi
-      .query("center-check-in")
-      .find({ center: center_id, _limit: 10, _sort: "id:desc" });
-    //queries to get the count
+    let recentUsers = [];
+    let offers = [];
+    let centerOffers = await strapi.query("center-check-in").find({ center: center_id, _limit: 5, _sort: "id:desc" });
 
+    if (centerOffers === null) {
+      offers = await strapi.query("offers").find({ center: center_id, _limit: 5, _sort: "id:desc" });
+    }
+    else {
+      centerOffers.map((center) => {
+        offers.push(center.offer_id);
+        recentUsers.push({ ...center.user_id, checked_in: center.created_at });
+        return null;
+      });
+    }
+
+    let center = await strapi.query("centers").findOne({ id: center_id });
+
+    //queries to get the count
     let offersCount = await strapi.query("center-check-in").count({ center: center_id });
     let visitsCount = await strapi.query("center-check-in").count({ center: center_id });
     let counts = { offers: offersCount, visits: visitsCount, favourites: 123 };
 
     return {
       counts: counts,
-      offers: CenterOffers,
-      recentUsers: RecentUsers,
-      center: centers
+      offers: offers,
+      recentUsers: recentUsers,
+      center: center
     };
   },
 };
