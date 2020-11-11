@@ -5,24 +5,63 @@
  * to customize this controller
  */
 
+
+
 module.exports = {
-    async AddFavourites(user, offer, plan) {
-      if(user === null && offer === null) {
+    async AddAsFavourite(user, offer, center, plan) {
+      if(user === null && offer === null && center === null) {
           return false;
       }
-      
-       centeradd = await strapi
-            .query("favourites")
-            .create({
-              user_id: user_id,
-              center: center_id,
-              offer_id: offerArray[index],
-              transaction_id: trid,
-              discounted_price: offersavailable.discounted_price,
-              original_price: offersavailable.actual_price,
-              discount: offersavailable.discount,
-            });
+     //checking user is exist or not
+     let favouriteExist = await strapi.query("favourites").findOne({ user: user, center: center }); 
+     let userFavourites  = '';
+     if(favouriteExist!==null) {
+        userFavourites = favouriteExist.favourites;
+     }
+     
+     let newFavourites = [];
+     let status = false;
+     let pop = false;
+     // Pop
+    if (userFavourites !== null && userFavourites.includes(',')) {
+        userFavourites.replace(' ', '');
+        newFavourites = userFavourites.split(',');
+      }
+  
+      if (userFavourites !== null && userFavourites !== '' && !userFavourites.includes(',')) {
+        newFavourites.push(String(userFavourites));
+      }
+  
+      if (newFavourites.includes(String(offer))) {
+        newFavourites = newFavourites.filter((fav) => Number(fav) !== Number(offer));
+        pop = true
+      }
+  
+      if (pop === false) {
+        // Push
+        if (userFavourites === null || userFavourites === '') {
+            newFavourites.push(Number(offer));
+          status = true;
+        }
+        else {
+            newFavourites.push(Number(offer));
+            status = true;
+        }
+      }
 
-       
-    }
+      if(favouriteExist !== null) {
+        await strapi.query('favourites').update({ user: user, center: center }, {
+            favourites: newFavourites.length > 1 ? newFavourites.join(',') : (pop === false || newFavourites.length === 1) ? newFavourites[0] : null
+          });
+          status = true;
+      } else {
+        await strapi.query('favourites').create({ user: user, center: center, favourites: newFavourites[0] });
+          status = true;
+      }
+      
+      return {
+        status
+      }
+
+    }   
 };

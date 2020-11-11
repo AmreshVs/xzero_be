@@ -1,14 +1,14 @@
 
 module.exports = {
-    mutation: 'AddFavourites(user: Int!, offer: Int!, plan: Int):Favourites!',
+    mutation: 'AddAsFavourite(user: Int!, offer: Int!, center: Int!, plan: Int): JSON!',
     resolver: {
         Mutation: {
-            AddFavourites: {
+            AddAsFavourite: {
                 description: 'adding the favourite offers',
-                policies: ['plugins::users-permissions.isAuthenticated'],
+                //policies: ['plugins::users-permissions.isAuthenticated'],
                 resolverOf: 'application::favourites.favourites.create',
                 resolver: async (obj, options, ctx) => {
-                    return await strapi.api['favourites'].controllers['favourites'].AddFavourites(options.user, options.offer, options.plan);
+                    return await strapi.api['favourites'].controllers['favourites'].AddAsFavourite(options.user, options.offer, options.center, options.plan);
                 }
             }
         }

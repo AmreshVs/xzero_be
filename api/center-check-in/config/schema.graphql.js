@@ -32,7 +32,7 @@ module.exports = {
   query: `
     getMembershipInfo(user_id: Int, where: JSON):GetMembershipInfo!,
     getuserCheckinDetails(user_id: Int, where: JSON):OfferandUserInfo!, 
-    CenterCheckinByTransactionId(user_id: Int!, transaction_id: String!):UserandCenterCheckin!,
+    CenterCheckinByTransactionId( transaction_id: String!):UserandCenterCheckin!,
     RecentUsers(center_id: Int!): [CenterCheckIn]!,
     getOffers(center_id: Int!): [Offers]!,
     UserCheckins(center_id: Int!): [CenterCheckIn],
@@ -70,7 +70,7 @@ module.exports = {
         description: 'Return center chckins by transactionid',
         resolverOf: 'application::center-check-in.center-check-in.find',
         resolver: async (obj, options, ctx) => {
-          return await strapi.api['center-check-in'].controllers['center-check-in'].CenterCheckinByTransactionId(options.user_id, options.transaction_id);
+          return await strapi.api['center-check-in'].controllers['center-check-in'].CenterCheckinByTransactionId(options.transaction_id);
         },
       },
       RecentUsers: {

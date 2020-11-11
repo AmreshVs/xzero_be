@@ -778,12 +778,6 @@
                     "type": "string"
                   }
                 },
-                "favourites": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "created_by": {
                   "type": "string"
                 },
@@ -837,9 +831,6 @@
                 "user": {
                   "type": "string"
                 },
-                "offer": {
-                  "type": "string"
-                },
                 "status": {
                   "type": "boolean"
                 },
@@ -847,6 +838,9 @@
                   "type": "string"
                 },
                 "center": {
+                  "type": "string"
+                },
+                "favourites": {
                   "type": "string"
                 },
                 "created_by": {

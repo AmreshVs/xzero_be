@@ -14,10 +14,6 @@
       "model": "user",
       "via": "favourite"
     },
-    "offer": {
-      "model": "offers",
-      "via": "favourites"
-    },
     "status": {
       "type": "boolean"
     },
@@ -27,6 +23,9 @@
     "center": {
       "model": "centers",
       "via": "favourites"
+    },
+    "favourites": {
+      "type": "text"
     }
   }
 }
