@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "favourites",
+  "info": {
+    "name": "Favourites"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user",
+      "via": "favourite"
+    },
+    "offer": {
+      "model": "offers",
+      "via": "favourites"
+    },
+    "status": {
+      "type": "boolean"
+    },
+    "membership_plan": {
+      "model": "membership-plans"
+    },
+    "center": {
+      "model": "centers",
+      "via": "favourites"
+    }
+  }
+}
