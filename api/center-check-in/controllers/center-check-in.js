@@ -147,7 +147,8 @@ module.exports = {
     //queries to get the count
     let offersCount = await strapi.query("center-check-in").count({ center: center_id });
     let visitsCount = await strapi.query("center-check-in").count({ center: center_id });
-    let counts = { offers: offersCount, visits: visitsCount, favourites: 123 };
+    let favouritesCount = await strapi.query("favourites").count({ center: center_id });
+    let counts = { offers: offersCount, visits: visitsCount, favourites: favouritesCount };
 
     return {
       counts: counts,
