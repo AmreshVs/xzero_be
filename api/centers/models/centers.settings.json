@@ -61,6 +61,10 @@
     "partner": {
       "via": "center",
       "model": "partner"
+    },
+    "favourites": {
+      "via": "center",
+      "collection": "favourites"
     }
   }
 }

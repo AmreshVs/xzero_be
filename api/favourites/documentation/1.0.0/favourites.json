@@ -1,18 +1,18 @@
 {
   "paths": {
-    "/partners": {
+    "/favourites": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find all the favourites's records",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve favourites document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Partner"
+                    "$ref": "#/components/schemas/Favourites"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Partner"
+          "Favourites"
         ],
         "parameters": [
           {
@@ -194,14 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new record",
+        "description": "Create a new favourites record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve favourites document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Partner"
+                  "$ref": "#/components/schemas/Favourites"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Partner"
+          "Favourites"
         ],
         "requestBody": {
           "description": "",
@@ -247,20 +247,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPartner"
+                "$ref": "#/components/schemas/NewFavourites"
               }
             }
           }
         }
       }
     },
-    "/partners/count": {
+    "/favourites/count": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Retrieve the numver of favourites documents",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve favourites document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -306,22 +306,22 @@
         },
         "summary": "",
         "tags": [
-          "Partner"
+          "Favourites"
         ],
         "parameters": []
       }
     },
-    "/partners/{id}": {
+    "/favourites/{id}": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find one favourites record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve favourites document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Partner"
+                  "$ref": "#/components/schemas/Favourites"
                 }
               }
             }
@@ -359,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Partner"
+          "Favourites"
         ],
         "parameters": [
           {
@@ -376,14 +376,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a record",
+        "description": "Update a single favourites record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve favourites document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Partner"
+                  "$ref": "#/components/schemas/Favourites"
                 }
               }
             }
@@ -421,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Partner"
+          "Favourites"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPartner"
+                "$ref": "#/components/schemas/NewFavourites"
               }
             }
           }
@@ -449,10 +449,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a record",
+        "description": "Delete a single favourites record",
         "responses": {
           "200": {
-            "description": "deletes a single record based on the ID supplied",
+            "description": "deletes a single favourites based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Partner"
+          "Favourites"
         ],
         "parameters": [
           {
@@ -514,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Partner": {
+      "Favourites": {
         "required": [
           "id"
         ],
@@ -522,17 +522,120 @@
           "id": {
             "type": "string"
           },
-          "username": {
-            "type": "string"
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "notification_token": {
+                "type": "string"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "favourites": {
+                "type": "string"
+              },
+              "dob": {
+                "type": "string"
+              },
+              "birthday": {
+                "type": "datetime"
+              },
+              "platform": {
+                "type": "string"
+              },
+              "app_version": {
+                "type": "string"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "favourite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
-          "email": {
-            "type": "string"
+          "status": {
+            "type": "boolean"
           },
-          "password": {
-            "type": "string"
-          },
-          "mobile_number": {
-            "type": "integer"
+          "membership_plan": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "price": {
+                "type": "number"
+              },
+              "expiry": {
+                "type": "datetime"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "center": {
             "required": [
@@ -593,6 +696,9 @@
               }
             }
           },
+          "favourites": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -683,21 +789,21 @@
           }
         }
       },
-      "NewPartner": {
+      "NewFavourites": {
         "properties": {
-          "username": {
+          "user": {
             "type": "string"
           },
-          "email": {
-            "type": "string"
+          "status": {
+            "type": "boolean"
           },
-          "password": {
+          "membership_plan": {
             "type": "string"
-          },
-          "mobile_number": {
-            "type": "integer"
           },
           "center": {
+            "type": "string"
+          },
+          "favourites": {
             "type": "string"
           },
           "created_by": {
@@ -712,7 +818,7 @@
   },
   "tags": [
     {
-      "name": "Partner"
+      "name": "Favourites"
     }
   ]
 }

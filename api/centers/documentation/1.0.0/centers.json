@@ -812,6 +812,40 @@
               }
             }
           },
+          "favourites": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "boolean"
+                },
+                "membership_plan": {
+                  "type": "string"
+                },
+                "center": {
+                  "type": "string"
+                },
+                "favourites": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -948,6 +982,12 @@
           },
           "partner": {
             "type": "string"
+          },
+          "favourites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           },
           "created_by": {
             "type": "string"

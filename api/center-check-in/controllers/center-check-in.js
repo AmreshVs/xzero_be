@@ -94,7 +94,7 @@ module.exports = {
   },
 
   //Return the center check in by transaction id
-  async CenterCheckinByTransactionId(user_id, transaction_id) {
+  async CenterCheckinByTransactionId(transaction_id) {
     let centercheckins = await strapi
       .query("center-check-in")
       .find({ transaction_id: transaction_id });
