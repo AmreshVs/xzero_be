@@ -127,21 +127,20 @@ module.exports = {
 
   //Return the center home data including the counts, center offers and the recent users
   async getCenterHomeData(center_id) {
-    let CenterOffers = await strapi.query("offers").find({ center: center_id });
+    let CenterOffers = await strapi.query("center-check-in").find({ center: center_id, _limit: 5, _sort: "id:desc" });
+    if(CenterOffers === null) {
+           CenterOffers = await strapi.query("offers").find({ center: center_id, _limit: 5, _sort: "id:desc" });
+    }
     let centers = await strapi.query("centers").findOne({ id: center_id });
     let RecentUsers = await strapi
       .query("center-check-in")
       .find({ center: center_id, _limit: 10, _sort: "id:desc" });
     //queries to get the count
 
-    let offersCount = await strapi.query("center-check-in").count({ center: center_id, _limit: 5, _sort: "id:desc" });
-    if(offersCount === null) {
-        let offersCount = await strapi.query("offers").count({ center: center_id, _limit: 5, _sort: "id:desc" });
-    }
-
-
+    let offersCount = await strapi.query("center-check-in").count({ center: center_id });
     let visitsCount = await strapi.query("center-check-in").count({ center: center_id });
     let counts = { offers: offersCount, visits: visitsCount, favourites: 123 };
+
     return {
       counts: counts,
       offers: CenterOffers,
