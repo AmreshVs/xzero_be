@@ -44,12 +44,8 @@ module.exports = {
       center: Centers
     }
 
-    type CenterCheckinConfirm {
-      msg: JSON!,
-      centercheckin: CenterCheckIn
-    }
   `,
-  mutation: `Checkin(user_id: Int!, center_id: Int!, offers : String!): CenterCheckinConfirm`,
+  mutation: `Checkin(user_id: Int!, center_id: Int!, offers : String!): CenterCheckIn`,
 
   query: `
     getMembershipInfo(serial: String!, where: JSON):GetMembershipInfo!,

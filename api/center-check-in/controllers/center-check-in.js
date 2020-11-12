@@ -59,7 +59,6 @@ module.exports = {
             limit: limitBecom
           }
           );
-          return {msg: "success", centercheckin: centeradd }
           return centeradd;
         }
         return centeradd;
@@ -70,7 +69,6 @@ module.exports = {
         console.log(
           `You have chosen offers which exceeds the limit. Your limit is ${limit}, To add more please renew the membership or`
         );
-        return {msg: "success", centercheckin: centeradd }
       }
     } else {
       console.log("empty params");
