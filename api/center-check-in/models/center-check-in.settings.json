@@ -25,7 +25,8 @@
       "type": "string"
     },
     "discounted_price": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "original_price": {
       "type": "integer"

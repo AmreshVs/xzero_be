@@ -5,16 +5,18 @@ var fs = require("fs");
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
  * to customize this controller
  */
+const _ = require('lodash');
+const { sanitizeEntity } = require('strapi-utils');
 
 async function generateTransactionId() {
-  let trid = Math.random().toString(10).substr(2, 8);
-  let TRNExist = await strapi
+  let trId = Math.random().toString(10).substr(2, 8);
+  let trnExist = await strapi
     .query("center-check-in")
-    .findOne({ transaction_id: trid });
-  if (TRNExist === null) {
-    return trid.toUpperCase();
+    .findOne({ transaction_id: trId });
+  if (trnExist === null) {
+    return trId;
   } else {
-    await generateTRId();
+    await generateTransactionId();
   }
 }
 
@@ -57,6 +59,7 @@ module.exports = {
             limit: limitBecom
           }
           );
+          return {msg: "success", centercheckin: centeradd }
           return centeradd;
         }
         return centeradd;
@@ -67,6 +70,7 @@ module.exports = {
         console.log(
           `You have chosen offers which exceeds the limit. Your limit is ${limit}, To add more please renew the membership or`
         );
+        return {msg: "success", centercheckin: centeradd }
       }
     } else {
       console.log("empty params");
