@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/11/2020 11:03:58 PM"
+    "x-generation-date": "11/12/2020 11:13:55 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -11522,6 +11522,18 @@
               }
             }
           },
+          "transaction_id": {
+            "type": "string"
+          },
+          "discounted_price": {
+            "type": "integer"
+          },
+          "original_price": {
+            "type": "integer"
+          },
+          "discount": {
+            "type": "integer"
+          },
           "offer_id": {
             "required": [
               "id",
@@ -11598,18 +11610,6 @@
                 "type": "string"
               }
             }
-          },
-          "transaction_id": {
-            "type": "string"
-          },
-          "discounted_price": {
-            "type": "integer"
-          },
-          "original_price": {
-            "type": "integer"
-          },
-          "discount": {
-            "type": "integer"
           },
           "created_by": {
             "required": [
@@ -11712,9 +11712,6 @@
           "membership": {
             "type": "string"
           },
-          "offer_id": {
-            "type": "string"
-          },
           "transaction_id": {
             "type": "string"
           },
@@ -11726,6 +11723,9 @@
           },
           "discount": {
             "type": "integer"
+          },
+          "offer_id": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -13141,9 +13141,6 @@
                 "membership": {
                   "type": "string"
                 },
-                "offer_id": {
-                  "type": "string"
-                },
                 "transaction_id": {
                   "type": "string"
                 },
@@ -13155,6 +13152,9 @@
                 },
                 "discount": {
                   "type": "integer"
+                },
+                "offer_id": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -13642,9 +13642,6 @@
                 "membership": {
                   "type": "string"
                 },
-                "offer_id": {
-                  "type": "string"
-                },
                 "transaction_id": {
                   "type": "string"
                 },
@@ -13656,6 +13653,9 @@
                 },
                 "discount": {
                   "type": "integer"
+                },
+                "offer_id": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
@@ -15148,9 +15148,6 @@
                 "membership": {
                   "type": "string"
                 },
-                "offer_id": {
-                  "type": "string"
-                },
                 "transaction_id": {
                   "type": "string"
                 },
@@ -15162,6 +15159,9 @@
                 },
                 "discount": {
                   "type": "integer"
+                },
+                "offer_id": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"

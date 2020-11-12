@@ -84,6 +84,10 @@
     "center": {
       "model": "centers",
       "via": "offers"
+    },
+    "center_check_ins": {
+      "via": "offer_id",
+      "collection": "center-check-in"
     }
   }
 }

@@ -47,7 +47,7 @@ module.exports = {
   mutation: `Checkin(user_id: Int!, center_id: Int!, offers : String!): CenterCheckIn`,
 
   query: `
-    getMembershipInfo(user_id: Int, where: JSON):GetMembershipInfo!,
+    getMembershipInfo(serial: String!, where: JSON):GetMembershipInfo!,
     getuserCheckinDetails(user_id: Int, where: JSON):OfferandUserInfo!, 
     CenterCheckinByTransactionId( transaction_id: String!): UserandCenterCheckin!,
     RecentUsers(center_id: Int!): [CenterCheckIn]!,
@@ -72,7 +72,7 @@ module.exports = {
         description: 'Return the membership with offers',
         resolverOf: 'application::offers.offers.find',
         resolver: async (obj, options, ctx) => {
-          return await strapi.api['center-check-in'].controllers['center-check-in'].getMembershipInfo(options.user_id, options.where || {});
+          return await strapi.api['center-check-in'].controllers['center-check-in'].getMembershipInfo(options.serial, options.where || {});
         },
       },
 

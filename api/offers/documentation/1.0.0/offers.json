@@ -788,9 +788,6 @@
                 "membership": {
                   "type": "string"
                 },
-                "offer_id": {
-                  "type": "string"
-                },
                 "transaction_id": {
                   "type": "string"
                 },
@@ -802,6 +799,9 @@
                 },
                 "discount": {
                   "type": "integer"
+                },
+                "offer_id": {
+                  "type": "string"
                 },
                 "created_by": {
                   "type": "string"
