@@ -74,13 +74,13 @@ module.exports = {
   },
 
   //returning the offers availed and the membership info
-  async getMembershipInfo(user_id, condition) {
+  async getMembershipInfo(serial, condition) {
     let offers = await strapi
       .query("offers")
       .find({ center: condition.center });
     let memberships = await strapi
       .query("membership")
-      .findOne({ user: user_id });
+      .findOne({ serial: serial });
     return { offer: offers, membership: memberships };
   },
 

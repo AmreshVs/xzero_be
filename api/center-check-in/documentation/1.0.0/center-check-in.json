@@ -715,6 +715,18 @@
               }
             }
           },
+          "transaction_id": {
+            "type": "string"
+          },
+          "discounted_price": {
+            "type": "integer"
+          },
+          "original_price": {
+            "type": "integer"
+          },
+          "discount": {
+            "type": "integer"
+          },
           "offer_id": {
             "required": [
               "id",
@@ -791,18 +803,6 @@
                 "type": "string"
               }
             }
-          },
-          "transaction_id": {
-            "type": "string"
-          },
-          "discounted_price": {
-            "type": "integer"
-          },
-          "original_price": {
-            "type": "integer"
-          },
-          "discount": {
-            "type": "integer"
           },
           "created_by": {
             "required": [
@@ -905,9 +905,6 @@
           "membership": {
             "type": "string"
           },
-          "offer_id": {
-            "type": "string"
-          },
           "transaction_id": {
             "type": "string"
           },
@@ -919,6 +916,9 @@
           },
           "discount": {
             "type": "integer"
+          },
+          "offer_id": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
