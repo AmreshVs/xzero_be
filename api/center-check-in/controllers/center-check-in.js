@@ -5,8 +5,6 @@ var fs = require("fs");
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
  * to customize this controller
  */
-const _ = require('lodash');
-const { sanitizeEntity } = require('strapi-utils');
 
 async function generateTransactionId() {
   let trId = Math.random().toString(10).substr(2, 8);
