@@ -568,6 +568,10 @@
           "status": {
             "type": "boolean"
           },
+          "voucher_id": {
+            "type": "integer",
+            "default": 0
+          },
           "created_by": {
             "required": [
               "id",
@@ -674,6 +678,10 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "voucher_id": {
+            "type": "integer",
+            "default": 0
           },
           "created_by": {
             "type": "string"

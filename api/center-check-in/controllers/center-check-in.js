@@ -21,48 +21,48 @@ async function generateTransactionId() {
 module.exports = {
   //insert check-in data and update limit in membership table
   async Checkin(user_id, center_id, offers) {
-    let membership = await strapi.query("membership").findOne({ user: user_id });
-    if (membership === null || new Date() > new Date(membership.expiry)) {
+    let memberShip = await strapi.query("membership").findOne({ user: user_id });
+    if (memberShip === null || new Date() > new Date(memberShip.expiry)) {
       console.log("User not exist or membership expired!");
       return false;
     }
     if (user_id !== null && center_id !== null) {
-      let centeradd;
+      let centerAdd;
       let limit = 0;
-      let iteratecount = 0;
+      let iterateCount = 0;
       let offerArray = offers.split(",");
-      let trid = await generateTransactionId();
-      if (offerArray.length <= membership.limit) {
+      let trId = await generateTransactionId();
+      if (offerArray.length <= memberShip.limit) {
         for (let index = 0; index < offerArray.length; index++) {
           //getting the original price, discounted price, and offer per
-          let offersavailable = await strapi
+          let offersAvailable = await strapi
             .query("offers")
             .findOne({ id: offerArray[index] });
-          centeradd = await strapi
+          centerAdd = await strapi
             .query("center-check-in")
             .create({
               user_id: user_id,
               center: center_id,
               offer_id: offerArray[index],
-              transaction_id: trid,
-              discounted_price: offersavailable.discounted_price,
-              original_price: offersavailable.actual_price,
-              discount: offersavailable.discount,
+              transaction_id: trId,
+              discounted_price: offersAvailable.discounted_price,
+              original_price: offersAvailable.actual_price,
+              discount: offersAvailable.discount,
             });
-          iteratecount = index + 1;
+            iterateCount = index + 1;
         }
-        let limitBecom = parseInt(membership.limit) - parseInt(iteratecount);
+        let limitBecom = parseInt(memberShip.limit) - parseInt(iterateCount);
         if (limitBecom >= 0) {
           await strapi.query("membership").update({ user: user_id }, {
             limit: limitBecom
           }
           );
-          return centeradd;
+          return centerAdd;
         }
-        return centeradd;
+        return centerAdd;
       } else {
-        if (membership.limit > 0) {
-          limit = membership.limit;
+        if (memberShip.limit > 0) {
+          limit = memberShip.limit;
         }
         console.log(
           `You have chosen offers which exceeds the limit. Your limit is ${limit}, To add more please renew the membership or`
@@ -78,10 +78,10 @@ module.exports = {
     let offers = await strapi
       .query("offers")
       .find({ center: condition.center });
-    let memberships = await strapi
+    let memberShips = await strapi
       .query("membership")
       .findOne({ serial: serial });
-    return { offer: offers, membership: memberships };
+    return { offer: offers, membership: memberShips };
   },
 
   //Returning the center check in details for a user
@@ -109,26 +109,26 @@ module.exports = {
 
   //Return the recent users
   async RecentUsers(center_id) {
-    let recentusers = await strapi
+    let recentUsers = await strapi
       .query("center-check-in")
       .find({ center: center_id, _limit: 10, _sort: "id:desc" });
-    return recentusers;
+    return recentUsers;
   },
 
   //Return the offers for a particular center
   async getOffers(center_id) {
-    let offersbycenter = await strapi
+    let offersByCenter = await strapi
       .query("offers")
       .find({ center: center_id, _sort: "id:desc" });
-    return offersbycenter;
+    return offersByCenter;
   },
 
   //Return the usercheckins for a specific center
   async UserCheckins(center_id) {
-    let usercheckinsAvailed = await strapi
+    let userCheckinsAvailed = await strapi
       .query("center-check-in")
       .find({ center: center_id });
-    return usercheckinsAvailed;
+    return userCheckinsAvailed;
   },
 
   //Return the center home data including the counts, center offers and the recent users
@@ -149,7 +149,7 @@ module.exports = {
         return null;
       });
     }
-
+    
     let center = await strapi.query("centers").findOne({ id: center_id });
 
     //queries to get the count
