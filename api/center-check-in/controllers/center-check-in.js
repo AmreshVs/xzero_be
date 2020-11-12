@@ -21,7 +21,9 @@ async function generateTransactionId() {
 module.exports = {
   //insert check-in data and update limit in membership table
   async Checkin(user_id, center_id, offers) {
-    let memberShip = await strapi.query("membership").findOne({ user: user_id });
+    let memberShip = await strapi
+      .query("membership")
+      .findOne({ user: user_id });
     if (memberShip === null || new Date() > new Date(memberShip.expiry)) {
       console.log("User not exist or membership expired!");
       return false;
@@ -38,24 +40,24 @@ module.exports = {
           let offersAvailable = await strapi
             .query("offers")
             .findOne({ id: offerArray[index] });
-          centerAdd = await strapi
-            .query("center-check-in")
-            .create({
-              user_id: user_id,
-              center: center_id,
-              offer_id: offerArray[index],
-              transaction_id: trId,
-              discounted_price: offersAvailable.discounted_price,
-              original_price: offersAvailable.actual_price,
-              discount: offersAvailable.discount,
-            });
-            iterateCount = index + 1;
+          centerAdd = await strapi.query("center-check-in").create({
+            user_id: user_id,
+            center: center_id,
+            offer_id: offerArray[index],
+            transaction_id: trId,
+            discounted_price: offersAvailable.discounted_price,
+            original_price: offersAvailable.actual_price,
+            discount: offersAvailable.discount,
+          });
+          iterateCount = index + 1;
         }
         let limitBecom = parseInt(memberShip.limit) - parseInt(iterateCount);
         if (limitBecom >= 0) {
-          await strapi.query("membership").update({ user: user_id }, {
-            limit: limitBecom
-          }
+          await strapi.query("membership").update(
+            { user: user_id },
+            {
+              limit: limitBecom,
+            }
           );
           return centerAdd;
         }
@@ -101,7 +103,12 @@ module.exports = {
     let userInfo = centerCheckIns[0].user_id;
 
     await centerCheckIns.map((center) => {
-      offers.push({ ...center.offer_id, discounted_price: center.discounted_price, original_price: center.original_price, discount: center.discount });
+      offers.push({
+        ...center.offer_id,
+        discounted_price: center.discounted_price,
+        original_price: center.original_price,
+        discount: center.discount,
+      });
     });
 
     return { userInfo, offers };
@@ -135,34 +142,53 @@ module.exports = {
   async getCenterHomeData(center_id) {
     let recentUsers = [];
     let offers = [];
-    let centerOffers = await strapi.query("center-check-in").find({ center: center_id, _limit: 5, _sort: "id:desc" });
+    let centerOffers = await strapi
+      .query("center-check-in")
+      .find({ center: center_id, _limit: 5, _sort: "id:desc" });
 
     if (centerOffers === null) {
-      offers = await strapi.query("offers").find({ center: center_id, _limit: 5, _sort: "id:desc" });
-    }
-    else {
+      offers = await strapi
+        .query("offers")
+        .find({ center: center_id, _limit: 5, _sort: "id:desc" });
+    } else {
       centerOffers.map((center) => {
         if (center.offer_id !== null) {
           offers.push(center.offer_id);
         }
-        recentUsers.push({ ...center.user_id, transaction_id: center.transaction_id, checked_in: center.created_at });
+        recentUsers.push({
+          ...center.user_id,
+          transaction_id: center.transaction_id,
+          checked_in: center.created_at,
+        });
         return null;
       });
     }
-    
+
     let center = await strapi.query("centers").findOne({ id: center_id });
 
     //queries to get the count
-    let offersCount = await strapi.query("center-check-in").count({ center: center_id });
-    let visitsCount = await strapi.query("center-check-in").count({ center: center_id });
-    let favouritesCount = await strapi.query("favourites").count({ center: center_id });
-    let counts = { offers: offersCount, visits: visitsCount, favourites: favouritesCount };
+    let offersCount = await strapi
+      .query("center-check-in")
+      .count({ center: center_id });
+    let visitsCount = await strapi
+      .query("center-check-in")
+      .count({ center: center_id });
+    let favouritesCount = await strapi
+      .query("favourites")
+      .count({ center: center_id });
+    let counts = {
+      offers: offersCount,
+      visits: visitsCount,
+      favourites: favouritesCount,
+    };
 
     return {
       counts: counts,
-      offers: [...new Map(offers.map(item => [item['id'], item])).values()].slice(0, 4),
+      offers: [
+        ...new Map(offers.map((item) => [item["id"], item])).values(),
+      ].slice(0, 4),
       recentUsers: recentUsers,
-      center: center
+      center: center,
     };
   },
 };
