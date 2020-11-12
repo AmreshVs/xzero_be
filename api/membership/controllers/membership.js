@@ -50,7 +50,7 @@ async function sendMail(user_id, status) {
 }
 
 module.exports = {
-  async generateMembership(user_id, amount, plan) {
+  async generateMembership(user_id, plan) {
     function generateMemberId(length) {
       var randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       var result = "";
@@ -119,7 +119,7 @@ module.exports = {
       offerLimit = packageSelected.limit;
       totalOfferLimit = parseInt(packageSelected.limit) + parseInt(checkUserExist.limit);
     }
-
+    
     if (checkUserExist === null) {
       let expiryDate = new Date();
       let serial = await generateSerial();
@@ -142,7 +142,7 @@ module.exports = {
           serial: serial,
           type: "New",
           expiry: expiryDate,
-          amount,
+          amount: packageSelected.price,
         });
       //sendMail(user_id, "create");
       return membership;
@@ -158,7 +158,7 @@ module.exports = {
           serial: serial,
           type: "Renewal",
           expiry: checkUserExist.expiry,
-          amount,
+          amount: packageSelected.price,
         });
       let membership = await strapi
         .query("membership")
