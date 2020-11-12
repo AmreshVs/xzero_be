@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gifts",
+  "info": {
+    "name": "gift"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "membership_plan": {
+      "model": "membership-plans"
+    },
+    "expiry": {
+      "type": "datetime"
+    },
+    "gifttype": {
+      "type": "string"
+    },
+    "status": {
+      "type": "boolean"
+    }
+  }
+}
