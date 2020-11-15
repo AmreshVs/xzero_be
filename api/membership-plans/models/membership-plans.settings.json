@@ -26,10 +26,6 @@
     },
     "status": {
       "type": "boolean"
-    },
-    "gift": {
-      "via": "membership_plan",
-      "model": "gift"
     }
   }
 }

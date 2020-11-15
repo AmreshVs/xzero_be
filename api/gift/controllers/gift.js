@@ -10,25 +10,23 @@ Array.prototype.random = function () {
 }
 
 module.exports = {
+    //Select random gift from a set
     async SelectRandomUsersForGift() {
         let gifts =  await strapi.query("gift").find();
         let GiftSelectedUserIds = [];
-        let GiftEligibleUserIds = [45343,3,31231232,9898];
-        GiftSelectedUserIds = _.sampleSize(GiftEligibleUserIds, 2);
+        let GiftEligibleUserIds = [23, 67, 34, 44,56,322, 67,23,12,456, 98, 45,32,12,45,56,87];
+        GiftSelectedUserIds = _.sampleSize(GiftEligibleUserIds, 2);  
         return {GiftSelectedUserIds}
     },
 
-
+    // manages gift availed users
     async GiftAvail(user_id, giftid,) {
         console.log("Here");  return false;
-
     },
 
+    //function to get gift added
     async GetGiftAdded(condtion) {
         let gifts =  await strapi.query("gift").find();
         return gifts;
-
-        
     }
-
 };

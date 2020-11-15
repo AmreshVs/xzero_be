@@ -629,9 +629,6 @@
               "status": {
                 "type": "boolean"
               },
-              "gift": {
-                "type": "string"
-              },
               "created_by": {
                 "type": "string"
               },

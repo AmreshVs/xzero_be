@@ -553,40 +553,6 @@
           "status": {
             "type": "boolean"
           },
-          "gift": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "quantity": {
-                "type": "integer"
-              },
-              "membership_plan": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "created_by": {
             "required": [
               "id",
@@ -696,9 +662,6 @@
           },
           "status": {
             "type": "boolean"
-          },
-          "gift": {
-            "type": "string"
           },
           "created_by": {
             "type": "string"
