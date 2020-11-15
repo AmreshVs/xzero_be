@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gift_availeds",
+  "info": {
+    "name": "Gift Availed"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "gift_id": {
+      "model": "gift"
+    },
+    "membership_plan": {
+      "model": "membership-plans"
+    },
+    "status": {
+      "type": "boolean"
+    }
+  }
+}

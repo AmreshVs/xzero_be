@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/gift-availeds",
+      "handler": "gift-availed.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/gift-availeds/count",
+      "handler": "gift-availed.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/gift-availeds/:id",
+      "handler": "gift-availed.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/gift-availeds",
+      "handler": "gift-availed.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/gift-availeds/:id",
+      "handler": "gift-availed.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/gift-availeds/:id",
+      "handler": "gift-availed.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
