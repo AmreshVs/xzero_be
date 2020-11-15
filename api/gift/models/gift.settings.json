@@ -12,21 +12,21 @@
     "name": {
       "type": "string"
     },
-    "membership_plan": {
-      "model": "membership-plans"
-    },
     "expiry": {
       "type": "datetime"
-    },
-    "gifttype": {
-      "type": "string"
     },
     "status": {
       "type": "boolean"
     },
-    "voucher_id": {
-      "type": "integer",
-      "default": 0
+    "quantity": {
+      "type": "integer"
+    },
+    "membership_plan": {
+      "model": "membership-plans",
+      "via": "gift"
+    },
+    "type": {
+      "model": "gift-type"
     }
   }
 }

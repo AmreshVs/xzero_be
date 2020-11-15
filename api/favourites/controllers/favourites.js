@@ -5,8 +5,6 @@
  * to customize this controller
  */
 
-
-
 module.exports = {
     async AddAsFavourite(user, offer, center, plan) {
       let FavouriteStatus = 1;
@@ -63,6 +61,5 @@ module.exports = {
       return {
         status
       }
-
     }   
 };
