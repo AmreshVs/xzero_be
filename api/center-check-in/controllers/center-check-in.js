@@ -146,7 +146,7 @@ module.exports = {
       .query("center-check-in")
       .find({ center: center_id, _limit: 5, _sort: "id:desc" });
       
-      centerOffers =null;
+  
     if (centerOffers === null) {
       offers = await strapi
         .query("offers")
