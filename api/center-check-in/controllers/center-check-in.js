@@ -168,11 +168,20 @@ module.exports = {
 
     //queries to get the count
     let offersCount = await strapi
-      .query("center-check-in")
+      .query("offers")
       .count({ center: center_id });
-    let visitsCount = await strapi
-      .query("center-check-in")
-      .count({ center: center_id });
+
+      const result = await strapi
+        .query('center-check-in')
+        .model.query(qb => {
+          qb.where('center', center_id), qb.distinct('user_id');
+        })
+        .fetchAll();
+
+      const fields = result.toJSON();
+
+      let visitsCount = fields.length;
+      
     let favouritesCount = await strapi
       .query("favourites")
       .count({ center: center_id });

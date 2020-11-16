@@ -11,6 +11,9 @@
   "attributes": {
     "Name": {
       "type": "string"
+    },
+    "prize_count": {
+      "type": "integer"
     }
   }
 }

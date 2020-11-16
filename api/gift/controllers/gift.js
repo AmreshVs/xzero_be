@@ -5,19 +5,32 @@
  * to customize this controller
  */
 const _ = require('lodash');
+
 Array.prototype.random = function () {
     return this[Math.floor((Math.random()*this.length))];
+}
+
+function arrayColumn(array, columnName) {
+    return array.map(function(value,index) {
+        return value[columnName];
+    })
 }
 
 module.exports = {
     //Select random gift from a set
     async SelectRandomUsersForGift() {
-        let gifts =  await strapi.query("gift").find();
         let GiftSelectedUserIds = [];
-        let GiftEligibleUserIds = [23, 67, 34, 44,56,322, 67,23,12,456, 98, 45,32,12,45,56,87];
-        GiftSelectedUserIds = _.sampleSize(GiftEligibleUserIds, 2);  
+        let gifts =  await strapi.query("gift").find(); 
+        console.log(gifts); return false;
+        let user = await strapi.query('user', 'users-permissions').find();
+        let userids = await arrayColumn(user, 'id');
+        let GiftEligibleUserIds = userids;
+        GiftSelectedUserIds = _.sampleSize(GiftEligibleUserIds, 2);
+        //console.log(GiftSelectedUserIds); return false;
+
         return {GiftSelectedUserIds}
     },
+    
 
     // manages gift availed users
     async GiftAvail(user_id, giftid,) {
