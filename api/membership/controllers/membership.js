@@ -80,7 +80,7 @@ module.exports = {
 
     //Generate the QRCode image 
     async function createQR(userInfo) {
-      let fileName = "qr_" + userInfo.userid + ".png";
+      let fileName = "/qrcode/qr_" + userInfo.userid + ".png";
       let logo = "../../../public/qrcode/logo.png";
       let serial = JSON.stringify({ serial: userInfo.serial });
       await brandedQRCode
@@ -95,7 +95,7 @@ module.exports = {
           },
         })
         .then((buf) => {
-          fs.writeFile("public/qrcode/" + fileName, buf, (err) => {
+          fs.writeFile("public" + fileName, buf, (err) => {
             if (err) {
               throw err;
             }
