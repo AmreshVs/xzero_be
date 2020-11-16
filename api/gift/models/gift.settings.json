@@ -26,6 +26,9 @@
     },
     "type": {
       "model": "gift-type"
+    },
+    "name_ar": {
+      "type": "string"
     }
   }
 }

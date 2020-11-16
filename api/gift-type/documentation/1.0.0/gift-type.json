@@ -535,11 +535,14 @@
           "id": {
             "type": "string"
           },
-          "Name": {
+          "name": {
             "type": "string"
           },
           "prize_count": {
             "type": "integer"
+          },
+          "name_ar": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -633,11 +636,14 @@
       },
       "NewGift-type": {
         "properties": {
-          "Name": {
+          "name": {
             "type": "string"
           },
           "prize_count": {
             "type": "integer"
+          },
+          "name_ar": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

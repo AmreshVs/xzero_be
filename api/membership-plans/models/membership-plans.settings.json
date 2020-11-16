@@ -13,7 +13,7 @@
       "type": "string"
     },
     "description": {
-      "type": "string"
+      "type": "text"
     },
     "price": {
       "type": "decimal"
@@ -26,6 +26,12 @@
     },
     "status": {
       "type": "boolean"
+    },
+    "name_ar": {
+      "type": "string"
+    },
+    "description_ar": {
+      "type": "text"
     }
   }
 }

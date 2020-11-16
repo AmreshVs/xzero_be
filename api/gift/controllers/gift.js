@@ -21,8 +21,10 @@ module.exports = {
     async SelectRandomUsersForGift() {
         let GiftSelectedUserIds = [];
         let gifts =  await strapi.query("gift").find(); 
-        console.log(gifts); return false;
+    
         let user = await strapi.query('user', 'users-permissions').find();
+
+
         let userids = await arrayColumn(user, 'id');
         let GiftEligibleUserIds = userids;
         GiftSelectedUserIds = _.sampleSize(GiftEligibleUserIds, 2);

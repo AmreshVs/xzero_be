@@ -553,6 +553,12 @@
           "status": {
             "type": "boolean"
           },
+          "name_ar": {
+            "type": "string"
+          },
+          "description_ar": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -662,6 +668,12 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "name_ar": {
+            "type": "string"
+          },
+          "description_ar": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

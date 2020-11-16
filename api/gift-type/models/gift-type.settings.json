@@ -9,11 +9,14 @@
     "timestamps": true
   },
   "attributes": {
-    "Name": {
+    "name": {
       "type": "string"
     },
     "prize_count": {
       "type": "integer"
+    },
+    "name_ar": {
+      "type": "string"
     }
   }
 }

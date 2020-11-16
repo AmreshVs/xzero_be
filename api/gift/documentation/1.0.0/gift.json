@@ -560,6 +560,12 @@
               "status": {
                 "type": "boolean"
               },
+              "name_ar": {
+                "type": "string"
+              },
+              "description_ar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -576,11 +582,14 @@
               "id": {
                 "type": "string"
               },
-              "Name": {
+              "name": {
                 "type": "string"
               },
               "prize_count": {
                 "type": "integer"
+              },
+              "name_ar": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -589,6 +598,9 @@
                 "type": "string"
               }
             }
+          },
+          "name_ar": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -698,6 +710,9 @@
             "type": "string"
           },
           "type": {
+            "type": "string"
+          },
+          "name_ar": {
             "type": "string"
           },
           "created_by": {

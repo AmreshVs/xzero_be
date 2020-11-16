@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/16/2020 11:38:13 AM"
+    "x-generation-date": "11/16/2020 1:31:19 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -13843,6 +13843,12 @@
               "status": {
                 "type": "boolean"
               },
+              "name_ar": {
+                "type": "string"
+              },
+              "description_ar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -14140,6 +14146,9 @@
               "type": {
                 "type": "string"
               },
+              "name_ar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -14173,6 +14182,12 @@
               },
               "status": {
                 "type": "boolean"
+              },
+              "name_ar": {
+                "type": "string"
+              },
+              "description_ar": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -14305,11 +14320,14 @@
           "id": {
             "type": "string"
           },
-          "Name": {
+          "name": {
             "type": "string"
           },
           "prize_count": {
             "type": "integer"
+          },
+          "name_ar": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -14403,11 +14421,14 @@
       },
       "NewGift-type": {
         "properties": {
-          "Name": {
+          "name": {
             "type": "string"
           },
           "prize_count": {
             "type": "integer"
+          },
+          "name_ar": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -14463,6 +14484,12 @@
               "status": {
                 "type": "boolean"
               },
+              "name_ar": {
+                "type": "string"
+              },
+              "description_ar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -14479,11 +14506,14 @@
               "id": {
                 "type": "string"
               },
-              "Name": {
+              "name": {
                 "type": "string"
               },
               "prize_count": {
                 "type": "integer"
+              },
+              "name_ar": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -14492,6 +14522,9 @@
                 "type": "string"
               }
             }
+          },
+          "name_ar": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -14601,6 +14634,9 @@
             "type": "string"
           },
           "type": {
+            "type": "string"
+          },
+          "name_ar": {
             "type": "string"
           },
           "created_by": {
@@ -14877,6 +14913,12 @@
           "status": {
             "type": "boolean"
           },
+          "name_ar": {
+            "type": "string"
+          },
+          "description_ar": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -14986,6 +15028,12 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "name_ar": {
+            "type": "string"
+          },
+          "description_ar": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
