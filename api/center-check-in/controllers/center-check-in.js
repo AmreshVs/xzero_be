@@ -145,7 +145,8 @@ module.exports = {
     let centerOffers = await strapi
       .query("center-check-in")
       .find({ center: center_id, _limit: 5, _sort: "id:desc" });
-
+      
+      centerOffers =null;
     if (centerOffers === null) {
       offers = await strapi
         .query("offers")
@@ -180,7 +181,7 @@ module.exports = {
 
       const fields = result.toJSON();
 
-      let visitsCount = fields.length;
+    let visitsCount = fields.length;
       
     let favouritesCount = await strapi
       .query("favourites")
@@ -194,7 +195,7 @@ module.exports = {
     return {
       counts: counts,
       offers: [
-        ...new Map(offers.map((item) => [item["id"], item])).values(),
+        ...new Map(offers.map((item) => [item["center"], item])).values(),
       ].slice(0, 4),
       recentUsers: recentUsers,
       center: center,
