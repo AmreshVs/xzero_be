@@ -15,7 +15,7 @@
     "name_ar": {
       "type": "string"
     },
-    "image": {
+    "featured_img": {
       "model": "file",
       "via": "related",
       "allowedTypes": [

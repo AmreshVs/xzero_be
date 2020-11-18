@@ -9,10 +9,10 @@
     "timestamps": true
   },
   "attributes": {
-    "name": {
+    "name_en": {
       "type": "string"
     },
-    "description": {
+    "desc_en": {
       "type": "text"
     },
     "price": {
@@ -30,7 +30,7 @@
     "name_ar": {
       "type": "string"
     },
-    "description_ar": {
+    "desc_ar": {
       "type": "text"
     }
   }

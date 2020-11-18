@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/18/2020 11:48:44 AM"
+    "x-generation-date": "11/18/2020 12:59:43 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -13825,10 +13825,10 @@
               "id": {
                 "type": "string"
               },
-              "name": {
+              "name_en": {
                 "type": "string"
               },
-              "description": {
+              "desc_en": {
                 "type": "string"
               },
               "price": {
@@ -13846,7 +13846,7 @@
               "name_ar": {
                 "type": "string"
               },
-              "description_ar": {
+              "desc_ar": {
                 "type": "string"
               },
               "created_by": {
@@ -14128,10 +14128,10 @@
               "id": {
                 "type": "string"
               },
-              "name": {
+              "name_en": {
                 "type": "string"
               },
-              "description": {
+              "desc_en": {
                 "type": "string"
               },
               "price": {
@@ -14149,7 +14149,7 @@
               "name_ar": {
                 "type": "string"
               },
-              "description_ar": {
+              "desc_ar": {
                 "type": "string"
               },
               "created_by": {
@@ -14177,7 +14177,7 @@
               "name_ar": {
                 "type": "string"
               },
-              "image": {
+              "featured_img": {
                 "type": "string"
               },
               "expiry": {
@@ -14479,7 +14479,7 @@
           "name_ar": {
             "type": "string"
           },
-          "image": {
+          "featured_img": {
             "required": [
               "id",
               "name",
@@ -14582,10 +14582,10 @@
               "id": {
                 "type": "string"
               },
-              "name": {
+              "name_en": {
                 "type": "string"
               },
-              "description": {
+              "desc_en": {
                 "type": "string"
               },
               "price": {
@@ -14603,7 +14603,7 @@
               "name_ar": {
                 "type": "string"
               },
-              "description_ar": {
+              "desc_ar": {
                 "type": "string"
               },
               "created_by": {
@@ -14998,10 +14998,10 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "name_en": {
             "type": "string"
           },
-          "description": {
+          "desc_en": {
             "type": "string"
           },
           "price": {
@@ -15019,7 +15019,7 @@
           "name_ar": {
             "type": "string"
           },
-          "description_ar": {
+          "desc_ar": {
             "type": "string"
           },
           "created_by": {
@@ -15114,10 +15114,10 @@
       },
       "NewMembership-plans": {
         "properties": {
-          "name": {
+          "name_en": {
             "type": "string"
           },
-          "description": {
+          "desc_en": {
             "type": "string"
           },
           "price": {
@@ -15135,7 +15135,7 @@
           "name_ar": {
             "type": "string"
           },
-          "description_ar": {
+          "desc_ar": {
             "type": "string"
           },
           "created_by": {
