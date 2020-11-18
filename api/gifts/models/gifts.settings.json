@@ -40,6 +40,12 @@
     },
     "status": {
       "type": "boolean"
+    },
+    "desc_en": {
+      "type": "text"
+    },
+    "desc_ar": {
+      "type": "text"
     }
   }
 }

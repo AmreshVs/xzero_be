@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/18/2020 11:30:43 AM"
+    "x-generation-date": "11/18/2020 11:47:10 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -14195,6 +14195,12 @@
               "status": {
                 "type": "boolean"
               },
+              "desc_en": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -14202,6 +14208,18 @@
                 "type": "string"
               }
             }
+          },
+          "name_en": {
+            "type": "string"
+          },
+          "name_ar": {
+            "type": "string"
+          },
+          "desc_en": {
+            "type": "string"
+          },
+          "desc_ar": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -14307,6 +14325,18 @@
           "gift_id": {
             "type": "string"
           },
+          "name_en": {
+            "type": "string"
+          },
+          "name_ar": {
+            "type": "string"
+          },
+          "desc_en": {
+            "type": "string"
+          },
+          "desc_ar": {
+            "type": "string"
+          },
           "created_by": {
             "type": "string"
           },
@@ -14325,9 +14355,6 @@
           },
           "name_en": {
             "type": "string"
-          },
-          "prize_count": {
-            "type": "integer"
           },
           "name_ar": {
             "type": "string"
@@ -14426,9 +14453,6 @@
         "properties": {
           "name_en": {
             "type": "string"
-          },
-          "prize_count": {
-            "type": "integer"
           },
           "name_ar": {
             "type": "string"
@@ -14539,9 +14563,6 @@
               "name_en": {
                 "type": "string"
               },
-              "prize_count": {
-                "type": "integer"
-              },
               "name_ar": {
                 "type": "string"
               },
@@ -14595,6 +14616,12 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "desc_en": {
+            "type": "string"
+          },
+          "desc_ar": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -14708,6 +14735,12 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "desc_en": {
+            "type": "string"
+          },
+          "desc_ar": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

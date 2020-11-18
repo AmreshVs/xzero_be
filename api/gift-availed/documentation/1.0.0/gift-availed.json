@@ -688,6 +688,12 @@
               "status": {
                 "type": "boolean"
               },
+              "desc_en": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -695,6 +701,18 @@
                 "type": "string"
               }
             }
+          },
+          "name_en": {
+            "type": "string"
+          },
+          "name_ar": {
+            "type": "string"
+          },
+          "desc_en": {
+            "type": "string"
+          },
+          "desc_ar": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -798,6 +816,18 @@
             "type": "boolean"
           },
           "gift_id": {
+            "type": "string"
+          },
+          "name_en": {
+            "type": "string"
+          },
+          "name_ar": {
+            "type": "string"
+          },
+          "desc_en": {
+            "type": "string"
+          },
+          "desc_ar": {
             "type": "string"
           },
           "created_by": {

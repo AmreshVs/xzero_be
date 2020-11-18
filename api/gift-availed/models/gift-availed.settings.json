@@ -21,6 +21,18 @@
     },
     "gift_id": {
       "model": "gifts"
+    },
+    "name_en": {
+      "type": "string"
+    },
+    "name_ar": {
+      "type": "string"
+    },
+    "desc_en": {
+      "type": "text"
+    },
+    "desc_ar": {
+      "type": "text"
     }
   }
 }

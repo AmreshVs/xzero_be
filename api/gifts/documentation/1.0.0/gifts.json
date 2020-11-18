@@ -612,9 +612,6 @@
               "name_en": {
                 "type": "string"
               },
-              "prize_count": {
-                "type": "integer"
-              },
               "name_ar": {
                 "type": "string"
               },
@@ -668,6 +665,12 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "desc_en": {
+            "type": "string"
+          },
+          "desc_ar": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -781,6 +784,12 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "desc_en": {
+            "type": "string"
+          },
+          "desc_ar": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

@@ -12,9 +12,6 @@
     "name_en": {
       "type": "string"
     },
-    "prize_count": {
-      "type": "integer"
-    },
     "name_ar": {
       "type": "string"
     }
