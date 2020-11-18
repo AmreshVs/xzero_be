@@ -6,72 +6,56 @@
  */
 const _ = require('lodash');
 
-Array.prototype.random = function () {
-    return this[Math.floor((Math.random()*this.length))];
-}
-
-function arrayColumn(array, columnName) {
-    return array.map(function(value,index) {
-        return value[columnName];
-    })
-}
-
 module.exports = {
-    async GenerateGift(user_id) {
-        let datas = [];
-        let alluserIds = [];
-        let eligibleUsers;
-        let memberShipPlan =  await strapi.query('membership-plans').find();
-        for (var key in memberShipPlan) {
-            if(memberShipPlan[key]['id']>0) {
-            let memberArray = await strapi.query('membership').find({ package: memberShipPlan[key]['id']});
-            let giftArray = await strapi.query('gifts').find({membership_plans: memberShipPlan[key]['id']});
+    async GenerateGift(user_id, plan_id) {
+        let finalList;
+        if(plan_id>0) {
+            let memberArray = await strapi.query('membership').find({ package: plan_id, user: user_id});
+            let giftArray = await strapi.query('gifts').find({membership_plans: plan_id});
             if(memberArray!==null && giftArray!==null) {
-                let luckyUser = [].concat(...memberArray.map(x => x.user));
-                luckyUser.map(g=> alluserIds.push(g.id) );
-                let selectedGroupIds = luckyUser.map(g=> g.id );
-                let selectGifts =  [].concat(...giftArray.map(x => x.id));
-                 datas[memberShipPlan[key]['name']] =  { users:  selectedGroupIds };
-                 datas[memberShipPlan[key]['name']]['gifts'] = selectGifts;
-                eligibleUsers =  alluserIds;
-             }
-        }
-        }
+                let luckyUser = [].concat(...memberArray.map(member => member.user));
+                //let selectedUserIds = luckyUser.map(member=> member.id );
+                let selectGifts =  [].concat(...giftArray.map(gift => gift.id));
+                let shuffledGifts = _.shuffle(selectGifts.concat(Array(100-selectGifts.length).fill(0)));
+                
+                //let GiftSelectedUser =  _.sampleSize(selectedUserIds, 1);
 
-        let GiftSelectedUser =  _.sampleSize(eligibleUsers, 1);
-        let finalList = [];
-        
-        for (var impKey in GiftSelectedUser) {
-            for(var key in memberShipPlan){
-                if(memberShipPlan[key]['id']>0) {
-                    if(datas[memberShipPlan[key]['name']].users.includes(GiftSelectedUser[impKey])) {
-                        let giftsGotId = _.sampleSize(datas[memberShipPlan[key]['name']].gifts,1)
-                        var giftName =  await strapi.query('gifts').findOne({id: giftsGotId[0]});
-                        let giftIds =  {user: GiftSelectedUser[impKey], giftsGotId: giftsGotId[0], giftName: giftName.name_en, plan: memberShipPlan[key]['name'], planId: memberShipPlan[key]['id'] };
-                       
-                        finalList.push(giftIds);
-                        await strapi
+                //if(selectedUserIds.includes(GiftSelectedUser[0])) {
+                    let giftsGotId = _.sampleSize(shuffledGifts,1)
+                    let giftGotDetails =  await strapi.query('gifts').findOne({id: giftsGotId[0]});
+                    if( giftsGotId[0]>0 && giftGotDetails.quantity!==null && giftGotDetails.quantity>0){
+                        let giftDetails =  {user: user_id, giftsGotId: giftsGotId[0], giftGotName: giftGotDetails.name_en, featured_img: giftGotDetails.featured_img, planId: plan_id };
+                        //finalList.push(giftDetails);
+                         await strapi
                         .query("gift-availed")
                         .create({
-                        membership_plan: giftIds.planId,
-                        user: giftIds.user,
-                        gift_id: giftIds.giftsGotId[0],
-                        status: 1,
+                            membership_plan: giftDetails.planId,
+                            user: giftDetails.user,
+                            gift_id: giftDetails.giftsGotId,
+                            status: 1,
                         });
+                        let gift = await strapi
+                        .query("gifts")
+                        .update(
+                          { id: giftsGotId[0] },
+                          {
+                            quantity: giftGotDetails.quantity-1,
+                          }
+                        );
+                        return {gift:gift} 
+                    } else {
+                        //finalList.push({user:"Better Luck Next Time"});
+                        let gift = {}; 
+                        return {gift:gift} 
+
                     }
-                   
-                }   
-            }
+                // } else {
+                //     finalList.push({user:"Better Luck Next Time"});
+                // }               
+             }
         }
-       
-        return {giftDetails:finalList}
     },
     
-    // manages gift availed users
-    async GiftAvail(user_id, giftid,) {
-        console.log("Here");  return false;
-    },
-
     //function to get gift added
     async AvailableGifts(condtion) {
         let gifts =  await strapi.query("gifts").find({status: 1, membership_plans: condtion.membership_plan });

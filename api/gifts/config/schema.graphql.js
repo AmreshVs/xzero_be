@@ -1,9 +1,9 @@
 
 module.exports = {
 
-    definition: 'type UserGifts { gifts: [Gifts], AvailedGifts: [GiftAvailed] }',
+    definition: 'type UserGifts { gifts: [Gifts], AvailedGifts: [GiftAvailed] }, type GiftsPayLoad { gift: JSON! }',
 
-    mutation: `GenerateGift(user_id: Int!): JSON!,  GiftAvail: JSON!`,
+    mutation: `GenerateGift(user_id: Int!, plan_id: Int!): GiftsPayLoad!`,
     query: 'AvailableGifts(where: JSON): UserGifts!',
     resolver: {
     Mutation: {
@@ -12,7 +12,7 @@ module.exports = {
         policies: [],
         resolverOf: 'application::gifts.gifts.find',
         resolver: async (obj, options, ctx) => {
-        return await strapi.api.gifts.controllers.gifts.GenerateGift(options.user_id||'');
+        return await strapi.api.gifts.controllers.gifts.GenerateGift(options.user_id,options.plan_id);
         }
     }
     },
