@@ -8,24 +8,16 @@ const _ = require('lodash');
 
 module.exports = {
     async GenerateGift(user_id, plan_id) {
-        let finalList;
-        if(plan_id>0) {
+        if(plan_id>0 && user_id!=null) {
             let memberArray = await strapi.query('membership').find({ package: plan_id, user: user_id});
             let giftArray = await strapi.query('gifts').find({membership_plans: plan_id});
             if(memberArray!==null && giftArray!==null) {
-                let luckyUser = [].concat(...memberArray.map(member => member.user));
-                //let selectedUserIds = luckyUser.map(member=> member.id );
                 let selectGifts =  [].concat(...giftArray.map(gift => gift.id));
                 let shuffledGifts = _.shuffle(selectGifts.concat(Array(100-selectGifts.length).fill(0)));
-                
-                //let GiftSelectedUser =  _.sampleSize(selectedUserIds, 1);
-
-                //if(selectedUserIds.includes(GiftSelectedUser[0])) {
                     let giftsGotId = _.sampleSize(shuffledGifts,1)
                     let giftGotDetails =  await strapi.query('gifts').findOne({id: giftsGotId[0]});
                     if( giftsGotId[0]>0 && giftGotDetails.quantity!==null && giftGotDetails.quantity>0){
                         let giftDetails =  {user: user_id, giftsGotId: giftsGotId[0], giftGotName: giftGotDetails.name_en, featured_img: giftGotDetails.featured_img, planId: plan_id };
-                        //finalList.push(giftDetails);
                          await strapi
                         .query("gift-availed")
                         .create({
@@ -42,18 +34,15 @@ module.exports = {
                             quantity: giftGotDetails.quantity-1,
                           }
                         );
-                        return {gift:gift} 
+                        return {won: "true", gift:gift} 
                     } else {
-                        //finalList.push({user:"Better Luck Next Time"});
                         let gift = {}; 
-                        return {gift:gift} 
+                        return {won: "false", gift:gift} 
 
-                    }
-                // } else {
-                //     finalList.push({user:"Better Luck Next Time"});
-                // }               
+                    }              
              }
         }
+        return null
     },
     
     //function to get gift added
