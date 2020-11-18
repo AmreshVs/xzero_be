@@ -1,0 +1,45 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gifts",
+  "info": {
+    "name": "Gifts"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "name_ar": {
+      "type": "string"
+    },
+    "image": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "expiry": {
+      "type": "datetime"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "gift_type": {
+      "model": "gift-type"
+    },
+    "membership_plans": {
+      "collection": "membership-plans"
+    },
+    "status": {
+      "type": "boolean"
+    }
+  }
+}

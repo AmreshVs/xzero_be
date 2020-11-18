@@ -13,14 +13,14 @@
       "plugin": "users-permissions",
       "model": "user"
     },
-    "gift_id": {
-      "model": "gift"
-    },
     "membership_plan": {
       "model": "membership-plans"
     },
     "status": {
       "type": "boolean"
+    },
+    "gift_id": {
+      "model": "gifts"
     }
   }
 }
