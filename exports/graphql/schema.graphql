@@ -2124,7 +2124,7 @@ type Mutation {
   deleteUser(input: deleteUserInput): deleteUserPayload
   Checkin(user_id: Int!, center_id: Int!, offers: String!): CenterCheckIn
   AddAsFavourite(user: Int!, offer: Int!, center: Int!, plan: Int): JSON!
-  GenerateGift(user_id: Int!, plan_id: Int!): GiftsPayLoad!
+  GenerateGift(user_id: Int!): GiftsPayLoad!
   generateMembership(user_id: ID!, plan: Int!): Membership!
   addFavourite(user_id: Int!, offer_id: Int!): JSON!
   partnerLogin(input: PartnerLoginInput!): PartnerLoginPaylod!

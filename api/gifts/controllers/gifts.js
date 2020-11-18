@@ -9,15 +9,15 @@ const _ = require('lodash');
 module.exports = {
   async GenerateGift(user_id) {
     if (user_id) {
-      let memberArray = await strapi.query('membership').find({ user: user_id });
-      let giftArray = await strapi.query('gifts').find({ membership_plans: plan_id });
+      let memberArray = await strapi.query('membership').findOne({ user: user_id });
+      let giftArray = await strapi.query('gifts').find({ membership_plans: memberArray.package });
       if (memberArray !== null && giftArray !== null) {
         let selectGifts = [].concat(...giftArray.map(gift => gift.id));
         let shuffledGifts = _.shuffle(selectGifts.concat(Array(100 - selectGifts.length).fill(0)));
         let giftsGotId = _.sampleSize(shuffledGifts, 1)
         let giftGotDetails = await strapi.query('gifts').findOne({ id: giftsGotId[0] });
         if (giftsGotId[0] > 0 && giftGotDetails.quantity !== null && giftGotDetails.quantity > 0) {
-          let giftDetails = { user: user_id, giftsGotId: giftsGotId[0], giftGotName: giftGotDetails.name_en, featured_img: giftGotDetails.featured_img, planId: plan_id };
+          let giftDetails = { user: user_id, giftsGotId: giftsGotId[0], giftGotName: giftGotDetails.name_en, featured_img: giftGotDetails.featured_img, planId: memberArray.package };
           await strapi
             .query("gift-availed")
             .create({
