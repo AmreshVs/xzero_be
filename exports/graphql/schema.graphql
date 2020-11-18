@@ -1525,7 +1525,7 @@ type GiftsGroupBy {
 
 type GiftsPayLoad {
   won: JSON!
-  gift: Gifts!
+  gift: Gifts
 }
 
 type GiftType {

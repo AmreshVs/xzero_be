@@ -36,13 +36,10 @@ module.exports = {
             );
           return { won: true, gift: gift }
         } else {
-          let gift = {};
-          return { won: false, gift: gift }
-
+          return { won: false }
         }
       }
     }
-    return null
   },
 
   //function to get gift added
