@@ -1,7 +1,7 @@
 
 module.exports = {
 
-    definition: 'type UserGifts { gifts: [Gifts], AvailedGifts: [GiftAvailed] }, type GiftsPayLoad {won:JSON! gift: JSON! }',
+    definition: 'type UserGifts { gifts: [Gifts], AvailedGifts: [GiftAvailed] }, type GiftsPayLoad {won:JSON! gift: Gifts! }',
 
     mutation: `GenerateGift(user_id: Int!, plan_id: Int!): GiftsPayLoad!`,
     query: 'AvailableGifts(where: JSON): UserGifts!',

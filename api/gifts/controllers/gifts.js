@@ -34,10 +34,10 @@ module.exports = {
                             quantity: giftGotDetails.quantity-1,
                           }
                         );
-                        return {won: "true", gift:gift} 
+                        return {won: true, gift:gift} 
                     } else {
                         let gift = {}; 
-                        return {won: "false", gift:gift} 
+                        return {won: false, gift:gift} 
 
                     }              
              }
