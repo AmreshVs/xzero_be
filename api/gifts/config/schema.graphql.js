@@ -1,28 +1,28 @@
 
 module.exports = {
 
-    definition: 'type UserGifts { gifts: [Gifts], giftavailed: [GiftAvailed] }',
+    definition: 'type UserGifts { gifts: [Gifts], AvailedGifts: [GiftAvailed] }',
 
-    mutation: `SelectRandomUsersForGift(user_id: Int!): JSON!,  GiftAvail: JSON!`,
-    query: 'GetGiftAdded(where: JSON): UserGifts!',
+    mutation: `GenerateGift(user_id: Int!): JSON!,  GiftAvail: JSON!`,
+    query: 'AvailableGifts(where: JSON): UserGifts!',
     resolver: {
     Mutation: {
-        SelectRandomUsersForGift: {
+      GenerateGift: {
         description: 'Select users for gift',
         policies: [],
         resolverOf: 'application::gifts.gifts.find',
         resolver: async (obj, options, ctx) => {
-        return await strapi.api.gifts.controllers.gifts.SelectRandomUsersForGift(options.user_id||'');
+        return await strapi.api.gifts.controllers.gifts.GenerateGift(options.user_id||'');
         }
     }
     },
 
     Query: {
-        GetGiftAdded: {
+      AvailableGifts: {
           description: 'Return the gifts',
           resolverOf: 'application::gifts.gifts.find',
           resolver: async (obj, options, ctx) => {
-            return await strapi.api.gifts.controllers.gifts.GetGiftAdded(options.where || {});
+            return await strapi.api.gifts.controllers.gifts.AvailableGifts(options.where || {});
           },
         },
       },

@@ -17,7 +17,7 @@ function arrayColumn(array, columnName) {
 }
 
 module.exports = {
-    async SelectRandomUsersForGift(user_id) {
+    async GenerateGift(user_id) {
         let datas = [];
         let alluserIds = [];
         let eligibleUsers;
@@ -73,9 +73,9 @@ module.exports = {
     },
 
     //function to get gift added
-    async GetGiftAdded(condtion) {
-        let gifts =  await strapi.query("gifts").find({status: 1});
+    async AvailableGifts(condtion) {
+        let gifts =  await strapi.query("gifts").find({status: 1, membership_plans: condtion.membership_plan });
         let giftAvailed = await strapi.query("gift-availed").find(condtion);
-        return {gifts: gifts, giftavailed: giftAvailed };
+        return {gifts: gifts, AvailedGifts: giftAvailed };
     }
 };
