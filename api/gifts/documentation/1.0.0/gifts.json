@@ -522,7 +522,7 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "name_en": {
             "type": "string"
           },
           "name_ar": {
@@ -609,7 +609,7 @@
               "id": {
                 "type": "string"
               },
-              "name": {
+              "name_en": {
                 "type": "string"
               },
               "prize_count": {
@@ -761,7 +761,7 @@
       },
       "NewGifts": {
         "properties": {
-          "name": {
+          "name_en": {
             "type": "string"
           },
           "name_ar": {

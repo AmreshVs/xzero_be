@@ -535,7 +535,7 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "name_en": {
             "type": "string"
           },
           "prize_count": {
@@ -636,7 +636,7 @@
       },
       "NewGift-type": {
         "properties": {
-          "name": {
+          "name_en": {
             "type": "string"
           },
           "prize_count": {

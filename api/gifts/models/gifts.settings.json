@@ -9,7 +9,7 @@
     "timestamps": true
   },
   "attributes": {
-    "name": {
+    "name_en": {
       "type": "string"
     },
     "name_ar": {

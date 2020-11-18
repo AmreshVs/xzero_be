@@ -47,7 +47,7 @@ module.exports = {
                     if(datas[memberShipPlan[key]['name']].users.includes(GiftSelectedUser[impKey])) {
                         let giftsGotId = _.sampleSize(datas[memberShipPlan[key]['name']].gifts,1)
                         var giftName =  await strapi.query('gifts').findOne({id: giftsGotId[0]});
-                        let giftIds =  {user: GiftSelectedUser[impKey], giftsGotId: giftsGotId[0], giftName: giftName.name, plan: memberShipPlan[key]['name'], planId: memberShipPlan[key]['id'] };
+                        let giftIds =  {user: GiftSelectedUser[impKey], giftsGotId: giftsGotId[0], giftName: giftName.name_en, plan: memberShipPlan[key]['name'], planId: memberShipPlan[key]['id'] };
                        
                         finalList.push(giftIds);
                         await strapi

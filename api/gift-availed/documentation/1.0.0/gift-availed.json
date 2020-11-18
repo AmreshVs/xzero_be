@@ -664,7 +664,7 @@
               "id": {
                 "type": "string"
               },
-              "name": {
+              "name_en": {
                 "type": "string"
               },
               "name_ar": {
