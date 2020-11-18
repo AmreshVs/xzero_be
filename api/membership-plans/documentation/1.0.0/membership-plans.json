@@ -535,10 +535,10 @@
           "id": {
             "type": "string"
           },
-          "name": {
+          "name_en": {
             "type": "string"
           },
-          "description": {
+          "desc_en": {
             "type": "string"
           },
           "price": {
@@ -556,7 +556,7 @@
           "name_ar": {
             "type": "string"
           },
-          "description_ar": {
+          "desc_ar": {
             "type": "string"
           },
           "created_by": {
@@ -651,10 +651,10 @@
       },
       "NewMembership-plans": {
         "properties": {
-          "name": {
+          "name_en": {
             "type": "string"
           },
-          "description": {
+          "desc_en": {
             "type": "string"
           },
           "price": {
@@ -672,7 +672,7 @@
           "name_ar": {
             "type": "string"
           },
-          "description_ar": {
+          "desc_ar": {
             "type": "string"
           },
           "created_by": {
