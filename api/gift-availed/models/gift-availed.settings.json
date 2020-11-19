@@ -16,9 +16,6 @@
     "membership_plan": {
       "model": "membership-plans"
     },
-    "enabled": {
-      "type": "boolean"
-    },
     "gift_id": {
       "model": "gifts"
     },
@@ -44,6 +41,9 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "status": {
+      "type": "boolean"
     }
   }
 }

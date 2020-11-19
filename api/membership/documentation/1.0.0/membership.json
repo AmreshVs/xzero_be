@@ -690,6 +690,12 @@
               }
             }
           },
+          "is_gift_generated": {
+            "type": "boolean"
+          },
+          "gift_generated_date": {
+            "type": "datetime"
+          },
           "created_by": {
             "required": [
               "id",
@@ -809,6 +815,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "is_gift_generated": {
+            "type": "boolean"
+          },
+          "gift_generated_date": {
+            "type": "datetime"
           },
           "created_by": {
             "type": "string"

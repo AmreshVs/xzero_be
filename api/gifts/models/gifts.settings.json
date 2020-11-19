@@ -38,14 +38,14 @@
     "membership_plans": {
       "collection": "membership-plans"
     },
-    "enabled": {
-      "type": "boolean"
-    },
     "desc_en": {
       "type": "text"
     },
     "desc_ar": {
       "type": "text"
+    },
+    "status": {
+      "type": "boolean"
     }
   }
 }

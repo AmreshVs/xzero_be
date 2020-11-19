@@ -663,14 +663,14 @@
               }
             }
           },
-          "enabled": {
-            "type": "boolean"
-          },
           "desc_en": {
             "type": "string"
           },
           "desc_ar": {
             "type": "string"
+          },
+          "status": {
+            "type": "boolean"
           },
           "created_by": {
             "required": [
@@ -782,14 +782,14 @@
           "membership_plans": {
             "type": "string"
           },
-          "enabled": {
-            "type": "boolean"
-          },
           "desc_en": {
             "type": "string"
           },
           "desc_ar": {
             "type": "string"
+          },
+          "status": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"

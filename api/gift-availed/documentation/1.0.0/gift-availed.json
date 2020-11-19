@@ -653,9 +653,6 @@
               }
             }
           },
-          "enabled": {
-            "type": "boolean"
-          },
           "gift_id": {
             "required": [
               "id"
@@ -685,14 +682,14 @@
               "membership_plans": {
                 "type": "string"
               },
-              "enabled": {
-                "type": "boolean"
-              },
               "desc_en": {
                 "type": "string"
               },
               "desc_ar": {
                 "type": "string"
+              },
+              "status": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -780,6 +777,9 @@
                 "type": "string"
               }
             }
+          },
+          "status": {
+            "type": "boolean"
           },
           "created_by": {
             "required": [
@@ -879,9 +879,6 @@
           "membership_plan": {
             "type": "string"
           },
-          "enabled": {
-            "type": "boolean"
-          },
           "gift_id": {
             "type": "string"
           },
@@ -896,6 +893,9 @@
           },
           "desc_ar": {
             "type": "string"
+          },
+          "status": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"

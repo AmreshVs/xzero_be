@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/19/2020 1:15:07 PM"
+    "x-generation-date": "11/19/2020 3:12:45 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -13073,6 +13073,12 @@
                   "type": "string"
                 }
               },
+              "is_gift_generated": {
+                "type": "boolean"
+              },
+              "gift_generated_date": {
+                "type": "datetime"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -14160,9 +14166,6 @@
               }
             }
           },
-          "enabled": {
-            "type": "boolean"
-          },
           "gift_id": {
             "required": [
               "id"
@@ -14192,14 +14195,14 @@
               "membership_plans": {
                 "type": "string"
               },
-              "enabled": {
-                "type": "boolean"
-              },
               "desc_en": {
                 "type": "string"
               },
               "desc_ar": {
                 "type": "string"
+              },
+              "status": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -14287,6 +14290,9 @@
                 "type": "string"
               }
             }
+          },
+          "status": {
+            "type": "boolean"
           },
           "created_by": {
             "required": [
@@ -14386,9 +14392,6 @@
           "membership_plan": {
             "type": "string"
           },
-          "enabled": {
-            "type": "boolean"
-          },
           "gift_id": {
             "type": "string"
           },
@@ -14403,6 +14406,9 @@
           },
           "desc_ar": {
             "type": "string"
+          },
+          "status": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"
@@ -14681,14 +14687,14 @@
               }
             }
           },
-          "enabled": {
-            "type": "boolean"
-          },
           "desc_en": {
             "type": "string"
           },
           "desc_ar": {
             "type": "string"
+          },
+          "status": {
+            "type": "boolean"
           },
           "created_by": {
             "required": [
@@ -14800,14 +14806,14 @@
           "membership_plans": {
             "type": "string"
           },
-          "enabled": {
-            "type": "boolean"
-          },
           "desc_en": {
             "type": "string"
           },
           "desc_ar": {
             "type": "string"
+          },
+          "status": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"
@@ -15527,6 +15533,12 @@
               }
             }
           },
+          "is_gift_generated": {
+            "type": "boolean"
+          },
+          "gift_generated_date": {
+            "type": "datetime"
+          },
           "created_by": {
             "required": [
               "id",
@@ -15646,6 +15658,12 @@
             "items": {
               "type": "string"
             }
+          },
+          "is_gift_generated": {
+            "type": "boolean"
+          },
+          "gift_generated_date": {
+            "type": "datetime"
           },
           "created_by": {
             "type": "string"

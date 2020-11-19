@@ -18,8 +18,8 @@
       "model": "centers"
     },
     "membership": {
-      "model": "membership",
-      "via": "center_check_ins"
+      "via": "center_check_ins",
+      "model": "membership"
     },
     "transaction_id": {
       "type": "string"

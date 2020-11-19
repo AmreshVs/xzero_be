@@ -33,8 +33,14 @@
       "default": "0"
     },
     "center_check_ins": {
-      "via": "membership",
-      "collection": "center-check-in"
+      "collection": "center-check-in",
+      "via": "membership"
+    },
+    "is_gift_generated": {
+      "type": "boolean"
+    },
+    "gift_generated_date": {
+      "type": "datetime"
     }
   }
 }

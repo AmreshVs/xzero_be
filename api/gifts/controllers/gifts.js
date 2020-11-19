@@ -35,12 +35,15 @@ module.exports = {
           selectGifts.concat(Array(100-selectGifts.length).fill(0))
         );
         let giftsGotId = _.sampleSize(shuffledGifts, 1);
-        let giftAvailed = await strapi.query("gift-availed").findOne({user: user_id, _sort:'id:desc'});
-        if(giftAvailed)
-        days = DateDiffInDaysWithCurrentDate(giftAvailed.created_at);
-        if(days<7 && giftAvailed!==null) {
+        let giftAvailed = await strapi.query("gift-availed").count({user: user_id});
+
+        if(memberArray.gift_generated_date)
+        days = DateDiffInDaysWithCurrentDate(new Date(memberArray.gift_generated_date));
+
+        if( days<7 && giftAvailed > 0 ) {
           return { disabled: true,  won: false };
         }
+
         let giftGotDetails = await strapi
           .query("gifts")
           .findOne({ id: giftsGotId[0] });
@@ -67,6 +70,14 @@ module.exports = {
               quantity: giftGotDetails.quantity - 1,
             }
           );
+          await strapi.query("membership").update(
+            { id: memberArray.id },
+            {
+              is_gift_generated: true,
+              gift_generated_date: new Date()
+            }
+          );
+
           return { won: true, gift: gift };
         } else {
           return { disabled: false, won: false };
