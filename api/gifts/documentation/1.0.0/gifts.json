@@ -672,6 +672,10 @@
           "status": {
             "type": "boolean"
           },
+          "is_assured": {
+            "type": "boolean",
+            "default": false
+          },
           "created_by": {
             "required": [
               "id",
@@ -790,6 +794,10 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "is_assured": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"

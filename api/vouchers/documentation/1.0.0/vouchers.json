@@ -1,19 +1,18 @@
 {
   "paths": {
-    "/gift-availeds": {
+    "/vouchers": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find all the vouchers's records",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve vouchers document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Vouchers"
                   }
                 }
               }
@@ -52,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Vouchers"
         ],
         "parameters": [
           {
@@ -195,18 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new record",
+        "description": "Create a new vouchers record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve vouchers document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Vouchers"
                 }
               }
             }
@@ -244,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Vouchers"
         ],
         "requestBody": {
           "description": "",
@@ -252,26 +247,26 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewGift-availed"
+                "$ref": "#/components/schemas/NewVouchers"
               }
             }
           }
         }
       }
     },
-    "/gift-availeds/count": {
+    "/vouchers/count": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Retrieve the numver of vouchers documents",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve vouchers document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -311,26 +306,22 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Vouchers"
         ],
         "parameters": []
       }
     },
-    "/gift-availeds/{id}": {
+    "/vouchers/{id}": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find one vouchers record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve vouchers document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Vouchers"
                 }
               }
             }
@@ -368,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Vouchers"
         ],
         "parameters": [
           {
@@ -385,18 +376,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a record",
+        "description": "Update a single vouchers record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve vouchers document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Vouchers"
                 }
               }
             }
@@ -434,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Vouchers"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewGift-availed"
+                "$ref": "#/components/schemas/NewVouchers"
               }
             }
           }
@@ -462,10 +449,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a record",
+        "description": "Delete a single vouchers record",
         "responses": {
           "200": {
-            "description": "deletes a single record based on the ID supplied",
+            "description": "deletes a single vouchers based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -508,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Vouchers"
         ],
         "parameters": [
           {
@@ -527,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Gift-availed": {
+      "Vouchers": {
         "required": [
           "id"
         ],
@@ -535,177 +522,16 @@
           "id": {
             "type": "string"
           },
-          "user": {
-            "required": [
-              "id",
-              "username",
-              "email"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "username": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "role": {
-                "type": "string"
-              },
-              "language": {
-                "type": "string"
-              },
-              "notification_token": {
-                "type": "string"
-              },
-              "mobile_number": {
-                "type": "integer"
-              },
-              "favourites": {
-                "type": "string"
-              },
-              "dob": {
-                "type": "string"
-              },
-              "birthday": {
-                "type": "datetime"
-              },
-              "platform": {
-                "type": "string"
-              },
-              "app_version": {
-                "type": "string"
-              },
-              "center_check_ins": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "favourite": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "membership_plan": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name_en": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "price": {
-                "type": "number"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "limit": {
-                "type": "integer"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "name_ar": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "gift_id": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name_en": {
-                "type": "string"
-              },
-              "name_ar": {
-                "type": "string"
-              },
-              "featured_img": {
-                "type": "string"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "quantity": {
-                "type": "integer"
-              },
-              "gift_type": {
-                "type": "string"
-              },
-              "membership_plans": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "is_assured": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "name_en": {
+          "buy_title_en": {
             "type": "string"
           },
-          "name_ar": {
+          "buy_title_ar": {
+            "type": "string"
+          },
+          "win_title_en": {
+            "type": "string"
+          },
+          "win_title_ar": {
             "type": "string"
           },
           "desc_en": {
@@ -781,8 +607,141 @@
               }
             }
           },
+          "membership_plan": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name_en": {
+                "type": "string"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "price": {
+                "type": "number"
+              },
+              "expiry": {
+                "type": "datetime"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "name_ar": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "product_id": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title_en": {
+                "type": "string"
+              },
+              "title_ar": {
+                "type": "string"
+              },
+              "worth_of": {
+                "type": "number"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "featured_imgs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "assured_gift_id": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name_en": {
+                "type": "string"
+              },
+              "name_ar": {
+                "type": "string"
+              },
+              "featured_img": {
+                "type": "string"
+              },
+              "expiry": {
+                "type": "datetime"
+              },
+              "quantity": {
+                "type": "integer"
+              },
+              "gift_type": {
+                "type": "string"
+              },
+              "membership_plans": {
+                "type": "string"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "is_assured": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "cost": {
+            "type": "number"
+          },
           "status": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "required": [
@@ -874,21 +833,18 @@
           }
         }
       },
-      "NewGift-availed": {
+      "NewVouchers": {
         "properties": {
-          "user": {
+          "buy_title_en": {
             "type": "string"
           },
-          "membership_plan": {
+          "buy_title_ar": {
             "type": "string"
           },
-          "gift_id": {
+          "win_title_en": {
             "type": "string"
           },
-          "name_en": {
-            "type": "string"
-          },
-          "name_ar": {
+          "win_title_ar": {
             "type": "string"
           },
           "desc_en": {
@@ -897,8 +853,21 @@
           "desc_ar": {
             "type": "string"
           },
+          "membership_plan": {
+            "type": "string"
+          },
+          "product_id": {
+            "type": "string"
+          },
+          "assured_gift_id": {
+            "type": "string"
+          },
+          "cost": {
+            "type": "number"
+          },
           "status": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"
@@ -910,5 +879,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Vouchers"
+    }
+  ]
 }

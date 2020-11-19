@@ -46,6 +46,10 @@
     },
     "status": {
       "type": "boolean"
+    },
+    "is_assured": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

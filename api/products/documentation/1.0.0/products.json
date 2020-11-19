@@ -1,19 +1,18 @@
 {
   "paths": {
-    "/gift-availeds": {
+    "/products": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find all the products's records",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve products document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Products"
                   }
                 }
               }
@@ -52,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Products"
         ],
         "parameters": [
           {
@@ -195,18 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new record",
+        "description": "Create a new products record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve products document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Products"
                 }
               }
             }
@@ -244,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Products"
         ],
         "requestBody": {
           "description": "",
@@ -252,26 +247,26 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewGift-availed"
+                "$ref": "#/components/schemas/NewProducts"
               }
             }
           }
         }
       }
     },
-    "/gift-availeds/count": {
+    "/products/count": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Retrieve the numver of products documents",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve products document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -311,26 +306,22 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Products"
         ],
         "parameters": []
       }
     },
-    "/gift-availeds/{id}": {
+    "/products/{id}": {
       "get": {
         "deprecated": false,
-        "description": "",
+        "description": "Find one products record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve products document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Products"
                 }
               }
             }
@@ -368,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Products"
         ],
         "parameters": [
           {
@@ -385,18 +376,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a record",
+        "description": "Update a single products record",
         "responses": {
           "200": {
-            "description": "response",
+            "description": "Retrieve products document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Products"
                 }
               }
             }
@@ -434,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Products"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewGift-availed"
+                "$ref": "#/components/schemas/NewProducts"
               }
             }
           }
@@ -462,10 +449,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a record",
+        "description": "Delete a single products record",
         "responses": {
           "200": {
-            "description": "deletes a single record based on the ID supplied",
+            "description": "deletes a single products based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -508,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Gift-availed"
+          "Products"
         ],
         "parameters": [
           {
@@ -527,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Gift-availed": {
+      "Products": {
         "required": [
           "id"
         ],
@@ -535,178 +522,14 @@
           "id": {
             "type": "string"
           },
-          "user": {
-            "required": [
-              "id",
-              "username",
-              "email"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "username": {
-                "type": "string"
-              },
-              "email": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "password": {
-                "type": "string"
-              },
-              "resetPasswordToken": {
-                "type": "string"
-              },
-              "confirmed": {
-                "type": "boolean"
-              },
-              "blocked": {
-                "type": "boolean"
-              },
-              "role": {
-                "type": "string"
-              },
-              "language": {
-                "type": "string"
-              },
-              "notification_token": {
-                "type": "string"
-              },
-              "mobile_number": {
-                "type": "integer"
-              },
-              "favourites": {
-                "type": "string"
-              },
-              "dob": {
-                "type": "string"
-              },
-              "birthday": {
-                "type": "datetime"
-              },
-              "platform": {
-                "type": "string"
-              },
-              "app_version": {
-                "type": "string"
-              },
-              "center_check_ins": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "favourite": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "membership_plan": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name_en": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "price": {
-                "type": "number"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "limit": {
-                "type": "integer"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "name_ar": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "gift_id": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name_en": {
-                "type": "string"
-              },
-              "name_ar": {
-                "type": "string"
-              },
-              "featured_img": {
-                "type": "string"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "quantity": {
-                "type": "integer"
-              },
-              "gift_type": {
-                "type": "string"
-              },
-              "membership_plans": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "is_assured": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "name_en": {
+          "title_en": {
             "type": "string"
           },
-          "name_ar": {
+          "title_ar": {
             "type": "string"
+          },
+          "worth_of": {
+            "type": "number"
           },
           "desc_en": {
             "type": "string"
@@ -714,75 +537,79 @@
           "desc_ar": {
             "type": "string"
           },
-          "featured_img": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
+          "featured_imgs": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id",
+                "name",
+                "hash",
+                "mime",
+                "size",
+                "url",
+                "provider"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "alternativeText": {
+                  "type": "string"
+                },
+                "caption": {
+                  "type": "string"
+                },
+                "width": {
+                  "type": "integer"
+                },
+                "height": {
+                  "type": "integer"
+                },
+                "formats": {
+                  "type": "object"
+                },
+                "hash": {
+                  "type": "string"
+                },
+                "ext": {
+                  "type": "string"
+                },
+                "mime": {
+                  "type": "string"
+                },
+                "size": {
+                  "type": "number"
+                },
+                "url": {
+                  "type": "string"
+                },
+                "previewUrl": {
+                  "type": "string"
+                },
+                "provider": {
+                  "type": "string"
+                },
+                "provider_metadata": {
+                  "type": "object"
+                },
+                "related": {
+                  "type": "string"
+                },
+                "created_by": {
+                  "type": "string"
+                },
+                "updated_by": {
+                  "type": "string"
+                }
               }
             }
           },
           "status": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "required": [
@@ -874,22 +701,16 @@
           }
         }
       },
-      "NewGift-availed": {
+      "NewProducts": {
         "properties": {
-          "user": {
+          "title_en": {
             "type": "string"
           },
-          "membership_plan": {
+          "title_ar": {
             "type": "string"
           },
-          "gift_id": {
-            "type": "string"
-          },
-          "name_en": {
-            "type": "string"
-          },
-          "name_ar": {
-            "type": "string"
+          "worth_of": {
+            "type": "number"
           },
           "desc_en": {
             "type": "string"
@@ -898,7 +719,8 @@
             "type": "string"
           },
           "status": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"
@@ -910,5 +732,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Products"
+    }
+  ]
 }

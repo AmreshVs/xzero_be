@@ -1,0 +1,58 @@
+{
+  "kind": "collectionType",
+  "collectionName": "vouchers",
+  "info": {
+    "name": "Vouchers"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "buy_title_en": {
+      "type": "string"
+    },
+    "buy_title_ar": {
+      "type": "string"
+    },
+    "win_title_en": {
+      "type": "string"
+    },
+    "win_title_ar": {
+      "type": "string"
+    },
+    "desc_en": {
+      "type": "text"
+    },
+    "desc_ar": {
+      "type": "text"
+    },
+    "featured_img": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "membership_plan": {
+      "model": "membership-plans"
+    },
+    "product_id": {
+      "collection": "products"
+    },
+    "assured_gift_id": {
+      "collection": "gifts"
+    },
+    "cost": {
+      "type": "decimal"
+    },
+    "status": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}
