@@ -22,6 +22,7 @@ module.exports = {
     //generate gifts
   async GenerateGift(user_id) {
     if (user_id) {
+      let days = 0;
       let memberArray = await strapi
         .query("membership")
         .findOne({ user: user_id });
@@ -35,12 +36,13 @@ module.exports = {
         );
         let giftsGotId = _.sampleSize(shuffledGifts, 1);
         let giftAvailed = await strapi.query("gift-availed").findOne({user: user_id, _sort:'id:desc'});
-        let days = DateDiffInDaysWithCurrentDate(giftAvailed.created_at);
+        if(giftAvailed)
+        days = DateDiffInDaysWithCurrentDate(giftAvailed.created_at);
         let giftGotDetails = await strapi
           .query("gifts")
           .findOne({ id: giftsGotId[0] });
         if ( 
-          days>30 &&
+          ( days > 30 || giftAvailed === null ) &&
           giftsGotId[0] > 0 &&
           giftGotDetails.quantity !== null &&
           giftGotDetails.quantity > 0
