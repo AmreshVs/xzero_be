@@ -31,7 +31,7 @@ module.exports = {
       if (memberArray !== null && giftArray !== null) {
         let selectGifts = [].concat(...giftArray.map((gift) => gift.id));
         let shuffledGifts = _.shuffle(
-          selectGifts.concat(Array(3).fill(0))
+          selectGifts.concat(Array(100-selectGifts.length).fill(0))
         );
         let giftsGotId = _.sampleSize(shuffledGifts, 1);
         let giftAvailed = await strapi.query("gift-availed").findOne({user: user_id, _sort:'id:desc'});
