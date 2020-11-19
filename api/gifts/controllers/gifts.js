@@ -38,11 +38,13 @@ module.exports = {
         let giftAvailed = await strapi.query("gift-availed").findOne({user: user_id, _sort:'id:desc'});
         if(giftAvailed)
         days = DateDiffInDaysWithCurrentDate(giftAvailed.created_at);
+        if(days<7 && giftAvailed!==null) {
+          return { disableStatus: true,  won: false };
+        }
         let giftGotDetails = await strapi
           .query("gifts")
           .findOne({ id: giftsGotId[0] });
         if ( 
-          ( days > 30 || giftAvailed === null ) &&
           giftsGotId[0] > 0 &&
           giftGotDetails.quantity !== null &&
           giftGotDetails.quantity > 0

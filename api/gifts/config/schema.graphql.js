@@ -7,7 +7,8 @@ module.exports = {
     }
 
     type GiftsPayLoad {
-      won: JSON!,
+      disableStatus: Boolean,
+      won: Boolean!,
       gift: Gifts
     }
   `,
