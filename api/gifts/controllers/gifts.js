@@ -62,7 +62,7 @@ module.exports = {
             membership_plan: memberArray.package,
             user: user_id,
             gift_id: giftsGotId[0],
-            enabled: 1,
+            status: 1,
           });
           let gift = await strapi.query("gifts").update(
             { id: giftsGotId[0] },
@@ -90,7 +90,7 @@ module.exports = {
   async AvailableGifts(condtion) {
     let gifts = await strapi
       .query("gifts")
-      .find({ enabled: 1, membership_plans: condtion.membership_plan });
+      .find({ status: 1, membership_plans: condtion.membership_plan });
     let giftAvailed = await strapi.query("gift-availed").find(condtion);
     return { gifts: gifts, AvailedGifts: giftAvailed };
   },
