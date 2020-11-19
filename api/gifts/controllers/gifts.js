@@ -39,7 +39,7 @@ module.exports = {
         if(giftAvailed)
         days = DateDiffInDaysWithCurrentDate(giftAvailed.created_at);
         if(days<7 && giftAvailed!==null) {
-          return { disableStatus: true,  won: false };
+          return { disabled: true,  won: false };
         }
         let giftGotDetails = await strapi
           .query("gifts")
@@ -59,7 +59,7 @@ module.exports = {
             membership_plan: memberArray.package,
             user: user_id,
             gift_id: giftsGotId[0],
-            status: 1,
+            enabled: 1,
           });
           let gift = await strapi.query("gifts").update(
             { id: giftsGotId[0] },
@@ -69,7 +69,7 @@ module.exports = {
           );
           return { won: true, gift: gift };
         } else {
-          return { won: false };
+          return { disabled: false, won: false };
         }
       }
     }
@@ -79,7 +79,7 @@ module.exports = {
   async AvailableGifts(condtion) {
     let gifts = await strapi
       .query("gifts")
-      .find({ status: 1, membership_plans: condtion.membership_plan });
+      .find({ enabled: 1, membership_plans: condtion.membership_plan });
     let giftAvailed = await strapi.query("gift-availed").find(condtion);
     return { gifts: gifts, AvailedGifts: giftAvailed };
   },

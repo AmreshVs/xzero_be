@@ -38,7 +38,7 @@
     "membership_plans": {
       "collection": "membership-plans"
     },
-    "status": {
+    "enabled": {
       "type": "boolean"
     },
     "desc_en": {

@@ -16,7 +16,7 @@
     "membership_plan": {
       "model": "membership-plans"
     },
-    "status": {
+    "enabled": {
       "type": "boolean"
     },
     "gift_id": {

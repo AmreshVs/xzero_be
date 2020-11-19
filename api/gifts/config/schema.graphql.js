@@ -7,7 +7,7 @@ module.exports = {
     }
 
     type GiftsPayLoad {
-      disableStatus: Boolean,
+      disabled: Boolean,
       won: Boolean!,
       gift: Gifts
     }

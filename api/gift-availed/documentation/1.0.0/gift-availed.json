@@ -653,7 +653,7 @@
               }
             }
           },
-          "status": {
+          "enabled": {
             "type": "boolean"
           },
           "gift_id": {
@@ -685,7 +685,7 @@
               "membership_plans": {
                 "type": "string"
               },
-              "status": {
+              "enabled": {
                 "type": "boolean"
               },
               "desc_en": {
@@ -879,7 +879,7 @@
           "membership_plan": {
             "type": "string"
           },
-          "status": {
+          "enabled": {
             "type": "boolean"
           },
           "gift_id": {
