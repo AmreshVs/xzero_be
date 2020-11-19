@@ -6,6 +6,18 @@
  */
 const _ = require("lodash");
 
+function DateDiffInDaysWithCurrentDate(date) {
+  let dt = new Date();
+  let localTime = dt.getTime(); 
+  let localOffset = dt.getTimezoneOffset(); 
+  let utc = localTime + localOffset;
+  let offset = 4; // GST (Gulf Standard Time) ahead +4 hours from utc
+  let currentDateTime = utc + (3600000*offset); 
+  let current = new Date(currentDateTime); 
+  const diffTime = Math.abs(current - date);
+  return Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+}
+
 module.exports = {
     //generate gifts
   async GenerateGift(user_id) {
@@ -22,10 +34,13 @@ module.exports = {
           selectGifts.concat(Array(3).fill(0))
         );
         let giftsGotId = _.sampleSize(shuffledGifts, 1);
+        let giftAvailed = await strapi.query("gift-availed").findOne({user: user_id, _sort:'id:desc'});
+        let days = DateDiffInDaysWithCurrentDate(giftAvailed.created_at);
         let giftGotDetails = await strapi
           .query("gifts")
           .findOne({ id: giftsGotId[0] });
-        if (
+        if ( 
+          days>30 &&
           giftsGotId[0] > 0 &&
           giftGotDetails.quantity !== null &&
           giftGotDetails.quantity > 0
