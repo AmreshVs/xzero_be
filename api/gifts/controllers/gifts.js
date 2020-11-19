@@ -40,7 +40,7 @@ module.exports = {
         if(memberArray.gift_generated_date)
         days = DateDiffInDaysWithCurrentDate(new Date(memberArray.gift_generated_date));
 
-        if( days<7 && giftAvailed > 0 ) {
+        if( days<7 && giftAvailed > 0 && memberArray.is_gift_generated === true ) {
           return { disabled: true,  won: false };
         }
 
