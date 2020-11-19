@@ -19,7 +19,7 @@ module.exports = {
       if (memberArray !== null && giftArray !== null) {
         let selectGifts = [].concat(...giftArray.map((gift) => gift.id));
         let shuffledGifts = _.shuffle(
-          selectGifts.concat(Array(100 - selectGifts.length).fill(0))
+          selectGifts.concat(Array(3).fill(0))
         );
         let giftsGotId = _.sampleSize(shuffledGifts, 1);
         let giftGotDetails = await strapi
@@ -30,17 +30,16 @@ module.exports = {
           giftGotDetails.quantity !== null &&
           giftGotDetails.quantity > 0
         ) {
-          let giftDetails = {
-            user: user_id,
-            giftsGotId: giftsGotId[0],
-            giftGotName: giftGotDetails.name_en,
-            featured_img: giftGotDetails.featured_img,
-            planId: memberArray.package,
-          };
+          
           await strapi.query("gift-availed").create({
-            membership_plan: giftDetails.planId,
-            user: giftDetails.user,
-            gift_id: giftDetails.giftsGotId,
+            name_en: giftGotDetails.name_en,
+            name_ar: giftGotDetails.name_ar,
+            desc_en: giftGotDetails.desc_en,
+            desc_ar: giftGotDetails.desc_ar,
+            featured_img: giftGotDetails.featured_img,
+            membership_plan: memberArray.package,
+            user: user_id,
+            gift_id: giftsGotId[0],
             status: 1,
           });
           let gift = await strapi.query("gifts").update(
