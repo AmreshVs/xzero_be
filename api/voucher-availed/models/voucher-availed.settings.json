@@ -1,0 +1,65 @@
+{
+  "kind": "collectionType",
+  "collectionName": "voucher_availeds",
+  "info": {
+    "name": "Voucher Availed"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "voucher_id": {
+      "model": "vouchers"
+    },
+    "user_id": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "featured_img": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "membership_plan": {
+      "model": "membership-plans"
+    },
+    "buy_title_en": {
+      "type": "string"
+    },
+    "buy_title_ar": {
+      "type": "string"
+    },
+    "win_title_en": {
+      "type": "string"
+    },
+    "win_title_ar": {
+      "type": "string"
+    },
+    "desc_an": {
+      "type": "text"
+    },
+    "desc_ar": {
+      "type": "string"
+    },
+    "product_ids": {
+      "collection": "products"
+    },
+    "gift_ids": {
+      "collection": "gifts"
+    },
+    "is_won": {
+      "type": "boolean",
+      "default": false,
+      "unique": false,
+      "private": false,
+      "required": false
+    }
+  }
+}

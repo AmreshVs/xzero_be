@@ -53,6 +53,16 @@
     "status": {
       "type": "boolean",
       "default": true
+    },
+    "minimum_subscription_limit": {
+      "type": "integer"
+    },
+    "users_subscribed": {
+      "type": "biginteger",
+      "default": "0"
+    },
+    "expiry": {
+      "type": "datetime"
     }
   }
 }
