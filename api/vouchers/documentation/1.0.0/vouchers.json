@@ -607,46 +607,6 @@
               }
             }
           },
-          "membership_plan": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name_en": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "price": {
-                "type": "number"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "limit": {
-                "type": "integer"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "name_ar": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "product_id": {
             "required": [
               "id"
@@ -752,6 +712,49 @@
           },
           "expiry": {
             "type": "datetime"
+          },
+          "membership_plans": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name_en": {
+                "type": "string"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "price": {
+                "type": "number"
+              },
+              "expiry": {
+                "type": "datetime"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "name_ar": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "featured_img": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "created_by": {
             "required": [
@@ -863,9 +866,6 @@
           "desc_ar": {
             "type": "string"
           },
-          "membership_plan": {
-            "type": "string"
-          },
           "product_id": {
             "type": "string"
           },
@@ -888,6 +888,9 @@
           },
           "expiry": {
             "type": "datetime"
+          },
+          "membership_plans": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

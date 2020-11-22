@@ -635,6 +635,9 @@
               "desc_ar": {
                 "type": "string"
               },
+              "featured_img": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },

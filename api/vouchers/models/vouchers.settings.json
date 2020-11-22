@@ -38,9 +38,6 @@
       "plugin": "upload",
       "required": false
     },
-    "membership_plan": {
-      "model": "membership-plans"
-    },
     "product_id": {
       "collection": "products"
     },
@@ -63,6 +60,9 @@
     },
     "expiry": {
       "type": "datetime"
+    },
+    "membership_plans": {
+      "collection": "membership-plans"
     }
   }
 }

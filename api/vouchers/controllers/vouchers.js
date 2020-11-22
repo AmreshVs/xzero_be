@@ -28,7 +28,7 @@ module.exports = {
                 .create({
                 user_id: user_id,
                 voucher_id: vouchers.id,
-                membership_plan: memberShip.id,
+                membership_plans: memberShip.id,
                 buy_title_en: vouchers.buy_title_en,	
                 buy_title_ar: vouchers.buy_title_ar,
                 win_title_en: vouchers.win_title_en,
@@ -42,15 +42,13 @@ module.exports = {
 
             await strapi
             .query("vouchers")
-                .update({
-                user_id: user_id},
-                { users_subscribed: users_subscribed+1
+                .update({ id: vouchers.id },
+                { users_subscribed: vouchers.users_subscribed+1
             });
         }
     },
 
     async GenerateVoucherWinner(user_id, plan_id) {
-
         let datas = [];
         let alluserIds = [];
         let eligibleUsers;

@@ -1,18 +1,19 @@
 {
   "paths": {
-    "/gifts": {
+    "/voucher-rules": {
       "get": {
         "deprecated": false,
-        "description": "Find all the gifts's records",
+        "description": "Find all the voucher-rules's records",
         "responses": {
           "200": {
-            "description": "Retrieve gifts document(s)",
+            "description": "Retrieve voucher-rules document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Gifts"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Gifts"
+          "Voucher-rules"
         ],
         "parameters": [
           {
@@ -192,81 +193,18 @@
           }
         ]
       },
-      "post": {
+      "put": {
         "deprecated": false,
-        "description": "Create a new gifts record",
+        "description": "Update a single voucher-rules record",
         "responses": {
           "200": {
-            "description": "Retrieve gifts document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Gifts"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Gifts"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewGifts"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/gifts/count": {
-      "get": {
-        "deprecated": false,
-        "description": "Retrieve the numver of gifts documents",
-        "responses": {
-          "200": {
-            "description": "Retrieve gifts document(s)",
+            "description": "Retrieve voucher-rules document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,122 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "Gifts"
-        ],
-        "parameters": []
-      }
-    },
-    "/gifts/{id}": {
-      "get": {
-        "deprecated": false,
-        "description": "Find one gifts record",
-        "responses": {
-          "200": {
-            "description": "Retrieve gifts document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Gifts"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Gifts"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
-      "put": {
-        "deprecated": false,
-        "description": "Update a single gifts record",
-        "responses": {
-          "200": {
-            "description": "Retrieve gifts document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Gifts"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Gifts"
+          "Voucher-rules"
         ],
         "requestBody": {
           "description": "",
@@ -429,30 +252,19 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewGifts"
+                "$ref": "#/components/schemas/NewVoucher-rules"
               }
             }
           }
         },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        "parameters": []
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single gifts record",
+        "description": "Delete a single voucher-rules record",
         "responses": {
           "200": {
-            "description": "deletes a single gifts based on the ID supplied",
+            "description": "deletes a single voucher-rules based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,26 +307,15 @@
         },
         "summary": "",
         "tags": [
-          "Gifts"
+          "Voucher-rules"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        "parameters": []
       }
     }
   },
   "components": {
     "schemas": {
-      "Gifts": {
+      "Voucher-rules": {
         "required": [
           "id"
         ],
@@ -522,162 +323,11 @@
           "id": {
             "type": "string"
           },
-          "name_en": {
+          "text_en": {
             "type": "string"
           },
-          "name_ar": {
+          "text_ar": {
             "type": "string"
-          },
-          "featured_img": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "expiry": {
-            "type": "datetime"
-          },
-          "quantity": {
-            "type": "integer"
-          },
-          "gift_type": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name_en": {
-                "type": "string"
-              },
-              "name_ar": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "membership_plans": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name_en": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "price": {
-                "type": "number"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "limit": {
-                "type": "integer"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "name_ar": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "featured_img": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "is_assured": {
-            "type": "boolean",
-            "default": false
           },
           "created_by": {
             "required": [
@@ -769,38 +419,13 @@
           }
         }
       },
-      "NewGifts": {
+      "NewVoucher-rules": {
         "properties": {
-          "name_en": {
+          "text_en": {
             "type": "string"
           },
-          "name_ar": {
+          "text_ar": {
             "type": "string"
-          },
-          "expiry": {
-            "type": "datetime"
-          },
-          "quantity": {
-            "type": "integer"
-          },
-          "gift_type": {
-            "type": "string"
-          },
-          "membership_plans": {
-            "type": "string"
-          },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "is_assured": {
-            "type": "boolean",
-            "default": false
           },
           "created_by": {
             "type": "string"
@@ -812,9 +437,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Gifts"
-    }
-  ]
+  "tags": []
 }

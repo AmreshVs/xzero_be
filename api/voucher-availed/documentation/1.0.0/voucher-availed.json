@@ -564,9 +564,6 @@
               "featured_img": {
                 "type": "string"
               },
-              "membership_plan": {
-                "type": "string"
-              },
               "product_id": {
                 "type": "string"
               },
@@ -587,6 +584,9 @@
               },
               "expiry": {
                 "type": "datetime"
+              },
+              "membership_plans": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -771,6 +771,9 @@
                 "type": "string"
               },
               "desc_ar": {
+                "type": "string"
+              },
+              "featured_img": {
                 "type": "string"
               },
               "created_by": {

@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "voucher_rules",
+  "info": {
+    "name": "Voucher rules"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "text_en": {
+      "type": "string"
+    },
+    "text_ar": {
+      "type": "string"
+    }
+  }
+}
