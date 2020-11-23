@@ -16,7 +16,7 @@ module.exports = {
 
     mutation: `
         GenerateVoucherWinner(user_id: Int!, plan_id: Int!): UserVoucher!,
-        DeclareVoucherWinner(id: Int!): VoucherAvailed!,
+        
         FinalizeWinner: VoucherAvailed!,
         
     `,
@@ -36,14 +36,14 @@ module.exports = {
           }
         },
 
-        DeclareVoucherWinner: {
-            description: 'Declaring voucher winner',
-            policies: [],
-            resolverOf: 'application::vouchers.vouchers.find',
-            resolver: async (obj, options, ctx) => {
-              return await strapi.api.vouchers.controllers.vouchers.DeclareVoucherWinner(options.id);
-            }
-        },
+        // DeclareVoucherWinner: {
+        //     description: 'Declaring voucher winner',
+        //     policies: [],
+        //     resolverOf: 'application::vouchers.vouchers.find',
+        //     resolver: async (obj, options, ctx) => {
+        //       return await strapi.api.vouchers.controllers.vouchers.DeclareVoucherWinner(options.id);
+        //     }
+        // },
         FinalizeWinner: {
             description: 'complete the voucher process and publish the winnner',
             policies: [],

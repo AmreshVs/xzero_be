@@ -86,29 +86,7 @@ module.exports = {
         return { won: true, voucher: voucher, disabled: false };
     },
 
-    async DeclareVoucherWinner(id) {
-        let datas = [];
-        //let voucher_id = 2;
-        let vouchers =  await strapi.query('vouchers').findOne({ status: true, id: id });
-        //console.log(vouchers); return false;
-        //for (var key in vouchers) {
-            if( vouchers.draw_status === 'progress' ) {
-            let voucherAvailedArray = await strapi.query('voucher-availed').find({ status:true,  voucher_id: vouchers.id});
-            if( voucherAvailedArray!==null && vouchers.draw_status ==='progress' ) {
-                let selectVoucher =  [].concat(...voucherAvailedArray.map(x => x.id));
-                let winner =  _.sampleSize(selectVoucher, 1);
-                datas[vouchers['buy_title_en']] = selectVoucher;
-                datas[vouchers['buy_title_en']]['draw_status'] = vouchers.draw_status;
-                datas[vouchers['buy_title_en']]['winner'] = winner;
-
-                return await strapi.query("voucher-availed").update({ id: winner[0] }, { is_won: true });
-              
-             }
-        }
-          //console.log(datas); return false;
-        //}
-        //return vouchers;
-    },
+   
 
     async FinalizeWinner() {
         console.log("here in finalize in voucher");  return false

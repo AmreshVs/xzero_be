@@ -323,10 +323,10 @@
           "id": {
             "type": "string"
           },
-          "text_en": {
+          "title_en": {
             "type": "string"
           },
-          "text_ar": {
+          "title_ar": {
             "type": "string"
           },
           "created_by": {
@@ -421,10 +421,10 @@
       },
       "NewVoucher-rules": {
         "properties": {
-          "text_en": {
+          "title_en": {
             "type": "string"
           },
-          "text_ar": {
+          "title_ar": {
             "type": "string"
           },
           "created_by": {

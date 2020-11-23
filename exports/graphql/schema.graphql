@@ -1457,8 +1457,8 @@ input editVoucherInput {
 }
 
 input editVoucherRuleInput {
-  text_en: String
-  text_ar: String
+  title_en: String
+  title_ar: String
   created_by: ID
   updated_by: ID
 }
@@ -2558,8 +2558,8 @@ type Mutation {
   addFavourite(user_id: Int!, offer_id: Int!): JSON!
   partnerLogin(input: PartnerLoginInput!): PartnerLoginPaylod!
   BuyVouchers(user_id: Int!, voucher_id: Int!): VoucherAvailed!
-  GenerateVoucherWinner(user_id: Int!, plan_id: Int!): UserVoucher!
   DeclareVoucherWinner(id: Int!): VoucherAvailed!
+  GenerateVoucherWinner(user_id: Int!, plan_id: Int!): UserVoucher!
   FinalizeWinner: VoucherAvailed!
   upload(refId: ID, ref: String, field: String, source: String, file: Upload!): UploadFile!
   multipleUpload(refId: ID, ref: String, field: String, source: String, files: [Upload]!): [UploadFile]!
@@ -4318,8 +4318,8 @@ input VoucherInput {
 }
 
 input VoucherRuleInput {
-  text_en: String
-  text_ar: String
+  title_en: String
+  title_ar: String
   created_by: ID
   updated_by: ID
 }
@@ -4328,8 +4328,8 @@ type VoucherRules {
   id: ID!
   created_at: DateTime!
   updated_at: DateTime!
-  text_en: String
-  text_ar: String
+  title_en: String
+  title_ar: String
   created_by: AdminUser
   updated_by: AdminUser
 }
