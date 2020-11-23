@@ -110,5 +110,9 @@ module.exports = {
         //return vouchers;
     },
 
-
+    async FinalizeWinner() {
+        console.log("here in finalize in voucher");  return false
+        let vouchers = await strapi.query("voucher-availed").findOne();
+        return vouchers;
+    }
 };
