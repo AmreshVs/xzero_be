@@ -28,6 +28,105 @@ input AppBasicInformationInput {
   updated_by: ID
 }
 
+input AssuredGiftInput {
+  title_en: String
+  title_ar: String
+  desc_en: String
+  desc_ar: String
+  featured_img: [ID]
+  status: Boolean
+  created_by: ID
+  updated_by: ID
+}
+
+type AssuredGifts {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title_en: String
+  title_ar: String
+  desc_en: String
+  desc_ar: String
+  status: Boolean
+  created_by: AdminUser
+  updated_by: AdminUser
+  featured_img(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+}
+
+type AssuredGiftsAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type AssuredGiftsConnection {
+  values: [AssuredGifts]
+  groupBy: AssuredGiftsGroupBy
+  aggregate: AssuredGiftsAggregator
+}
+
+type AssuredGiftsConnectionCreated_at {
+  key: DateTime
+  connection: AssuredGiftsConnection
+}
+
+type AssuredGiftsConnectionCreated_by {
+  key: ID
+  connection: AssuredGiftsConnection
+}
+
+type AssuredGiftsConnectionDesc_ar {
+  key: String
+  connection: AssuredGiftsConnection
+}
+
+type AssuredGiftsConnectionDesc_en {
+  key: String
+  connection: AssuredGiftsConnection
+}
+
+type AssuredGiftsConnectionId {
+  key: ID
+  connection: AssuredGiftsConnection
+}
+
+type AssuredGiftsConnectionStatus {
+  key: Boolean
+  connection: AssuredGiftsConnection
+}
+
+type AssuredGiftsConnectionTitle_ar {
+  key: String
+  connection: AssuredGiftsConnection
+}
+
+type AssuredGiftsConnectionTitle_en {
+  key: String
+  connection: AssuredGiftsConnection
+}
+
+type AssuredGiftsConnectionUpdated_at {
+  key: DateTime
+  connection: AssuredGiftsConnection
+}
+
+type AssuredGiftsConnectionUpdated_by {
+  key: ID
+  connection: AssuredGiftsConnection
+}
+
+type AssuredGiftsGroupBy {
+  id: [AssuredGiftsConnectionId]
+  created_at: [AssuredGiftsConnectionCreated_at]
+  updated_at: [AssuredGiftsConnectionUpdated_at]
+  title_en: [AssuredGiftsConnectionTitle_en]
+  title_ar: [AssuredGiftsConnectionTitle_ar]
+  desc_en: [AssuredGiftsConnectionDesc_en]
+  desc_ar: [AssuredGiftsConnectionDesc_ar]
+  status: [AssuredGiftsConnectionStatus]
+  created_by: [AssuredGiftsConnectionCreated_by]
+  updated_by: [AssuredGiftsConnectionUpdated_by]
+}
+
 type AvailableVouchers {
   vouchers: [Vouchers]
   AvailedVouchers: [VoucherAvailed]!
@@ -495,6 +594,14 @@ type CentersGroupBy {
   updated_by: [CentersConnectionUpdated_by]
 }
 
+input createAssuredGiftInput {
+  data: AssuredGiftInput
+}
+
+type createAssuredGiftPayload {
+  assuredGift: AssuredGifts
+}
+
 input createBannerInput {
   data: BannerInput
 }
@@ -525,6 +632,14 @@ input createCenterInput {
 
 type createCenterPayload {
   center: Centers
+}
+
+input createDrawGiftInput {
+  data: DrawGiftInput
+}
+
+type createDrawGiftPayload {
+  drawGift: DrawGifts
 }
 
 input createFavouriteInput {
@@ -678,6 +793,14 @@ type deleteAppBasicInformationPayload {
   appBasicInformation: AppBasicInformation
 }
 
+input deleteAssuredGiftInput {
+  where: InputID
+}
+
+type deleteAssuredGiftPayload {
+  assuredGift: AssuredGifts
+}
+
 input deleteBannerInput {
   where: InputID
 }
@@ -712,6 +835,14 @@ input deleteCenterInput {
 
 type deleteCenterPayload {
   center: Centers
+}
+
+input deleteDrawGiftInput {
+  where: InputID
+}
+
+type deleteDrawGiftPayload {
+  drawGift: DrawGifts
 }
 
 input deleteFavouriteInput {
@@ -866,6 +997,105 @@ type deleteVoucherRulePayload {
   voucherRule: VoucherRules
 }
 
+input DrawGiftInput {
+  title_en: String
+  title_ar: String
+  desc_en: String
+  desc_ar: String
+  featured_imgs: [ID]
+  status: Boolean
+  created_by: ID
+  updated_by: ID
+}
+
+type DrawGifts {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  title_en: String
+  title_ar: String
+  desc_en: String
+  desc_ar: String
+  status: Boolean
+  created_by: AdminUser
+  updated_by: AdminUser
+  featured_imgs(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
+}
+
+type DrawGiftsAggregator {
+  count: Int
+  totalCount: Int
+}
+
+type DrawGiftsConnection {
+  values: [DrawGifts]
+  groupBy: DrawGiftsGroupBy
+  aggregate: DrawGiftsAggregator
+}
+
+type DrawGiftsConnectionCreated_at {
+  key: DateTime
+  connection: DrawGiftsConnection
+}
+
+type DrawGiftsConnectionCreated_by {
+  key: ID
+  connection: DrawGiftsConnection
+}
+
+type DrawGiftsConnectionDesc_ar {
+  key: String
+  connection: DrawGiftsConnection
+}
+
+type DrawGiftsConnectionDesc_en {
+  key: String
+  connection: DrawGiftsConnection
+}
+
+type DrawGiftsConnectionId {
+  key: ID
+  connection: DrawGiftsConnection
+}
+
+type DrawGiftsConnectionStatus {
+  key: Boolean
+  connection: DrawGiftsConnection
+}
+
+type DrawGiftsConnectionTitle_ar {
+  key: String
+  connection: DrawGiftsConnection
+}
+
+type DrawGiftsConnectionTitle_en {
+  key: String
+  connection: DrawGiftsConnection
+}
+
+type DrawGiftsConnectionUpdated_at {
+  key: DateTime
+  connection: DrawGiftsConnection
+}
+
+type DrawGiftsConnectionUpdated_by {
+  key: ID
+  connection: DrawGiftsConnection
+}
+
+type DrawGiftsGroupBy {
+  id: [DrawGiftsConnectionId]
+  created_at: [DrawGiftsConnectionCreated_at]
+  updated_at: [DrawGiftsConnectionUpdated_at]
+  title_en: [DrawGiftsConnectionTitle_en]
+  title_ar: [DrawGiftsConnectionTitle_ar]
+  desc_en: [DrawGiftsConnectionDesc_en]
+  desc_ar: [DrawGiftsConnectionDesc_ar]
+  status: [DrawGiftsConnectionStatus]
+  created_by: [DrawGiftsConnectionCreated_by]
+  updated_by: [DrawGiftsConnectionUpdated_by]
+}
+
 input editAppBasicInformationInput {
   app_version: String
   version_check: Boolean
@@ -873,6 +1103,17 @@ input editAppBasicInformationInput {
   android_version_check: Boolean
   iso_app_version: String
   ios_version_check: Boolean
+  created_by: ID
+  updated_by: ID
+}
+
+input editAssuredGiftInput {
+  title_en: String
+  title_ar: String
+  desc_en: String
+  desc_ar: String
+  featured_img: [ID]
+  status: Boolean
   created_by: ID
   updated_by: ID
 }
@@ -925,6 +1166,17 @@ input editCenterInput {
   offers: [ID]
   partner: ID
   favourites: [ID]
+  created_by: ID
+  updated_by: ID
+}
+
+input editDrawGiftInput {
+  title_en: String
+  title_ar: String
+  desc_en: String
+  desc_ar: String
+  featured_imgs: [ID]
+  status: Boolean
   created_by: ID
   updated_by: ID
 }
@@ -1177,16 +1429,6 @@ input editUserInput {
 input editVoucherAvailedInput {
   voucher_id: ID
   user_id: ID
-  featured_img: ID
-  membership_plan: ID
-  buy_title_en: String
-  buy_title_ar: String
-  win_title_en: String
-  win_title_ar: String
-  desc_an: String
-  desc_ar: String
-  product_ids: [ID]
-  gift_ids: [ID]
   is_won: Boolean
   status: Boolean
   created_by: ID
@@ -1202,15 +1444,14 @@ input editVoucherInput {
   desc_ar: String
   featured_img: ID
   product_id: [ID]
-  assured_gift_id: [ID]
   cost: Float
   status: Boolean
   limit: Int
   total_bought: Long
   membership_plans: [ID]
   draw_status: ENUM_VOUCHERS_DRAW_STATUS
-  is_declared: Boolean
-  is_published: Boolean
+  assured_gift_id: [ID]
+  draw_gift_id: [ID]
   created_by: ID
   updated_by: ID
 }
@@ -2213,11 +2454,14 @@ type MembershipTransactionsGroupBy {
   updated_by: [MembershipTransactionsConnectionUpdated_by]
 }
 
-union Morph = GetMembershipInfo | OfferandUserInfo | UserInfo | OffersInfo | UserandCenterCheckin | UserPayload | CenterProfile | UserGifts | GiftsPayLoad | PartnerLoginPaylod | UserVoucher | AvailableVouchers | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | CreateUserPayload | AppBasicInformation | updateAppBasicInformationPayload | deleteAppBasicInformationPayload | Banners | BannersConnection | BannersAggregator | BannersGroupBy | BannersConnectionId | BannersConnectionCreated_at | BannersConnectionUpdated_at | BannersConnectionBanner_img | BannersConnectionCreated_by | BannersConnectionUpdated_by | createBannerPayload | updateBannerPayload | deleteBannerPayload | BasicMembershipAmount | updateBasicMembershipAmountPayload | deleteBasicMembershipAmountPayload | Categories | CategoriesConnection | CategoriesAggregator | CategoriesGroupBy | CategoriesConnectionId | CategoriesConnectionCreated_at | CategoriesConnectionUpdated_at | CategoriesConnectionTitle_en | CategoriesConnectionFeatured_img | CategoriesConnectionTitle_ar | CategoriesConnectionEnabled | CategoriesConnectionCreated_by | CategoriesConnectionUpdated_by | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | CenterCheckIn | CenterCheckInConnection | CenterCheckInAggregator | CenterCheckInAggregatorSum | CenterCheckInAggregatorAvg | CenterCheckInAggregatorMin | CenterCheckInAggregatorMax | CenterCheckInGroupBy | CenterCheckInConnectionId | CenterCheckInConnectionCreated_at | CenterCheckInConnectionUpdated_at | CenterCheckInConnectionUser_id | CenterCheckInConnectionCenter | CenterCheckInConnectionMembership | CenterCheckInConnectionTransaction_id | CenterCheckInConnectionDiscounted_price | CenterCheckInConnectionOriginal_price | CenterCheckInConnectionDiscount | CenterCheckInConnectionOffer_id | CenterCheckInConnectionCreated_by | CenterCheckInConnectionUpdated_by | createCenterCheckInPayload | updateCenterCheckInPayload | deleteCenterCheckInPayload | Centers | CentersConnection | CentersAggregator | CentersGroupBy | CentersConnectionId | CentersConnectionCreated_at | CentersConnectionUpdated_at | CentersConnectionTitle_en | CentersConnectionTitle_ar | CentersConnectionCategory | CentersConnectionFeatured_img | CentersConnectionMobile_number | CentersConnectionPlace | CentersConnectionCity | CentersConnectionHomescreen | CentersConnectionPartner | CentersConnectionCreated_by | CentersConnectionUpdated_by | createCenterPayload | updateCenterPayload | deleteCenterPayload | Favourites | FavouritesConnection | FavouritesAggregator | FavouritesGroupBy | FavouritesConnectionId | FavouritesConnectionCreated_at | FavouritesConnectionUpdated_at | FavouritesConnectionUser | FavouritesConnectionStatus | FavouritesConnectionMembership_plan | FavouritesConnectionCenter | FavouritesConnectionFavourites | FavouritesConnectionCreated_by | FavouritesConnectionUpdated_by | createFavouritePayload | updateFavouritePayload | deleteFavouritePayload | GiftAvailed | GiftAvailedConnection | GiftAvailedAggregator | GiftAvailedGroupBy | GiftAvailedConnectionId | GiftAvailedConnectionCreated_at | GiftAvailedConnectionUpdated_at | GiftAvailedConnectionUser | GiftAvailedConnectionMembership_plan | GiftAvailedConnectionGift_id | GiftAvailedConnectionName_en | GiftAvailedConnectionName_ar | GiftAvailedConnectionDesc_en | GiftAvailedConnectionDesc_ar | GiftAvailedConnectionFeatured_img | GiftAvailedConnectionStatus | GiftAvailedConnectionCreated_by | GiftAvailedConnectionUpdated_by | createGiftAvailedPayload | updateGiftAvailedPayload | deleteGiftAvailedPayload | GiftType | GiftTypeConnection | GiftTypeAggregator | GiftTypeGroupBy | GiftTypeConnectionId | GiftTypeConnectionCreated_at | GiftTypeConnectionUpdated_at | GiftTypeConnectionName_en | GiftTypeConnectionName_ar | GiftTypeConnectionCreated_by | GiftTypeConnectionUpdated_by | createGiftTypePayload | updateGiftTypePayload | deleteGiftTypePayload | Gifts | GiftsConnection | GiftsAggregator | GiftsAggregatorSum | GiftsAggregatorAvg | GiftsAggregatorMin | GiftsAggregatorMax | GiftsGroupBy | GiftsConnectionId | GiftsConnectionCreated_at | GiftsConnectionUpdated_at | GiftsConnectionName_en | GiftsConnectionName_ar | GiftsConnectionFeatured_img | GiftsConnectionExpiry | GiftsConnectionQuantity | GiftsConnectionGift_type | GiftsConnectionDesc_en | GiftsConnectionDesc_ar | GiftsConnectionStatus | GiftsConnectionIs_assured | GiftsConnectionCreated_by | GiftsConnectionUpdated_by | createGiftPayload | updateGiftPayload | deleteGiftPayload | MembershipBenefits | updateMembershipBenefitPayload | deleteMembershipBenefitPayload | MembershipCardInfo | updateMembershipCardInfoPayload | deleteMembershipCardInfoPayload | MembershipPlans | MembershipPlansConnection | MembershipPlansAggregator | MembershipPlansAggregatorSum | MembershipPlansAggregatorAvg | MembershipPlansAggregatorMin | MembershipPlansAggregatorMax | MembershipPlansGroupBy | MembershipPlansConnectionId | MembershipPlansConnectionCreated_at | MembershipPlansConnectionUpdated_at | MembershipPlansConnectionName_en | MembershipPlansConnectionDesc_en | MembershipPlansConnectionPrice | MembershipPlansConnectionExpiry | MembershipPlansConnectionLimit | MembershipPlansConnectionStatus | MembershipPlansConnectionName_ar | MembershipPlansConnectionDesc_ar | MembershipPlansConnectionFeatured_img | MembershipPlansConnectionCreated_by | MembershipPlansConnectionUpdated_by | createMembershipPlanPayload | updateMembershipPlanPayload | deleteMembershipPlanPayload | MembershipTransactions | MembershipTransactionsConnection | MembershipTransactionsAggregator | MembershipTransactionsAggregatorSum | MembershipTransactionsAggregatorAvg | MembershipTransactionsAggregatorMin | MembershipTransactionsAggregatorMax | MembershipTransactionsGroupBy | MembershipTransactionsConnectionId | MembershipTransactionsConnectionCreated_at | MembershipTransactionsConnectionUpdated_at | MembershipTransactionsConnectionMembership_id | MembershipTransactionsConnectionSerial | MembershipTransactionsConnectionType | MembershipTransactionsConnectionAmount | MembershipTransactionsConnectionExpiry | MembershipTransactionsConnectionCreated_by | MembershipTransactionsConnectionUpdated_by | createMembershipTransactionPayload | updateMembershipTransactionPayload | deleteMembershipTransactionPayload | Membership | MembershipConnection | MembershipAggregator | MembershipAggregatorSum | MembershipAggregatorAvg | MembershipAggregatorMin | MembershipAggregatorMax | MembershipGroupBy | MembershipConnectionId | MembershipConnectionCreated_at | MembershipConnectionUpdated_at | MembershipConnectionUser | MembershipConnectionSerial | MembershipConnectionExpiry | MembershipConnectionQrcode_url | MembershipConnectionPackage | MembershipConnectionLimit | MembershipConnectionIs_gift_generated | MembershipConnectionGift_generated_date | MembershipConnectionCreated_by | MembershipConnectionUpdated_by | createMembershipPayload | updateMembershipPayload | deleteMembershipPayload | Notifications | NotificationsConnection | NotificationsAggregator | NotificationsGroupBy | NotificationsConnectionId | NotificationsConnectionCreated_at | NotificationsConnectionUpdated_at | NotificationsConnectionTitle_en | NotificationsConnectionTitle_ar | NotificationsConnectionDesc_en | NotificationsConnectionDesc_ar | NotificationsConnectionCreated_by | NotificationsConnectionUpdated_by | createNotificationPayload | updateNotificationPayload | deleteNotificationPayload | Offers | OffersConnection | OffersAggregator | OffersAggregatorSum | OffersAggregatorAvg | OffersAggregatorMin | OffersAggregatorMax | OffersGroupBy | OffersConnectionId | OffersConnectionCreated_at | OffersConnectionUpdated_at | OffersConnectionTitle_en | OffersConnectionTitle_ar | OffersConnectionDiscount | OffersConnectionDesc_en | OffersConnectionDesc_ar | OffersConnectionCountry | OffersConnectionCity | OffersConnectionExpiry | OffersConnectionMobile_number | OffersConnectionLatitude | OffersConnectionLongitude | OffersConnectionStatus | OffersConnectionActual_price | OffersConnectionDiscounted_price | OffersConnectionPlace | OffersConnectionFeatured_img | OffersConnectionCenter | OffersConnectionCreated_by | OffersConnectionUpdated_by | createOfferPayload | updateOfferPayload | deleteOfferPayload | Partner | PartnerConnection | PartnerAggregator | PartnerGroupBy | PartnerConnectionId | PartnerConnectionCreated_at | PartnerConnectionUpdated_at | PartnerConnectionUsername | PartnerConnectionEmail | PartnerConnectionPassword | PartnerConnectionMobile_number | PartnerConnectionCenter | PartnerConnectionCreated_by | PartnerConnectionUpdated_by | createPartnerPayload | updatePartnerPayload | deletePartnerPayload | PrivacyPolicy | updatePrivacyPolicyPayload | deletePrivacyPolicyPayload | Products | ProductsConnection | ProductsAggregator | ProductsAggregatorSum | ProductsAggregatorAvg | ProductsAggregatorMin | ProductsAggregatorMax | ProductsGroupBy | ProductsConnectionId | ProductsConnectionCreated_at | ProductsConnectionUpdated_at | ProductsConnectionTitle_en | ProductsConnectionTitle_ar | ProductsConnectionCost | ProductsConnectionDesc_en | ProductsConnectionDesc_ar | ProductsConnectionStatus | ProductsConnectionCreated_by | ProductsConnectionUpdated_by | createProductPayload | updateProductPayload | deleteProductPayload | SpecialistHelp | updateSpecialistHelpPayload | deleteSpecialistHelpPayload | Specialist | SpecialistConnection | SpecialistAggregator | SpecialistGroupBy | SpecialistConnectionId | SpecialistConnectionCreated_at | SpecialistConnectionUpdated_at | SpecialistConnectionName_en | SpecialistConnectionName_ar | SpecialistConnectionDesc_en | SpecialistConnectionDesc_ar | SpecialistConnectionMobile_number | SpecialistConnectionCategory | SpecialistConnectionCenter | SpecialistConnectionFeatured_img | SpecialistConnectionSpecialization_en | SpecialistConnectionSpecialization_ar | SpecialistConnectionCreated_by | SpecialistConnectionUpdated_by | createSpecialistPayload | updateSpecialistPayload | deleteSpecialistPayload | TermsAndConditions | updateTermsAndConditionPayload | deleteTermsAndConditionPayload | VoucherAvailed | VoucherAvailedConnection | VoucherAvailedAggregator | VoucherAvailedGroupBy | VoucherAvailedConnectionId | VoucherAvailedConnectionCreated_at | VoucherAvailedConnectionUpdated_at | VoucherAvailedConnectionVoucher_id | VoucherAvailedConnectionUser_id | VoucherAvailedConnectionFeatured_img | VoucherAvailedConnectionMembership_plan | VoucherAvailedConnectionBuy_title_en | VoucherAvailedConnectionBuy_title_ar | VoucherAvailedConnectionWin_title_en | VoucherAvailedConnectionWin_title_ar | VoucherAvailedConnectionDesc_an | VoucherAvailedConnectionDesc_ar | VoucherAvailedConnectionIs_won | VoucherAvailedConnectionStatus | VoucherAvailedConnectionCreated_by | VoucherAvailedConnectionUpdated_by | createVoucherAvailedPayload | updateVoucherAvailedPayload | deleteVoucherAvailedPayload | VoucherRules | updateVoucherRulePayload | deleteVoucherRulePayload | Vouchers | VouchersConnection | VouchersAggregator | VouchersAggregatorSum | VouchersAggregatorAvg | VouchersAggregatorMin | VouchersAggregatorMax | VouchersGroupBy | VouchersConnectionId | VouchersConnectionCreated_at | VouchersConnectionUpdated_at | VouchersConnectionBuy_title_en | VouchersConnectionBuy_title_ar | VouchersConnectionWin_title_en | VouchersConnectionWin_title_ar | VouchersConnectionDesc_en | VouchersConnectionDesc_ar | VouchersConnectionFeatured_img | VouchersConnectionCost | VouchersConnectionStatus | VouchersConnectionLimit | VouchersConnectionTotal_bought | VouchersConnectionDraw_status | VouchersConnectionIs_declared | VouchersConnectionIs_published | VouchersConnectionCreated_by | VouchersConnectionUpdated_by | createVoucherPayload | updateVoucherPayload | deleteVoucherPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionLanguage | UsersPermissionsUserConnectionNotification_token | UsersPermissionsUserConnectionMobile_number | UsersPermissionsUserConnectionFavourites | UsersPermissionsUserConnectionDob | UsersPermissionsUserConnectionBirthday | UsersPermissionsUserConnectionPlatform | UsersPermissionsUserConnectionApp_version | UsersPermissionsUserConnectionMembership | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = GetMembershipInfo | OfferandUserInfo | UserInfo | OffersInfo | UserandCenterCheckin | UserPayload | CenterProfile | UserGifts | GiftsPayLoad | PartnerLoginPaylod | UserVoucher | AvailableVouchers | UsersPermissionsMe | UsersPermissionsMeRole | UsersPermissionsLoginPayload | UserPermissionsPasswordPayload | CreateUserPayload | AppBasicInformation | updateAppBasicInformationPayload | deleteAppBasicInformationPayload | AssuredGifts | AssuredGiftsConnection | AssuredGiftsAggregator | AssuredGiftsGroupBy | AssuredGiftsConnectionId | AssuredGiftsConnectionCreated_at | AssuredGiftsConnectionUpdated_at | AssuredGiftsConnectionTitle_en | AssuredGiftsConnectionTitle_ar | AssuredGiftsConnectionDesc_en | AssuredGiftsConnectionDesc_ar | AssuredGiftsConnectionStatus | AssuredGiftsConnectionCreated_by | AssuredGiftsConnectionUpdated_by | createAssuredGiftPayload | updateAssuredGiftPayload | deleteAssuredGiftPayload | Banners | BannersConnection | BannersAggregator | BannersGroupBy | BannersConnectionId | BannersConnectionCreated_at | BannersConnectionUpdated_at | BannersConnectionBanner_img | BannersConnectionCreated_by | BannersConnectionUpdated_by | createBannerPayload | updateBannerPayload | deleteBannerPayload | BasicMembershipAmount | updateBasicMembershipAmountPayload | deleteBasicMembershipAmountPayload | Categories | CategoriesConnection | CategoriesAggregator | CategoriesGroupBy | CategoriesConnectionId | CategoriesConnectionCreated_at | CategoriesConnectionUpdated_at | CategoriesConnectionTitle_en | CategoriesConnectionFeatured_img | CategoriesConnectionTitle_ar | CategoriesConnectionEnabled | CategoriesConnectionCreated_by | CategoriesConnectionUpdated_by | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | CenterCheckIn | CenterCheckInConnection | CenterCheckInAggregator | CenterCheckInAggregatorSum | CenterCheckInAggregatorAvg | CenterCheckInAggregatorMin | CenterCheckInAggregatorMax | CenterCheckInGroupBy | CenterCheckInConnectionId | CenterCheckInConnectionCreated_at | CenterCheckInConnectionUpdated_at | CenterCheckInConnectionUser_id | CenterCheckInConnectionCenter | CenterCheckInConnectionMembership | CenterCheckInConnectionTransaction_id | CenterCheckInConnectionDiscounted_price | CenterCheckInConnectionOriginal_price | CenterCheckInConnectionDiscount | CenterCheckInConnectionOffer_id | CenterCheckInConnectionCreated_by | CenterCheckInConnectionUpdated_by | createCenterCheckInPayload | updateCenterCheckInPayload | deleteCenterCheckInPayload | Centers | CentersConnection | CentersAggregator | CentersGroupBy | CentersConnectionId | CentersConnectionCreated_at | CentersConnectionUpdated_at | CentersConnectionTitle_en | CentersConnectionTitle_ar | CentersConnectionCategory | CentersConnectionFeatured_img | CentersConnectionMobile_number | CentersConnectionPlace | CentersConnectionCity | CentersConnectionHomescreen | CentersConnectionPartner | CentersConnectionCreated_by | CentersConnectionUpdated_by | createCenterPayload | updateCenterPayload | deleteCenterPayload | DrawGifts | DrawGiftsConnection | DrawGiftsAggregator | DrawGiftsGroupBy | DrawGiftsConnectionId | DrawGiftsConnectionCreated_at | DrawGiftsConnectionUpdated_at | DrawGiftsConnectionTitle_en | DrawGiftsConnectionTitle_ar | DrawGiftsConnectionDesc_en | DrawGiftsConnectionDesc_ar | DrawGiftsConnectionStatus | DrawGiftsConnectionCreated_by | DrawGiftsConnectionUpdated_by | createDrawGiftPayload | updateDrawGiftPayload | deleteDrawGiftPayload | Favourites | FavouritesConnection | FavouritesAggregator | FavouritesGroupBy | FavouritesConnectionId | FavouritesConnectionCreated_at | FavouritesConnectionUpdated_at | FavouritesConnectionUser | FavouritesConnectionStatus | FavouritesConnectionMembership_plan | FavouritesConnectionCenter | FavouritesConnectionFavourites | FavouritesConnectionCreated_by | FavouritesConnectionUpdated_by | createFavouritePayload | updateFavouritePayload | deleteFavouritePayload | GiftAvailed | GiftAvailedConnection | GiftAvailedAggregator | GiftAvailedGroupBy | GiftAvailedConnectionId | GiftAvailedConnectionCreated_at | GiftAvailedConnectionUpdated_at | GiftAvailedConnectionUser | GiftAvailedConnectionMembership_plan | GiftAvailedConnectionGift_id | GiftAvailedConnectionName_en | GiftAvailedConnectionName_ar | GiftAvailedConnectionDesc_en | GiftAvailedConnectionDesc_ar | GiftAvailedConnectionFeatured_img | GiftAvailedConnectionStatus | GiftAvailedConnectionCreated_by | GiftAvailedConnectionUpdated_by | createGiftAvailedPayload | updateGiftAvailedPayload | deleteGiftAvailedPayload | GiftType | GiftTypeConnection | GiftTypeAggregator | GiftTypeGroupBy | GiftTypeConnectionId | GiftTypeConnectionCreated_at | GiftTypeConnectionUpdated_at | GiftTypeConnectionName_en | GiftTypeConnectionName_ar | GiftTypeConnectionCreated_by | GiftTypeConnectionUpdated_by | createGiftTypePayload | updateGiftTypePayload | deleteGiftTypePayload | Gifts | GiftsConnection | GiftsAggregator | GiftsAggregatorSum | GiftsAggregatorAvg | GiftsAggregatorMin | GiftsAggregatorMax | GiftsGroupBy | GiftsConnectionId | GiftsConnectionCreated_at | GiftsConnectionUpdated_at | GiftsConnectionName_en | GiftsConnectionName_ar | GiftsConnectionFeatured_img | GiftsConnectionExpiry | GiftsConnectionQuantity | GiftsConnectionGift_type | GiftsConnectionDesc_en | GiftsConnectionDesc_ar | GiftsConnectionStatus | GiftsConnectionIs_assured | GiftsConnectionCreated_by | GiftsConnectionUpdated_by | createGiftPayload | updateGiftPayload | deleteGiftPayload | MembershipBenefits | updateMembershipBenefitPayload | deleteMembershipBenefitPayload | MembershipCardInfo | updateMembershipCardInfoPayload | deleteMembershipCardInfoPayload | MembershipPlans | MembershipPlansConnection | MembershipPlansAggregator | MembershipPlansAggregatorSum | MembershipPlansAggregatorAvg | MembershipPlansAggregatorMin | MembershipPlansAggregatorMax | MembershipPlansGroupBy | MembershipPlansConnectionId | MembershipPlansConnectionCreated_at | MembershipPlansConnectionUpdated_at | MembershipPlansConnectionName_en | MembershipPlansConnectionDesc_en | MembershipPlansConnectionPrice | MembershipPlansConnectionExpiry | MembershipPlansConnectionLimit | MembershipPlansConnectionStatus | MembershipPlansConnectionName_ar | MembershipPlansConnectionDesc_ar | MembershipPlansConnectionFeatured_img | MembershipPlansConnectionCreated_by | MembershipPlansConnectionUpdated_by | createMembershipPlanPayload | updateMembershipPlanPayload | deleteMembershipPlanPayload | MembershipTransactions | MembershipTransactionsConnection | MembershipTransactionsAggregator | MembershipTransactionsAggregatorSum | MembershipTransactionsAggregatorAvg | MembershipTransactionsAggregatorMin | MembershipTransactionsAggregatorMax | MembershipTransactionsGroupBy | MembershipTransactionsConnectionId | MembershipTransactionsConnectionCreated_at | MembershipTransactionsConnectionUpdated_at | MembershipTransactionsConnectionMembership_id | MembershipTransactionsConnectionSerial | MembershipTransactionsConnectionType | MembershipTransactionsConnectionAmount | MembershipTransactionsConnectionExpiry | MembershipTransactionsConnectionCreated_by | MembershipTransactionsConnectionUpdated_by | createMembershipTransactionPayload | updateMembershipTransactionPayload | deleteMembershipTransactionPayload | Membership | MembershipConnection | MembershipAggregator | MembershipAggregatorSum | MembershipAggregatorAvg | MembershipAggregatorMin | MembershipAggregatorMax | MembershipGroupBy | MembershipConnectionId | MembershipConnectionCreated_at | MembershipConnectionUpdated_at | MembershipConnectionUser | MembershipConnectionSerial | MembershipConnectionExpiry | MembershipConnectionQrcode_url | MembershipConnectionPackage | MembershipConnectionLimit | MembershipConnectionIs_gift_generated | MembershipConnectionGift_generated_date | MembershipConnectionCreated_by | MembershipConnectionUpdated_by | createMembershipPayload | updateMembershipPayload | deleteMembershipPayload | Notifications | NotificationsConnection | NotificationsAggregator | NotificationsGroupBy | NotificationsConnectionId | NotificationsConnectionCreated_at | NotificationsConnectionUpdated_at | NotificationsConnectionTitle_en | NotificationsConnectionTitle_ar | NotificationsConnectionDesc_en | NotificationsConnectionDesc_ar | NotificationsConnectionCreated_by | NotificationsConnectionUpdated_by | createNotificationPayload | updateNotificationPayload | deleteNotificationPayload | Offers | OffersConnection | OffersAggregator | OffersAggregatorSum | OffersAggregatorAvg | OffersAggregatorMin | OffersAggregatorMax | OffersGroupBy | OffersConnectionId | OffersConnectionCreated_at | OffersConnectionUpdated_at | OffersConnectionTitle_en | OffersConnectionTitle_ar | OffersConnectionDiscount | OffersConnectionDesc_en | OffersConnectionDesc_ar | OffersConnectionCountry | OffersConnectionCity | OffersConnectionExpiry | OffersConnectionMobile_number | OffersConnectionLatitude | OffersConnectionLongitude | OffersConnectionStatus | OffersConnectionActual_price | OffersConnectionDiscounted_price | OffersConnectionPlace | OffersConnectionFeatured_img | OffersConnectionCenter | OffersConnectionCreated_by | OffersConnectionUpdated_by | createOfferPayload | updateOfferPayload | deleteOfferPayload | Partner | PartnerConnection | PartnerAggregator | PartnerGroupBy | PartnerConnectionId | PartnerConnectionCreated_at | PartnerConnectionUpdated_at | PartnerConnectionUsername | PartnerConnectionEmail | PartnerConnectionPassword | PartnerConnectionMobile_number | PartnerConnectionCenter | PartnerConnectionCreated_by | PartnerConnectionUpdated_by | createPartnerPayload | updatePartnerPayload | deletePartnerPayload | PrivacyPolicy | updatePrivacyPolicyPayload | deletePrivacyPolicyPayload | Products | ProductsConnection | ProductsAggregator | ProductsAggregatorSum | ProductsAggregatorAvg | ProductsAggregatorMin | ProductsAggregatorMax | ProductsGroupBy | ProductsConnectionId | ProductsConnectionCreated_at | ProductsConnectionUpdated_at | ProductsConnectionTitle_en | ProductsConnectionTitle_ar | ProductsConnectionCost | ProductsConnectionDesc_en | ProductsConnectionDesc_ar | ProductsConnectionStatus | ProductsConnectionCreated_by | ProductsConnectionUpdated_by | createProductPayload | updateProductPayload | deleteProductPayload | SpecialistHelp | updateSpecialistHelpPayload | deleteSpecialistHelpPayload | Specialist | SpecialistConnection | SpecialistAggregator | SpecialistGroupBy | SpecialistConnectionId | SpecialistConnectionCreated_at | SpecialistConnectionUpdated_at | SpecialistConnectionName_en | SpecialistConnectionName_ar | SpecialistConnectionDesc_en | SpecialistConnectionDesc_ar | SpecialistConnectionMobile_number | SpecialistConnectionCategory | SpecialistConnectionCenter | SpecialistConnectionFeatured_img | SpecialistConnectionSpecialization_en | SpecialistConnectionSpecialization_ar | SpecialistConnectionCreated_by | SpecialistConnectionUpdated_by | createSpecialistPayload | updateSpecialistPayload | deleteSpecialistPayload | TermsAndConditions | updateTermsAndConditionPayload | deleteTermsAndConditionPayload | VoucherAvailed | VoucherAvailedConnection | VoucherAvailedAggregator | VoucherAvailedGroupBy | VoucherAvailedConnectionId | VoucherAvailedConnectionCreated_at | VoucherAvailedConnectionUpdated_at | VoucherAvailedConnectionVoucher_id | VoucherAvailedConnectionUser_id | VoucherAvailedConnectionIs_won | VoucherAvailedConnectionStatus | VoucherAvailedConnectionCreated_by | VoucherAvailedConnectionUpdated_by | createVoucherAvailedPayload | updateVoucherAvailedPayload | deleteVoucherAvailedPayload | VoucherRules | updateVoucherRulePayload | deleteVoucherRulePayload | Vouchers | VouchersConnection | VouchersAggregator | VouchersAggregatorSum | VouchersAggregatorAvg | VouchersAggregatorMin | VouchersAggregatorMax | VouchersGroupBy | VouchersConnectionId | VouchersConnectionCreated_at | VouchersConnectionUpdated_at | VouchersConnectionBuy_title_en | VouchersConnectionBuy_title_ar | VouchersConnectionWin_title_en | VouchersConnectionWin_title_ar | VouchersConnectionDesc_en | VouchersConnectionDesc_ar | VouchersConnectionFeatured_img | VouchersConnectionCost | VouchersConnectionStatus | VouchersConnectionLimit | VouchersConnectionTotal_bought | VouchersConnectionDraw_status | VouchersConnectionCreated_by | VouchersConnectionUpdated_by | createVoucherPayload | updateVoucherPayload | deleteVoucherPayload | UploadFile | UploadFileConnection | UploadFileAggregator | UploadFileAggregatorSum | UploadFileAggregatorAvg | UploadFileAggregatorMin | UploadFileAggregatorMax | UploadFileGroupBy | UploadFileConnectionId | UploadFileConnectionCreated_at | UploadFileConnectionUpdated_at | UploadFileConnectionName | UploadFileConnectionAlternativeText | UploadFileConnectionCaption | UploadFileConnectionWidth | UploadFileConnectionHeight | UploadFileConnectionFormats | UploadFileConnectionHash | UploadFileConnectionExt | UploadFileConnectionMime | UploadFileConnectionSize | UploadFileConnectionUrl | UploadFileConnectionPreviewUrl | UploadFileConnectionProvider | UploadFileConnectionProvider_metadata | UploadFileConnectionCreated_by | UploadFileConnectionUpdated_by | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsRoleConnection | UsersPermissionsRoleAggregator | UsersPermissionsRoleGroupBy | UsersPermissionsRoleConnectionId | UsersPermissionsRoleConnectionName | UsersPermissionsRoleConnectionDescription | UsersPermissionsRoleConnectionType | UsersPermissionsRoleConnectionCreated_by | UsersPermissionsRoleConnectionUpdated_by | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | UsersPermissionsUserConnection | UsersPermissionsUserAggregator | UsersPermissionsUserGroupBy | UsersPermissionsUserConnectionId | UsersPermissionsUserConnectionCreated_at | UsersPermissionsUserConnectionUpdated_at | UsersPermissionsUserConnectionUsername | UsersPermissionsUserConnectionEmail | UsersPermissionsUserConnectionProvider | UsersPermissionsUserConnectionConfirmed | UsersPermissionsUserConnectionBlocked | UsersPermissionsUserConnectionRole | UsersPermissionsUserConnectionLanguage | UsersPermissionsUserConnectionNotification_token | UsersPermissionsUserConnectionMobile_number | UsersPermissionsUserConnectionFavourites | UsersPermissionsUserConnectionDob | UsersPermissionsUserConnectionBirthday | UsersPermissionsUserConnectionPlatform | UsersPermissionsUserConnectionApp_version | UsersPermissionsUserConnectionMembership | UsersPermissionsUserConnectionCreated_by | UsersPermissionsUserConnectionUpdated_by | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
   updateAppBasicInformation(input: updateAppBasicInformationInput): updateAppBasicInformationPayload
   deleteAppBasicInformation: deleteAppBasicInformationPayload
+  createAssuredGift(input: createAssuredGiftInput): createAssuredGiftPayload
+  updateAssuredGift(input: updateAssuredGiftInput): updateAssuredGiftPayload
+  deleteAssuredGift(input: deleteAssuredGiftInput): deleteAssuredGiftPayload
   createBanner(input: createBannerInput): createBannerPayload
   updateBanner(input: updateBannerInput): updateBannerPayload
   deleteBanner(input: deleteBannerInput): deleteBannerPayload
@@ -2232,6 +2476,9 @@ type Mutation {
   createCenter(input: createCenterInput): createCenterPayload
   updateCenter(input: updateCenterInput): updateCenterPayload
   deleteCenter(input: deleteCenterInput): deleteCenterPayload
+  createDrawGift(input: createDrawGiftInput): createDrawGiftPayload
+  updateDrawGift(input: updateDrawGiftInput): updateDrawGiftPayload
+  deleteDrawGift(input: deleteDrawGiftInput): deleteDrawGiftPayload
   createFavourite(input: createFavouriteInput): createFavouritePayload
   updateFavourite(input: updateFavouriteInput): updateFavouritePayload
   deleteFavourite(input: deleteFavouriteInput): deleteFavouritePayload
@@ -2312,7 +2559,7 @@ type Mutation {
   partnerLogin(input: PartnerLoginInput!): PartnerLoginPaylod!
   BuyVouchers(user_id: Int!, voucher_id: Int!): VoucherAvailed!
   GenerateVoucherWinner(user_id: Int!, plan_id: Int!): UserVoucher!
-  DeclareVoucherWinner: VoucherAvailed!
+  DeclareVoucherWinner(id: Int!): VoucherAvailed!
   FinalizeWinner: VoucherAvailed!
   upload(refId: ID, ref: String, field: String, source: String, file: Upload!): UploadFile!
   multipleUpload(refId: ID, ref: String, field: String, source: String, files: [Upload]!): [UploadFile]!
@@ -2911,6 +3158,9 @@ type ProductsGroupBy {
 
 type Query {
   appBasicInformation: AppBasicInformation
+  assuredGift(id: ID!): AssuredGifts
+  assuredGifts(sort: String, limit: Int, start: Int, where: JSON): [AssuredGifts]
+  assuredGiftsConnection(sort: String, limit: Int, start: Int, where: JSON): AssuredGiftsConnection
   banner(id: ID!): Banners
   banners(sort: String, limit: Int, start: Int, where: JSON): [Banners]
   bannersConnection(sort: String, limit: Int, start: Int, where: JSON): BannersConnection
@@ -2924,6 +3174,9 @@ type Query {
   center(id: ID!): Centers
   centers(sort: String, limit: Int, start: Int, where: JSON): [Centers]
   centersConnection(sort: String, limit: Int, start: Int, where: JSON): CentersConnection
+  drawGift(id: ID!): DrawGifts
+  drawGifts(sort: String, limit: Int, start: Int, where: JSON): [DrawGifts]
+  drawGiftsConnection(sort: String, limit: Int, start: Int, where: JSON): DrawGiftsConnection
   favourite(id: ID!): Favourites
   favourites(sort: String, limit: Int, start: Int, where: JSON): [Favourites]
   favouritesConnection(sort: String, limit: Int, start: Int, where: JSON): FavouritesConnection
@@ -3195,6 +3448,15 @@ type updateAppBasicInformationPayload {
   appBasicInformation: AppBasicInformation
 }
 
+input updateAssuredGiftInput {
+  where: InputID
+  data: editAssuredGiftInput
+}
+
+type updateAssuredGiftPayload {
+  assuredGift: AssuredGifts
+}
+
 input updateBannerInput {
   where: InputID
   data: editBannerInput
@@ -3237,6 +3499,15 @@ input updateCenterInput {
 
 type updateCenterPayload {
   center: Centers
+}
+
+input updateDrawGiftInput {
+  where: InputID
+  data: editDrawGiftInput
+}
+
+type updateDrawGiftPayload {
+  drawGift: DrawGifts
 }
 
 input updateFavouriteInput {
@@ -3942,20 +4213,10 @@ type VoucherAvailed {
   updated_at: DateTime!
   voucher_id: Vouchers
   user_id: UsersPermissionsUser
-  featured_img: UploadFile
-  membership_plan: MembershipPlans
-  buy_title_en: String
-  buy_title_ar: String
-  win_title_en: String
-  win_title_ar: String
-  desc_an: String
-  desc_ar: String
   is_won: Boolean
   status: Boolean
   created_by: AdminUser
   updated_by: AdminUser
-  product_ids(sort: String, limit: Int, start: Int, where: JSON): [Products]
-  gift_ids(sort: String, limit: Int, start: Int, where: JSON): [Gifts]
 }
 
 type VoucherAvailedAggregator {
@@ -3969,37 +4230,12 @@ type VoucherAvailedConnection {
   aggregate: VoucherAvailedAggregator
 }
 
-type VoucherAvailedConnectionBuy_title_ar {
-  key: String
-  connection: VoucherAvailedConnection
-}
-
-type VoucherAvailedConnectionBuy_title_en {
-  key: String
-  connection: VoucherAvailedConnection
-}
-
 type VoucherAvailedConnectionCreated_at {
   key: DateTime
   connection: VoucherAvailedConnection
 }
 
 type VoucherAvailedConnectionCreated_by {
-  key: ID
-  connection: VoucherAvailedConnection
-}
-
-type VoucherAvailedConnectionDesc_an {
-  key: String
-  connection: VoucherAvailedConnection
-}
-
-type VoucherAvailedConnectionDesc_ar {
-  key: String
-  connection: VoucherAvailedConnection
-}
-
-type VoucherAvailedConnectionFeatured_img {
   key: ID
   connection: VoucherAvailedConnection
 }
@@ -4011,11 +4247,6 @@ type VoucherAvailedConnectionId {
 
 type VoucherAvailedConnectionIs_won {
   key: Boolean
-  connection: VoucherAvailedConnection
-}
-
-type VoucherAvailedConnectionMembership_plan {
-  key: ID
   connection: VoucherAvailedConnection
 }
 
@@ -4044,30 +4275,12 @@ type VoucherAvailedConnectionVoucher_id {
   connection: VoucherAvailedConnection
 }
 
-type VoucherAvailedConnectionWin_title_ar {
-  key: String
-  connection: VoucherAvailedConnection
-}
-
-type VoucherAvailedConnectionWin_title_en {
-  key: String
-  connection: VoucherAvailedConnection
-}
-
 type VoucherAvailedGroupBy {
   id: [VoucherAvailedConnectionId]
   created_at: [VoucherAvailedConnectionCreated_at]
   updated_at: [VoucherAvailedConnectionUpdated_at]
   voucher_id: [VoucherAvailedConnectionVoucher_id]
   user_id: [VoucherAvailedConnectionUser_id]
-  featured_img: [VoucherAvailedConnectionFeatured_img]
-  membership_plan: [VoucherAvailedConnectionMembership_plan]
-  buy_title_en: [VoucherAvailedConnectionBuy_title_en]
-  buy_title_ar: [VoucherAvailedConnectionBuy_title_ar]
-  win_title_en: [VoucherAvailedConnectionWin_title_en]
-  win_title_ar: [VoucherAvailedConnectionWin_title_ar]
-  desc_an: [VoucherAvailedConnectionDesc_an]
-  desc_ar: [VoucherAvailedConnectionDesc_ar]
   is_won: [VoucherAvailedConnectionIs_won]
   status: [VoucherAvailedConnectionStatus]
   created_by: [VoucherAvailedConnectionCreated_by]
@@ -4077,16 +4290,6 @@ type VoucherAvailedGroupBy {
 input VoucherAvailedInput {
   voucher_id: ID
   user_id: ID
-  featured_img: ID
-  membership_plan: ID
-  buy_title_en: String
-  buy_title_ar: String
-  win_title_en: String
-  win_title_ar: String
-  desc_an: String
-  desc_ar: String
-  product_ids: [ID]
-  gift_ids: [ID]
   is_won: Boolean
   status: Boolean
   created_by: ID
@@ -4102,15 +4305,14 @@ input VoucherInput {
   desc_ar: String
   featured_img: ID
   product_id: [ID]
-  assured_gift_id: [ID]
   cost: Float
   status: Boolean
   limit: Int
   total_bought: Long
   membership_plans: [ID]
   draw_status: ENUM_VOUCHERS_DRAW_STATUS
-  is_declared: Boolean
-  is_published: Boolean
+  assured_gift_id: [ID]
+  draw_gift_id: [ID]
   created_by: ID
   updated_by: ID
 }
@@ -4148,13 +4350,12 @@ type Vouchers {
   limit: Int
   total_bought: Long
   draw_status: ENUM_VOUCHERS_DRAW_STATUS
-  is_declared: Boolean
-  is_published: Boolean
   created_by: AdminUser
   updated_by: AdminUser
   product_id(sort: String, limit: Int, start: Int, where: JSON): [Products]
-  assured_gift_id(sort: String, limit: Int, start: Int, where: JSON): [Gifts]
   membership_plans(sort: String, limit: Int, start: Int, where: JSON): [MembershipPlans]
+  assured_gift_id(sort: String, limit: Int, start: Int, where: JSON): [AssuredGifts]
+  draw_gift_id(sort: String, limit: Int, start: Int, where: JSON): [DrawGifts]
 }
 
 type VouchersAggregator {
@@ -4242,16 +4443,6 @@ type VouchersConnectionId {
   connection: VouchersConnection
 }
 
-type VouchersConnectionIs_declared {
-  key: Boolean
-  connection: VouchersConnection
-}
-
-type VouchersConnectionIs_published {
-  key: Boolean
-  connection: VouchersConnection
-}
-
 type VouchersConnectionLimit {
   key: Int
   connection: VouchersConnection
@@ -4303,8 +4494,6 @@ type VouchersGroupBy {
   limit: [VouchersConnectionLimit]
   total_bought: [VouchersConnectionTotal_bought]
   draw_status: [VouchersConnectionDraw_status]
-  is_declared: [VouchersConnectionIs_declared]
-  is_published: [VouchersConnectionIs_published]
   created_by: [VouchersConnectionCreated_by]
   updated_by: [VouchersConnectionUpdated_by]
 }

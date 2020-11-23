@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/assured-gifts",
+      "handler": "assured-gifts.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/assured-gifts/count",
+      "handler": "assured-gifts.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/assured-gifts/:id",
+      "handler": "assured-gifts.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/assured-gifts",
+      "handler": "assured-gifts.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/assured-gifts/:id",
+      "handler": "assured-gifts.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/assured-gifts/:id",
+      "handler": "assured-gifts.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

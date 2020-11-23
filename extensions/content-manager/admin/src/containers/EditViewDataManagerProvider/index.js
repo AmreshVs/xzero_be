@@ -475,7 +475,7 @@ const EditViewDataManagerProvider = ({
         //Generate the voucher winner upon closing 
         if (currentContentTypeLayout.apiID === 'vouchers') {    
           if(cleanedData.draw_status == 'pending') {
-            let declareVoucherWinner = await request('/DeclareVoucherWinner', {
+            let declareVoucherWinner = await request('/DeclareVoucherWinner/cleanedData.id', {
               method: 'GET'
             });
             if(declareVoucherWinner) {

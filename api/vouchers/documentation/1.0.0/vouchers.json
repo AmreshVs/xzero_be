@@ -568,7 +568,7 @@
         "parameters": []
       }
     },
-    "/DeclareVoucherWinner": {
+    "/DeclareVoucherWinner{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -622,7 +622,18 @@
         "tags": [
           "Vouchers"
         ],
-        "parameters": []
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "deprecated": false,
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ]
       }
     },
     "/FinalizeWinner": {
@@ -818,55 +829,6 @@
               }
             }
           },
-          "assured_gift_id": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name_en": {
-                "type": "string"
-              },
-              "name_ar": {
-                "type": "string"
-              },
-              "featured_img": {
-                "type": "string"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "quantity": {
-                "type": "integer"
-              },
-              "gift_type": {
-                "type": "string"
-              },
-              "membership_plans": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "is_assured": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "cost": {
             "type": "number"
           },
@@ -933,13 +895,79 @@
               "publish"
             ]
           },
-          "is_declared": {
-            "type": "boolean",
-            "default": false
+          "assured_gift_id": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title_en": {
+                "type": "string"
+              },
+              "title_ar": {
+                "type": "string"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "featured_img": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
-          "is_published": {
-            "type": "boolean",
-            "default": false
+          "draw_gift_id": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "title_en": {
+                "type": "string"
+              },
+              "title_ar": {
+                "type": "string"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "featured_imgs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "created_by": {
             "required": [
@@ -1054,9 +1082,6 @@
           "product_id": {
             "type": "string"
           },
-          "assured_gift_id": {
-            "type": "string"
-          },
           "cost": {
             "type": "number"
           },
@@ -1083,13 +1108,11 @@
               "publish"
             ]
           },
-          "is_declared": {
-            "type": "boolean",
-            "default": false
+          "assured_gift_id": {
+            "type": "string"
           },
-          "is_published": {
-            "type": "boolean",
-            "default": false
+          "draw_gift_id": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

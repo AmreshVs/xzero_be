@@ -41,9 +41,6 @@
     "product_id": {
       "collection": "products"
     },
-    "assured_gift_id": {
-      "collection": "gifts"
-    },
     "cost": {
       "type": "decimal"
     },
@@ -70,13 +67,11 @@
         "publish"
       ]
     },
-    "is_declared": {
-      "type": "boolean",
-      "default": false
+    "assured_gift_id": {
+      "collection": "assured-gifts"
     },
-    "is_published": {
-      "type": "boolean",
-      "default": false
+    "draw_gift_id": {
+      "collection": "draw-gifts"
     }
   }
 }

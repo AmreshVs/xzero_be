@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "draw_gifts",
+  "info": {
+    "name": "Draw gifts"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title_en": {
+      "type": "string"
+    },
+    "title_ar": {
+      "type": "string"
+    },
+    "desc_en": {
+      "type": "text"
+    },
+    "desc_ar": {
+      "type": "text"
+    },
+    "featured_imgs": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "status": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

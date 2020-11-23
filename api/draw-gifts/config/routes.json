@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/draw-gifts",
+      "handler": "draw-gifts.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/draw-gifts/count",
+      "handler": "draw-gifts.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/draw-gifts/:id",
+      "handler": "draw-gifts.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/draw-gifts",
+      "handler": "draw-gifts.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/draw-gifts/:id",
+      "handler": "draw-gifts.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/draw-gifts/:id",
+      "handler": "draw-gifts.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

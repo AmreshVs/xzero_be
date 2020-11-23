@@ -16,7 +16,7 @@ module.exports = {
 
     mutation: `
         GenerateVoucherWinner(user_id: Int!, plan_id: Int!): UserVoucher!,
-        DeclareVoucherWinner: VoucherAvailed!,
+        DeclareVoucherWinner(id: Int!): VoucherAvailed!,
         FinalizeWinner: VoucherAvailed!,
         
     `,
@@ -41,7 +41,7 @@ module.exports = {
             policies: [],
             resolverOf: 'application::vouchers.vouchers.find',
             resolver: async (obj, options, ctx) => {
-              return await strapi.api.vouchers.controllers.vouchers.DeclareVoucherWinner();
+              return await strapi.api.vouchers.controllers.vouchers.DeclareVoucherWinner(options.id);
             }
         },
         FinalizeWinner: {

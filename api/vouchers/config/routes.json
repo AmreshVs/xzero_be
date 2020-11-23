@@ -57,7 +57,7 @@
 
     {
       "method": "GET",
-      "path": "/DeclareVoucherWinner",
+      "path": "/DeclareVoucherWinner:id",
       "handler": "vouchers.DeclareVoucherWinner"
     },
 
