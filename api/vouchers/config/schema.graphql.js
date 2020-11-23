@@ -1,4 +1,3 @@
-
 module.exports = {
     definition: `
       type UserVoucher {
@@ -13,16 +12,15 @@ module.exports = {
 
       }
 
-      type VouchersPayLoad {
-        VoucherBought: VoucherAvailed
-      }
-
     `,
 
     mutation: `
         GenerateVoucherWinner(user_id: Int!, plan_id: Int!): UserVoucher!,
-        BuyVouchers(user_id: Int!, voucher_id: Int!): VouchersPayLoad!
+        DeclareVoucherWinner: VoucherAvailed!,
+        FinalizeWinner: VoucherAvailed!,
+        
     `,
+
 
     query: 'AvailableVouchers(where: JSON): AvailableVouchers!',
 
@@ -33,21 +31,30 @@ module.exports = {
           policies: [],
           resolverOf: 'application::vouchers.vouchers.find',
           resolver: async (obj, options, ctx) => {
+              
             return await strapi.api.vouchers.controllers.vouchers.GenerateVoucherWinner(options.user_id, options.plan_id);
           }
         },
 
-        BuyVouchers: {
-            description: 'function for to buy vouchers',
+        DeclareVoucherWinner: {
+            description: 'Declaring voucher winner',
             policies: [],
             resolverOf: 'application::vouchers.vouchers.find',
             resolver: async (obj, options, ctx) => {
-              return await strapi.api.vouchers.controllers.vouchers.BuyVouchers(options.user_id, options.voucher_id);
+              return await strapi.api.vouchers.controllers.vouchers.DeclareVoucherWinner();
             }
-          }
+        },
+        FinalizeWinner: {
+            description: 'complete the voucher process and publish the winnner',
+            policies: [],
+            resolverOf: 'application::vouchers.vouchers.find',
+            resolver: async (obj, options, ctx) => {
+              return await strapi.api.vouchers.controllers.vouchers.FinalizeWinner();
+            }
+        }
+        
       },
 
-  
       Query: {
         AvailableVouchers: {
           description: 'Return the added vouchers',

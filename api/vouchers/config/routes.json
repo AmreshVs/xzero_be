@@ -47,6 +47,25 @@
       "config": {
         "policies": []
       }
+    },
+
+    {
+      "method": "GET",
+      "path": "/GenerateVoucherWinner",
+      "handler": "vouchers.GenerateVoucherWinner"
+    },
+
+    {
+      "method": "GET",
+      "path": "/DeclareVoucherWinner",
+      "handler": "vouchers.DeclareVoucherWinner"
+    },
+
+    {
+      "method": "GET",
+      "path": "/FinalizeWinner",
+      "handler": "vouchers.FinalizeWinner"
     }
+
   ]
 }

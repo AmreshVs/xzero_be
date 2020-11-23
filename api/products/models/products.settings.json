@@ -15,7 +15,7 @@
     "title_ar": {
       "type": "string"
     },
-    "worth_of": {
+    "cost": {
       "type": "decimal"
     },
     "desc_en": {

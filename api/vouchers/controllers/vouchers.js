@@ -11,66 +11,54 @@ const _ = require('lodash');
 
 module.exports = {
 
-    async AvailableVouchers() {
+    async AvailableVouchers(condtion) {
         let vouchers = await strapi.query("vouchers").find({ status :1, membership_plans: condtion.membership_plan });
         let VouchersAvailed = await strapi.query("voucher-availed").find(condtion);
         return { vouchers: vouchers, AvailedVouchers: VouchersAvailed };   
     },
 
-    async BuyVouchers(user_id, voucher_id) {
-    
-        let memberShip = await strapi.query("membership").findOne({ user: user_id });
-        let vouchers = await strapi.query("vouchers").findOne({ id: voucher_id });
-        
-        if( user_id !== null && vouchers !== null ){
-             await strapi
-            .query("voucher-availed")
-                .create({
-                user_id: user_id,
-                voucher_id: vouchers.id,
-                membership_plans: memberShip.id,
-                buy_title_en: vouchers.buy_title_en,	
-                buy_title_ar: vouchers.buy_title_ar,
-                win_title_en: vouchers.win_title_en,
-                win_title_ar: vouchers.win_title_ar,
-                featured_img: vouchers.featured_img,
-                desc_an: vouchers.desc_an,
-                desc_ar: vouchers.desc_ar,
-                product_ids: vouchers.product_id, 
-                gift_ids: vouchers.assured_gift_id
-            });
-
-            await strapi
-            .query("vouchers")
-                .update({ id: vouchers.id },
-                { users_subscribed: vouchers.users_subscribed+1
-            });
-        }
-    },
 
     async GenerateVoucherWinner(user_id, plan_id) {
         let datas = [];
         let alluserIds = [];
         let eligibleUsers;
-        let memberShipPlan =  await strapi.query('membership-plans').find(user);
-        for (var key in memberShipPlan) {
-            if(memberShipPlan[key]['id']>0) {
-            let memberArray = await strapi.query('membership').find({ package: memberShipPlan[key]['id']});
-            let giftArray = await strapi.query('vouchers').find({membership_plan: memberShipPlan[key]['id']});
-            if(memberArray!==null && giftArray!==null) {
-                let luckyUser = [].concat(...memberArray.map(x => x.user));
-                luckyUser.map(g=> alluserIds.push(g.id) );
-                let selectedGroupIds = luckyUser.map(g=> g.id );
-                let selectVoucher =  [].concat(...giftArray.map(x => x.id));
-                 datas[memberShipPlan[key]['name']] =  { users:  selectedGroupIds };
-                 datas[memberShipPlan[key]['name']]['vouchers'] = selectVoucher;
+        let memberShipPlan =  await strapi.query('membership-plans').find();
+        let vouchers =  await strapi.query('vouchers').find({status: true});
+        //console.log(vouchers); return false;
+        //let vouchers =  await strapi.query('vouchers').find();
+        //console.log(vouchers); return false;
+        for (var key in vouchers) {
+            if(vouchers[key]['id']>0 && vouchers[key]['draw_status'] === 'progress') {
+            //let memberArray = await strapi.query('membership').find({ package: vouchers[key]['id']});
+            let voucherAvailedArray = await strapi.query('voucher-availed').find({voucher_id: vouchers[key].id});
+            //let vouchers = await strapi.query('vouchers').find({membership_plans: memberShipPlan[key]['id']});
+            //console.log(voucherAvailedArray); return false;
+            if( voucherAvailedArray!==null && vouchers[key].draw_status ==='progress' ) {
+
+                //let voucherStatus = vouchers.map(x => x.draw_status);
+                //luckyUser.map(g=> alluserIds.push(g.id) );
+                //let voucherStatusAll = voucherStatus.map(g=> g.draw_status );
+                //console.log(voucherStatusAll); return false;
+                //let voucherSts = 
+
+                let selectVoucher =  [].concat(...voucherAvailedArray.map(x => x.id));
+                let winner =  _.sampleSize(selectVoucher, 1);
+                
+                //datas[memberShipPlan[key]['name_en']] =  { users:  selectedGroupIds };
+                datas[vouchers[key]['buy_title_en']] = selectVoucher;
+                datas[vouchers[key]['buy_title_en']]['draw_status'] = vouchers[key]['draw_status'];
+                //datas[vouchers[key]['buy_title_en']]['winner'] = winner;
+                
+                //datas[vouchers[key]['buy_title_en']]['status'] = voucherStatus;
                 eligibleUsers =  alluserIds;
              }
         }
         }
 
-        // let VoucherSelectedUser =  _.sampleSize(eligibleUsers, 1);
-        // let finalList = [];
+        //console.log(datas); return false;
+        let VoucherSelectedUser =  _.sampleSize(eligibleUsers, 1);
+        
+        let finalList = [];
         
         // for (var impKey in VoucherSelectedUser) {
         //     for(var key in memberShipPlan){
@@ -96,6 +84,34 @@ module.exports = {
         // }
        
         return { won: true, voucher: voucher, disabled: false };
+    },
+
+    async DeclareVoucherWinner() {
+        let datas = [];
+        let voucher_id = 2;
+        let vouchers =  await strapi.query('vouchers').findOne({ status: true, id: voucher_id });
+        //console.log(vouchers); return false;
+        //for (var key in vouchers) {
+            if( vouchers.draw_status === 'pending' ) {
+            let voucherAvailedArray = await strapi.query('voucher-availed').find({voucher_id: vouchers.id});
+            if( voucherAvailedArray!==null && vouchers.draw_status ==='progress' ) {
+                let selectVoucher =  [].concat(...voucherAvailedArray.map(x => x.id));
+                let winner =  _.sampleSize(selectVoucher, 1);
+                datas[vouchers[key]['buy_title_en']] = selectVoucher;
+                datas[vouchers[key]['buy_title_en']]['draw_status'] = vouchers.draw_status;
+                datas[vouchers[key]['buy_title_en']]['winner'] = winner;
+              
+                //eligibleUsers =  alluserIds;
+             }
+        }
+          console.log(datas); return false;
+        //}
+        return vouchers;
+    },
+
+    async FinalizeWinner() {
+        console.log("here in finalize in voucher");  return false
+        let vouchers = await strapi.query("voucher-availed").findOne();
+        return vouchers;
     }
-    
 };

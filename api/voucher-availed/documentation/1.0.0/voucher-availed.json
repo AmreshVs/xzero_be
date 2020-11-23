@@ -576,17 +576,23 @@
               "status": {
                 "type": "boolean"
               },
-              "minimum_subscription_limit": {
+              "limit": {
                 "type": "integer"
               },
-              "users_subscribed": {
+              "total_bought": {
                 "type": "integer"
-              },
-              "expiry": {
-                "type": "datetime"
               },
               "membership_plans": {
                 "type": "string"
+              },
+              "draw_status": {
+                "type": "string"
+              },
+              "is_declared": {
+                "type": "boolean"
+              },
+              "is_published": {
+                "type": "boolean"
               },
               "created_by": {
                 "type": "string"
@@ -665,6 +671,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "membership": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -816,7 +825,7 @@
               "title_ar": {
                 "type": "string"
               },
-              "worth_of": {
+              "cost": {
                 "type": "number"
               },
               "desc_en": {
@@ -894,6 +903,9 @@
           "is_won": {
             "type": "boolean",
             "default": false
+          },
+          "status": {
+            "type": "boolean"
           },
           "created_by": {
             "required": [
@@ -1023,6 +1035,9 @@
           "is_won": {
             "type": "boolean",
             "default": false
+          },
+          "status": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"

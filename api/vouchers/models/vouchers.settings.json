@@ -51,18 +51,32 @@
       "type": "boolean",
       "default": true
     },
-    "minimum_subscription_limit": {
+    "limit": {
       "type": "integer"
     },
-    "users_subscribed": {
+    "total_bought": {
       "type": "biginteger",
       "default": "0"
     },
-    "expiry": {
-      "type": "datetime"
-    },
     "membership_plans": {
       "collection": "membership-plans"
+    },
+    "draw_status": {
+      "type": "enumeration",
+      "enum": [
+        "progress",
+        "closed",
+        "declare",
+        "publish"
+      ]
+    },
+    "is_declared": {
+      "type": "boolean",
+      "default": false
+    },
+    "is_published": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

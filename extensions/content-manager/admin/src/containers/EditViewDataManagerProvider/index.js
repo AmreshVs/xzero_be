@@ -472,6 +472,31 @@ const EditViewDataManagerProvider = ({
           }
         }
 
+        //Generate the voucher winner upon closing 
+        if (currentContentTypeLayout.apiID === 'vouchers') {    
+          if(cleanedData.draw_status == 'pending') {
+            let declareVoucherWinner = await request('/DeclareVoucherWinner', {
+              method: 'GET'
+            });
+            if(declareVoucherWinner) {
+              console.log("Declared Winner");
+            } else {
+              console.log("something is went wrong ")
+            }
+
+          } else if(cleanedData.draw_status == 'complete') {
+            let finalizeVoucherWinner = await request('/FinalizeWinner', {
+              method: 'GET'
+            });
+            if(finalizeVoucherWinner) {
+              console.log("Published Winner");
+            } else {
+              console.log("Something is went wrong")
+            }
+          }
+        }
+
+
         if (isSingleType) {
           setIsCreatingEntry(false);
         } else {

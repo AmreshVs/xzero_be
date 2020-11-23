@@ -60,6 +60,9 @@
       "unique": false,
       "private": false,
       "required": false
+    },
+    "status": {
+      "type": "boolean"
     }
   }
 }

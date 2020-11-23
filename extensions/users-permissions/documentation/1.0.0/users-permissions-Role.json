@@ -594,6 +594,9 @@
                     "type": "string"
                   }
                 },
+                "membership": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },

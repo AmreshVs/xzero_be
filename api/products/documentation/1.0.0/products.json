@@ -528,7 +528,7 @@
           "title_ar": {
             "type": "string"
           },
-          "worth_of": {
+          "cost": {
             "type": "number"
           },
           "desc_en": {
@@ -709,7 +709,7 @@
           "title_ar": {
             "type": "string"
           },
-          "worth_of": {
+          "cost": {
             "type": "number"
           },
           "desc_en": {

@@ -1352,6 +1352,55 @@
               }
             }
           },
+          "membership": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "serial": {
+                "type": "string"
+              },
+              "expiry": {
+                "type": "datetime"
+              },
+              "membership_transactions": {
+                "type": "string"
+              },
+              "qrcode_url": {
+                "type": "string"
+              },
+              "package": {
+                "type": "integer"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "is_gift_generated": {
+                "type": "boolean"
+              },
+              "gift_generated_date": {
+                "type": "datetime"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -1512,6 +1561,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "membership": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

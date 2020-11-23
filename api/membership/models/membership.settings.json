@@ -11,7 +11,8 @@
   "attributes": {
     "user": {
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "membership"
     },
     "serial": {
       "type": "string"

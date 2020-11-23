@@ -510,6 +510,177 @@
           }
         ]
       }
+    },
+    "/GenerateVoucherWinner": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Vouchers"
+        ],
+        "parameters": []
+      }
+    },
+    "/DeclareVoucherWinner": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Vouchers"
+        ],
+        "parameters": []
+      }
+    },
+    "/FinalizeWinner": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Vouchers"
+        ],
+        "parameters": []
+      }
     }
   },
   "components": {
@@ -621,7 +792,7 @@
               "title_ar": {
                 "type": "string"
               },
-              "worth_of": {
+              "cost": {
                 "type": "number"
               },
               "desc_en": {
@@ -703,15 +874,12 @@
             "type": "boolean",
             "default": true
           },
-          "minimum_subscription_limit": {
+          "limit": {
             "type": "integer"
           },
-          "users_subscribed": {
+          "total_bought": {
             "type": "integer",
             "default": "0"
-          },
-          "expiry": {
-            "type": "datetime"
           },
           "membership_plans": {
             "required": [
@@ -755,6 +923,23 @@
                 "type": "string"
               }
             }
+          },
+          "draw_status": {
+            "type": "string",
+            "enum": [
+              "progress",
+              "closed",
+              "declare",
+              "publish"
+            ]
+          },
+          "is_declared": {
+            "type": "boolean",
+            "default": false
+          },
+          "is_published": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "required": [
@@ -879,18 +1064,32 @@
             "type": "boolean",
             "default": true
           },
-          "minimum_subscription_limit": {
+          "limit": {
             "type": "integer"
           },
-          "users_subscribed": {
+          "total_bought": {
             "type": "integer",
             "default": "0"
           },
-          "expiry": {
-            "type": "datetime"
-          },
           "membership_plans": {
             "type": "string"
+          },
+          "draw_status": {
+            "type": "string",
+            "enum": [
+              "progress",
+              "closed",
+              "declare",
+              "publish"
+            ]
+          },
+          "is_declared": {
+            "type": "boolean",
+            "default": false
+          },
+          "is_published": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"
