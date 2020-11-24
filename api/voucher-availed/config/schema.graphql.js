@@ -4,7 +4,7 @@ module.exports = {
         type BoughtVoucher {
             disabled: Boolean,
             bought: JSON!,
-            VocherAvailed: VoucherAvailed
+            VoucherAvailed: VoucherAvailed
         }`, 
 
     mutation: `

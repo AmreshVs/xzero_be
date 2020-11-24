@@ -19,11 +19,9 @@ module.exports = {
 		}
 		
     let dataToSave = {
-      user_id: user_id,
-      voucher_id: vouchers.id,
-      product_ids: vouchers.product_id,
+      user: user_id,
+      voucher: vouchers.id,
       status: true,
-      gift_ids: vouchers.assured_gift_id,
     };
 
     if (user_id !== null && vouchers !== null) {

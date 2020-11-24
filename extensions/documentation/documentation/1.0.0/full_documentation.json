@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/24/2020 4:39:38 PM"
+    "x-generation-date": "11/24/2020 4:56:25 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -22454,7 +22454,7 @@
           "id": {
             "type": "string"
           },
-          "voucher_id": {
+          "voucher": {
             "required": [
               "id"
             ],
@@ -22524,7 +22524,7 @@
               }
             }
           },
-          "user_id": {
+          "user": {
             "required": [
               "id",
               "username",
@@ -22704,10 +22704,10 @@
       },
       "NewVoucher-availed": {
         "properties": {
-          "voucher_id": {
+          "voucher": {
             "type": "string"
           },
-          "user_id": {
+          "user": {
             "type": "string"
           },
           "is_won": {

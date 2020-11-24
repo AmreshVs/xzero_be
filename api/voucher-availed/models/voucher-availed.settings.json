@@ -9,10 +9,10 @@
     "timestamps": true
   },
   "attributes": {
-    "voucher_id": {
+    "voucher": {
       "model": "vouchers"
     },
-    "user_id": {
+    "user": {
       "plugin": "users-permissions",
       "model": "user"
     },

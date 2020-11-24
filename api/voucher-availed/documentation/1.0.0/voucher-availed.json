@@ -603,7 +603,7 @@
           "id": {
             "type": "string"
           },
-          "voucher_id": {
+          "voucher": {
             "required": [
               "id"
             ],
@@ -673,7 +673,7 @@
               }
             }
           },
-          "user_id": {
+          "user": {
             "required": [
               "id",
               "username",
@@ -853,10 +853,10 @@
       },
       "NewVoucher-availed": {
         "properties": {
-          "voucher_id": {
+          "voucher": {
             "type": "string"
           },
-          "user_id": {
+          "user": {
             "type": "string"
           },
           "is_won": {
