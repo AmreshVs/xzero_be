@@ -38,7 +38,7 @@ module.exports = {
       return {
         disabled: false,
         bought: "success",
-        VocherAvailed: voucher_availed,
+        VoucherAvailed: voucher_availed,
       };
     }
   },
