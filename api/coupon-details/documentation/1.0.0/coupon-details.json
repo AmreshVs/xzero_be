@@ -1,18 +1,19 @@
 {
   "paths": {
-    "/vouchers": {
+    "/coupon-details": {
       "get": {
         "deprecated": false,
-        "description": "Find all the vouchers's records",
+        "description": "Find all the coupon-details's records",
         "responses": {
           "200": {
-            "description": "Retrieve vouchers document(s)",
+            "description": "Retrieve coupon-details document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Vouchers"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Coupon-details"
         ],
         "parameters": [
           {
@@ -194,79 +195,16 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new vouchers record",
+        "description": "Create a new coupon-details record",
         "responses": {
           "200": {
-            "description": "Retrieve vouchers document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Vouchers"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Vouchers"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewVouchers"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/vouchers/count": {
-      "get": {
-        "deprecated": false,
-        "description": "Retrieve the numver of vouchers documents",
-        "responses": {
-          "200": {
-            "description": "Retrieve vouchers document(s)",
+            "description": "Retrieve coupon-details document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,22 +244,36 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Coupon-details"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewCoupon-details"
+              }
+            }
+          }
+        }
       }
     },
-    "/vouchers/{id}": {
+    "/coupon-details/count": {
       "get": {
         "deprecated": false,
-        "description": "Find one vouchers record",
+        "description": "Retrieve the numver of coupon-details documents",
         "responses": {
           "200": {
-            "description": "Retrieve vouchers document(s)",
+            "description": "Retrieve coupon-details document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Vouchers"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -359,7 +311,64 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Coupon-details"
+        ],
+        "parameters": []
+      }
+    },
+    "/coupon-details/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "Find one coupon-details record",
+        "responses": {
+          "200": {
+            "description": "Retrieve coupon-details document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Coupon-details"
         ],
         "parameters": [
           {
@@ -376,14 +385,18 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single vouchers record",
+        "description": "Update a single coupon-details record",
         "responses": {
           "200": {
-            "description": "Retrieve vouchers document(s)",
+            "description": "Retrieve coupon-details document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Vouchers"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -421,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Coupon-details"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewVouchers"
+                "$ref": "#/components/schemas/NewCoupon-details"
               }
             }
           }
@@ -449,10 +462,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single vouchers record",
+        "description": "Delete a single coupon-details record",
         "responses": {
           "200": {
-            "description": "deletes a single vouchers based on the ID supplied",
+            "description": "deletes a single coupon-details based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Coupon-details"
         ],
         "parameters": [
           {
@@ -514,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Vouchers": {
+      "Coupon-details": {
         "required": [
           "id"
         ],
@@ -522,122 +535,78 @@
           "id": {
             "type": "string"
           },
-          "buy_title_en": {
-            "type": "string"
-          },
-          "buy_title_ar": {
-            "type": "string"
-          },
-          "win_title_en": {
-            "type": "string"
-          },
-          "win_title_ar": {
-            "type": "string"
-          },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "featured_img": {
+          "user": {
             "required": [
               "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
+              "username",
+              "email"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "name": {
+              "username": {
                 "type": "string"
               },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
+              "email": {
                 "type": "string"
               },
               "provider": {
                 "type": "string"
               },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
+              "password": {
                 "type": "string"
               },
-              "created_by": {
+              "resetPasswordToken": {
                 "type": "string"
               },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "product": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
                 "type": "string"
               },
-              "title_en": {
+              "language": {
                 "type": "string"
               },
-              "title_ar": {
+              "notification_token": {
                 "type": "string"
               },
-              "cost": {
-                "type": "number"
+              "mobile_number": {
+                "type": "integer"
               },
-              "desc_en": {
+              "favourites": {
                 "type": "string"
               },
-              "desc_ar": {
+              "dob": {
                 "type": "string"
               },
-              "featured_imgs": {
+              "birthday": {
+                "type": "datetime"
+              },
+              "platform": {
+                "type": "string"
+              },
+              "app_version": {
+                "type": "string"
+              },
+              "center_check_ins": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "status": {
-                "type": "boolean"
+              "favourite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "membership": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -647,156 +616,40 @@
               }
             }
           },
-          "cost": {
+          "promocode": {
+            "type": "string"
+          },
+          "start_date": {
+            "type": "datetime"
+          },
+          "end_date": {
+            "type": "datetime"
+          },
+          "discount": {
             "type": "number"
           },
-          "status": {
-            "type": "boolean",
-            "default": true
+          "allowed_maximum_discount": {
+            "type": "number"
+          },
+          "maximum_usage_per_user": {
+            "type": "integer"
+          },
+          "total_used": {
+            "type": "integer"
+          },
+          "applied_for": {
+            "type": "string",
+            "enum": [
+              "membership",
+              "voucher"
+            ]
           },
           "limit": {
             "type": "integer"
           },
-          "total_bought": {
-            "type": "integer",
-            "default": "0"
-          },
-          "membership_plans": {
-            "required": [
-              "id",
-              "duration"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name_en": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "price": {
-                "type": "number"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "limit": {
-                "type": "integer"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "name_ar": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "featured_img": {
-                "type": "string"
-              },
-              "duration": {
-                "type": "integer"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "draw_status": {
-            "type": "string",
-            "default": "progress",
-            "enum": [
-              "progress",
-              "closed",
-              "declare",
-              "publish"
-            ]
-          },
-          "assured_gift": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "title_en": {
-                "type": "string"
-              },
-              "title_ar": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "featured_img": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "draw_gift": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "title_en": {
-                "type": "string"
-              },
-              "title_ar": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "featured_imgs": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "promo_code_applied": {
-            "type": "string"
-          },
-          "paid_amount": {
-            "type": "number"
+          "status": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "required": [
@@ -888,67 +741,45 @@
           }
         }
       },
-      "NewVouchers": {
+      "NewCoupon-details": {
         "properties": {
-          "buy_title_en": {
+          "user": {
             "type": "string"
           },
-          "buy_title_ar": {
+          "promocode": {
             "type": "string"
           },
-          "win_title_en": {
-            "type": "string"
+          "start_date": {
+            "type": "datetime"
           },
-          "win_title_ar": {
-            "type": "string"
+          "end_date": {
+            "type": "datetime"
           },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "product": {
-            "type": "string"
-          },
-          "cost": {
+          "discount": {
             "type": "number"
           },
-          "status": {
-            "type": "boolean",
-            "default": true
+          "allowed_maximum_discount": {
+            "type": "number"
+          },
+          "maximum_usage_per_user": {
+            "type": "integer"
+          },
+          "total_used": {
+            "type": "integer"
+          },
+          "applied_for": {
+            "type": "string",
+            "enum": [
+              "membership",
+              "voucher"
+            ]
           },
           "limit": {
             "type": "integer"
           },
-          "total_bought": {
-            "type": "integer",
-            "default": "0"
-          },
-          "membership_plans": {
-            "type": "string"
-          },
-          "draw_status": {
-            "type": "string",
-            "default": "progress",
-            "enum": [
-              "progress",
-              "closed",
-              "declare",
-              "publish"
-            ]
-          },
-          "assured_gift": {
-            "type": "string"
-          },
-          "draw_gift": {
-            "type": "string"
-          },
-          "promo_code_applied": {
-            "type": "string"
-          },
-          "paid_amount": {
-            "type": "number"
+          "status": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"
@@ -960,9 +791,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Vouchers"
-    }
-  ]
+  "tags": []
 }

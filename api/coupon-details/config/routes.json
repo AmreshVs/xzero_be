@@ -2,48 +2,48 @@
   "routes": [
     {
       "method": "GET",
-      "path": "/vouchers",
-      "handler": "vouchers.find",
+      "path": "/coupon-details",
+      "handler": "coupon-details.find",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/vouchers/count",
-      "handler": "vouchers.count",
+      "path": "/coupon-details/count",
+      "handler": "coupon-details.count",
       "config": {
         "policies": []
       }
     },
     {
       "method": "GET",
-      "path": "/vouchers/:id",
-      "handler": "vouchers.findOne",
+      "path": "/coupon-details/:id",
+      "handler": "coupon-details.findOne",
       "config": {
         "policies": []
       }
     },
     {
       "method": "POST",
-      "path": "/vouchers",
-      "handler": "vouchers.create",
+      "path": "/coupon-details",
+      "handler": "coupon-details.create",
       "config": {
         "policies": []
       }
     },
     {
       "method": "PUT",
-      "path": "/vouchers/:id",
-      "handler": "vouchers.update",
+      "path": "/coupon-details/:id",
+      "handler": "coupon-details.update",
       "config": {
         "policies": []
       }
     },
     {
       "method": "DELETE",
-      "path": "/vouchers/:id",
-      "handler": "vouchers.delete",
+      "path": "/coupon-details/:id",
+      "handler": "coupon-details.delete",
       "config": {
         "policies": []
       }

@@ -28,25 +28,25 @@ module.exports = {
         .findOne({ user: user_id });
       let giftArray = await strapi
         .query("gifts")
-        .find({ membership_plans: memberArray.package });
+        .find({ membership_plans: memberArray.package, status: true });
       if (memberArray !== null && giftArray !== null) {
         let selectGifts = [].concat(...giftArray.map((gift) => gift.id));
         let shuffledGifts = _.shuffle(
           selectGifts.concat(Array(100-selectGifts.length).fill(0))
         );
         let giftsGotId = _.sampleSize(shuffledGifts, 1);
-        let giftAvailed = await strapi.query("gift-availed").count({user: user_id});
+        let giftAvailedCount = await strapi.query("gift-availed").count({ user: user_id, status: true });
 
         if(memberArray.gift_generated_date)
         days = DateDiffInDaysWithCurrentDate(new Date(memberArray.gift_generated_date));
 
-        if( days<7 && giftAvailed > 0 && memberArray.is_gift_generated === true ) {
+        if( days<7 && giftAvailedCount > 0 && memberArray.is_gift_generated === true ) {
           return { disabled: true,  won: false };
         }
 
         let giftGotDetails = await strapi
           .query("gifts")
-          .findOne({ id: giftsGotId[0] });
+          .findOne({ id: giftsGotId[0], status: true });
         if ( 
           giftsGotId[0] > 0 &&
           giftGotDetails.quantity !== null &&
@@ -62,7 +62,7 @@ module.exports = {
             membership_plan: memberArray.package,
             user: user_id,
             gift_id: giftsGotId[0],
-            status: 1,
+            status: true,
           });
           let gift = await strapi.query("gifts").update(
             { id: giftsGotId[0] },
@@ -90,7 +90,7 @@ module.exports = {
   async AvailableGifts(condtion) {
     let gifts = await strapi
       .query("gifts")
-      .find({ status: 1, membership_plans: condtion.membership_plan });
+      .find({ status: true, membership_plans: condtion.membership_plan });
     let giftAvailed = await strapi.query("gift-availed").find(condtion);
     return { gifts: gifts, AvailedGifts: giftAvailed };
   },

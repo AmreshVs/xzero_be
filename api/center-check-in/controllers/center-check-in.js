@@ -79,7 +79,7 @@ module.exports = {
   async getMembershipInfo(serial, condition) {
     let offers = await strapi
       .query("offers")
-      .find({ center: condition.center });
+      .find({ center: condition.center, status: true });
     let memberShips = await strapi
       .query("membership")
       .findOne({ serial: serial });
@@ -126,7 +126,7 @@ module.exports = {
   async getOffers(center_id) {
     let offersByCenter = await strapi
       .query("offers")
-      .find({ center: center_id, _sort: "id:desc" });
+      .find({ status: true, center: center_id, _sort: "id:desc" });
     return offersByCenter;
   },
 
@@ -150,7 +150,7 @@ module.exports = {
     if (centerOffers === null) {
       offers = await strapi
         .query("offers")
-        .find({ center: center_id, _limit: 5, _sort: "id:desc" });
+        .find({ status: true, center: center_id, _limit: 5, _sort: "id:desc" });
     } else {
       centerOffers.map((center) => {
         if (center.offer_id !== null) {
@@ -170,7 +170,7 @@ module.exports = {
     //queries to get the count
     let offersCount = await strapi
       .query("offers")
-      .count({ center: center_id });
+      .count({ center: center_id, status: true });
 
       const result = await strapi
         .query('center-check-in')
@@ -185,7 +185,7 @@ module.exports = {
       
     let favouritesCount = await strapi
       .query("favourites")
-      .count({ center: center_id });
+      .count({ center: center_id, status: true });
     let counts = {
       offers: offersCount,
       visits: visitsCount,
