@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "coupon_details",
+  "info": {
+    "name": "Coupon Details"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "promocode": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "datetime"
+    },
+    "end_date": {
+      "type": "datetime"
+    },
+    "discount": {
+      "type": "decimal"
+    },
+    "allowed_maximum_discount": {
+      "type": "decimal"
+    },
+    "maximum_usage_per_user": {
+      "type": "integer"
+    },
+    "total_used": {
+      "type": "biginteger"
+    },
+    "applied_for": {
+      "type": "enumeration",
+      "enum": [
+        "membership",
+        "voucher"
+      ]
+    },
+    "limit": {
+      "type": "biginteger"
+    },
+    "status": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

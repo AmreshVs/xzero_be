@@ -1,18 +1,18 @@
 {
   "paths": {
-    "/vouchers": {
+    "/affiliates": {
       "get": {
         "deprecated": false,
-        "description": "Find all the vouchers's records",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve vouchers document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Vouchers"
+                    "$ref": "#/components/schemas/Affiliate"
                   }
                 }
               }
@@ -51,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Affiliate"
         ],
         "parameters": [
           {
@@ -194,14 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new vouchers record",
+        "description": "Create a new record",
         "responses": {
           "200": {
-            "description": "Retrieve vouchers document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Vouchers"
+                  "$ref": "#/components/schemas/Affiliate"
                 }
               }
             }
@@ -239,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Affiliate"
         ],
         "requestBody": {
           "description": "",
@@ -247,20 +247,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewVouchers"
+                "$ref": "#/components/schemas/NewAffiliate"
               }
             }
           }
         }
       }
     },
-    "/vouchers/count": {
+    "/affiliates/count": {
       "get": {
         "deprecated": false,
-        "description": "Retrieve the numver of vouchers documents",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve vouchers document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
@@ -306,22 +306,22 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Affiliate"
         ],
         "parameters": []
       }
     },
-    "/vouchers/{id}": {
+    "/affiliates/{id}": {
       "get": {
         "deprecated": false,
-        "description": "Find one vouchers record",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve vouchers document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Vouchers"
+                  "$ref": "#/components/schemas/Affiliate"
                 }
               }
             }
@@ -359,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Affiliate"
         ],
         "parameters": [
           {
@@ -376,14 +376,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single vouchers record",
+        "description": "Update a record",
         "responses": {
           "200": {
-            "description": "Retrieve vouchers document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Vouchers"
+                  "$ref": "#/components/schemas/Affiliate"
                 }
               }
             }
@@ -421,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Affiliate"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewVouchers"
+                "$ref": "#/components/schemas/NewAffiliate"
               }
             }
           }
@@ -449,10 +449,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single vouchers record",
+        "description": "Delete a record",
         "responses": {
           "200": {
-            "description": "deletes a single vouchers based on the ID supplied",
+            "description": "deletes a single record based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Vouchers"
+          "Affiliate"
         ],
         "parameters": [
           {
@@ -514,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Vouchers": {
+      "Affiliate": {
         "required": [
           "id"
         ],
@@ -522,122 +522,78 @@
           "id": {
             "type": "string"
           },
-          "buy_title_en": {
-            "type": "string"
-          },
-          "buy_title_ar": {
-            "type": "string"
-          },
-          "win_title_en": {
-            "type": "string"
-          },
-          "win_title_ar": {
-            "type": "string"
-          },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "featured_img": {
+          "user": {
             "required": [
               "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
+              "username",
+              "email"
             ],
             "properties": {
               "id": {
                 "type": "string"
               },
-              "name": {
+              "username": {
                 "type": "string"
               },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
+              "email": {
                 "type": "string"
               },
               "provider": {
                 "type": "string"
               },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
+              "password": {
                 "type": "string"
               },
-              "created_by": {
+              "resetPasswordToken": {
                 "type": "string"
               },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "product_id": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
                 "type": "string"
               },
-              "title_en": {
+              "language": {
                 "type": "string"
               },
-              "title_ar": {
+              "notification_token": {
                 "type": "string"
               },
-              "cost": {
-                "type": "number"
+              "mobile_number": {
+                "type": "integer"
               },
-              "desc_en": {
+              "favourites": {
                 "type": "string"
               },
-              "desc_ar": {
+              "dob": {
                 "type": "string"
               },
-              "featured_imgs": {
+              "birthday": {
+                "type": "datetime"
+              },
+              "platform": {
+                "type": "string"
+              },
+              "app_version": {
+                "type": "string"
+              },
+              "center_check_ins": {
                 "type": "array",
                 "items": {
                   "type": "string"
                 }
               },
-              "status": {
-                "type": "boolean"
+              "favourite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "membership": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
@@ -647,151 +603,42 @@
               }
             }
           },
-          "cost": {
-            "type": "number"
-          },
-          "status": {
-            "type": "boolean",
-            "default": true
+          "referral_code": {
+            "type": "string"
           },
           "limit": {
             "type": "integer"
           },
-          "total_bought": {
-            "type": "integer",
-            "default": "0"
-          },
-          "membership_plans": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name_en": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "price": {
-                "type": "number"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "limit": {
-                "type": "integer"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "name_ar": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "featured_img": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "draw_status": {
+          "type": {
             "type": "string",
+            "default": "public",
             "enum": [
-              "progress",
-              "closed",
-              "declare",
-              "publish"
+              "limited",
+              "public"
             ]
           },
-          "assured_gift_id": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "title_en": {
-                "type": "string"
-              },
-              "title_ar": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "featured_img": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "allowed_usage_per_user": {
+            "type": "integer"
           },
-          "draw_gift_id": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "title_en": {
-                "type": "string"
-              },
-              "title_ar": {
-                "type": "string"
-              },
-              "desc_en": {
-                "type": "string"
-              },
-              "desc_ar": {
-                "type": "string"
-              },
-              "featured_imgs": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
+          "applied_for": {
+            "type": "string",
+            "enum": [
+              "voucher",
+              "membership"
+            ]
           },
-          "promo_code_applied": {
-            "type": "string"
+          "total_usage": {
+            "type": "integer"
           },
-          "paid_amount": {
-            "type": "number"
+          "discount": {
+            "type": "integer"
+          },
+          "maximum_allowed_discount": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "required": [
@@ -883,66 +730,47 @@
           }
         }
       },
-      "NewVouchers": {
+      "NewAffiliate": {
         "properties": {
-          "buy_title_en": {
+          "user": {
             "type": "string"
           },
-          "buy_title_ar": {
+          "referral_code": {
             "type": "string"
-          },
-          "win_title_en": {
-            "type": "string"
-          },
-          "win_title_ar": {
-            "type": "string"
-          },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "product_id": {
-            "type": "string"
-          },
-          "cost": {
-            "type": "number"
-          },
-          "status": {
-            "type": "boolean",
-            "default": true
           },
           "limit": {
             "type": "integer"
           },
-          "total_bought": {
-            "type": "integer",
-            "default": "0"
-          },
-          "membership_plans": {
-            "type": "string"
-          },
-          "draw_status": {
+          "type": {
             "type": "string",
+            "default": "public",
             "enum": [
-              "progress",
-              "closed",
-              "declare",
-              "publish"
+              "limited",
+              "public"
             ]
           },
-          "assured_gift_id": {
-            "type": "string"
+          "allowed_usage_per_user": {
+            "type": "integer"
           },
-          "draw_gift_id": {
-            "type": "string"
+          "applied_for": {
+            "type": "string",
+            "enum": [
+              "voucher",
+              "membership"
+            ]
           },
-          "promo_code_applied": {
-            "type": "string"
+          "total_usage": {
+            "type": "integer"
           },
-          "paid_amount": {
-            "type": "number"
+          "discount": {
+            "type": "integer"
+          },
+          "maximum_allowed_discount": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"
@@ -956,7 +784,7 @@
   },
   "tags": [
     {
-      "name": "Vouchers"
+      "name": "Affiliate"
     }
   ]
 }

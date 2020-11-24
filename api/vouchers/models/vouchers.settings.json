@@ -72,6 +72,12 @@
     },
     "draw_gift_id": {
       "collection": "draw-gifts"
+    },
+    "promo_code_applied": {
+      "type": "string"
+    },
+    "paid_amount": {
+      "type": "decimal"
     }
   }
 }

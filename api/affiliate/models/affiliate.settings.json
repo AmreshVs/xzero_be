@@ -1,0 +1,54 @@
+{
+  "kind": "collectionType",
+  "collectionName": "affiliates",
+  "info": {
+    "name": "Affiliate"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "referral_code": {
+      "type": "string"
+    },
+    "limit": {
+      "type": "integer"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "limited",
+        "public"
+      ],
+      "default": "public"
+    },
+    "allowed_usage_per_user": {
+      "type": "integer"
+    },
+    "applied_for": {
+      "type": "enumeration",
+      "enum": [
+        "voucher",
+        "membership"
+      ]
+    },
+    "total_usage": {
+      "type": "biginteger"
+    },
+    "discount": {
+      "type": "integer"
+    },
+    "maximum_allowed_discount": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

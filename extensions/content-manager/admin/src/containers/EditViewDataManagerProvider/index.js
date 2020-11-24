@@ -472,28 +472,22 @@ const EditViewDataManagerProvider = ({
           }
         }
 
-        //Generate the voucher winner upon closing 
+        //update the voucher status upon draw status change on strapi admin 
         if (currentContentTypeLayout.apiID === 'vouchers') {    
-          if(cleanedData.draw_status == 'pending') {
-            let declareVoucherWinner = await request('/DeclareVoucherWinner/cleanedData.id', {
+          let vouchers = await request('/vouchers', {
+            method: 'GET'
+          });
+          let allDrawStatus =  vouchers.map(x => x.draw_status);
+          if(allDrawStatus.includes(cleanedData.draw_status) && cleanedData.draw_status == 'declare') {
+            let declareVoucherWinner = await request(`/DeclareVoucherWinner/`+cleanedData.id, {
               method: 'GET'
             });
             if(declareVoucherWinner) {
-              console.log("Declared Winner");
+              console.log( cleanedData.buy_title_en + cleanedData.draw_status );
             } else {
               console.log("something is went wrong ")
             }
-
-          } else if(cleanedData.draw_status == 'complete') {
-            let finalizeVoucherWinner = await request('/FinalizeWinner', {
-              method: 'GET'
-            });
-            if(finalizeVoucherWinner) {
-              console.log("Published Winner");
-            } else {
-              console.log("Something is went wrong")
-            }
-          }
+          } 
         }
 
 
