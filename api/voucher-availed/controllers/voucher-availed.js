@@ -11,13 +11,12 @@ module.exports = {
   // function will add voucher to bought list
   async BuyVoucher(user_id, voucher_id) {
     let vouchers = await strapi.query("vouchers").findOne({ id: voucher_id });
-
-    // if(vouchers.total_bought >=  vouchers.limit) {
-    //     await strapi.query("vouchers").update({ id: vouchers.id },
-    //         { draw_status: 'closed'
-    //     });
-    //     return { disabled: true, bought: 'Limit is reached' }
-		// }
+    if(vouchers.total_bought >=  vouchers.limit) {
+        await strapi.query("vouchers").update({ id: vouchers.id },
+            { draw_status: 'closed'
+        });
+        return { disabled: true, bought: 'Limit is reached' }
+		}
 		
     let dataToSave = {
       user_id: user_id,
