@@ -2,3 +2,7 @@ node_modules
 config/database.js
 .cache
 .vscode
+public/uploads
+public/qrcode
+exports/graphql/schema.graphql
+.DS_Store

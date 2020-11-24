@@ -43,6 +43,10 @@
       ],
       "plugin": "upload",
       "required": false
+    },
+    "duration": {
+      "type": "integer",
+      "required": true
     }
   }
 }

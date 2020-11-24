@@ -625,7 +625,8 @@
           },
           "membership_plans": {
             "required": [
-              "id"
+              "id",
+              "duration"
             ],
             "properties": {
               "id": {
@@ -657,6 +658,9 @@
               },
               "featured_img": {
                 "type": "string"
+              },
+              "duration": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"

@@ -632,7 +632,7 @@
               "featured_img": {
                 "type": "string"
               },
-              "product_id": {
+              "product": {
                 "type": "string"
               },
               "cost": {
@@ -653,10 +653,10 @@
               "draw_status": {
                 "type": "string"
               },
-              "assured_gift_id": {
+              "assured_gift": {
                 "type": "string"
               },
-              "draw_gift_id": {
+              "draw_gift": {
                 "type": "string"
               },
               "promo_code_applied": {

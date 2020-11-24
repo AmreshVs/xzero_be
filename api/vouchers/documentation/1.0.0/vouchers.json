@@ -607,7 +607,7 @@
               }
             }
           },
-          "product_id": {
+          "product": {
             "required": [
               "id"
             ],
@@ -663,7 +663,8 @@
           },
           "membership_plans": {
             "required": [
-              "id"
+              "id",
+              "duration"
             ],
             "properties": {
               "id": {
@@ -696,6 +697,9 @@
               "featured_img": {
                 "type": "string"
               },
+              "duration": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -706,6 +710,7 @@
           },
           "draw_status": {
             "type": "string",
+            "default": "progress",
             "enum": [
               "progress",
               "closed",
@@ -713,7 +718,7 @@
               "publish"
             ]
           },
-          "assured_gift_id": {
+          "assured_gift": {
             "required": [
               "id"
             ],
@@ -750,7 +755,7 @@
               }
             }
           },
-          "draw_gift_id": {
+          "draw_gift": {
             "required": [
               "id"
             ],
@@ -903,7 +908,7 @@
           "desc_ar": {
             "type": "string"
           },
-          "product_id": {
+          "product": {
             "type": "string"
           },
           "cost": {
@@ -925,6 +930,7 @@
           },
           "draw_status": {
             "type": "string",
+            "default": "progress",
             "enum": [
               "progress",
               "closed",
@@ -932,10 +938,10 @@
               "publish"
             ]
           },
-          "assured_gift_id": {
+          "assured_gift": {
             "type": "string"
           },
-          "draw_gift_id": {
+          "draw_gift": {
             "type": "string"
           },
           "promo_code_applied": {
