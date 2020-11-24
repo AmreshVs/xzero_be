@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "11/23/2020 4:43:05 PM"
+    "x-generation-date": "11/24/2020 3:40:17 PM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -17339,7 +17339,8 @@
           },
           "membership_plan": {
             "required": [
-              "id"
+              "id",
+              "duration"
             ],
             "properties": {
               "id": {
@@ -17371,6 +17372,9 @@
               },
               "featured_img": {
                 "type": "string"
+              },
+              "duration": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"
@@ -17648,7 +17652,8 @@
           },
           "membership_plan": {
             "required": [
-              "id"
+              "id",
+              "duration"
             ],
             "properties": {
               "id": {
@@ -17680,6 +17685,9 @@
               },
               "featured_img": {
                 "type": "string"
+              },
+              "duration": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"
@@ -18175,7 +18183,8 @@
           },
           "membership_plans": {
             "required": [
-              "id"
+              "id",
+              "duration"
             ],
             "properties": {
               "id": {
@@ -18207,6 +18216,9 @@
               },
               "featured_img": {
                 "type": "string"
+              },
+              "duration": {
+                "type": "integer"
               },
               "created_by": {
                 "type": "string"
@@ -18602,7 +18614,8 @@
       },
       "Membership-plans": {
         "required": [
-          "id"
+          "id",
+          "duration"
         ],
         "properties": {
           "id": {
@@ -18699,6 +18712,9 @@
               }
             }
           },
+          "duration": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -18790,6 +18806,9 @@
         }
       },
       "NewMembership-plans": {
+        "required": [
+          "duration"
+        ],
         "properties": {
           "name_en": {
             "type": "string"
@@ -18814,6 +18833,9 @@
           },
           "desc_ar": {
             "type": "string"
+          },
+          "duration": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"
@@ -21012,7 +21034,7 @@
               "featured_img": {
                 "type": "string"
               },
-              "product_id": {
+              "product": {
                 "type": "string"
               },
               "cost": {
@@ -21033,10 +21055,10 @@
               "draw_status": {
                 "type": "string"
               },
-              "assured_gift_id": {
+              "assured_gift": {
                 "type": "string"
               },
-              "draw_gift_id": {
+              "draw_gift": {
                 "type": "string"
               },
               "created_by": {
@@ -21461,7 +21483,7 @@
               }
             }
           },
-          "product_id": {
+          "product": {
             "required": [
               "id"
             ],
@@ -21517,7 +21539,8 @@
           },
           "membership_plans": {
             "required": [
-              "id"
+              "id",
+              "duration"
             ],
             "properties": {
               "id": {
@@ -21550,6 +21573,9 @@
               "featured_img": {
                 "type": "string"
               },
+              "duration": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -21560,6 +21586,7 @@
           },
           "draw_status": {
             "type": "string",
+            "default": "progress",
             "enum": [
               "progress",
               "closed",
@@ -21567,7 +21594,7 @@
               "publish"
             ]
           },
-          "assured_gift_id": {
+          "assured_gift": {
             "required": [
               "id"
             ],
@@ -21604,7 +21631,7 @@
               }
             }
           },
-          "draw_gift_id": {
+          "draw_gift": {
             "required": [
               "id"
             ],
@@ -21751,7 +21778,7 @@
           "desc_ar": {
             "type": "string"
           },
-          "product_id": {
+          "product": {
             "type": "string"
           },
           "cost": {
@@ -21773,6 +21800,7 @@
           },
           "draw_status": {
             "type": "string",
+            "default": "progress",
             "enum": [
               "progress",
               "closed",
@@ -21780,10 +21808,10 @@
               "publish"
             ]
           },
-          "assured_gift_id": {
+          "assured_gift": {
             "type": "string"
           },
-          "draw_gift_id": {
+          "draw_gift": {
             "type": "string"
           },
           "created_by": {

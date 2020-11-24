@@ -529,7 +529,8 @@
     "schemas": {
       "Membership-plans": {
         "required": [
-          "id"
+          "id",
+          "duration"
         ],
         "properties": {
           "id": {
@@ -626,6 +627,9 @@
               }
             }
           },
+          "duration": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -717,6 +721,9 @@
         }
       },
       "NewMembership-plans": {
+        "required": [
+          "duration"
+        ],
         "properties": {
           "name_en": {
             "type": "string"
@@ -741,6 +748,9 @@
           },
           "desc_ar": {
             "type": "string"
+          },
+          "duration": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

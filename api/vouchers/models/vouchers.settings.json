@@ -38,7 +38,7 @@
       "plugin": "upload",
       "required": false
     },
-    "product_id": {
+    "product": {
       "collection": "products"
     },
     "cost": {
@@ -65,12 +65,13 @@
         "closed",
         "declare",
         "publish"
-      ]
+      ],
+      "default": "progress"
     },
-    "assured_gift_id": {
+    "assured_gift": {
       "collection": "assured-gifts"
     },
-    "draw_gift_id": {
+    "draw_gift": {
       "collection": "draw-gifts"
     }
   }
