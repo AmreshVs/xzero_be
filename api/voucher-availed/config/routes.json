@@ -49,9 +49,12 @@
       }
     },
     {
-      "method": "GET",
-      "path": "/DeclareVoucherWinner:id",
+      "method": "POST",
+      "path": "/DeclareVoucherWinner",
       "handler": "voucher-availed.DeclareVoucherWinner"
     }
+
+    
+
   ]
 }

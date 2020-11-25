@@ -7,6 +7,30 @@
 const _ = require("lodash");
 const voucherWinnerEmailTemplate = require("../voucherWinnerEmailTemplate");
 
+async function sendMail(user_id) {
+  let user = await strapi
+    .query("user", "users-permissions")
+    .findOne({ id: user_id });
+  try {
+    let emailTemplate = {};
+      emailTemplate = {
+        subject: "Congtatulations!. You are selected as winner for voucher draw",
+        text: `Thank You for using Xzero App`,
+        html: voucherWinnerEmailTemplate,
+      };
+    // Send an email to the user.
+    await strapi.plugins["email"].services.email.sendTemplatedEmail(
+      {
+        to: 'noufal@xzero.app',
+        from: "support@xzero.app",
+      },
+      emailTemplate
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 module.exports = {
   // function will add voucher to bought list
   async BuyVoucher(user_id, voucher_id) {
@@ -43,38 +67,40 @@ module.exports = {
     }
   },
 
-  async DeclareVoucherWinner(id) {
-    let datas = [];
-    let vouchers = await strapi
+	DeclareVoucherWinner: async (ctx) => {
+		let postData = ctx.request.body;
+		let voucher = await strapi
       .query("vouchers")
-      .findOne({ status: true, id: id });
-    let existingWinner = await strapi
-      .query("vouchers")
-      .findOne({ status: true, is_won: true });
+      .findOne({ status: true, id: postData.id });
+		
+    let voucherAvailedArray = await strapi
+			.query("voucher-availed")
+			.find({ status: true, voucher: voucher.id });
 
-    //for (var key in vouchers) {
-    if (vouchers.draw_status === "declare") {
-      let voucherAvailedArray = await strapi
-        .query("voucher-availed")
-        .find({ status: true, voucher_id: vouchers.id });
-      if (voucherAvailedArray !== null && vouchers.draw_status === "progress") {
-        let selectVoucher = [].concat(...voucherAvailedArray.map((x) => x.id));
-        let winner = _.sampleSize(selectVoucher, 1);
-        //disable if the winner if already exist and choose new winner
+      if (voucherAvailedArray !== null && postData.draw_status === "declare") {
+				let selectVoucher = [].concat(...voucherAvailedArray.map((voucher_availed) => voucher_availed.id));
+				let winner = _.sampleSize(selectVoucher, 1);
+				//reverting the exisiting winner
+				let existingWinner = await strapi
+				.query("voucher-availed")
+				.findOne({ status: true, is_won: true });
         await strapi
           .query("voucher-availed")
-          .update({ id: existingWinner["id"] }, { is_won: false });
-        return await strapi
+					.update({ id: existingWinner["id"] }, { is_won: false });
+				//end of revert
+         await strapi
           .query("voucher-availed")
-          .update({ id: winner[0] }, { is_won: true });
-      } else if (vouchers.draw_status === "complete") {
-        //selecting winner, email function will be here
+					.update({ id: winner[0] }, { is_won: true });
+					ctx.send('declared winner')
+				
+      } else if (postData.draw_status === "publish") {
         let winner = await strapi
           .query("voucher-availed")
-          .find({ is_won: true });
-      }
-    }
-    //}
-	},
-	
+					.findOne({ is_won: true });
+					if(winner) {
+						sendMail(winner.user.id);
+						ctx.send('published winner, email is sent');
+					}
+			}
+	}
 };
