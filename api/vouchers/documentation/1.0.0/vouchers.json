@@ -792,6 +792,12 @@
               }
             }
           },
+          "enable_for_non_members": {
+            "type": "boolean"
+          },
+          "cost_for_non_members": {
+            "type": "number"
+          },
           "created_by": {
             "required": [
               "id",
@@ -937,6 +943,12 @@
           },
           "draw_gift": {
             "type": "string"
+          },
+          "enable_for_non_members": {
+            "type": "boolean"
+          },
+          "cost_for_non_members": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"

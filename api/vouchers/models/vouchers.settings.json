@@ -73,6 +73,12 @@
     },
     "draw_gift": {
       "collection": "draw-gifts"
+    },
+    "enable_for_non_members": {
+      "type": "boolean"
+    },
+    "cost_for_non_members": {
+      "type": "decimal"
     }
   }
 }
