@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "promocode_transactions",
+  "info": {
+    "name": "promocode transaction"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "promocode": {
+      "model": "promocode"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "paid_amount": {
+      "type": "decimal"
+    },
+    "actual_price": {
+      "type": "decimal"
+    },
+    "discount": {
+      "type": "decimal"
+    },
+    "applied_for": {
+      "type": "string"
+    },
+    "status": {
+      "type": "boolean"
+    }
+  }
+}

@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "coupon_details",
+  "collectionName": "promocodes",
   "info": {
-    "name": "Coupon Details"
+    "name": "promocode"
   },
   "options": {
     "increments": true,
@@ -42,7 +42,7 @@
       ]
     },
     "limit": {
-      "type": "biginteger"
+      "type": "integer"
     },
     "status": {
       "type": "boolean",

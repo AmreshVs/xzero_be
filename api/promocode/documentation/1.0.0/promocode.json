@@ -1,19 +1,18 @@
 {
   "paths": {
-    "/coupon-details": {
+    "/promocodes": {
       "get": {
         "deprecated": false,
-        "description": "Find all the coupon-details's records",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve coupon-details document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Promocode"
                   }
                 }
               }
@@ -52,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Coupon-details"
+          "Promocode"
         ],
         "parameters": [
           {
@@ -195,18 +194,14 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new coupon-details record",
+        "description": "Create a new record",
         "responses": {
           "200": {
-            "description": "Retrieve coupon-details document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Promocode"
                 }
               }
             }
@@ -244,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Coupon-details"
+          "Promocode"
         ],
         "requestBody": {
           "description": "",
@@ -252,26 +247,26 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewCoupon-details"
+                "$ref": "#/components/schemas/NewPromocode"
               }
             }
           }
         }
       }
     },
-    "/coupon-details/count": {
+    "/promocodes/count": {
       "get": {
         "deprecated": false,
-        "description": "Retrieve the numver of coupon-details documents",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve coupon-details document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "foo": {
-                      "type": "string"
+                    "count": {
+                      "type": "integer"
                     }
                   }
                 }
@@ -311,26 +306,22 @@
         },
         "summary": "",
         "tags": [
-          "Coupon-details"
+          "Promocode"
         ],
         "parameters": []
       }
     },
-    "/coupon-details/{id}": {
+    "/promocodes/{id}": {
       "get": {
         "deprecated": false,
-        "description": "Find one coupon-details record",
+        "description": "",
         "responses": {
           "200": {
-            "description": "Retrieve coupon-details document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Promocode"
                 }
               }
             }
@@ -368,7 +359,7 @@
         },
         "summary": "",
         "tags": [
-          "Coupon-details"
+          "Promocode"
         ],
         "parameters": [
           {
@@ -385,18 +376,14 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single coupon-details record",
+        "description": "Update a record",
         "responses": {
           "200": {
-            "description": "Retrieve coupon-details document(s)",
+            "description": "response",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Promocode"
                 }
               }
             }
@@ -434,7 +421,7 @@
         },
         "summary": "",
         "tags": [
-          "Coupon-details"
+          "Promocode"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +429,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewCoupon-details"
+                "$ref": "#/components/schemas/NewPromocode"
               }
             }
           }
@@ -462,10 +449,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single coupon-details record",
+        "description": "Delete a record",
         "responses": {
           "200": {
-            "description": "deletes a single coupon-details based on the ID supplied",
+            "description": "deletes a single record based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -508,7 +495,7 @@
         },
         "summary": "",
         "tags": [
-          "Coupon-details"
+          "Promocode"
         ],
         "parameters": [
           {
@@ -527,7 +514,7 @@
   },
   "components": {
     "schemas": {
-      "Coupon-details": {
+      "Promocode": {
         "required": [
           "id"
         ],
@@ -741,7 +728,7 @@
           }
         }
       },
-      "NewCoupon-details": {
+      "NewPromocode": {
         "properties": {
           "user": {
             "type": "string"
@@ -791,5 +778,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Promocode"
+    }
+  ]
 }

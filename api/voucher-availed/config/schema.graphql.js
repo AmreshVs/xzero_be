@@ -5,7 +5,9 @@ module.exports = {
             disabled: Boolean,
             bought: JSON!,
             VoucherAvailed: VoucherAvailed
-        }`, 
+				},
+				`
+				, 
 
     mutation: `
         BuyVoucher(user_id: Int!, voucher_id: Int!): BoughtVoucher!,
@@ -31,7 +33,6 @@ module.exports = {
               return await strapi.api['voucher-availed'].controllers['voucher-availed'].DeclareVoucherWinner(options.id);
             }
         },
-
       },
     }
   }
