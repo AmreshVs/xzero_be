@@ -25,6 +25,12 @@
     },
     "status": {
       "type": "boolean"
+    },
+    "promocode_applied": {
+      "type": "string"
+    },
+    "paid_amount": {
+      "type": "decimal"
     }
   }
 }

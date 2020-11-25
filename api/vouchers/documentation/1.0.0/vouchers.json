@@ -792,12 +792,6 @@
               }
             }
           },
-          "promo_code_applied": {
-            "type": "string"
-          },
-          "paid_amount": {
-            "type": "number"
-          },
           "created_by": {
             "required": [
               "id",
@@ -943,12 +937,6 @@
           },
           "draw_gift": {
             "type": "string"
-          },
-          "promo_code_applied": {
-            "type": "string"
-          },
-          "paid_amount": {
-            "type": "number"
           },
           "created_by": {
             "type": "string"

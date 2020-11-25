@@ -72,7 +72,6 @@ module.exports = {
         let winner = await strapi
           .query("voucher-availed")
           .find({ is_won: true });
-        
       }
     }
     //}

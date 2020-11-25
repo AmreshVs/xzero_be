@@ -659,12 +659,6 @@
               "draw_gift": {
                 "type": "string"
               },
-              "promo_code_applied": {
-                "type": "string"
-              },
-              "paid_amount": {
-                "type": "number"
-              },
               "created_by": {
                 "type": "string"
               },
@@ -760,6 +754,12 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "promocode_applied": {
+            "type": "string"
+          },
+          "paid_amount": {
+            "type": "number"
           },
           "created_by": {
             "required": [
@@ -865,6 +865,12 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "promocode_applied": {
+            "type": "string"
+          },
+          "paid_amount": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"
