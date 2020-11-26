@@ -473,23 +473,30 @@ const EditViewDataManagerProvider = ({
         }
 
         //update the voucher status upon draw status change on strapi admin 
-        if (currentContentTypeLayout.apiID === 'vouchers') {    
-          let vouchers = await request('/vouchers', {
-            method: 'GET'
-          });
-          let allDrawStatus =  vouchers.map(x => x.draw_status);
-          if(allDrawStatus.includes(cleanedData.draw_status) && cleanedData.draw_status == 'declare') {
-            let declareVoucherWinner = await request(`/DeclareVoucherWinner/`+cleanedData.id, {
-              method: 'GET'
-            });
-            if(declareVoucherWinner) {
-              console.log( cleanedData.buy_title_en + cleanedData.draw_status );
-            } else {
-              console.log("something is went wrong ")
+        if (currentContentTypeLayout.apiID === 'vouchers') {   
+          if(cleanedData.draw_status == 'declare' || cleanedData.draw_status == 'publish') {
+            const axios = require('axios');
+            let confirmAct;
+            if(cleanedData.draw_status == 'declare') {
+              confirmAct = confirm('Do you really want to declare winner ?');
+            } else if(cleanedData.draw_status == 'publish') {
+              confirmAct = confirm('Do you really want to publish winner, note that this will send email to the winner ?');
+            }
+            if(confirmAct) {  
+              let res = await axios.post('/DeclareVoucherWinner', {
+                id: cleanedData.id,
+                draw_status: cleanedData.draw_status
+              });
+
+              if(res) {
+                console.log( res.data );
+              } else {
+                console.log("something is went wrong")
+              }
             }
           } 
         }
-
+        //update voucher status end here
 
         if (isSingleType) {
           setIsCreatingEntry(false);
