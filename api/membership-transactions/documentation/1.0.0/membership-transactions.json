@@ -550,6 +550,15 @@
           "expiry": {
             "type": "datetime"
           },
+          "promocode_applied": {
+            "type": "string"
+          },
+          "discount": {
+            "type": "integer"
+          },
+          "paid_amount": {
+            "type": "number"
+          },
           "created_by": {
             "required": [
               "id",
@@ -656,6 +665,15 @@
           },
           "expiry": {
             "type": "datetime"
+          },
+          "promocode_applied": {
+            "type": "string"
+          },
+          "discount": {
+            "type": "integer"
+          },
+          "paid_amount": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"

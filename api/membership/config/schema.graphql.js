@@ -1,6 +1,6 @@
 module.exports = {
   mutation: `
-    generateMembership(user_id: ID!, plan :Int!): Membership!
+    generateMembership(user_id: ID!, plan :Int!, promocode: String): Membership!
   `,
   resolver: {
     Mutation: {
@@ -9,7 +9,7 @@ module.exports = {
         policies: ['plugins::users-permissions.isAuthenticated'],
         resolverOf: 'application::membership.membership.create',
         resolver: async (obj, options, ctx) => {
-          return await strapi.api.membership.controllers.membership.generateMembership(options.user_id, options.plan);
+          return await strapi.api.membership.controllers.membership.generateMembership(options.user_id, options.plan, options.promocode);
         },
       },
     }

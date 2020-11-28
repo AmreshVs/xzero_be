@@ -5,7 +5,9 @@
  * to customize this controller
  */
 const _ = require("lodash");
+const { sanitizeEntity } = require('strapi-utils'); 
 const voucherWinnerEmailTemplate = require("../voucherWinnerEmailTemplate");
+
 
 async function sendMail(user_id) {
   let user = await strapi
@@ -31,24 +33,56 @@ async function sendMail(user_id) {
   }
 }
 
+
+async function ApplyPromocode(user, price, promocode) {
+  const promoCode = sanitizeEntity(promocode, 'string');
+  let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: promoCode, status: true });
+  let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: user, status: true });
+  let getPromoCode = await strapi.query("promocode").findOne({ promocode: promoCode, status: true });
+
+  let start_date = getPromoCode.start_date ? getPromoCode.start_date: new Date();
+  let end_date = getPromoCode.start_date ? getPromoCode.end_date: new Date();
+  
+  if(new Date().toString() >= start_date && end_date >= start_date && getPromoCode!==null || (getPromoCode.start_date ===null || getPromoCode.end_date === null) )  {
+    if( getPromoCodeUsedCountByUser<=getPromoCode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers <= getPromoCode.limit ) {
+      let discountAmount = (parseInt(getPromoCode.discount)/parseInt(100)) * parseInt(price);
+      discountAmount = (discountAmount <= getPromoCode.allowed_maximum_discount) ? discountAmount: getPromoCode.allowed_maximum_discount; 
+      let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+      return { discount: getPromoCode.discount, discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, promoCodeAapplied:promocode }
+    } else {
+      let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+      return { discount: getPromoCode.discount, discountedPrice: discountedPrice,  discountYouGet: Math.floor(discountAmount), applied: false, promoCodeAapplied:promocode }
+    } 
+  } else {
+    return { applied: false, promoCodeAapplied: "Invalid Promocode" }
+  } 
+}
+
 module.exports = {
   // function will add voucher to bought list
-  async BuyVoucher(user_id, voucher_id) {
-    let vouchers = await strapi.query("vouchers").findOne({ id: voucher_id });
-    if(vouchers.total_bought >=  vouchers.limit) {
-        await strapi.query("vouchers").update({ id: vouchers.id },
+  async BuyVoucher(user_id, voucher_id, promocode) {
+    let voucher = await strapi.query("vouchers").findOne({ id: voucher_id });
+    if(voucher.total_bought >=  voucher.limit) {
+        await strapi.query("vouchers").update({ id: voucher.id },
             { draw_status: 'closed'
         });
         return { disabled: true, bought: 'Limit is reached' }
 		}
-		
+    
+    let promoCodeDetails = await ApplyPromocode(user_id, voucher.cost, promocode);
+
     let dataToSave = {
       user: user_id,
-      voucher: vouchers.id,
+      voucher: voucher.id,
       status: true,
+      cost: voucher.cost,
+      paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null, 
+      promocode_applied: promoCodeDetails.promocode_applied ? promoCodeDetails.promocode_applied: null, 
+      discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
     };
 
-    if (user_id !== null && vouchers !== null) {
+  
+    if (user_id !== null && voucher !== null) {
       let voucher_availed = await strapi
         .query("voucher-availed")
         .create(dataToSave);
@@ -56,8 +90,8 @@ module.exports = {
       await strapi
         .query("vouchers")
         .update(
-          { id: vouchers.id },
-          { total_bought: parseInt(vouchers.total_bought) + 1 }
+          { id: voucher.id },
+          { total_bought: parseInt(voucher.total_bought) + 1 }
         );
       return {
         disabled: false,
@@ -98,7 +132,7 @@ module.exports = {
           .query("voucher-availed")
 					.findOne({ is_won: true });
 					if(winner) {
-						sendMail(winner.user.id);
+						//sendMail(winner.user.id);
 						ctx.send('published winner, email is sent');
 					}
 			}

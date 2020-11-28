@@ -1,0 +1,32 @@
+{
+  "kind": "collectionType",
+  "collectionName": "referral_code_transactions",
+  "info": {
+    "name": "Referral Code Transaction"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "affiliate": {
+      "model": "affiliate"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "applied_for": {
+      "type": "string"
+    },
+    "membership": {
+      "model": "membership"
+    },
+    "voucher_availed": {
+      "model": "voucher-availed"
+    },
+    "status": {
+      "type": "boolean"
+    }
+  }
+}

@@ -10,7 +10,7 @@ module.exports = {
 				, 
 
     mutation: `
-        BuyVoucher(user_id: Int!, voucher_id: Int!): BoughtVoucher!,
+        BuyVoucher(user_id: Int!, voucher_id: Int!, promocode: String): BoughtVoucher!,
     `,
 
     resolver: {
@@ -20,7 +20,7 @@ module.exports = {
             policies: [],
             resolverOf: 'application::voucher-availed.voucher-availed.create',
             resolver: async (obj, options, ctx) => {
-              return await strapi.api['voucher-availed'].controllers['voucher-availed'].BuyVoucher(options.user_id, options.voucher_id);
+              return await strapi.api['voucher-availed'].controllers['voucher-availed'].BuyVoucher(options.user_id, options.voucher_id, options.promocode);
             }
           },
       },

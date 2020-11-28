@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/promocode-transactions": {
+    "/referral-code-transactions": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -52,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Promocode-transaction"
+          "Referral-code-transaction"
         ],
         "parameters": [
           {
@@ -244,7 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "Promocode-transaction"
+          "Referral-code-transaction"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +252,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPromocode-transaction"
+                "$ref": "#/components/schemas/NewReferral-code-transaction"
               }
             }
           }
         }
       }
     },
-    "/promocode-transactions/count": {
+    "/referral-code-transactions/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -311,12 +311,12 @@
         },
         "summary": "",
         "tags": [
-          "Promocode-transaction"
+          "Referral-code-transaction"
         ],
         "parameters": []
       }
     },
-    "/promocode-transactions/{id}": {
+    "/referral-code-transactions/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -368,7 +368,7 @@
         },
         "summary": "",
         "tags": [
-          "Promocode-transaction"
+          "Referral-code-transaction"
         ],
         "parameters": [
           {
@@ -434,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Promocode-transaction"
+          "Referral-code-transaction"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewPromocode-transaction"
+                "$ref": "#/components/schemas/NewReferral-code-transaction"
               }
             }
           }
@@ -508,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Promocode-transaction"
+          "Referral-code-transaction"
         ],
         "parameters": [
           {
@@ -527,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Promocode-transaction": {
+      "Referral-code-transaction": {
         "required": [
           "id"
         ],
@@ -535,7 +535,7 @@
           "id": {
             "type": "string"
           },
-          "promocode": {
+          "affiliate": {
             "required": [
               "id"
             ],
@@ -543,34 +543,31 @@
               "id": {
                 "type": "string"
               },
-              "user": {
+              "users": {
                 "type": "string"
               },
-              "promocode": {
+              "referral_code": {
                 "type": "string"
               },
-              "start_date": {
-                "type": "datetime"
-              },
-              "end_date": {
-                "type": "datetime"
-              },
-              "discount": {
-                "type": "number"
-              },
-              "allowed_maximum_discount": {
-                "type": "number"
-              },
-              "maximum_usage_per_user": {
+              "limit": {
                 "type": "integer"
               },
-              "total_usage": {
+              "type": {
+                "type": "string"
+              },
+              "allowed_usage_per_user": {
                 "type": "integer"
               },
               "applied_for": {
                 "type": "string"
               },
-              "limit": {
+              "total_usage": {
+                "type": "integer"
+              },
+              "discount": {
+                "type": "integer"
+              },
+              "maximum_allowed_discount": {
                 "type": "integer"
               },
               "status": {
@@ -665,17 +662,97 @@
               }
             }
           },
-          "paid_amount": {
-            "type": "number"
-          },
-          "actual_price": {
-            "type": "number"
-          },
-          "discount": {
-            "type": "number"
-          },
           "applied_for": {
             "type": "string"
+          },
+          "membership": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "serial": {
+                "type": "string"
+              },
+              "expiry": {
+                "type": "datetime"
+              },
+              "membership_transactions": {
+                "type": "string"
+              },
+              "qrcode_url": {
+                "type": "string"
+              },
+              "package": {
+                "type": "integer"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "is_gift_generated": {
+                "type": "boolean"
+              },
+              "gift_generated_date": {
+                "type": "datetime"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "voucher_availed": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "voucher": {
+                "type": "string"
+              },
+              "user": {
+                "type": "string"
+              },
+              "is_won": {
+                "type": "boolean"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "promocode_applied": {
+                "type": "string"
+              },
+              "paid_amount": {
+                "type": "number"
+              },
+              "discount": {
+                "type": "integer"
+              },
+              "cost": {
+                "type": "number"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "status": {
             "type": "boolean"
@@ -770,24 +847,21 @@
           }
         }
       },
-      "NewPromocode-transaction": {
+      "NewReferral-code-transaction": {
         "properties": {
-          "promocode": {
+          "affiliate": {
             "type": "string"
           },
           "user": {
             "type": "string"
           },
-          "paid_amount": {
-            "type": "number"
-          },
-          "actual_price": {
-            "type": "number"
-          },
-          "discount": {
-            "type": "number"
-          },
           "applied_for": {
+            "type": "string"
+          },
+          "membership": {
+            "type": "string"
+          },
+          "voucher_availed": {
             "type": "string"
           },
           "status": {

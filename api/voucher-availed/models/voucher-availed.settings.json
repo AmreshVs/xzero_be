@@ -31,6 +31,12 @@
     },
     "paid_amount": {
       "type": "decimal"
+    },
+    "discount": {
+      "type": "integer"
+    },
+    "cost": {
+      "type": "decimal"
     }
   }
 }

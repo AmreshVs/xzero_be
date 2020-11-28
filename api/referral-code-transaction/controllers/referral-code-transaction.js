@@ -5,10 +5,4 @@
  * to customize this controller
  */
 
-module.exports = {
-    //function for referral 
-    async refer(referralCode) {
-
-
-    }
-};
+module.exports = {};

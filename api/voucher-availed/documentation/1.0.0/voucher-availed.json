@@ -770,6 +770,12 @@
           "paid_amount": {
             "type": "number"
           },
+          "discount": {
+            "type": "integer"
+          },
+          "cost": {
+            "type": "number"
+          },
           "created_by": {
             "required": [
               "id",
@@ -879,6 +885,12 @@
             "type": "string"
           },
           "paid_amount": {
+            "type": "number"
+          },
+          "discount": {
+            "type": "integer"
+          },
+          "cost": {
             "type": "number"
           },
           "created_by": {

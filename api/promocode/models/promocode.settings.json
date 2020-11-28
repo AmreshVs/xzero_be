@@ -23,7 +23,8 @@
       "type": "datetime"
     },
     "discount": {
-      "type": "decimal"
+      "type": "decimal",
+      "default": 0
     },
     "allowed_maximum_discount": {
       "type": "decimal"
@@ -31,7 +32,7 @@
     "maximum_usage_per_user": {
       "type": "integer"
     },
-    "total_used": {
+    "total_usage": {
       "type": "biginteger"
     },
     "applied_for": {

@@ -613,7 +613,8 @@
             "type": "datetime"
           },
           "discount": {
-            "type": "number"
+            "type": "number",
+            "default": 0
           },
           "allowed_maximum_discount": {
             "type": "number"
@@ -621,7 +622,7 @@
           "maximum_usage_per_user": {
             "type": "integer"
           },
-          "total_used": {
+          "total_usage": {
             "type": "integer"
           },
           "applied_for": {
@@ -743,7 +744,8 @@
             "type": "datetime"
           },
           "discount": {
-            "type": "number"
+            "type": "number",
+            "default": 0
           },
           "allowed_maximum_discount": {
             "type": "number"
@@ -751,7 +753,7 @@
           "maximum_usage_per_user": {
             "type": "integer"
           },
-          "total_used": {
+          "total_usage": {
             "type": "integer"
           },
           "applied_for": {

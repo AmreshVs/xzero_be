@@ -7,6 +7,8 @@
 require("babel-polyfill");
 var brandedQRCode = require("branded-qr-code");
 let fs = require("fs");
+const { sanitizeEntity } = require('strapi-utils');
+
 
 const membershipEmailTemplate = require("../membershipEmailTemplate");
 const membershipRenewalEmailTemplate = require("../membershipRenewalEmailTemplate");
@@ -16,6 +18,32 @@ Date.prototype.addDays = function (days) {
   date.setDate(date.getDate() + days);
   return date;
 };
+
+
+async function ApplyPromocode(user, price, promocode) {
+  const promoCode = sanitizeEntity(promocode, 'string');
+  let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: promoCode, status: true });
+  let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: user, status: true });
+  let getPromoCode = await strapi.query("promocode").findOne({ promocode: promoCode, status: true });
+
+  let start_date = getPromoCode.start_date ? getPromoCode.start_date: new Date();
+  let end_date = getPromoCode.start_date ? getPromoCode.end_date: new Date();
+  
+  if(new Date().toString() >= start_date && end_date >= start_date && getPromoCode!==null || (getPromoCode.start_date ===null || getPromoCode.end_date === null) )  {
+    if( getPromoCodeUsedCountByUser<=getPromoCode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers <= getPromoCode.limit ) {
+      let discountAmount = (parseInt(getPromoCode.discount)/parseInt(100)) * parseInt(price);
+      discountAmount = (discountAmount <= getPromoCode.allowed_maximum_discount) ? discountAmount: getPromoCode.allowed_maximum_discount; 
+      let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+      return { discount: getPromoCode.discount, discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, promoCodeAapplied:promocode }
+    } else {
+      let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+      return { discount: getPromoCode.discount, discountedPrice: discountedPrice,  discountYouGet: Math.floor(discountAmount), applied: false, promoCodeAapplied:promocode }
+    } 
+  } else {
+    return { applied: false, promoCodeAapplied: "Invalid Promocode", discountedPrice :price  }
+  } 
+}
+
 
 async function sendMail(user_id, status) {
   let user = await strapi
@@ -50,7 +78,7 @@ async function sendMail(user_id, status) {
 }
 
 module.exports = {
-  async generateMembership(user_id, plan) {
+  async generateMembership(user_id, plan, promocode) {
     function generateMemberId(length) {
       var randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       var result = "";
@@ -120,9 +148,12 @@ module.exports = {
       totalOfferLimit = parseInt(packageSelected.limit) + parseInt(checkUserExist.limit);
     }
     
+    let promoCodeDetails = await ApplyPromocode(user_id, packageSelected.price, promocode); 
+
     if (checkUserExist === null) {
       let expiryDate = new Date();
       let serial = await generateSerial();
+      
       var userInfo = { userid: user_id, serial: serial };
       let qrCodeFile = await createQR(userInfo);
       let membership = await strapi
@@ -135,6 +166,8 @@ module.exports = {
           limit: offerLimit,
           expiry: expiryDate.addDays(365),
         });
+
+      
       await strapi
         .query("membership-transactions")
         .create({
@@ -143,6 +176,9 @@ module.exports = {
           type: "New",
           expiry: expiryDate,
           amount: packageSelected.price,
+          promocode_applied: promoCodeDetails.promoCodeAapplied ? promoCodeDetails.promoCodeAapplied: null ,
+          discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
+          paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null
         });
       //sendMail(user_id, "create");
       return membership;
@@ -159,6 +195,9 @@ module.exports = {
           type: "Renewal",
           expiry: checkUserExist.expiry,
           amount: packageSelected.price,
+          promocode_applied: promoCodeDetails.promoCodeAapplied ? promoCodeDetails.promoCodeAapplied: null ,
+          discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
+          paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null
         });
       let membership = await strapi
         .query("membership")
@@ -170,6 +209,7 @@ module.exports = {
             package: plan,
             limit: totalOfferLimit,
             expiry: new Date(checkUserExist.expiry).addDays(365),
+
           }
         );
       //sendMail(user_id, "renewal");
