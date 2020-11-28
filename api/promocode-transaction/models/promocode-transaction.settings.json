@@ -9,9 +9,6 @@
     "timestamps": true
   },
   "attributes": {
-    "promocode": {
-      "model": "promocode"
-    },
     "user": {
       "plugin": "users-permissions",
       "model": "user"
@@ -19,7 +16,7 @@
     "paid_amount": {
       "type": "decimal"
     },
-    "actual_price": {
+    "cost": {
       "type": "decimal"
     },
     "discount": {
@@ -30,6 +27,9 @@
     },
     "status": {
       "type": "boolean"
+    },
+    "promocode": {
+      "type": "string"
     }
   }
 }

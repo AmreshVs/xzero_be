@@ -26,22 +26,34 @@ async function ApplyPromocode(user, price, promocode) {
   let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: user, status: true });
   let getPromoCode = await strapi.query("promocode").findOne({ promocode: promoCode, status: true });
 
-  let start_date = getPromoCode.start_date ? getPromoCode.start_date: new Date();
-  let end_date = getPromoCode.start_date ? getPromoCode.end_date: new Date();
-  
-  if(new Date().toString() >= start_date && end_date >= start_date && getPromoCode!==null || (getPromoCode.start_date ===null || getPromoCode.end_date === null) )  {
-    if( getPromoCodeUsedCountByUser<=getPromoCode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers <= getPromoCode.limit ) {
-      let discountAmount = (parseInt(getPromoCode.discount)/parseInt(100)) * parseInt(price);
-      discountAmount = (discountAmount <= getPromoCode.allowed_maximum_discount) ? discountAmount: getPromoCode.allowed_maximum_discount; 
-      let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
-      return { discount: getPromoCode.discount, discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, promoCodeAapplied:promocode }
+  if(getPromoCode!==null) {
+    if(getPromoCode.applied_for === "membership" || getPromoCode.applied_for ===null ) {
+
+    let start_date = getPromoCode.start_date ? getPromoCode.start_date: new Date();
+    let end_date = getPromoCode.start_date ? getPromoCode.end_date: new Date();
+    if(new Date().toString() >= start_date && end_date >= start_date && getPromoCode!==null || (getPromoCode.start_date ===null || getPromoCode.end_date === null) )  {
+      if( getPromoCodeUsedCountByUser<=getPromoCode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers <= getPromoCode.limit ) {
+        let discountAmount = (parseInt(getPromoCode.discount)/parseInt(100)) * parseInt(price);
+        discountAmount = (discountAmount <= getPromoCode.allowed_maximum_discount) ? discountAmount: getPromoCode.allowed_maximum_discount; 
+        let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+        return { discount: getPromoCode.discount, discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, promoCodeAapplied:promocode }
+      } else {
+        if(getPromoCodeUsedCountByUser>getPromoCode.maximum_usage_per_user) {
+          var msg = "User limit exceeded";
+        } else {
+          var msg = "Maximum limit exceeded, try again later";
+        }
+        return { applied: false, promoCodeApplied: msg }
+      } 
     } else {
-      let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
-      return { discount: getPromoCode.discount, discountedPrice: discountedPrice,  discountYouGet: Math.floor(discountAmount), applied: false, promoCodeAapplied:promocode }
+      return {  applied: false, promoCodeApplied: "Promocode expired", discountedPrice :price  }
     } 
   } else {
-    return { applied: false, promoCodeAapplied: "Invalid Promocode", discountedPrice :price  }
-  } 
+    return {  applied: false, promoCodeApplied: "Promocode cannot be used", discountedPrice :price  }
+  }
+  } else {
+    return {  applied: false, promoCodeApplied: "Promocode is not supported"  }
+  }
 }
 
 
@@ -148,7 +160,8 @@ module.exports = {
       totalOfferLimit = parseInt(packageSelected.limit) + parseInt(checkUserExist.limit);
     }
     
-    let promoCodeDetails = await ApplyPromocode(user_id, packageSelected.price, promocode); 
+    let promoCodeDetails = await ApplyPromocode(user_id, packageSelected.price, promocode);
+  
 
     if (checkUserExist === null) {
       let expiryDate = new Date();
@@ -180,6 +193,23 @@ module.exports = {
           discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
           paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null
         });
+
+        //updating the promocode transaction table
+        if(promoCodeDetails !== null && promoCodeDetails.applied === true) {
+          var promocodeTransactions = { promocode: promocode,
+            user: user_id,
+            paid_amount: promoCodeDetails.discountedPrice,
+            discount: promoCodeDetails.discount,
+            applied_for: 'membership',
+            cost:  packageSelected.price,
+            status: true
+           }
+            await strapi
+            .query("promocode-transaction")
+            .create(promocodeTransactions);
+        } 
+
+       
       //sendMail(user_id, "create");
       return membership;
     } else {
@@ -199,6 +229,9 @@ module.exports = {
           discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
           paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null
         });
+        //updating the promocode transaction table
+        
+
       let membership = await strapi
         .query("membership")
         .update(
@@ -212,6 +245,19 @@ module.exports = {
 
           }
         );
+
+        if(promoCodeDetails !== null && promoCodeDetails.applied === true) {
+          await strapi
+          .query("promocode-transaction")
+          .create({ promocode: promocode,
+            user: user_id,
+            paid_amount: promoCodeDetails.discountedPrice,
+            discount: promoCodeDetails.discount,
+            applied_for: 'membership',
+            cost:  packageSelected.price,
+            status: true
+          });
+      } 
       //sendMail(user_id, "renewal");
       return membership;
     }

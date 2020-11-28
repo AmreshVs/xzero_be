@@ -10,9 +10,9 @@
   },
   "attributes": {
     "user_id": {
+      "via": "center_check_ins",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "center_check_ins"
+      "model": "user"
     },
     "center": {
       "model": "centers"

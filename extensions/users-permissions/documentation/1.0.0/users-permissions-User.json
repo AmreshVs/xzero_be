@@ -1401,6 +1401,9 @@
               }
             }
           },
+          "referral_code": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -1563,6 +1566,9 @@
             }
           },
           "membership": {
+            "type": "string"
+          },
+          "referral_code": {
             "type": "string"
           },
           "created_by": {

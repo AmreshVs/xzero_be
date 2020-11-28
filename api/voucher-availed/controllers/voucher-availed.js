@@ -39,23 +39,37 @@ async function ApplyPromocode(user, price, promocode) {
   let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: promoCode, status: true });
   let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: user, status: true });
   let getPromoCode = await strapi.query("promocode").findOne({ promocode: promoCode, status: true });
+    if(getPromoCode!==null) {
+      if(getPromoCode.applied_for === "voucher" || getPromoCode.applied_for === null ) {
 
-  let start_date = getPromoCode.start_date ? getPromoCode.start_date: new Date();
-  let end_date = getPromoCode.start_date ? getPromoCode.end_date: new Date();
-  
-  if(new Date().toString() >= start_date && end_date >= start_date && getPromoCode!==null || (getPromoCode.start_date ===null || getPromoCode.end_date === null) )  {
-    if( getPromoCodeUsedCountByUser<=getPromoCode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers <= getPromoCode.limit ) {
-      let discountAmount = (parseInt(getPromoCode.discount)/parseInt(100)) * parseInt(price);
-      discountAmount = (discountAmount <= getPromoCode.allowed_maximum_discount) ? discountAmount: getPromoCode.allowed_maximum_discount; 
-      let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
-      return { discount: getPromoCode.discount, discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, promoCodeAapplied:promocode }
+    let start_date = getPromoCode.start_date ? getPromoCode.start_date: new Date();
+    let end_date = getPromoCode.start_date ? getPromoCode.end_date: new Date();
+    
+    if(new Date().toString() >= start_date && end_date >= start_date && getPromoCode!==null || (getPromoCode.start_date ===null || getPromoCode.end_date === null) )  {
+      if( getPromoCodeUsedCountByUser<=getPromoCode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers <= getPromoCode.limit ) {
+        let discountAmount = (parseInt(getPromoCode.discount)/parseInt(100)) * parseInt(price);
+        discountAmount = (discountAmount <= getPromoCode.allowed_maximum_discount) ? discountAmount: getPromoCode.allowed_maximum_discount; 
+        let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+
+        return { discount: getPromoCode.discount, discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, promoCodeAapplied:promocode }
+
+      } else {
+        if(getPromoCodeUsedCountByUser>getPromoCode.maximum_usage_per_user) {
+          let msg = "User limit exceeded";
+        } else {
+          let msg = "Maximum limit exceeded, try again later";
+        }
+        return { applied: false, promoCodeApplied: msg }
+      } 
     } else {
-      let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
-      return { discount: getPromoCode.discount, discountedPrice: discountedPrice,  discountYouGet: Math.floor(discountAmount), applied: false, promoCodeAapplied:promocode }
+      return { applied: false, promoCodeApplied: "Promocode expired" }
     } 
-  } else {
-    return { applied: false, promoCodeAapplied: "Invalid Promocode" }
-  } 
+      } else {
+        return { applied: false, promoCodeApplied: "Promocode is not supported" }
+      }
+    } else {
+      return { applied: false, promoCodeApplied: "Promocode is not found" }
+    }
 }
 
 module.exports = {
@@ -81,11 +95,24 @@ module.exports = {
       discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
     };
 
-  
     if (user_id !== null && voucher !== null) {
       let voucher_availed = await strapi
         .query("voucher-availed")
         .create(dataToSave);
+
+        if(promoCodeDetails !== null && promoCodeDetails.applied === true) {
+          var promocodeTransactions = { promocode: promocode,
+            user: user_id,
+            paid_amount: promoCodeDetails.discountedPrice,
+            discount: promoCodeDetails.discount,
+            applied_for: 'voucher',
+            cost:  packageSelected.price,
+            status: true
+          }
+            await strapi
+            .query("promocode-transaction")
+            .create(promocodeTransactions);
+        } 
 
       await strapi
         .query("vouchers")

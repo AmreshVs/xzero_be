@@ -10,9 +10,9 @@
   },
   "attributes": {
     "user": {
+      "via": "favourite",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "favourite"
+      "model": "user"
     },
     "status": {
       "type": "boolean"

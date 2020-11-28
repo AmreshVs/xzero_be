@@ -10,9 +10,9 @@
   },
   "attributes": {
     "user": {
+      "via": "membership",
       "plugin": "users-permissions",
-      "model": "user",
-      "via": "membership"
+      "model": "user"
     },
     "serial": {
       "type": "string"

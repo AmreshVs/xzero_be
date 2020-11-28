@@ -535,55 +535,6 @@
           "id": {
             "type": "string"
           },
-          "promocode": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "user": {
-                "type": "string"
-              },
-              "promocode": {
-                "type": "string"
-              },
-              "start_date": {
-                "type": "datetime"
-              },
-              "end_date": {
-                "type": "datetime"
-              },
-              "discount": {
-                "type": "number"
-              },
-              "allowed_maximum_discount": {
-                "type": "number"
-              },
-              "maximum_usage_per_user": {
-                "type": "integer"
-              },
-              "total_usage": {
-                "type": "integer"
-              },
-              "applied_for": {
-                "type": "string"
-              },
-              "limit": {
-                "type": "integer"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
           "user": {
             "required": [
               "id",
@@ -657,6 +608,9 @@
               "membership": {
                 "type": "string"
               },
+              "referral_code": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -668,7 +622,7 @@
           "paid_amount": {
             "type": "number"
           },
-          "actual_price": {
+          "cost": {
             "type": "number"
           },
           "discount": {
@@ -679,6 +633,9 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "promocode": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -772,16 +729,13 @@
       },
       "NewPromocode-transaction": {
         "properties": {
-          "promocode": {
-            "type": "string"
-          },
           "user": {
             "type": "string"
           },
           "paid_amount": {
             "type": "number"
           },
-          "actual_price": {
+          "cost": {
             "type": "number"
           },
           "discount": {
@@ -792,6 +746,9 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "promocode": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

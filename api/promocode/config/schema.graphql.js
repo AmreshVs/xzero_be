@@ -3,9 +3,10 @@ module.exports = {
         type ApplyPromoCode {
             discount: String  
             applied: JSON!,
-            promoCodeAapplied: String,
+            promoCodeApplied: String,
             discountYouGet: Int
             discountedPrice: Int,
+            ApplicableFor: String
 		    },
 				`
 				, 

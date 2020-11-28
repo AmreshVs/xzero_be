@@ -654,6 +654,9 @@
               "membership": {
                 "type": "string"
               },
+              "referral_code": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
