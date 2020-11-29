@@ -189,7 +189,7 @@ module.exports = {
           type: "New",
           expiry: expiryDate,
           amount: packageSelected.price,
-          promocode_applied: promoCodeDetails.promoCodeAapplied ? promoCodeDetails.promoCodeAapplied: null ,
+          promocode_applied: promocode ? promocode: null,
           discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
           paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null
         });
@@ -225,7 +225,7 @@ module.exports = {
           type: "Renewal",
           expiry: checkUserExist.expiry,
           amount: packageSelected.price,
-          promocode_applied: promoCodeDetails.promoCodeAapplied ? promoCodeDetails.promoCodeAapplied: null ,
+          promocode_applied: promocode ? promocode: null,
           discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
           paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null
         });

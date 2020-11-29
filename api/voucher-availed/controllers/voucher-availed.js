@@ -56,10 +56,12 @@ async function ApplyPromocode(user, price, promocode) {
       } else {
         if(getPromoCodeUsedCountByUser>getPromoCode.maximum_usage_per_user) {
           let msg = "User limit exceeded";
+          return { applied: false, promoCodeApplied: msg }
         } else {
           let msg = "Maximum limit exceeded, try again later";
+          return { applied: false, promoCodeApplied: msg }
         }
-        return { applied: false, promoCodeApplied: msg }
+        
       } 
     } else {
       return { applied: false, promoCodeApplied: "Promocode expired" }
@@ -90,6 +92,7 @@ module.exports = {
       voucher: voucher.id,
       status: true,
       cost: voucher.cost,
+      promocode_applied: promocode ? promocode: null, 
       paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null, 
       promocode_applied: promoCodeDetails.promocode_applied ? promoCodeDetails.promocode_applied: null, 
       discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
