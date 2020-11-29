@@ -758,7 +758,11 @@
             }
           },
           "status": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
+          },
+          "referral_code": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -868,7 +872,11 @@
             "type": "string"
           },
           "status": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
+          },
+          "referral_code": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

@@ -26,7 +26,11 @@
       "model": "voucher-availed"
     },
     "status": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": true
+    },
+    "referral_code": {
+      "type": "string"
     }
   }
 }

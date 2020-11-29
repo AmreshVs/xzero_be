@@ -94,7 +94,6 @@ module.exports = {
       cost: voucher.cost,
       promocode_applied: promocode ? promocode: null, 
       paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null, 
-      promocode_applied: promoCodeDetails.promocode_applied ? promoCodeDetails.promocode_applied: null, 
       discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
     };
 
