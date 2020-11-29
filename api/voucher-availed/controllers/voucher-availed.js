@@ -106,7 +106,7 @@ module.exports = {
             paid_amount: promoCodeDetails.discountedPrice,
             discount: promoCodeDetails.discount,
             applied_for: 'voucher',
-            cost:  packageSelected.price,
+            cost:  voucher.cost,
             status: true
           }
             await strapi
