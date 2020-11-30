@@ -20,8 +20,8 @@ Date.prototype.addDays = function (days) {
 };
 
 
-async function ApplyPromocode(user, price, promocode) {
-  const promoCode = sanitizeEntity(promocode, 'string');
+async function getPromocodeDiscount(user, price, promocode) {
+  let promoCode = sanitizeEntity(promocode, 'string');
   let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: promoCode, status: true });
   let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: user, status: true });
   let getPromoCode = await strapi.query("promocode").findOne({ promocode: promoCode, status: true });
@@ -159,9 +159,9 @@ module.exports = {
       offerLimit = packageSelected.limit;
       totalOfferLimit = parseInt(packageSelected.limit) + parseInt(checkUserExist.limit);
     }
-    
-    let promoCodeDetails = await ApplyPromocode(user_id, packageSelected.price, promocode);
-  
+
+
+    let promoCodeDetails = await getPromocodeDiscount(user_id, packageSelected.price, promocode);
 
     if (checkUserExist === null) {
       let expiryDate = new Date();
@@ -202,6 +202,7 @@ module.exports = {
             discount: promoCodeDetails.discount,
             applied_for: 'membership',
             cost:  packageSelected.price,
+            inserted_id: membership.id,
             status: true
            }
             await strapi
@@ -255,6 +256,7 @@ module.exports = {
             discount: promoCodeDetails.discount,
             applied_for: 'membership',
             cost:  packageSelected.price,
+            inserted_id: membership.id,
             status: true
           });
       } 

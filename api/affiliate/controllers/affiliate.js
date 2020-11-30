@@ -1,5 +1,4 @@
 'use strict';
-
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
  * to customize this controller
@@ -31,8 +30,6 @@ module.exports = {
               } 
         } else {
             return { ApplicableFor: refferalCode.applied_for, discount: refferalCode.discount, discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, ReferralCodeApplied: referral_code };
-        }
-        
-       
+        }  
     }
 };

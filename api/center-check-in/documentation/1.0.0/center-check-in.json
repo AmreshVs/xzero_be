@@ -611,6 +611,9 @@
               "referral_code": {
                 "type": "string"
               },
+              "address": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },

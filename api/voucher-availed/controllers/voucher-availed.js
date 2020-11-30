@@ -35,7 +35,7 @@ async function sendMail(user_id) {
 
 
 async function ApplyPromocode(user, price, promocode) {
-  const promoCode = sanitizeEntity(promocode, 'string');
+  let promoCode = sanitizeEntity(promocode, 'string');
   let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: promoCode, status: true });
   let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: user, status: true });
   let getPromoCode = await strapi.query("promocode").findOne({ promocode: promoCode, status: true });
@@ -55,7 +55,7 @@ async function ApplyPromocode(user, price, promocode) {
 
       } else {
         if(getPromoCodeUsedCountByUser>getPromoCode.maximum_usage_per_user) {
-          let msg = "User limit exceeded";
+          let msg = "Invalid promocode";
           return { applied: false, promoCodeApplied: msg }
         } else {
           let msg = "Maximum limit exceeded, try again later";
@@ -109,6 +109,7 @@ module.exports = {
             discount: promoCodeDetails.discount,
             applied_for: 'voucher',
             cost:  voucher.cost,
+            inserted_id: voucher_availed.id,
             status: true
           }
             await strapi

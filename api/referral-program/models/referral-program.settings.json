@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "referral_programs",
+  "info": {
+    "name": "Referral Program"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "discount": {
+      "type": "integer"
+    },
+    "allowed_maximum_discount": {
+      "type": "decimal"
+    },
+    "usage_limit": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "boolean"
+    }
+  }
+}

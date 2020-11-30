@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/referral-program",
+      "handler": "referral-program.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/referral-program",
+      "handler": "referral-program.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/referral-program",
+      "handler": "referral-program.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

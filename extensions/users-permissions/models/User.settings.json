@@ -91,6 +91,9 @@
     },
     "referral_code": {
       "type": "string"
+    },
+    "address": {
+      "type": "text"
     }
   }
 }

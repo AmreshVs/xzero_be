@@ -30,6 +30,9 @@
     },
     "promocode": {
       "type": "string"
+    },
+    "inserted_id": {
+      "type": "integer"
     }
   }
 }

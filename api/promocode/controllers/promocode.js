@@ -9,7 +9,7 @@ const { sanitizeEntity } = require('strapi-utils');
 
 module.exports = {
     async ApplyPromocode(user, price, promocode) {
-        const promoCode = sanitizeEntity(promocode, 'string');
+        let promoCode = sanitizeEntity(promocode, 'string');
         let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: promoCode, status: true });
         let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: user, status: true });
         let getPromoCode = await strapi.query("promocode").findOne({ promocode: promoCode, status: true });
