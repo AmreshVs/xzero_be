@@ -626,10 +626,12 @@
             "default": 0
           },
           "allowed_maximum_discount": {
-            "type": "number"
+            "type": "number",
+            "default": 0
           },
           "maximum_usage_per_user": {
-            "type": "integer"
+            "type": "integer",
+            "default": 1
           },
           "total_usage": {
             "type": "integer",
@@ -645,7 +647,8 @@
             ]
           },
           "limit": {
-            "type": "integer"
+            "type": "integer",
+            "default": 0
           },
           "status": {
             "type": "boolean",
@@ -760,10 +763,12 @@
             "default": 0
           },
           "allowed_maximum_discount": {
-            "type": "number"
+            "type": "number",
+            "default": 0
           },
           "maximum_usage_per_user": {
-            "type": "integer"
+            "type": "integer",
+            "default": 1
           },
           "total_usage": {
             "type": "integer",
@@ -779,7 +784,8 @@
             ]
           },
           "limit": {
-            "type": "integer"
+            "type": "integer",
+            "default": 0
           },
           "status": {
             "type": "boolean",

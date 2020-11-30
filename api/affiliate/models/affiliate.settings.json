@@ -28,7 +28,8 @@
       "default": "public"
     },
     "allowed_usage_per_user": {
-      "type": "integer"
+      "type": "integer",
+      "default": 1
     },
     "applied_for": {
       "type": "enumeration",
@@ -44,10 +45,12 @@
       "default": "0"
     },
     "discount": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "maximum_allowed_discount": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "status": {
       "type": "boolean",
