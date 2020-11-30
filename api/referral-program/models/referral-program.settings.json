@@ -20,6 +20,12 @@
     },
     "status": {
       "type": "boolean"
+    },
+    "referrer_get": {
+      "type": "integer"
+    },
+    "applied_for": {
+      "type": "string"
     }
   }
 }

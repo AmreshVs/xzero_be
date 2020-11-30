@@ -335,6 +335,12 @@
           "status": {
             "type": "boolean"
           },
+          "referrer_get": {
+            "type": "integer"
+          },
+          "applied_for": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -438,6 +444,12 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "referrer_get": {
+            "type": "integer"
+          },
+          "applied_for": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
