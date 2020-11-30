@@ -19,13 +19,18 @@
       "type": "integer"
     },
     "status": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": true
     },
     "referrer_get": {
       "type": "integer"
     },
-    "applied_for": {
-      "type": "string"
+    "referrer_allowed_maximum_amount": {
+      "type": "decimal",
+      "default": 0
+    },
+    "user_can_refer": {
+      "type": "integer"
     }
   }
 }

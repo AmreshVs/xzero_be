@@ -39,8 +39,10 @@
       "type": "enumeration",
       "enum": [
         "membership",
-        "voucher"
-      ]
+        "voucher",
+        "both"
+      ],
+      "default": "both"
     },
     "limit": {
       "type": "integer"

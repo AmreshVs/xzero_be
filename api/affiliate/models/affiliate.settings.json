@@ -34,8 +34,10 @@
       "type": "enumeration",
       "enum": [
         "voucher",
-        "membership"
-      ]
+        "membership",
+        "both"
+      ],
+      "default": "both"
     },
     "total_usage": {
       "type": "biginteger"

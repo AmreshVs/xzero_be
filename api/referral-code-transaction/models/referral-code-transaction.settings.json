@@ -31,6 +31,25 @@
     },
     "referral_code": {
       "type": "string"
+    },
+    "from": {
+      "type": "string"
+    },
+    "referrer": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "cost": {
+      "type": "decimal"
+    },
+    "discount": {
+      "type": "integer"
+    },
+    "paid_amount": {
+      "type": "decimal"
+    },
+    "referrer_credit": {
+      "type": "decimal"
     }
   }
 }

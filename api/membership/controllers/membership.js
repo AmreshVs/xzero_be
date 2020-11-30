@@ -20,41 +20,82 @@ Date.prototype.addDays = function (days) {
 };
 
 
-async function getPromocodeDiscount(user, price, promocode) {
-  let promoCode = sanitizeEntity(promocode, 'string');
-  let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: promoCode, status: true });
-  let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: user, status: true });
-  let getPromoCode = await strapi.query("promocode").findOne({ promocode: promoCode, status: true });
+async function ApplyCode(receiver, price, referral_code) {
+  let referralCode = sanitizeEntity(referral_code, 'string');
+  
+  let userCode = await strapi.query('user', 'users-permissions').findOne({ referral_code: referral_code, enable_refer_and_earn: true });
+  
+  let affiliate = await strapi.query("affiliate").findOne({ referral_code: referralCode, status: true });
+  let referProgram = await strapi.query("referral-program").findOne({ status: true });    
+  let promocode = await strapi.query("promocode").findOne({ promocode: referralCode, status: true });
 
-  if(getPromoCode!==null) {
-    if(getPromoCode.applied_for === "membership" || getPromoCode.applied_for ===null ) {
+   //console.log(userCode.referral_code); return false;
+  if( referProgram !== null && userCode!==null && userCode.referral_code !== null ) {
+      let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
+      let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, from: 'referral' , status: true });
+      if(userUsedHistory <= referProgram.usage_limit && usedHistory <= referProgram.user_can_refer  ) {
+          //receiver get
+          let discountAmount = (parseInt(referProgram.discount)/100) * parseInt(price);
+          discountAmount = (discountAmount <= referProgram.allowed_maximum_discount) ? discountAmount: referProgram.allowed_maximum_discount; 
+          let afterDiscount = price - Math.floor(discountAmount);
+          //sender will get
+          let referrerCredit = (parseInt(referProgram.referrer_get)/100) * parseInt(price);  
+          referrerCredit = (referrerCredit <= referProgram.referrer_allowed_maximum_amount) ? referrerCredit: referProgram.referrer_allowed_maximum_amount;
 
-    let start_date = getPromoCode.start_date ? getPromoCode.start_date: new Date();
-    let end_date = getPromoCode.start_date ? getPromoCode.end_date: new Date();
-    if(new Date().toString() >= start_date && end_date >= start_date && getPromoCode!==null || (getPromoCode.start_date ===null || getPromoCode.end_date === null) )  {
-      if( getPromoCodeUsedCountByUser<=getPromoCode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers <= getPromoCode.limit ) {
-        let discountAmount = (parseInt(getPromoCode.discount)/parseInt(100)) * parseInt(price);
-        discountAmount = (discountAmount <= getPromoCode.allowed_maximum_discount) ? discountAmount: getPromoCode.allowed_maximum_discount; 
-        let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
-        return { discount: getPromoCode.discount, discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, promoCodeAapplied:promocode }
+          return { discount: discountAmount, discountedPrice: afterDiscount, applied: true, userId: userCode.id, from: 'referral', CodeApplied: referral_code, referrerCredit: referrerCredit};
+          
       } else {
-        if(getPromoCodeUsedCountByUser>getPromoCode.maximum_usage_per_user) {
-          var msg = "User limit exceeded";
+        return { applied:false, from: 'referral', CodeApplied: referral_code };
+      }
+
+  } else if( affiliate !== null && (affiliate.applied_for === "membership" || affiliate.applied_for === 'both' )) {
+
+        let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
+        let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, status: true });
+      
+          if( userUsedHistory < affiliate.allowed_usage_per_user && usedHistory < affiliate.limit ) {
+            let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
+            discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+            let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+            return { ApplicableFor: affiliate.applied_for, affiliateId: affiliate.id, discount: affiliate.discount, from: 'affiliate', discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, CodeApplied :referralCode }
+          } else {
+            if(userUsedHistory>affiliate.allowed_usage_per_user) {
+              var msg = "User limit exceeded";
+            } else {
+              var msg = "Maximum limit exceeded, try again later";
+            }
+            return { applied: false, CodeApplied: msg }
+          }   
+    } else if( promocode !== null && (promocode.applied_for === "membership" || promocode.applied_for === 'both')) {
+      let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: referral_code, status: true });
+      let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: receiver, status: true });
+      
+      let start_date = promocode.start_date ? promocode.start_date: new Date();
+      let end_date = promocode.start_date ? promocode.end_date: new Date();
+
+        if(new Date().toString() >= start_date && end_date >= start_date || (promocode.start_date ===null || promocode.end_date === null) )  {
+          if( getPromoCodeUsedCountByUser<=promocode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers <= promocode.limit ) {
+            let discountAmount = (parseInt(promocode.discount)/parseInt(100)) * parseInt(price);
+            discountAmount = (discountAmount <= promocode.allowed_maximum_discount) ? discountAmount: promocode.allowed_maximum_discount; 
+            let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+            return { discount: promocode.discount, discountedPrice: discountedPrice, promocodeId: promocode.id, from: 'promocode', discountYouGet: Math.floor(discountAmount), applied: true, CodeAapplied: promocode }
+          } else {
+            if(getPromoCodeUsedCountByUser>promocode.maximum_usage_per_user) {
+              var msg = "User limit exceeded";
+            } else {
+              var msg = "Maximum limit exceeded, try again later";
+            }
+            return { applied: false, CodeApplied: msg }
+          } 
         } else {
-          var msg = "Maximum limit exceeded, try again later";
-        }
-        return { applied: false, promoCodeApplied: msg }
-      } 
+          return {  applied: false, CodeApplied: "Promocode expired", discountedPrice :price  }
+        } 
+    
     } else {
-      return {  applied: false, promoCodeApplied: "Promocode expired", discountedPrice :price  }
-    } 
-  } else {
-    return {  applied: false, promoCodeApplied: "Promocode cannot be used", discountedPrice :price  }
-  }
-  } else {
-    return {  applied: false, promoCodeApplied: "Promocode is not supported"  }
-  }
+      return {  applied: false, CodeApplied: "Invalid Code",  }
+    }
 }
+
 
 
 async function sendMail(user_id, status) {
@@ -160,8 +201,8 @@ module.exports = {
       totalOfferLimit = parseInt(packageSelected.limit) + parseInt(checkUserExist.limit);
     }
 
-
-    let promoCodeDetails = await getPromocodeDiscount(user_id, packageSelected.price, promocode);
+    let afterCodeApply = await ApplyCode(user_id, packageSelected.price, promocode);
+    //console.log(AfterCodeApply); return false;
 
     if (checkUserExist === null) {
       let expiryDate = new Date();
@@ -190,27 +231,84 @@ module.exports = {
           expiry: expiryDate,
           amount: packageSelected.price,
           promocode_applied: promocode ? promocode: null,
-          discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
-          paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null
+          discount: afterCodeApply.discount ? afterCodeApply.discount: null,
+          paid_amount: afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: null
         });
 
         //updating the promocode transaction table
-        if(promoCodeDetails !== null && promoCodeDetails.applied === true) {
-          var promocodeTransactions = { promocode: promocode,
+        if(afterCodeApply !== null && afterCodeApply.applied === true) {
+          if(afterCodeApply.from === "promocode") {
+          let promocodeTransactions = { promocode: promocode,
             user: user_id,
-            paid_amount: promoCodeDetails.discountedPrice,
-            discount: promoCodeDetails.discount,
+            paid_amount: afterCodeApply.discountedPrice,
+            discount: afterCodeApply.discount,
             applied_for: 'membership',
             cost:  packageSelected.price,
             inserted_id: membership.id,
             status: true
            }
-            await strapi
+          let promoTransact =  await strapi
             .query("promocode-transaction")
             .create(promocodeTransactions);
-        } 
 
-       
+            if(promoTransact!==null &&  afterCodeApply.from === "promocode" && afterCodeApply.promocodeId !== null) {
+              await strapi.query("promocode").update({ id: afterCodeApply.promocodeId },
+                {
+                  total_usage: total_usage+1 
+                }
+              );
+            }
+
+
+          } else {
+            let referralTransactions = { referral_code: promocode,
+              user: user_id,
+              paid_amount: afterCodeApply.discountedPrice,
+              discount: afterCodeApply.discount,
+              applied_for: 'membership',
+              cost:  packageSelected.price,
+              affiliate: afterCodeApply.affiliateId ?  afterCodeApply.affiliateId: null,
+              membership: membership.id,
+              from: afterCodeApply.from,
+              referrer: afterCodeApply.referrer ? afterCodeApply.referrer: null,
+              referrer_credit: afterCodeApply.referrerCredit ? afterCodeApply.referrerCredit: null,
+              status: true
+             }
+
+             let referralTransact =  await strapi
+              .query("referral-code-transaction")
+              .create(referralTransactions);
+
+               //update the total usage count in affiliate
+               if( referralTransact !=null && afterCodeApply.from === "affiliate" && afterCodeApply.affiliateId !== null ) {
+                await strapi.query("affiliate").update({ id: afterCodeApply.affiliateId },
+                  {
+                    total_usage: total_usage+1 
+                  }
+                );
+              } else if( referralTransact && afterCodeApply.from === "referral" ) {
+                let userReferLogExist = await strapi.query("user-referral-log").findOne({ user: afterCodeApply.userId });
+                if(!userReferLogExist) {
+                  let count = 0;
+                  await strapi.query("user-referral-log").create(
+                    {
+                      user: afterCodeApply.userId,
+                      count: parseInt(count) + 1 
+                    }
+                  );
+                } else {
+                  await strapi.query("user-referral-log").update( {user: userCode.id,}, 
+                    {
+                      count: parseInt(userReferLogExist.count) + 1 
+                    }
+                  ); 
+                }
+              }
+
+           }
+        }
+      
+  
       //sendMail(user_id, "create");
       return membership;
     } else {
@@ -227,8 +325,8 @@ module.exports = {
           expiry: checkUserExist.expiry,
           amount: packageSelected.price,
           promocode_applied: promocode ? promocode: null,
-          discount: promoCodeDetails.discount ? promoCodeDetails.discount: null,
-          paid_amount: promoCodeDetails.discountedPrice ? promoCodeDetails.discountedPrice: null
+          discount: afterCodeApply.discount ? afterCodeApply.discount: null,
+          paid_amount: afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: null
         });
         //updating the promocode transaction table
         
@@ -247,19 +345,82 @@ module.exports = {
           }
         );
 
-        if(promoCodeDetails !== null && promoCodeDetails.applied === true) {
+        if(afterCodeApply !== null && afterCodeApply.applied === true) {
+          if(afterCodeApply.from === "promocode") {
+
           await strapi
           .query("promocode-transaction")
           .create({ promocode: promocode,
             user: user_id,
-            paid_amount: promoCodeDetails.discountedPrice,
-            discount: promoCodeDetails.discount,
+            paid_amount: afterCodeApply.discountedPrice,
+            discount: afterCodeApply.discount,
             applied_for: 'membership',
             cost:  packageSelected.price,
             inserted_id: membership.id,
             status: true
           });
-      } 
+
+          let promoTransact =  await strapi
+          .query("promocode-transaction")
+          .create(promocodeTransactions);
+
+          if(promoTransact!==null &&  afterCodeApply.from === "promocode" && afterCodeApply.promocodeId !== null) {
+            await strapi.query("promocode").update({ id: afterCodeApply.promocodeId },
+              {
+                total_usage: total_usage+1 
+              }
+            );
+          }
+
+        }  else {
+          
+          let referralTransactions = { referral_code: promocode,
+            user: user_id,
+            paid_amount: afterCodeApply.discountedPrice,
+            discount: afterCodeApply.discount,
+            applied_for: 'membership',
+            cost:  packageSelected.price,
+            affiliate: afterCodeApply.affiliateId ?  afterCodeApply.affiliateId: null,
+            membership: membership.id,
+            from: afterCodeApply.from,
+            referrer: afterCodeApply.referrer ? afterCodeApply.referrer: null,
+            referrer_credit: afterCodeApply.referrerCredit ? afterCodeApply.referrerCredit: null,
+            status: true
+           }
+           
+          let referralTransact = await strapi
+            .query("referral-code-transaction")
+            .create(referralTransactions);
+
+               //update the total usage count in affiliate
+               if( referralTransact !=null && afterCodeApply.from === "affiliate" && afterCodeApply.affiliateId !== null ) {
+                await strapi.query("affiliate").update({ id: afterCodeApply.affiliateId },
+                  {
+                    total_usage: total_usage+1 
+                  }
+                );
+              } else if( referralTransact && afterCodeApply.from === "referral" ) {
+                let userReferLogExist = await strapi.query("user-referral-log").findOne({ user: afterCodeApply.userId });
+                if(!userReferLogExist) {
+                  let count = 0;
+                  await strapi.query("user-referral-log").create(
+                    {
+                      user: afterCodeApply.userId,
+                      count: parseInt(count) + 1 
+                    }
+                  );
+                } else {
+                  await strapi.query("user-referral-log").update( {user: afterCodeApply.userId}, 
+                    {
+                      count: parseInt(userReferLogExist.count) + 1 
+                    }
+                  ); 
+                }
+              }
+
+
+        }
+      }
       //sendMail(user_id, "renewal");
       return membership;
     }

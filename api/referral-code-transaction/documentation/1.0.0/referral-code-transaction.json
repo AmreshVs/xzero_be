@@ -660,6 +660,9 @@
               "address": {
                 "type": "string"
               },
+              "enable_refer_and_earn": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -766,6 +769,111 @@
           },
           "referral_code": {
             "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "referrer": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "notification_token": {
+                "type": "string"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "favourites": {
+                "type": "string"
+              },
+              "dob": {
+                "type": "string"
+              },
+              "birthday": {
+                "type": "datetime"
+              },
+              "platform": {
+                "type": "string"
+              },
+              "app_version": {
+                "type": "string"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "favourite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "membership": {
+                "type": "string"
+              },
+              "referral_code": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "enable_refer_and_earn": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "cost": {
+            "type": "number"
+          },
+          "discount": {
+            "type": "integer"
+          },
+          "paid_amount": {
+            "type": "number"
+          },
+          "referrer_credit": {
+            "type": "number"
           },
           "created_by": {
             "required": [
@@ -880,6 +988,24 @@
           },
           "referral_code": {
             "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "referrer": {
+            "type": "string"
+          },
+          "cost": {
+            "type": "number"
+          },
+          "discount": {
+            "type": "integer"
+          },
+          "paid_amount": {
+            "type": "number"
+          },
+          "referrer_credit": {
+            "type": "number"
           },
           "created_by": {
             "type": "string"

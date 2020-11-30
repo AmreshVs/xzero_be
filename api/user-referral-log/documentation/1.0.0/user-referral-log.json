@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/memberships": {
+    "/user-referral-logs": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -10,9 +10,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Membership"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Membership"
+          "User-referral-log"
         ],
         "parameters": [
           {
@@ -201,72 +202,9 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Membership"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Membership"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewMembership"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/memberships/count": {
-      "get": {
-        "deprecated": false,
-        "description": "",
-        "responses": {
-          "200": {
-            "description": "response",
-            "content": {
-              "application/json": {
-                "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,12 +244,22 @@
         },
         "summary": "",
         "tags": [
-          "Membership"
+          "User-referral-log"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewUser-referral-log"
+              }
+            }
+          }
+        }
       }
     },
-    "/memberships/{id}": {
+    "/user-referral-logs/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -321,7 +269,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Membership"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -359,7 +311,64 @@
         },
         "summary": "",
         "tags": [
-          "Membership"
+          "User-referral-log"
+        ],
+        "parameters": []
+      }
+    },
+    "/user-referral-logs/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "User-referral-log"
         ],
         "parameters": [
           {
@@ -383,7 +392,11 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Membership"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -421,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Membership"
+          "User-referral-log"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewMembership"
+                "$ref": "#/components/schemas/NewUser-referral-log"
               }
             }
           }
@@ -495,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Membership"
+          "User-referral-log"
         ],
         "parameters": [
           {
@@ -514,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Membership": {
+      "User-referral-log": {
         "required": [
           "id"
         ],
@@ -612,110 +625,13 @@
               }
             }
           },
-          "serial": {
-            "type": "string"
-          },
-          "expiry": {
-            "type": "datetime"
-          },
-          "membership_transactions": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "membership_id": {
-                "type": "integer"
-              },
-              "serial": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              },
-              "amount": {
-                "type": "integer"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "promocode_applied": {
-                "type": "string"
-              },
-              "discount": {
-                "type": "integer"
-              },
-              "paid_amount": {
-                "type": "number"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "qrcode_url": {
-            "type": "string"
-          },
-          "package": {
-            "type": "integer"
-          },
-          "limit": {
+          "count": {
             "type": "integer",
-            "default": "0"
+            "default": 0
           },
-          "center_check_ins": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "user_id": {
-                  "type": "string"
-                },
-                "center": {
-                  "type": "string"
-                },
-                "membership": {
-                  "type": "string"
-                },
-                "transaction_id": {
-                  "type": "string"
-                },
-                "discounted_price": {
-                  "type": "integer"
-                },
-                "original_price": {
-                  "type": "integer"
-                },
-                "discount": {
-                  "type": "integer"
-                },
-                "offer_id": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
-          },
-          "is_gift_generated": {
-            "type": "boolean"
-          },
-          "gift_generated_date": {
-            "type": "datetime"
+          "status": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "required": [
@@ -807,41 +723,18 @@
           }
         }
       },
-      "NewMembership": {
+      "NewUser-referral-log": {
         "properties": {
           "user": {
             "type": "string"
           },
-          "serial": {
-            "type": "string"
-          },
-          "expiry": {
-            "type": "datetime"
-          },
-          "membership_transactions": {
-            "type": "string"
-          },
-          "qrcode_url": {
-            "type": "string"
-          },
-          "package": {
-            "type": "integer"
-          },
-          "limit": {
+          "count": {
             "type": "integer",
-            "default": "0"
+            "default": 0
           },
-          "center_check_ins": {
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          },
-          "is_gift_generated": {
-            "type": "boolean"
-          },
-          "gift_generated_date": {
-            "type": "datetime"
+          "status": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"
@@ -853,9 +746,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Membership"
-    }
-  ]
+  "tags": []
 }

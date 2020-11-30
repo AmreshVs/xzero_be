@@ -1407,6 +1407,10 @@
           "address": {
             "type": "string"
           },
+          "enable_refer_and_earn": {
+            "type": "boolean",
+            "default": true
+          },
           "created_by": {
             "required": [
               "id",
@@ -1576,6 +1580,10 @@
           },
           "address": {
             "type": "string"
+          },
+          "enable_refer_and_earn": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"

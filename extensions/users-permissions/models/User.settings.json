@@ -94,6 +94,10 @@
     },
     "address": {
       "type": "text"
+    },
+    "enable_refer_and_earn": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

@@ -1,0 +1,26 @@
+{
+  "kind": "collectionType",
+  "collectionName": "user_referral_logs",
+  "info": {
+    "name": "User Referral Log"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "count": {
+      "type": "integer",
+      "default": 0,
+      "unique": false
+    },
+    "status": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

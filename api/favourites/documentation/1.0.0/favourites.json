@@ -601,6 +601,9 @@
               "address": {
                 "type": "string"
               },
+              "enable_refer_and_earn": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },
