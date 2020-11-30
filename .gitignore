@@ -6,3 +6,4 @@ public/uploads
 public/qrcode
 exports/graphql/schema.graphql
 .DS_Store
+extensions/documentation

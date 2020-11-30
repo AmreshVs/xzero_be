@@ -628,7 +628,8 @@
           "membership_plan": {
             "required": [
               "id",
-              "duration"
+              "duration",
+              "color"
             ],
             "properties": {
               "id": {
@@ -642,12 +643,6 @@
               },
               "price": {
                 "type": "number"
-              },
-              "expiry": {
-                "type": "datetime"
-              },
-              "limit": {
-                "type": "integer"
               },
               "status": {
                 "type": "boolean"
@@ -663,6 +658,9 @@
               },
               "duration": {
                 "type": "integer"
+              },
+              "color": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"
