@@ -18,12 +18,6 @@
     "price": {
       "type": "decimal"
     },
-    "expiry": {
-      "type": "datetime"
-    },
-    "limit": {
-      "type": "integer"
-    },
     "status": {
       "type": "boolean"
     },
@@ -46,6 +40,10 @@
     },
     "duration": {
       "type": "integer",
+      "required": true
+    },
+    "color": {
+      "type": "string",
       "required": true
     }
   }

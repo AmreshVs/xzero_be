@@ -530,7 +530,8 @@
       "Membership-plans": {
         "required": [
           "id",
-          "duration"
+          "duration",
+          "color"
         ],
         "properties": {
           "id": {
@@ -544,12 +545,6 @@
           },
           "price": {
             "type": "number"
-          },
-          "expiry": {
-            "type": "datetime"
-          },
-          "limit": {
-            "type": "integer"
           },
           "status": {
             "type": "boolean"
@@ -629,6 +624,9 @@
           },
           "duration": {
             "type": "integer"
+          },
+          "color": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -722,7 +720,8 @@
       },
       "NewMembership-plans": {
         "required": [
-          "duration"
+          "duration",
+          "color"
         ],
         "properties": {
           "name_en": {
@@ -733,12 +732,6 @@
           },
           "price": {
             "type": "number"
-          },
-          "expiry": {
-            "type": "datetime"
-          },
-          "limit": {
-            "type": "integer"
           },
           "status": {
             "type": "boolean"
@@ -751,6 +744,9 @@
           },
           "duration": {
             "type": "integer"
+          },
+          "color": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
