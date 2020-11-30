@@ -80,8 +80,8 @@ async function ApplyCode(receiver, price, referral_code) {
             return { applied: false, CodeApplied: msg }
           }   
     } else if( promocode !== null && (promocode.applied_for === "voucher" || promocode.applied_for === 'both')) {
-      let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: referral_code, status: true });
-      let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: receiver, status: true });
+      let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: referralCode, status: true });
+      let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: referralCode, user: receiver, status: true });
       
       let start_date = promocode.start_date ? promocode.start_date: new Date();
       let end_date = promocode.start_date ? promocode.end_date: new Date();
@@ -155,9 +155,10 @@ module.exports = {
               .create(promocodeTransactions);
 
               if(promoTransact!==null &&  afterCodeApply.from === "promocode" && afterCodeApply.promocodeId !== null) {
+                let promocodeData = await strapi.query("promocode").findOne({ id: afterCodeApply.promocodeId });
                 await strapi.query("promocode").update({ id: afterCodeApply.promocodeId },
                   {
-                    total_usage: total_usage+1 
+                    total_usage: parseInt(promocodeData.total_usage)+1 
                   }
                 );
               }
@@ -183,9 +184,10 @@ module.exports = {
 
               //update the total usage count in affiliate
               if( referralTransact && afterCodeApply.from === "affiliate" && afterCodeApply.affiliateId !== null ) {
+                let affiliateData = await strapi.query("affiliate").findOne({ id: afterCodeApply.affiliateId });
                 await strapi.query("affiliate").update({ id: afterCodeApply.affiliateId },
                   {
-                    total_usage: total_usage+1 
+                    total_usage: parseInt(affiliateData.total_usage)+1 
                   }
                 );
               } else if( referralTransact && afterCodeApply.from === "referral" ) {

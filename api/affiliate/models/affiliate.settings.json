@@ -40,7 +40,8 @@
       "default": "both"
     },
     "total_usage": {
-      "type": "biginteger"
+      "type": "biginteger",
+      "default": "0"
     },
     "discount": {
       "type": "integer"

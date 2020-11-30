@@ -632,7 +632,8 @@
             "type": "integer"
           },
           "total_usage": {
-            "type": "integer"
+            "type": "integer",
+            "default": "0"
           },
           "applied_for": {
             "type": "string",
@@ -765,7 +766,8 @@
             "type": "integer"
           },
           "total_usage": {
-            "type": "integer"
+            "type": "integer",
+            "default": "0"
           },
           "applied_for": {
             "type": "string",

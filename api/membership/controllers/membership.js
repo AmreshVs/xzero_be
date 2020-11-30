@@ -68,7 +68,7 @@ async function ApplyCode(receiver, price, referral_code) {
           }   
     } else if( promocode !== null && (promocode.applied_for === "membership" || promocode.applied_for === 'both')) {
       let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: referral_code, status: true });
-      let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: promoCode, user: receiver, status: true });
+      let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: referral_code, user: receiver, status: true });
       
       let start_date = promocode.start_date ? promocode.start_date: new Date();
       let end_date = promocode.start_date ? promocode.end_date: new Date();
@@ -348,7 +348,7 @@ module.exports = {
         if(afterCodeApply !== null && afterCodeApply.applied === true) {
           if(afterCodeApply.from === "promocode") {
 
-          await strapi
+          let promoTransact =await strapi
           .query("promocode-transaction")
           .create({ promocode: promocode,
             user: user_id,
@@ -360,14 +360,12 @@ module.exports = {
             status: true
           });
 
-          let promoTransact =  await strapi
-          .query("promocode-transaction")
-          .create(promocodeTransactions);
-
+  
           if(promoTransact!==null &&  afterCodeApply.from === "promocode" && afterCodeApply.promocodeId !== null) {
+            let promocodeData = await strapi.query("promocode").findOne({ id: afterCodeApply.promocodeId });
             await strapi.query("promocode").update({ id: afterCodeApply.promocodeId },
               {
-                total_usage: total_usage+1 
+                total_usage: parseInt(promocodeData.total_usage)+1 
               }
             );
           }
@@ -394,9 +392,10 @@ module.exports = {
 
                //update the total usage count in affiliate
                if( referralTransact !=null && afterCodeApply.from === "affiliate" && afterCodeApply.affiliateId !== null ) {
+                let affiliateData = await strapi.query("affiliate").findOne({ id: afterCodeApply.affiliateId });
                 await strapi.query("affiliate").update({ id: afterCodeApply.affiliateId },
                   {
-                    total_usage: total_usage+1 
+                    total_usage: parseInt(affiliateData.total_usage) + 1 
                   }
                 );
               } else if( referralTransact && afterCodeApply.from === "referral" ) {

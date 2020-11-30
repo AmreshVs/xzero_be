@@ -639,7 +639,8 @@
             ]
           },
           "total_usage": {
-            "type": "integer"
+            "type": "integer",
+            "default": "0"
           },
           "discount": {
             "type": "integer"
@@ -773,7 +774,8 @@
             ]
           },
           "total_usage": {
-            "type": "integer"
+            "type": "integer",
+            "default": "0"
           },
           "discount": {
             "type": "integer"

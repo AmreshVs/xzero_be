@@ -33,7 +33,8 @@
       "type": "integer"
     },
     "total_usage": {
-      "type": "biginteger"
+      "type": "biginteger",
+      "default": "0"
     },
     "applied_for": {
       "type": "enumeration",
