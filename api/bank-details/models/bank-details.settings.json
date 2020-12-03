@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "bank_details",
+  "info": {
+    "name": "Bank Details"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "bank_name": {
+      "type": "string"
+    },
+    "account_number": {
+      "type": "string"
+    },
+    "iban": {
+      "type": "string"
+    },
+    "swift_code": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "status": {
+      "type": "boolean"
+    }
+  }
+}
