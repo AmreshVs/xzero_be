@@ -321,7 +321,7 @@ module.exports = {
   
       //sendMail(user_id, "create");
       let expiry = membership.expiry.daysDiff(membership.expiry);
-      return { 'membership': membership, expiry: expiry };
+      return { membership: membership, expiry: expiry };
     } else {
       let serial = await generateSerial();
       var userInfo = { userid: user_id, serial: serial };;
