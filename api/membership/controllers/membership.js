@@ -19,6 +19,16 @@ Date.prototype.addDays = function (days) {
   return date;
 };
 
+  String.prototype.daysDiff = function (date) {
+  const date1 = new Date(date);
+  const date2 = new Date();
+  const diffTime = Math.abs(date1 - date2);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+  return diffDays;
+};
+
+
+
 
 async function ApplyCode(receiver, price, referral_code) {
   let referralCode = sanitizeEntity(referral_code, 'string');
@@ -252,14 +262,13 @@ module.exports = {
             .create(promocodeTransactions);
 
             if(promoTransact!==null &&  afterCodeApply.from === "promocode" && afterCodeApply.promocodeId !== null) {
+              let promocodeData = await strapi.query("promocode").findOne({ id: afterCodeApply.promocodeId });
               await strapi.query("promocode").update({ id: afterCodeApply.promocodeId },
                 {
-                  total_usage: total_usage+1 
+                  total_usage: parseInt(promocodeData.total_usage)+1 
                 }
               );
             }
-
-
           } else {
             let referralTransactions = { referral_code: promocode,
               user: user_id,
@@ -281,9 +290,10 @@ module.exports = {
 
                //update the total usage count in affiliate
                if( referralTransact !=null && afterCodeApply.from === "affiliate" && afterCodeApply.affiliateId !== null ) {
+                let affiliateData = await strapi.query("affiliate").findOne({ id: afterCodeApply.affiliateId });
                 await strapi.query("affiliate").update({ id: afterCodeApply.affiliateId },
                   {
-                    total_usage: total_usage+1 
+                    total_usage: (affiliateData.total_usage)+1 
                   }
                 );
               } else if( referralTransact && afterCodeApply.from === "referral" ) {
@@ -310,7 +320,8 @@ module.exports = {
       
   
       //sendMail(user_id, "create");
-      return membership;
+      let expiry = membership.expiry.daysDiff(membership.expiry);
+      return { 'membership': membership, expiry: expiry };
     } else {
       let serial = await generateSerial();
       var userInfo = { userid: user_id, serial: serial };;
@@ -329,7 +340,6 @@ module.exports = {
           paid_amount: afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: null
         });
         //updating the promocode transaction table
-        
 
       let membership = await strapi
         .query("membership")
@@ -421,7 +431,8 @@ module.exports = {
         }
       }
       //sendMail(user_id, "renewal");
-      return membership;
+      let expiry = membership.expiry.daysDiff(membership.expiry);
+      return { membership: membership, expiry: expiry };
     }
   },
 };

@@ -697,9 +697,6 @@
               "qrcode_url": {
                 "type": "string"
               },
-              "package": {
-                "type": "integer"
-              },
               "limit": {
                 "type": "integer"
               },
@@ -714,6 +711,9 @@
               },
               "gift_generated_date": {
                 "type": "datetime"
+              },
+              "package": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"

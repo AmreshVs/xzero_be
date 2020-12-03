@@ -1,6 +1,16 @@
 module.exports = {
+
+  definition: ` 
+        type membership {
+            membership : Membership,
+            expiry : Int!
+        } 
+       
+				`
+				, 
+
   mutation: `
-    generateMembership(user_id: ID!, plan :Int!, promocode: String): Membership!
+    generateMembership(user_id: ID!, plan :Int!, promocode: String): membership!
   `,
   resolver: {
     Mutation: {
