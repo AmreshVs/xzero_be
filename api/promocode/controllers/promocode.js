@@ -99,7 +99,7 @@ module.exports = {
                 let discountAmount = (parseInt(promocode.discount)/parseInt(100)) * parseInt(price);
                 discountAmount = (discountAmount <= promocode.allowed_maximum_discount) ? discountAmount: promocode.allowed_maximum_discount; 
                 let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
-                return { discount: promocode.discount, discountedPrice: discountedPrice, from: 'promocode', discountYouGet: Math.floor(discountAmount), applied: true, CodeAapplied: referralCode }
+                return { discount: promocode.discount, discountedPrice: discountedPrice, from: 'promocode', discountYouGet: Math.floor(discountAmount), applied: true, CodeApplied: referralCode }
               } else {
                 if(getPromoCodeUsedCountByUser>promocode.maximum_usage_per_user) {
                   var msg = "User limit exceeded";
