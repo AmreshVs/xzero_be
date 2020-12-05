@@ -498,6 +498,21 @@ const EditViewDataManagerProvider = ({
         }
         //update voucher status end here
 
+        //update the withdrawal status on change on strapi admin 
+        if (currentContentTypeLayout.apiID === 'withdrawal-history') {   
+            const axios = require('axios');
+              let res = await axios.post('/WithdrawMoney', {
+                id: cleanedData.id,
+                draw_status: cleanedData.withdrawal_status
+              });
+              if(res) {
+                console.log( res.data );
+              } else {
+                console.log("something is went wrong")
+              }
+        }
+        //update withdrawal status end here
+
         if (isSingleType) {
           setIsCreatingEntry(false);
         } else {

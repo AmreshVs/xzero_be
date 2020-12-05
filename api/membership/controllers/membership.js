@@ -39,7 +39,6 @@ async function ApplyCode(receiver, price, referral_code) {
   let referProgram = await strapi.query("referral-program").findOne({ status: true });    
   let promocode = await strapi.query("promocode").findOne({ promocode: referralCode, status: true });
 
-   //console.log(userCode.referral_code); return false;
   if( referProgram !== null && userCode!==null && userCode.referral_code !== null ) {
       let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
       let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, from: 'referral' , status: true });
@@ -279,7 +278,7 @@ module.exports = {
               affiliate: afterCodeApply.affiliateId ?  afterCodeApply.affiliateId: null,
               membership: membership.id,
               from: afterCodeApply.from,
-              referrer: afterCodeApply.referrer ? afterCodeApply.referrer: null,
+              referrer: afterCodeApply.userId ? afterCodeApply.userId: null,
               referrer_credit: afterCodeApply.referrerCredit ? afterCodeApply.referrerCredit: null,
               status: true
              }
@@ -320,7 +319,8 @@ module.exports = {
       
   
       //sendMail(user_id, "create");
-      let expiry = membership.expiry.daysDiff(membership.expiry);
+      
+      let expiry = membership.expiry.daysDiff(membership.expiry)>0 ? membership.expiry.daysDiff(membership.expiry): null;
       return { membership: membership, expiry: expiry };
     } else {
       let serial = await generateSerial();
@@ -391,7 +391,7 @@ module.exports = {
             affiliate: afterCodeApply.affiliateId ?  afterCodeApply.affiliateId: null,
             membership: membership.id,
             from: afterCodeApply.from,
-            referrer: afterCodeApply.referrer ? afterCodeApply.referrer: null,
+            referrer: afterCodeApply.userId ? afterCodeApply.userId: null,
             referrer_credit: afterCodeApply.referrerCredit ? afterCodeApply.referrerCredit: null,
             status: true
            }
@@ -431,7 +431,8 @@ module.exports = {
         }
       }
       //sendMail(user_id, "renewal");
-      let expiry = membership.expiry.daysDiff(membership.expiry);
+      let expiry = membership.expiry.daysDiff(membership.expiry)>0 ? membership.expiry.daysDiff(membership.expiry): null;
+    
       return { membership: membership, expiry: expiry };
     }
   },

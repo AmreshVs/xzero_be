@@ -1,0 +1,60 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/withdrawal-histories",
+      "handler": "withdrawal-history.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/withdrawal-histories/count",
+      "handler": "withdrawal-history.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/withdrawal-histories/:id",
+      "handler": "withdrawal-history.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/withdrawal-histories",
+      "handler": "withdrawal-history.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/withdrawal-histories/:id",
+      "handler": "withdrawal-history.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/withdrawal-histories/:id",
+      "handler": "withdrawal-history.delete",
+      "config": {
+        "policies": []
+      }
+    },
+
+    {
+      "method": "POST",
+      "path": "/WithdrawMoney",
+      "handler": "withdrawal-history.WithdrawMoney"
+    }
+
+  
+  ]
+}

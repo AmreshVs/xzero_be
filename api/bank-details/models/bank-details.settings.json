@@ -29,7 +29,9 @@
       "type": "string"
     },
     "status": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": true,
+      "required": false
     }
   }
 }

@@ -173,7 +173,7 @@ module.exports = {
               affiliate: afterCodeApply.affiliateId ?  afterCodeApply.affiliateId: null,
               voucher_availed: voucher.id,
               from: afterCodeApply.from,
-              referrer: afterCodeApply.referrer ? afterCodeApply.referrer: null,
+              referrer: afterCodeApply.userId ? afterCodeApply.userId: null,
               referrer_credit: afterCodeApply.referrerCredit ? afterCodeApply.referrerCredit: null,
               status: true
              }

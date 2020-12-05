@@ -1,0 +1,38 @@
+{
+  "kind": "collectionType",
+  "collectionName": "withdrawal_histories",
+  "info": {
+    "name": "withdrawal_history"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "withdraw_amount": {
+      "type": "decimal"
+    },
+    "remaining_amount": {
+      "type": "decimal",
+      "default": 0
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "status": {
+      "type": "boolean"
+    },
+    "total_amount": {
+      "type": "decimal"
+    },
+    "withdrawal_status": {
+      "type": "enumeration",
+      "enum": [
+        "pending",
+        "completed",
+        "cancelled"
+      ]
+    }
+  }
+}
