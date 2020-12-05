@@ -10,10 +10,12 @@
   },
   "attributes": {
     "discount": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "allowed_maximum_discount": {
-      "type": "decimal"
+      "type": "decimal",
+      "default": 0
     },
     "usage_limit": {
       "type": "integer"
@@ -23,14 +25,16 @@
       "default": true
     },
     "referrer_get": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "referrer_allowed_maximum_amount": {
       "type": "decimal",
       "default": 0
     },
     "user_can_refer": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     }
   }
 }

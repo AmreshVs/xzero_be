@@ -24,7 +24,7 @@ module.exports = {
         if(withdrawAmount <= totalAmount ){
             totalAmount =  totalAmount;
         } else {
-            return {withdrawal: "please check the amount you entered"}
+            return {msg: "please check the amount you entered"}
         } 
         if(RemainingAmount<0) {
             return { msg: "Wallet is empty" }
