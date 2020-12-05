@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-    async WithdrawMoney( user, withdrawamount, status = "pending" ) {
+    async WithdrawMoney( user, withdrawAmount, status = "pending" ) {
         let dataArray = {};
         let RemainingAmount = 0;
         let withdrawHistory = await strapi.query('withdrawal-history').findOne({ user: user, status: true, _sort: 'id:desc' });

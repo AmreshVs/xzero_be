@@ -10,11 +10,18 @@ module.exports = {
             applicableFor: String,
             referrerCredit: Int,
             from: String
-		    },
+            },
+        type ReferralHistory {
+            referralCode: JSON 
+            earned: Int, 
+            totalReferred: Int , 
+            balance: Int
+            },
 			`
 	, 
 
-    mutation: `ApplyReferral(receiver: Int!, price: Int!, referral_code: String!): ReferralCodeH!, `,
+    mutation: `ApplyReferral(receiver: Int!, price: Int!, referral_code: String!): ReferralCodeH! `,
+    query: `GetReferHistory(referrer: Int): ReferralHistory`,
 
     resolver: {
       Mutation: {
@@ -27,5 +34,15 @@ module.exports = {
             }
           },
       },
+      Query: {
+        GetReferHistory:{
+            description: 'referral code transactions',
+            policies: [],
+            resolverOf: 'application::referral-code-transaction.referral-code-transaction.find',
+            resolver: async (obj, options, ctx) => {
+              return await strapi.api['referral-code-transaction'].controllers['referral-code-transaction'].GetReferHistory(options.referrer);
+            }  
+        }
+      }
     }
   }

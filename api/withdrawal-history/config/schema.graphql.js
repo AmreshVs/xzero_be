@@ -8,9 +8,8 @@ module.exports = {
 	    `
 		, 
 
-    mutation: `
-    WithdrawMoney(user: Int!, withdrawamount: Int!, status: String): TransactionPayLoad
-    `,
+    mutation: `WithdrawMoney(user: Int!, withdrawAmount: Int!, status: String): TransactionPayLoad`,
+    
 
     resolver: {
       Mutation: {
@@ -19,7 +18,7 @@ module.exports = {
             policies: [],
             resolverOf: 'application::withdrawal-history.withdrawal-history.find',
             resolver: async (obj, options, ctx) => {
-              return await strapi.api['withdrawal-history'].controllers['withdrawal-history'].WithdrawMoney( options.user, options.withdrawamount,options.status );
+              return await strapi.api['withdrawal-history'].controllers['withdrawal-history'].WithdrawMoney( options.user, options.withdrawAmount,options.status );
             }
           },
       },
