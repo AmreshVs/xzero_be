@@ -40,10 +40,9 @@ module.exports = {
     //   }
     // },
 
-    async ApplyCode(receiver, price, referral_code) {
-      let referralCode = sanitizeEntity(referral_code, 'string');
-      
-      let userCode = await strapi.query('user', 'users-permissions').findOne({ referral_code: referral_code, enable_refer_and_earn: true });
+    async ApplyCode(receiver, price, code) {
+      let referralCode = sanitizeEntity(code, 'string');
+      let userCode = await strapi.query('user', 'users-permissions').findOne({ referral_code: referralCode, enable_refer_and_earn: true });
       
       let affiliate = await strapi.query("affiliate").findOne({ referral_code: referralCode, status: true });
       let referProgram = await strapi.query("referral-program").findOne({ status: true });    
@@ -63,10 +62,10 @@ module.exports = {
               let referrerCredit = (parseInt(referProgram.referrer_get)/100) * parseInt(price);  
               referrerCredit = (referrerCredit <= referProgram.referrer_allowed_maximum_amount) ? referrerCredit: referProgram.referrer_allowed_maximum_amount;
     
-              return { discount: discountAmount, discountedPrice: afterDiscount, applied:true, userId: userCode.id, from: 'referral', CodeApplied: referral_code, referrerCredit: referrerCredit};
+              return { discount: discountAmount, discountedPrice: afterDiscount, applied:true, userId: userCode.id, from: 'referral', CodeApplied: referralCode, referrerCredit: referrerCredit};
               
           } else {
-            return { applied:false, from: 'referral', CodeApplied: referral_code };
+            return { applied:false, from: 'referral', CodeApplied: referralCode };
           }
     
       } else if( affiliate !== null ) {
@@ -89,8 +88,8 @@ module.exports = {
               }   
         } else if( promocode !== null ) {
           
-          let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: referral_code, status: true });
-          let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: referral_code, user: receiver, status: true });
+          let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: referralCode, status: true });
+          let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: referralCode, user: receiver, status: true });
           
           let start_date = promocode.start_date ? promocode.start_date: new Date();
           let end_date = promocode.start_date ? promocode.end_date: new Date();
@@ -115,7 +114,7 @@ module.exports = {
         
         } else {
           var msg = "Invalid Code"
-          if(receiver === userCode.id) {
+          if(userCode!==null && receiver === userCode.id) {
              msg = "Referrer and receiver can'be same";
           } 
 
