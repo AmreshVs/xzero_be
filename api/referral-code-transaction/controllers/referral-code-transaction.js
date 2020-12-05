@@ -56,7 +56,7 @@ module.exports = {
     },
 
     async GetReferHistory(referrer) {
-        let referHistory = await strapi.query("referral-code-transaction").find({ referrer: referrer, status: true });
+        let referHistory = await strapi.query('user', 'users-permissions').find({ id: referrer });
         let withdrawalHistory = await strapi.query("withdrawal-history").findOne({ user: referrer, status: true, _sort: 'id:desc' });
         let totalEarned = referHistory.map(refer => refer.referrer_credit).reduce((a, b) => a + b, 0) ?  referHistory.map(refer => refer.referrer_credit).reduce((a, b) => a + b, 0): 0;
         let totalAmountDebited = withdrawalHistory ? withdrawalHistory.remaining_amount: 0;
