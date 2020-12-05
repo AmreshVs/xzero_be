@@ -3,7 +3,8 @@ module.exports = {
   definition: ` 
         type membership {
             membership : Membership,
-            expiry : Int!
+            expiry : Int,
+            codeStatus: JSON
         } 
        
 				`

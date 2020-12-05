@@ -10,13 +10,14 @@ module.exports = {
         },
         
         type ApplyCodePayLoad {
-          discount: String  
-          applied: JSON!,
-          CodeApplied: String,
-          from: String
-          discountYouGet: Int
+          discount: String,  
+          applied: Boolean!,
+          codeApplied: String,
+          from: String,
+          discountYouGet: Int,
           discountedPrice: Int,
-          applicableFor: String
+          applicableFor: String,
+          msg: JSON
       }
 				`
 				, 

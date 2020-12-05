@@ -2,6 +2,7 @@ module.exports = {
 
     definition: ` 
         type BoughtVoucher {
+            codeStatus: JSON,
             disabled: Boolean,
             bought: JSON!,
             VoucherAvailed: VoucherAvailed
@@ -10,7 +11,7 @@ module.exports = {
 				, 
 
     mutation: `
-        BuyVoucher(user_id: Int!, voucher_id: Int!, promocode: String): BoughtVoucher!,
+        BuyVoucher(user_id: ID!, voucher_id: Int!, promocode: String): BoughtVoucher!,
     `,
 
     resolver: {
