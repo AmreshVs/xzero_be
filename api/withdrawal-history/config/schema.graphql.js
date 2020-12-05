@@ -3,7 +3,8 @@ module.exports = {
     definition: ` 
         type TransactionPayLoad {
             msg: String,
-            withdrawal: WithdrawalHistory  
+            withdrawal: WithdrawalHistory,
+            bankDetails: BankDetails 
         },
 	    `
 		, 

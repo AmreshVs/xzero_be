@@ -13,7 +13,7 @@ module.exports = {
             },
         type ReferralHistory {
             referralCode: JSON 
-            earned: Int, 
+            totalEarned: Int, 
             totalReferred: Int , 
             balance: Int
             },
