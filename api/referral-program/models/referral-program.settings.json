@@ -35,6 +35,10 @@
     "user_can_refer": {
       "type": "integer",
       "default": 0
+    },
+    "minimum_withdrawal_amount": {
+      "type": "decimal",
+      "default": 0
     }
   }
 }
