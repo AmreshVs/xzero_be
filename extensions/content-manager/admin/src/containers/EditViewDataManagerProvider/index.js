@@ -473,8 +473,9 @@ const EditViewDataManagerProvider = ({
         }
 
         //update the voucher status upon draw status change on strapi admin 
-        if (currentContentTypeLayout.apiID === 'vouchers') {   
-          if(cleanedData.draw_status == 'declare' || cleanedData.draw_status == 'publish') {
+        if (currentContentTypeLayout.apiID === 'vouchers') { 
+          const voucherDetails = await strapi.query('voucher').findOne({ id: cleanedData.id });
+          if(voucherDetails.draw_status !== 'declare' && voucherDetails.draw_status !== 'publish' && (cleanedData.draw_status == 'declare' || cleanedData.draw_status == 'publish')) {
             const axios = require('axios');
             let confirmAct;
             if(cleanedData.draw_status == 'declare') {

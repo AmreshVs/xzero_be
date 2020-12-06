@@ -19,23 +19,19 @@ Date.prototype.addDays = function (days) {
   return date;
 };
 
-// String.prototype.daysDiff = function (date) {
-//   const date1 = new Date(date);
-//   const date2 = new Date();
-//   const diffTime = Math.abs(date1 - date2);
-//   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-//   return diffDays;
-// };
-
 
 async function ApplyCode(receiver, price, code) {
-  let referralCode = sanitizeEntity(code, 'string');
   
+  if(code === null) {
+    return { applied: false, msg: "No code used" };
+  }
+  let referralCode = sanitizeEntity(code, 'string');
   let userCode = await strapi.query('user', 'users-permissions').findOne({ referral_code: referralCode, enable_refer_and_earn: true });
- 
-  let affiliate = await strapi.query("affiliate").findOne({ referral_code: referralCode, status: true });
-  let referProgram = await strapi.query("referral-program").findOne({ status: true });    
   let promocode = await strapi.query("promocode").findOne({ promocode: referralCode, status: true });
+  let affiliate = await strapi.query("affiliate").findOne({ referral_code: referralCode, status: true });
+
+  let referProgram = await strapi.query("referral-program").findOne({ status: true });    
+  
 
   if( referProgram !== null && userCode!==null && userCode.referral_code !== null && userCode.id !== parseInt(receiver)) {
       let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
@@ -142,7 +138,7 @@ async function sendMail(user_id, status) {
 }
 
 module.exports = {
-  async generateMembership(user_id, plan, code) {
+  async generateMembership(user_id, plan, code = null) {
     function generateMemberId(length) {
       var randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       var result = "";
@@ -213,6 +209,7 @@ module.exports = {
     }
 
     let afterCodeApply = await ApplyCode(user_id, packageSelected.price, code);
+
     if(code!==null && afterCodeApply !== null && afterCodeApply.applied === false) {
       return { codeStatus: afterCodeApply.msg };
     }

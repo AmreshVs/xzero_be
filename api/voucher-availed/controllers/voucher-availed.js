@@ -34,6 +34,11 @@ async function sendMail(user_id) {
 
 
 async function ApplyCode(receiver, price, code) {
+
+  if(code === null) {
+    return { applied: false, msg: "No code used" };
+  }
+
   let referralCode = sanitizeEntity(code, 'String');
 
   let userCode = await strapi.query('user', 'users-permissions').findOne({ referral_code: referralCode, enable_refer_and_earn: true });
@@ -117,7 +122,7 @@ async function ApplyCode(receiver, price, code) {
 
 module.exports = {
   // function will add voucher to bought list
-  async BuyVoucher(user_id, voucher_id, code) {
+  async BuyVoucher(user_id, voucher_id, code = null) {
     let voucher = await strapi.query("vouchers").findOne({ id: voucher_id });
     if(voucher != null && voucher.total_bought >=  voucher.limit) {
         await strapi.query("vouchers").update({ id: voucher.id },
