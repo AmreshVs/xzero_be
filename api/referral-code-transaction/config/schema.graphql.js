@@ -12,6 +12,7 @@ module.exports = {
             from: String
             },
         type ReferralHistory {
+            referProgram : ReferralProgram,
             referralCode: JSON 
             totalEarned: Int, 
             totalReferred: Int , 

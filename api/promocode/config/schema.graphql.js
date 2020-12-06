@@ -24,8 +24,10 @@ module.exports = {
 
     mutation: `
       ApplyPromocode(user: Int!, price: Int!, promocode: String!): ApplyPromoCode!,
-      ApplyCode(receiver: Int!, price: Int!, code: String!): ApplyCodePayLoad
+      
     `,
+
+    query: 'ApplyCode(receiver: Int!, price: Int!, code: String!): ApplyCodePayLoad',
 
     resolver: {
       Mutation: {
@@ -37,14 +39,16 @@ module.exports = {
               return await strapi.api.promocode.controllers.promocode.ApplyPromocode(options.user, options.price, options.promocode);
             }
           },
-          ApplyCode: {
-            description: 'function to apply promocode',
-            policies: [],
-            resolverOf: 'application::promocode.promocode.find',
-            resolver: async (obj, options, ctx) => {
-              return await strapi.api.promocode.controllers.promocode.ApplyCode(options.receiver, options.price, options.code);
-            }
-          },
       },
+      Query: {
+        ApplyCode: {
+          description: 'function to apply promocode',
+          policies: [],
+          resolverOf: 'application::promocode.promocode.find',
+          resolver: async (obj, options, ctx) => {
+            return await strapi.api.promocode.controllers.promocode.ApplyCode(options.receiver, options.price, options.code);
+          }
+        },
+      }
     }
   }

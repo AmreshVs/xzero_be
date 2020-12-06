@@ -66,7 +66,7 @@ async function ApplyCode(receiver, price, code) {
             let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
             discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
             let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
-            return { ApplicableFor: affiliate.applied_for, affiliateId: affiliate.id, discount: affiliate.discount, from: 'affiliate', discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, CodeApplied :referralCode }
+            return { ApplicableFor: affiliate.applied_for, affiliateId: affiliate.id, userId: affiliate.user, discount: affiliate.discount, from: 'affiliate', discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, CodeApplied :referralCode }
           } else {
             if(userUsedHistory>affiliate.allowed_usage_per_user) {
               var msg = "Affiliate user limit exceeded";

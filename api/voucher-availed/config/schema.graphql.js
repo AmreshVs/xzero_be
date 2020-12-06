@@ -5,7 +5,7 @@ module.exports = {
             codeStatus: JSON,
             disabled: Boolean,
             bought: JSON!,
-            VoucherAvailed: VoucherAvailed
+            voucherAvailed: VoucherAvailed
 				},
 				`
 				, 
