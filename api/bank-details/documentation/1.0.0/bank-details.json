@@ -644,6 +644,9 @@
             "type": "boolean",
             "default": true
           },
+          "holder_name": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -757,6 +760,9 @@
           "status": {
             "type": "boolean",
             "default": true
+          },
+          "holder_name": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"
