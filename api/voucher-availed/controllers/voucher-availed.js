@@ -44,8 +44,7 @@ async function ApplyCode(receiver, price, code) {
   let referProgram = await strapi.query("referral-program").findOne({ status: true });    
   let promocode = await strapi.query("promocode").findOne({ promocode: referralCode, status: true });
   
-
-   //console.log(userCode.referral_code); return false;
+  //console.log(userCode.referral_code); return false;
   if( referProgram !== null && userCode!==null && userCode.referral_code !== null && userCode.id !== parseInt(receiver)) {
       let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
       let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, from: 'referral' , status: true });
@@ -58,7 +57,7 @@ async function ApplyCode(receiver, price, code) {
           let referrerCredit = (parseInt(referProgram.referrer_get)/100) * parseInt(price);  
           referrerCredit = (referrerCredit <= referProgram.referrer_allowed_maximum_amount) ? referrerCredit: referProgram.referrer_allowed_maximum_amount;
 
-          return { discount: discountAmount, discountedPrice: afterDiscount, applied:true, userId: userCode.id, from: 'referral', codeApplied: referralCode, referrerCredit: referrerCredit };
+          return { discount: referProgram.discount, discountYouGet: discountAmount, discountedPrice: afterDiscount, applied:true, userId: userCode.id, from: 'referral', codeApplied: referralCode, referrerCredit: referrerCredit };
       } else {
         return { applied:false, from: 'referral', codeApplied: referralCode, msg: "Invalid referral code" };
       } 
@@ -129,14 +128,14 @@ module.exports = {
 		}
     
     let afterCodeApply = await ApplyCode(user_id, voucher.cost, promocode);
-    if(promocode !== null &&  afterCodeApply !== null && afterCodeApply.applied === false) {
-      return {
-        codeStatus: afterCodeApply.msg,
-        disabled: false,
-        bought: "false",
+    // if(promocode !== null &&  afterCodeApply !== null && afterCodeApply.applied === false) {
+    //   return {
+    //     codeStatus: afterCodeApply.msg,
+    //     disabled: false,
+    //     bought: "false",
 
-      };
-    }
+    //   };
+    // }
     
     let dataToSave = {
       user: user_id,

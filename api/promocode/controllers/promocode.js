@@ -30,7 +30,7 @@ module.exports = {
               let referrerCredit = (parseInt(referProgram.referrer_get)/100) * parseInt(price);  
               referrerCredit = (referrerCredit <= referProgram.referrer_allowed_maximum_amount) ? referrerCredit: referProgram.referrer_allowed_maximum_amount;
     
-              return { discount: discountAmount, discountedPrice: afterDiscount, applied:true, userId: userCode.id, from: 'referral', codeApplied: referralCode, referrerCredit: referrerCredit};
+              return { discount: referProgram.discount , discountYouGet: discountAmount, discountedPrice: afterDiscount, applied:true, userId: userCode.id, from: 'referral', codeApplied: referralCode, referrerCredit: referrerCredit};
               
           } else {
             return { applied:false, from: 'referral', codeApplied: referralCode, msg: "Invalid referral code" };
