@@ -118,7 +118,7 @@ async function ApplyCode(receiver, price, code) {
 
 module.exports = {
   // function will add voucher to bought list
-  async BuyVoucher(user_id, voucher_id, promocode) {
+  async BuyVoucher(user_id, voucher_id, code) {
     let voucher = await strapi.query("vouchers").findOne({ id: voucher_id });
     if(voucher != null && voucher.total_bought >=  voucher.limit) {
         await strapi.query("vouchers").update({ id: voucher.id },
@@ -127,8 +127,8 @@ module.exports = {
         return { disabled: true, bought: 'Limit is reached' }
 		}
     
-    let afterCodeApply = await ApplyCode(user_id, voucher.cost, promocode);
-    if(promocode !== null &&  afterCodeApply !== null && afterCodeApply.applied === false) {
+    let afterCodeApply = await ApplyCode(user_id, voucher.cost, code);
+    if(code !== null &&  afterCodeApply !== null && afterCodeApply.applied === false) {
       return {
         codeStatus: afterCodeApply.msg,
         disabled: false,
@@ -142,7 +142,7 @@ module.exports = {
       voucher: voucher.id,
       status: true,
       cost: voucher.cost,
-      promocode_applied: afterCodeApply.applied === true ? promocode: null, 
+      promocode_applied: afterCodeApply.applied === true ? code: null, 
       paid_amount: afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: null, 
       discount: afterCodeApply.discount ? afterCodeApply.discount: null,
     };
@@ -155,7 +155,7 @@ module.exports = {
         if(afterCodeApply !== null && afterCodeApply.applied === true) {
           var codeStatus = "Success";
           if(afterCodeApply.from === "promocode") {
-            var promocodeTransactions = { promocode: promocode,
+            var promocodeTransactions = { promocode: code,
               user: user_id,
               paid_amount: afterCodeApply.discountedPrice,
               discount: afterCodeApply.discount,
@@ -178,7 +178,7 @@ module.exports = {
               }
 
           } else {
-            let referralTransactions = { referral_code: promocode,
+            let referralTransactions = { referral_code: code,
               user: user_id,
               paid_amount: afterCodeApply.discountedPrice,
               discount: afterCodeApply.discount,

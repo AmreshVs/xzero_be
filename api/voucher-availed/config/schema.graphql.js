@@ -11,7 +11,7 @@ module.exports = {
 				, 
 
     mutation: `
-        BuyVoucher(user_id: ID!, voucher_id: Int!, promocode: String): BoughtVoucher!,
+        BuyVoucher(user_id: ID!, voucher_id: Int!, code: String): BoughtVoucher!,
     `,
 
     resolver: {
@@ -21,7 +21,7 @@ module.exports = {
             policies: [],
             resolverOf: 'application::voucher-availed.voucher-availed.create',
             resolver: async (obj, options, ctx) => {
-              return await strapi.api['voucher-availed'].controllers['voucher-availed'].BuyVoucher(options.user_id, options.voucher_id, options.promocode);
+              return await strapi.api['voucher-availed'].controllers['voucher-availed'].BuyVoucher(options.user_id, options.voucher_id, options.code);
             }
           },
       },

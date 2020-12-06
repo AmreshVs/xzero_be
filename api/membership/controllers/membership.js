@@ -144,7 +144,7 @@ async function sendMail(user_id, status) {
 }
 
 module.exports = {
-  async generateMembership(user_id, plan, promocode) {
+  async generateMembership(user_id, plan, code) {
     function generateMemberId(length) {
       var randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       var result = "";
@@ -214,8 +214,8 @@ module.exports = {
       totalOfferLimit = parseInt(packageSelected.limit) + parseInt(checkUserExist.limit);
     }
 
-    let afterCodeApply = await ApplyCode(user_id, packageSelected.price, promocode);
-    if(promocode!==null && afterCodeApply !== null && afterCodeApply.applied === false) {
+    let afterCodeApply = await ApplyCode(user_id, packageSelected.price, code);
+    if(code!==null && afterCodeApply !== null && afterCodeApply.applied === false) {
       return { codeStatus: afterCodeApply.msg };
     }
     
@@ -246,7 +246,7 @@ module.exports = {
           type: "New",
           expiry: expiryDate,
           amount: packageSelected.price,
-          promocode_applied: afterCodeApply.applied === true ? promocode: null,
+          promocode_applied: afterCodeApply.applied === true ? code: null,
           discount: afterCodeApply.discount ? afterCodeApply.discount: null,
           paid_amount: afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: null
         });
@@ -255,7 +255,7 @@ module.exports = {
         if(afterCodeApply !== null && afterCodeApply.applied === true) {
           var msg = "Success";
           if(afterCodeApply.from === "promocode")  {
-          let promocodeTransactions = { promocode: promocode,
+          let promocodeTransactions = { promocode: code,
             user: user_id,
             paid_amount: afterCodeApply.discountedPrice,
             discount: afterCodeApply.discount,
@@ -277,7 +277,7 @@ module.exports = {
               );
             }
           } else {
-            let referralTransactions = { referral_code: promocode,
+            let referralTransactions = { referral_code: code,
               user: user_id,
               paid_amount: afterCodeApply.discountedPrice,
               discount: afterCodeApply.discount,
@@ -345,7 +345,7 @@ module.exports = {
           type: "Renewal",
           expiry: checkUserExist.expiry,
           amount: packageSelected.price,
-          promocode_applied: afterCodeApply.applied === true ? promocode: null,
+          promocode_applied: afterCodeApply.applied === true ? code: null,
           discount: afterCodeApply.discount ? afterCodeApply.discount: null,
           paid_amount: afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: null
         });
@@ -371,7 +371,7 @@ module.exports = {
 
           let promoTransact =await strapi
           .query("promocode-transaction")
-          .create({ promocode: promocode,
+          .create({ promocode: code,
             user: user_id,
             paid_amount: afterCodeApply.discountedPrice,
             discount: afterCodeApply.discount,
@@ -393,7 +393,7 @@ module.exports = {
 
         }  else {
           
-          let referralTransactions = { referral_code: promocode,
+          let referralTransactions = { referral_code: code,
             user: user_id,
             paid_amount: afterCodeApply.discountedPrice,
             discount: afterCodeApply.discount,
