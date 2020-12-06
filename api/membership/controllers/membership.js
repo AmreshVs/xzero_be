@@ -19,13 +19,13 @@ Date.prototype.addDays = function (days) {
   return date;
 };
 
-  String.prototype.daysDiff = function (date) {
-  const date1 = new Date(date);
-  const date2 = new Date();
-  const diffTime = Math.abs(date1 - date2);
-  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-  return diffDays;
-};
+// String.prototype.daysDiff = function (date) {
+//   const date1 = new Date(date);
+//   const date2 = new Date();
+//   const diffTime = Math.abs(date1 - date2);
+//   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+//   return diffDays;
+// };
 
 
 async function ApplyCode(receiver, price, code) {
@@ -329,8 +329,8 @@ module.exports = {
   
       //sendMail(user_id, "create");
       
-      let expiry = membership.expiry.daysDiff(membership.expiry)>0 ? membership.expiry.daysDiff(membership.expiry): null;
-      return { membership: membership, expiry: expiry, codeStatus: msg };
+      
+      return { membership: membership, codeStatus: msg };
     } else {
       let serial = await generateSerial();
       var userInfo = { userid: user_id, serial: serial };;
@@ -444,8 +444,29 @@ module.exports = {
         var msg = afterCodeApply.msg;
       }
       //sendMail(user_id, "renewal");
-      let expiry = membership.expiry.daysDiff(membership.expiry)>0 ? membership.expiry.daysDiff(membership.expiry): null;
-      return { membership: membership, expiry: expiry, codeStatus: msg };
+
+      return { membership: membership, codeStatus: msg };
     }
   },
+
+  
+  async getMembershipExpiryDays(user_id) {
+    let membership = await strapi.query("membership").findOne({ user: user_id });
+    let dt = new Date();
+    let localTime = dt.getTime(); 
+    let localOffset = dt.getTimezoneOffset(); 
+    let utc = localTime + localOffset;
+    let offset = 4; // GST (Gulf Standard Time) ahead +4 hours from utc
+    let currentDateTime = utc + (3600000*offset); 
+    let current = new Date(currentDateTime); 
+    const date2 = new Date(membership.expiry);
+    const diffTime = Math.abs(date2 - current);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    if(date2 < current && diffDays > 1) {
+      return { diffDays: -1}   
+    }
+    return { diffDays }
+  }
+
+
 };
