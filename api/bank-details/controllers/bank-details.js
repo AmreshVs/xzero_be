@@ -8,7 +8,7 @@
 module.exports = {
   async TransactionInfo(user) {
     let userBankDetails = await strapi.query('bank-details').findOne({ user: user, status: true});
-    let withdrawalHistory = await strapi.query('withdrawal-history').find({ user: user, status: true });
+    let withdrawalHistory = await strapi.query('withdrawal-history').find({ user: user, status: true, _sort:'id:desc' });
     return { withdrawalHistory: withdrawalHistory, userBankDetails: userBankDetails }
 }
 };
