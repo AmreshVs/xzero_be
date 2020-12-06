@@ -522,7 +522,7 @@
           "id": {
             "type": "string"
           },
-          "users": {
+          "user": {
             "required": [
               "id",
               "username",
@@ -747,7 +747,7 @@
       },
       "NewAffiliate": {
         "properties": {
-          "users": {
+          "user": {
             "type": "string"
           },
           "referral_code": {

@@ -9,9 +9,9 @@
     "timestamps": true
   },
   "attributes": {
-    "users": {
+    "user": {
       "plugin": "users-permissions",
-      "collection": "user"
+      "model": "user"
     },
     "referral_code": {
       "type": "string"

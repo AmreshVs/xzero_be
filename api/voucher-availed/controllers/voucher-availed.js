@@ -62,7 +62,7 @@ async function ApplyCode(receiver, price, code) {
         return { applied:false, from: 'referral', codeApplied: referralCode, msg: "Invalid referral code" };
       } 
 
-  } else if( affiliate !== null && (affiliate.applied_for === "voucher" || affiliate.applied_for === 'both' ) && affiliate.user !== parseInt(receiver)) {
+  } else if( affiliate !== null && (affiliate.applied_for === "voucher" || affiliate.applied_for === 'both' ) && affiliate.user.id !== parseInt(receiver)) {
 
         let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
         let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, status: true });
@@ -71,7 +71,7 @@ async function ApplyCode(receiver, price, code) {
             let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
             discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
             let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
-            return { ApplicableFor: affiliate.applied_for, affiliateId: affiliate.id, discount: affiliate.discount, userId: affiliate.user, from: 'affiliate', discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, codeApplied :referralCode }
+            return { ApplicableFor: affiliate.applied_for, affiliateId: affiliate.id, discount: affiliate.discount, userId: affiliate.user.id, from: 'affiliate', discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, codeApplied :referralCode }
           } else {
             if(userUsedHistory>affiliate.allowed_usage_per_user) {
               var msg = "Affiliate user limit exceeded";
@@ -107,7 +107,7 @@ async function ApplyCode(receiver, price, code) {
     
     } else {
       var msg = "Invalid code";
-      if((affiliate !== null && affiliate.user === parseInt(receiver)) || (userCode !==null && userCode.id === parseInt(receiver))) {
+      if((affiliate !== null && affiliate.user.id === parseInt(receiver)) || (userCode !==null && userCode.id === parseInt(receiver))) {
         var msg = "Referrer and receiver can't be same"; 
       }
       return {  applied: false, codeApplied: referralCode, msg: msg }
@@ -151,6 +151,7 @@ module.exports = {
       let voucher_availed = await strapi
         .query("voucher-availed")
         .create(dataToSave);
+        
 
         if(afterCodeApply !== null && afterCodeApply.applied === true) {
           var codeStatus = "Success";
@@ -178,6 +179,7 @@ module.exports = {
               }
 
           } else {
+            
             let referralTransactions = { referral_code: code,
               user: user_id,
               paid_amount: afterCodeApply.discountedPrice,
@@ -189,6 +191,7 @@ module.exports = {
               from: afterCodeApply.from,
               referrer: afterCodeApply.userId ? afterCodeApply.userId: null,
               referrer_credit: afterCodeApply.referrerCredit ? afterCodeApply.referrerCredit: null,
+              inserted_id: voucher_availed ? voucher_availed.id:null, 
               status: true
              }
 

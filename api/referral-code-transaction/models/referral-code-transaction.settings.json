@@ -50,6 +50,9 @@
     },
     "referrer_credit": {
       "type": "decimal"
+    },
+    "inserted_id": {
+      "type": "biginteger"
     }
   }
 }

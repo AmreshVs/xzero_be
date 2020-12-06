@@ -543,7 +543,7 @@
               "id": {
                 "type": "string"
               },
-              "users": {
+              "user": {
                 "type": "string"
               },
               "referral_code": {
@@ -875,6 +875,9 @@
           "referrer_credit": {
             "type": "number"
           },
+          "inserted_id": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -1006,6 +1009,9 @@
           },
           "referrer_credit": {
             "type": "number"
+          },
+          "inserted_id": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

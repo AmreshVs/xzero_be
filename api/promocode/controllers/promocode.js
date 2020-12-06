@@ -36,7 +36,7 @@ module.exports = {
             return { applied:false, from: 'referral', codeApplied: referralCode, msg: "Invalid referral code" };
           }
     
-        } else if( affiliate !== null && (affiliate.applied_for === "voucher" || affiliate.applied_for === 'both' ) && affiliate.user !== parseInt(receiver)) {
+        } else if( affiliate !== null && (affiliate.applied_for === "voucher" || affiliate.applied_for === 'both' ) && affiliate.user.id !== parseInt(receiver)) {
     
             let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
             let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, status: true });
@@ -45,7 +45,7 @@ module.exports = {
                 let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
                 discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
                 let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
-                return { ApplicableFor: affiliate.applied_for, affiliate_id: affiliate.id, userId: affiliate.user, discount: affiliate.discount, from: 'affiliate', discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, codeApplied :referralCode }
+                return { ApplicableFor: affiliate.applied_for, affiliate_id: affiliate.id, userId: affiliate.user.id, discount: affiliate.discount, from: 'affiliate', discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, codeApplied :referralCode }
               } else {
                 if(userUsedHistory>affiliate.allowed_usage_per_user) {
                   var msg = "Affiliate user limit exceeded";
@@ -82,7 +82,7 @@ module.exports = {
         
         } else {
           var msg = "Invalid Code"
-          if((userCode!==null && parseInt(receiver) === userCode.id) || (affiliate !== null && parseInt(receiver) === affiliate.user)) {
+          if((userCode!==null && parseInt(receiver) === userCode.id) || (affiliate !== null && parseInt(receiver) === affiliate.user.id)) {
              msg = "Referrer and receiver can'be same";
           } 
 
