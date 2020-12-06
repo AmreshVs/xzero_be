@@ -48,7 +48,7 @@ async function ApplyCode(receiver, price, code) {
   if( referProgram !== null && userCode!==null && userCode.referral_code !== null && userCode.id !== parseInt(receiver)) {
       let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
       let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, from: 'referral' , status: true });
-      if(userUsedHistory <= referProgram.usage_limit && usedHistory < referProgram.user_can_refer || usedHistory===null || userUsedHistory===null)  {
+      if(userUsedHistory <= referProgram.usage_limit && usedHistory < referProgram.user_can_refer )  {
           //receiver get
           let discountAmount = (parseInt(referProgram.discount)/100) * parseInt(price);
           discountAmount = (discountAmount <= referProgram.allowed_maximum_discount) ? discountAmount: referProgram.allowed_maximum_discount; 
@@ -128,14 +128,14 @@ module.exports = {
 		}
     
     let afterCodeApply = await ApplyCode(user_id, voucher.cost, promocode);
-    // if(promocode !== null &&  afterCodeApply !== null && afterCodeApply.applied === false) {
-    //   return {
-    //     codeStatus: afterCodeApply.msg,
-    //     disabled: false,
-    //     bought: "false",
+    if(promocode !== null &&  afterCodeApply !== null && afterCodeApply.applied === false) {
+      return {
+        codeStatus: afterCodeApply.msg,
+        disabled: false,
+        bought: "false",
 
-    //   };
-    // }
+      };
+    }
     
     let dataToSave = {
       user: user_id,
