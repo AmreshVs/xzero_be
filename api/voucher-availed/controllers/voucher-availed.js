@@ -8,7 +8,6 @@ const _ = require("lodash");
 const { sanitizeEntity } = require('strapi-utils'); 
 const voucherWinnerEmailTemplate = require("../voucherWinnerEmailTemplate");
 
-
 async function sendMail(user_id) {
   let user = await strapi
     .query("user", "users-permissions")

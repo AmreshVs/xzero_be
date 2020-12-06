@@ -18,7 +18,6 @@ const formatError = error => [
 
 module.exports = {
   async createNewUser(ctx, params) {
-
     const pluginStore = await strapi.store({
       environment: '',
       type: 'plugin',
@@ -102,6 +101,14 @@ module.exports = {
     try {
       params.confirmed = true;
       params.provider = 'local';
+      
+      //for adding referral code while adding a user via app
+      var referral_code = Math.random().toString(36).substr(2,6);
+      const userRef = await strapi.query('user', 'users-permissions').findOne({
+        referral_code: referral_code
+      });
+      params.referral_code = userRef ? Math.random().toString(36).substr(2,6).toUpperCase(): referral_code.toUpperCase(); 
+      //code referral ends
 
       let userDate = params.dob !== '' ? new Date(params.dob) : '';
       params.dob = params.dob !== '' ? new Date(userDate.getTime() + Math.abs(userDate.getTimezoneOffset() * 60000)) : null;

@@ -28,8 +28,6 @@ Date.prototype.addDays = function (days) {
 };
 
 
-
-
 async function ApplyCode(receiver, price, code) {
   let referralCode = sanitizeEntity(code, 'string');
   
