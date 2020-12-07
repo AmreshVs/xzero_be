@@ -17,6 +17,31 @@ const formatError = error => [
 ];
 
 module.exports = {
+
+  async UpdateUserReferralCode() {
+    let userRef = await strapi.query('user', 'users-permissions').find({referral_code_ne: true});
+    let userAllwithNoRefercode  = await strapi.query('user', 'users-permissions').find({referral_code_null: true});
+    let filterReferralCode = userRef.map(user=> user.referral_code);
+    //console.log(userAllwithNoRefercode); return false;
+    
+    if(userAllwithNoRefercode.length>0) {
+      userAllwithNoRefercode.forEach(user => {
+      let referral_code = Math.random().toString(36).substr(2,6);
+      if(!filterReferralCode.includes(referral_code)) {
+        var updatedUser =  strapi.query('user', 'users-permissions').update({id: user.id}, {referral_code: referral_code.toUpperCase()});
+        //continue;
+      } else {
+        let referral_code = Math.random().toString(36).substr(2,6); 
+      }
+    });
+    } else {
+      let result = "no users with empty referral code";
+      return { result };
+    }
+    let result = "success";
+    return { result }
+  },
+
   async createNewUser(ctx, params) {
     const pluginStore = await strapi.store({
       environment: '',
