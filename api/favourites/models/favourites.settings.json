@@ -21,8 +21,8 @@
       "model": "membership-plans"
     },
     "center": {
-      "model": "centers",
-      "via": "favourites"
+      "via": "favourites",
+      "model": "centers"
     },
     "favourites": {
       "type": "text"

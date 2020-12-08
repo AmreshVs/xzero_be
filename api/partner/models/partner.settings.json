@@ -22,8 +22,8 @@
       "type": "biginteger"
     },
     "center": {
-      "model": "centers",
-      "via": "partner"
+      "via": "partner",
+      "model": "centers"
     }
   }
 }

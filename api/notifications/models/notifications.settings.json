@@ -20,6 +20,13 @@
     },
     "desc_ar": {
       "type": "text"
+    },
+    "data": {
+      "type": "json"
+    },
+    "status": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

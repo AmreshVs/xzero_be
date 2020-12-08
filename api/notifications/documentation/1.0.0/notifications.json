@@ -605,6 +605,13 @@
           "desc_ar": {
             "type": "string"
           },
+          "data": {
+            "type": "object"
+          },
+          "status": {
+            "type": "boolean",
+            "default": true
+          },
           "created_by": {
             "required": [
               "id",
@@ -708,6 +715,13 @@
           },
           "desc_ar": {
             "type": "string"
+          },
+          "data": {
+            "type": "object"
+          },
+          "status": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"

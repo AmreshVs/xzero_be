@@ -617,6 +617,9 @@
                   "type": "string"
                 }
               },
+              "status": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },

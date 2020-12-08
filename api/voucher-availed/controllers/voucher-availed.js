@@ -121,7 +121,7 @@ async function ApplyCode(receiver, price, code) {
 
 
 module.exports = {
-  // function will add voucher to bought list
+  //function will add voucher to bought list
   async BuyVoucher(user_id, voucher_id, code = null) {
     let voucher = await strapi.query("vouchers").findOne({ id: voucher_id });
     if(voucher != null && voucher.total_bought >=  voucher.limit) {
@@ -155,7 +155,6 @@ module.exports = {
       let voucher_availed = await strapi
         .query("voucher-availed")
         .create(dataToSave);
-        
 
         if(afterCodeApply !== null && afterCodeApply.applied === true) {
           var codeStatus = "Success";

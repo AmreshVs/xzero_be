@@ -852,6 +852,10 @@
               }
             }
           },
+          "status": {
+            "type": "boolean",
+            "default": true
+          },
           "created_by": {
             "required": [
               "id",
@@ -994,6 +998,10 @@
             "items": {
               "type": "string"
             }
+          },
+          "status": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"

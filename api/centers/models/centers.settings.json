@@ -55,16 +55,20 @@
       "default": false
     },
     "offers": {
-      "via": "center",
-      "collection": "offers"
+      "collection": "offers",
+      "via": "center"
     },
     "partner": {
-      "via": "center",
-      "model": "partner"
+      "model": "partner",
+      "via": "center"
     },
     "favourites": {
-      "via": "center",
-      "collection": "favourites"
+      "collection": "favourites",
+      "via": "center"
+    },
+    "status": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

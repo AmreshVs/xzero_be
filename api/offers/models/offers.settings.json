@@ -82,8 +82,8 @@
       "required": true
     },
     "center": {
-      "model": "centers",
-      "via": "offers"
+      "via": "offers",
+      "model": "centers"
     },
     "center_check_ins": {
       "via": "offer_id",
