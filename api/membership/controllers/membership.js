@@ -19,9 +19,11 @@ Date.prototype.addDays = function (days) {
   return date;
 };
 
+const formatError = error => [
+  { messages: [{ id: error.id, message: error.message, field: error.field }] },
+];
 
 async function ApplyCode(receiver, price, code) {
-  
   if(code === null) {
     return { applied: false, msg: "No code used" };
   }
@@ -32,7 +34,6 @@ async function ApplyCode(receiver, price, code) {
 
   let referProgram = await strapi.query("referral-program").findOne({ status: true });    
   
-
   if( referProgram !== null && userCode!==null && userCode.referral_code !== null && userCode.id !== parseInt(receiver)) {
       let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
       let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, from: 'referral' , status: true });
@@ -138,7 +139,18 @@ async function sendMail(user_id, status) {
 }
 
 module.exports = {
-  async generateMembership(user_id, plan, code = null) {
+  async generateMembership(ctx) {
+    //new code
+    const params = ctx.request.body;
+    let user_id = params.user_id;
+    let plan = params.plan;
+    if(params.code) {
+      var code = params.code;
+    } else {
+      var code = null;
+    }
+    //ends
+  
     function generateMemberId(length) {
       var randomChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
       var result = "";
@@ -211,7 +223,10 @@ module.exports = {
     let afterCodeApply = await ApplyCode(user_id, packageSelected.price, code);
 
     if(code!==null && afterCodeApply !== null && afterCodeApply.applied === false) {
-      return { codeStatus: afterCodeApply.msg };
+      //return { codeStatus: afterCodeApply.msg };
+      return ctx.send ({
+        codeStatus: msg
+      });
     }
     
 
@@ -322,12 +337,15 @@ module.exports = {
         } else {
           var msg = afterCodeApply.msg;
         }
-      
-  
+    
       //sendMail(user_id, "create");
+      return ctx.send ({
+        membership: membership, 
+        codeStatus: msg
+      });
       
-      
-      return { membership: membership, codeStatus: msg };
+      //return { membership: membership, codeStatus: msg };
+
     } else {
       let serial = await generateSerial();
       var userInfo = { userid: user_id, serial: serial };;
@@ -442,7 +460,12 @@ module.exports = {
       }
       //sendMail(user_id, "renewal");
 
-      return { membership: membership, codeStatus: msg };
+      return ctx.send ({
+        membership: membership, 
+        codeStatus: msg
+      });
+
+      //return { membership: membership, codeStatus: msg };
     }
   },
 

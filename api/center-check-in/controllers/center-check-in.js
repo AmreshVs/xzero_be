@@ -18,21 +18,34 @@ async function generateTransactionId() {
   }
 }
 
+const formatError = error => [
+  { messages: [{ id: error.id, message: error.message, field: error.field }] },
+];
+
+
 module.exports = {
   //insert check-in data and update limit in membership table
-  async Checkin(user_id, center_id, offers) {
+  async Checkin(ctx) {
+   const params = ctx.request.body;
+
     let memberShip = await strapi
       .query("membership")
-      .findOne({ user: user_id });
+      .findOne({ user: params.user_id });
     if (memberShip === null || new Date() > new Date(memberShip.expiry)) {
-      console.log("User not exist or membership expired!");
-      return false;
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'center-checkin.membership.expired',
+          message: 'User not exist or membership expired!.',
+        })
+      ); 
     }
-    if (user_id !== null && center_id !== null) {
+
+    if (params.user_id !== null && params.center_id !== null) {
       let centerAdd;
       let limit = 0;
       let iterateCount = 0;
-      let offerArray = offers.split(",");
+      let offerArray = params.offers.split(",");
       let trId = await generateTransactionId();
       if (offerArray.length <= memberShip.limit) {
         for (let index = 0; index < offerArray.length; index++) {
@@ -41,8 +54,8 @@ module.exports = {
             .query("offers")
             .findOne({ id: offerArray[index] });
           centerAdd = await strapi.query("center-check-in").create({
-            user_id: user_id,
-            center: center_id,
+            user_id: params.user_id,
+            center: params.center_id,
             offer_id: offerArray[index],
             transaction_id: trId,
             discounted_price: offersAvailable.discounted_price,
@@ -54,24 +67,43 @@ module.exports = {
         let limitBecom = parseInt(memberShip.limit) - parseInt(iterateCount);
         if (limitBecom >= 0) {
           await strapi.query("membership").update(
-            { user: user_id },
+            { user: params.user_id },
             {
               limit: limitBecom,
             }
           );
-          return centerAdd;
+
+          return ctx.send(
+            centerAdd
+         );
         }
-        return centerAdd;
+
+        return ctx.send(
+          centerAdd
+       );
+
       } else {
         if (memberShip.limit > 0) {
           limit = memberShip.limit;
         }
-        console.log(
-          `You have chosen offers which exceeds the limit. Your limit is ${limit}, To add more please renew the membership or`
+      
+        return ctx.badRequest(
+          null,
+          formatError({
+            id: 'center-checkin.offerlimit.exceeded',
+            message: 'You have chosen offers which exceeds the limit. Your limit is '+limit+', To add more please renew the membership.',
+          })
         );
       }
     } else {
-      console.log("empty params");
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'center-checkin.offerlimit.emptyparams',
+          message: 'empty params.',
+        })
+      );
+      
     }
   },
 

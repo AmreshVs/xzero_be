@@ -28,7 +28,7 @@ module.exports = {
         .findOne({ user: user_id });
       let giftArray = await strapi
         .query("gifts")
-        .find({ membership_plans: memberArray.package, status: true });
+        .find({ membership_plans: memberArray.package.id, status: true });
       if (memberArray !== null && giftArray !== null) {
         let selectGifts = [].concat(...giftArray.map((gift) => gift.id));
         let shuffledGifts = _.shuffle(
@@ -59,7 +59,7 @@ module.exports = {
             desc_en: giftGotDetails.desc_en,
             desc_ar: giftGotDetails.desc_ar,
             featured_img: giftGotDetails.featured_img,
-            membership_plan: memberArray.package,
+            membership_plan: memberArray.package.id,
             user: user_id,
             gift_id: giftsGotId[0],
             status: true,

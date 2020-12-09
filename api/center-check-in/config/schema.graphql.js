@@ -1,3 +1,18 @@
+const _ = require('lodash');
+/**
+ * Throws an ApolloError if context body contains a bad request
+ * @param contextBody - body of the context object given to the resolver
+ * @throws ApolloError if the body is a bad request
+ */
+function checkBadRequest(contextBody) {
+  if (_.get(contextBody, 'statusCode', 200) !== 200) {
+    const message = _.get(contextBody, 'error', 'Bad Request');
+    const exception = new Error(message);
+    exception.code = _.get(contextBody, 'statusCode', 400);
+    exception.data = contextBody;
+    throw exception;
+  }
+}
 
 module.exports = {
   definition: `
@@ -44,8 +59,11 @@ module.exports = {
       center: Centers
     }
 
+
   `,
-  mutation: `Checkin(user_id: Int!, center_id: Int!, offers : String!): CenterCheckIn`,
+  mutation: `Checkin(user_id: Int!,  center_id: Int!,   offers : String!): CenterCheckIn,
+
+  `,
 
   query: `
     getMembershipInfo(serial: String!, where: JSON):GetMembershipInfo!,
@@ -63,10 +81,16 @@ module.exports = {
         description: 'Scan QR code and process data',
         policies: [],
         resolverOf: 'application::center-check-in.center-check-in.create',
-        resolver: async (obj, options, ctx) => {
-          return await strapi.api['center-check-in'].controllers['center-check-in'].Checkin(options.user_id, options.center_id, options.offers);
+
+        resolver: async (obj, options, { context }) => {
+          context.request.body = _.toPlainObject(options);
+          await strapi.api['center-check-in'].controllers['center-check-in'].Checkin(context);
+          let output = context.body.toJSON ? context.body.toJSON() : context.body;
+          checkBadRequest(output);
+          return output
         },
       },
+
     },
     Query: {
       getMembershipInfo: {
