@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "error_logs",
+  "info": {
+    "name": "Error Log"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "error": {
+      "type": "text"
+    },
+    "module": {
+      "type": "string"
+    }
+  }
+}
