@@ -778,6 +778,9 @@
                     "type": "string"
                   }
                 },
+                "google_map_location": {
+                  "type": "string"
+                },
                 "created_by": {
                   "type": "string"
                 },

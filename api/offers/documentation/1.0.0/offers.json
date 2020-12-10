@@ -815,6 +815,9 @@
               }
             }
           },
+          "google_map_location": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -980,6 +983,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "google_map_location": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

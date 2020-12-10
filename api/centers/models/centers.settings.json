@@ -55,8 +55,8 @@
       "default": false
     },
     "offers": {
-      "collection": "offers",
-      "via": "center"
+      "via": "center",
+      "collection": "offers"
     },
     "partner": {
       "model": "partner",

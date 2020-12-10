@@ -35,8 +35,8 @@
       "type": "integer"
     },
     "offer_id": {
-      "model": "offers",
-      "via": "center_check_ins"
+      "via": "center_check_ins",
+      "model": "offers"
     }
   }
 }
