@@ -140,6 +140,7 @@ async function sendMail(user_id, status) {
 
 module.exports = {
   async generateMembership(ctx) {
+
     //new code
     const params = ctx.request.body;
     let user_id = params.user_id;
@@ -225,7 +226,7 @@ module.exports = {
     if(code!==null && afterCodeApply !== null && afterCodeApply.applied === false) {
       //return { codeStatus: afterCodeApply.msg };
       return ctx.send ({
-        codeStatus: msg
+        codeStatus: afterCodeApply.msg
       });
     }
     

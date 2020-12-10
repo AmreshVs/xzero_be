@@ -45,7 +45,8 @@
       "type": "text"
     },
     "status": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": true
     },
     "is_assured": {
       "type": "boolean",

@@ -44,6 +44,9 @@
     },
     "status": {
       "type": "boolean"
+    },
+    "remarks": {
+      "type": "string"
     }
   }
 }

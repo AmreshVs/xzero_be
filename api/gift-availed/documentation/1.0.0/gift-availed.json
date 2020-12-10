@@ -801,6 +801,9 @@
           "status": {
             "type": "boolean"
           },
+          "remarks": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -916,6 +919,9 @@
           },
           "status": {
             "type": "boolean"
+          },
+          "remarks": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

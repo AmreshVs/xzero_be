@@ -5,6 +5,7 @@
  * to customize this controller
  */
 const _ = require("lodash");
+const { trim } = require("../../membership/membershipEmailTemplate");
 
 function DateDiffInDaysWithCurrentDate(date) {
   let dt = new Date();
@@ -34,24 +35,45 @@ module.exports = {
         let shuffledGifts = _.shuffle(
           selectGifts.concat(Array(100-selectGifts.length).fill(0))
         );
+
         let giftsGotId = _.sampleSize(shuffledGifts, 1);
         let giftAvailedCount = await strapi.query("gift-availed").count({ user: user_id, status: true });
 
         if(memberArray.gift_generated_date)
         days = DateDiffInDaysWithCurrentDate(new Date(memberArray.gift_generated_date));
 
-        if( days<7 && giftAvailedCount > 0 && memberArray.is_gift_generated === true ) {
+        if( days < 7 && giftAvailedCount > 0 && memberArray.is_gift_generated === true ) {
           return { disabled: true,  won: false };
         }
 
         let giftGotDetails = await strapi
           .query("gifts")
           .findOne({ id: giftsGotId[0], status: true });
+
         if ( 
           giftsGotId[0] > 0 &&
           giftGotDetails.quantity !== null &&
           giftGotDetails.quantity > 0
         ) {
+
+          // when the gift become membership plan
+          if( giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membership1year") || giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membershiponeyear") ) {
+            let membership = await strapi.services.membership.generateMembership( user_id, memberArray.package.id,  "1year" );
+            if(membership) {
+              var remarks = "Added 6 months membership plan as gift";
+            } else {
+              var remarks = "got gift as membership 6 months plan and renewal failed";
+            }
+            
+          } else if ( giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membership6months") || giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membershipsixmonths") ) {
+            let membership = await strapi.services.membership.generateMembership( user_id, memberArray.package.id, "6months" );
+            if(membership) {
+              var remarks = "Added 1 year membership plan as gift";
+            } else {
+              var remarks = "got gift as membership 1 year plan and renewal failed";
+            }
+          }
+          // code ends
           
           await strapi.query("gift-availed").create({
             name_en: giftGotDetails.name_en,
@@ -60,6 +82,7 @@ module.exports = {
             desc_ar: giftGotDetails.desc_ar,
             featured_img: giftGotDetails.featured_img,
             membership_plan: memberArray.package.id,
+            remarks: remarks ? remarks: null,
             user: user_id,
             gift_id: giftsGotId[0],
             status: true,
@@ -70,6 +93,7 @@ module.exports = {
               quantity: giftGotDetails.quantity - 1,
             }
           );
+ 
           await strapi.query("membership").update(
             { id: memberArray.id },
             {
@@ -77,8 +101,8 @@ module.exports = {
               gift_generated_date: new Date()
             }
           );
-
           return { won: true, gift: gift };
+
         } else {
           return { disabled: false, won: false };
         }

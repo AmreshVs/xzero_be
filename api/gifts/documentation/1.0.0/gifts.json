@@ -675,7 +675,8 @@
             "type": "string"
           },
           "status": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
           },
           "is_assured": {
             "type": "boolean",
@@ -798,7 +799,8 @@
             "type": "string"
           },
           "status": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
           },
           "is_assured": {
             "type": "boolean",
