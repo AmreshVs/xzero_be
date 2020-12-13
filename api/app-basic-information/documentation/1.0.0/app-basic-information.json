@@ -350,6 +350,14 @@
             "type": "integer",
             "default": 10
           },
+          "error_logging": {
+            "type": "boolean",
+            "default": true
+          },
+          "payment_logging": {
+            "type": "boolean",
+            "default": true
+          },
           "created_by": {
             "required": [
               "id",
@@ -471,6 +479,14 @@
           },
           "total_downloads": {
             "type": "integer"
+          },
+          "error_logging": {
+            "type": "boolean",
+            "default": true
+          },
+          "payment_logging": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"

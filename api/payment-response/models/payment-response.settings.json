@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "error_logs",
+  "collectionName": "payment_responses",
   "info": {
-    "name": "Error Log"
+    "name": "Payment Response"
   },
   "options": {
     "increments": true,
@@ -13,20 +13,29 @@
       "plugin": "users-permissions",
       "model": "user"
     },
-    "screen": {
+    "for": {
       "type": "string"
     },
     "module": {
       "type": "string"
     },
-    "error": {
-      "type": "text"
+    "url": {
+      "type": "string"
     },
     "input": {
       "type": "text"
     },
-    "app_version": {
-      "type": "decimal"
+    "response": {
+      "type": "text"
+    },
+    "status": {
+      "type": "string"
+    },
+    "voucher": {
+      "model": "vouchers"
+    },
+    "membership_plan": {
+      "model": "membership-plans"
     }
   }
 }

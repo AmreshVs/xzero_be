@@ -1,6 +1,6 @@
 {
   "paths": {
-    "/error-logs": {
+    "/payment-responses": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -52,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Error-log"
+          "Payment-response"
         ],
         "parameters": [
           {
@@ -244,7 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "Error-log"
+          "Payment-response"
         ],
         "requestBody": {
           "description": "",
@@ -252,14 +252,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewError-log"
+                "$ref": "#/components/schemas/NewPayment-response"
               }
             }
           }
         }
       }
     },
-    "/error-logs/count": {
+    "/payment-responses/count": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -311,12 +311,12 @@
         },
         "summary": "",
         "tags": [
-          "Error-log"
+          "Payment-response"
         ],
         "parameters": []
       }
     },
-    "/error-logs/{id}": {
+    "/payment-responses/{id}": {
       "get": {
         "deprecated": false,
         "description": "",
@@ -368,7 +368,7 @@
         },
         "summary": "",
         "tags": [
-          "Error-log"
+          "Payment-response"
         ],
         "parameters": [
           {
@@ -434,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Error-log"
+          "Payment-response"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewError-log"
+                "$ref": "#/components/schemas/NewPayment-response"
               }
             }
           }
@@ -508,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Error-log"
+          "Payment-response"
         ],
         "parameters": [
           {
@@ -527,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Error-log": {
+      "Payment-response": {
         "required": [
           "id"
         ],
@@ -625,20 +625,138 @@
               }
             }
           },
-          "screen": {
+          "for": {
             "type": "string"
           },
           "module": {
             "type": "string"
           },
-          "error": {
+          "url": {
             "type": "string"
           },
           "input": {
             "type": "string"
           },
-          "app_version": {
-            "type": "number"
+          "response": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "voucher": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "buy_title_en": {
+                "type": "string"
+              },
+              "buy_title_ar": {
+                "type": "string"
+              },
+              "win_title_en": {
+                "type": "string"
+              },
+              "win_title_ar": {
+                "type": "string"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "featured_img": {
+                "type": "string"
+              },
+              "product": {
+                "type": "string"
+              },
+              "cost": {
+                "type": "number"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "total_bought": {
+                "type": "integer"
+              },
+              "membership_plans": {
+                "type": "string"
+              },
+              "draw_status": {
+                "type": "string"
+              },
+              "assured_gift": {
+                "type": "string"
+              },
+              "draw_gift": {
+                "type": "string"
+              },
+              "enable_for_non_members": {
+                "type": "boolean"
+              },
+              "cost_for_non_members": {
+                "type": "number"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "membership_plan": {
+            "required": [
+              "id",
+              "duration",
+              "color"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name_en": {
+                "type": "string"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "price": {
+                "type": "number"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "name_ar": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "featured_img": {
+                "type": "string"
+              },
+              "duration": {
+                "type": "integer"
+              },
+              "color": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
           "created_by": {
             "required": [
@@ -730,25 +848,34 @@
           }
         }
       },
-      "NewError-log": {
+      "NewPayment-response": {
         "properties": {
           "user": {
             "type": "string"
           },
-          "screen": {
+          "for": {
             "type": "string"
           },
           "module": {
             "type": "string"
           },
-          "error": {
+          "url": {
             "type": "string"
           },
           "input": {
             "type": "string"
           },
-          "app_version": {
-            "type": "number"
+          "response": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "voucher": {
+            "type": "string"
+          },
+          "membership_plan": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

@@ -39,6 +39,14 @@
     "total_downloads": {
       "type": "biginteger",
       "private": true
+    },
+    "error_logging": {
+      "type": "boolean",
+      "default": true
+    },
+    "payment_logging": {
+      "type": "boolean",
+      "default": true
     }
   }
 }
