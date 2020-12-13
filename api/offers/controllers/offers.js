@@ -5,6 +5,10 @@
  * to customize this controller
  */
 
+
+var fs = require("fs");
+const _ = require('lodash');
+
 module.exports = {
 
   async offerListWithFavourites(condition, user_id = 1) {
@@ -86,6 +90,49 @@ module.exports = {
     return {
       status
     }
+  },
+
+  async updateLocation() {
+  
+    let update = "updated";
+    const xlsx = require('xlsx');
+    let file = "./public/files/locations.xlsx";
+    const workbook = xlsx.readFile(file);
+
+    const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+    
+    const columnA = [];
+
+    for (let z in worksheet) {
+    
+      if(z.toString()[0] === 'B'){
+        columnA.push({centerId: worksheet[z].v});
+      } else if(z.toString()[0] === 'C') {
+        columnA.push({loc: worksheet[z].v});
+      }
+    }
+    
+    const updatedArr = [];
+    await Promise.all(columnA.map(async (centerLocDetails) => { 
+      //console.log(centerLocDetails.centerId); return false;
+      //try {
+
+        if( typeof centerLocDetails.centerId !== 'undefined'  && typeof centerLocDetails.loc != 'undefined' ) {
+          //console.log(centerLocDetails.centerId);
+          //console.log(centerLocDetails.loc); return false;
+          let updateCenter = await strapi.query('offers').update({ center: centerLocDetails.centerId }, {  	google_map_location: centerLocDetails.loc
+        }); 
+
+        updatedArr.push(updateCenter.id);
+        }
+      //} catch (err) {
+        //console.log(err);
+     // }
+       
+    }));
+
+    console.log(updatedArr); return false;
+    return {updatedArr};
   }
 
 };

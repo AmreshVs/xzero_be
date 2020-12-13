@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/voucher-queues",
+      "handler": "voucher-queue.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/voucher-queues/count",
+      "handler": "voucher-queue.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/voucher-queues/:id",
+      "handler": "voucher-queue.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/voucher-queues",
+      "handler": "voucher-queue.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/voucher-queues/:id",
+      "handler": "voucher-queue.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/voucher-queues/:id",
+      "handler": "voucher-queue.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

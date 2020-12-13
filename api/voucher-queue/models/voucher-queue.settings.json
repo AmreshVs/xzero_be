@@ -1,0 +1,23 @@
+{
+  "kind": "collectionType",
+  "collectionName": "voucher_queues",
+  "info": {
+    "name": "Voucher Queue"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "voucher": {
+      "model": "vouchers"
+    },
+    "status": {
+      "type": "boolean"
+    }
+  }
+}

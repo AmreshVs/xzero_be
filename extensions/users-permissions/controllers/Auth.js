@@ -93,6 +93,14 @@ module.exports = {
       throw createError;
     }
 
+    if (!params.otp) {
+      createError = new Error('Please verify OTP.');
+      createError.code = 400;
+      throw createError;
+    }
+
+    
+
     // Check if the provided email is valid or not.
     const isEmail = emailRegExp.test(params.email);
 
@@ -111,6 +119,10 @@ module.exports = {
       email: params.email,
     });
 
+    const otpCheck = await strapi.query('otp').findOne({
+      otp: params.otp,
+    });
+
     if (user && user.provider === params.provider) {
       createError = new Error('Email is already taken.');
       createError.code = 400;
@@ -123,6 +135,13 @@ module.exports = {
       throw createError;
     }
 
+    if (otpCheck && otpCheck.otp !== params.otp ) {
+      createError = new Error('OTP verificatio failed.');
+      createError.code = 400;
+      throw createError;
+    }
+
+    
     try {
       params.confirmed = true;
       params.provider = 'local';

@@ -1,6 +1,7 @@
 module.exports = {
   mutation: `
-    addFavourite(user_id: Int!, offer_id: Int!): JSON!
+    addFavourite(user_id: Int!, offer_id: Int!): JSON!,
+    updateLocation: JSON
   `,
   query: `
     offerListWithFavourites(where: JSON, user_id: Int): JSON!,
@@ -37,6 +38,14 @@ module.exports = {
         resolverOf: 'application::offers.offers.create',
         resolver: async (obj, options, ctx) => {
           return await strapi.api.offers.controllers.offers.addFavourite(options.user_id, options.offer_id);
+        },
+      },
+      
+      updateLocation: {
+        description: 'Update google map location',
+        resolverOf: 'application::offers.offers.update',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.api.offers.controllers.offers.updateLocation();
         },
       }
     }
