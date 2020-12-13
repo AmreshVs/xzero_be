@@ -10,4 +10,6 @@
  * See more details here: https://strapi.io/documentation/v3.x/concepts/configurations.html#bootstrap
  */
 
-module.exports = () => {};
+module.exports = () => {
+  delete strapi.plugins['users-permissions'].config.jwt.expiresIn; // Delete expireIn to make JWT doesn't expire
+};

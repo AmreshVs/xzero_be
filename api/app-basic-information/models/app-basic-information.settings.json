@@ -27,6 +27,14 @@
     },
     "ios_version_check": {
       "type": "boolean"
+    },
+    "error_logging": {
+      "type": "boolean",
+      "default": true
+    },
+    "payment_logging": {
+      "type": "boolean",
+      "default": true
     }
   }
 }

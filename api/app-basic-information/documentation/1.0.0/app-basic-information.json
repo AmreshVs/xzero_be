@@ -342,6 +342,14 @@
           "ios_version_check": {
             "type": "boolean"
           },
+          "error_logging": {
+            "type": "boolean",
+            "default": true
+          },
+          "payment_logging": {
+            "type": "boolean",
+            "default": true
+          },
           "created_by": {
             "required": [
               "id",
@@ -452,6 +460,14 @@
           },
           "ios_version_check": {
             "type": "boolean"
+          },
+          "error_logging": {
+            "type": "boolean",
+            "default": true
+          },
+          "payment_logging": {
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"
