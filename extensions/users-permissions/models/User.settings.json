@@ -86,8 +86,8 @@
       "via": "user"
     },
     "membership": {
-      "via": "user",
-      "model": "membership"
+      "model": "membership",
+      "via": "user"
     },
     "referral_code": {
       "type": "string"
@@ -98,6 +98,12 @@
     "enable_refer_and_earn": {
       "type": "boolean",
       "default": true
+    },
+    "otp": {
+      "type": "string"
+    },
+    "otp_generated_at": {
+      "type": "string"
     }
   }
 }

@@ -18,6 +18,54 @@ const formatError = error => [
 
 module.exports = {
 
+  async generateOtp(user) {
+    
+    let dt = new Date();
+    let localTime = dt.getTime(); 
+    let localOffset = dt.getTimezoneOffset(); 
+    let utc = localTime + localOffset;
+    let offset = 4; // GST (Gulf Standard Time) ahead +4 hours from utc
+    let currentDateTime = utc + (3600000*offset); 
+    let current = new Date(currentDateTime); 
+
+
+    let otp =  Math.random().toFixed(4).substr(`-${4}`);
+    let otpData = { otp: otp, otp_generated_at: current };
+    return await strapi.query('user', 'users-permissions').update({ id: user }, otpData);
+  },
+
+  async verifyOtp(ctx) {
+    let params = ctx.request.body;
+    let user = await strapi.query('user', 'users-permissions').findOne({id: params.user});
+    if(user.otp === null) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'otp.authenticate',
+          message: 'No otp found',
+        })
+      );
+    } else if(user.otp === params.otp) {
+      var msg  = "Verification successfull";
+    } else {
+      var startDate = new Date(user.otp_generated_at);
+      var endDate   = new Date();
+      var seconds = Math.floor((endDate.getTime() - startDate.getTime()) / 1000);
+      if(seconds>1800) {
+        return ctx.badRequest(
+          null,
+          formatError({
+            id: 'otp.authenticate',
+            message: 'otp expired.',
+          })
+        );
+
+      }
+    }
+    
+    return ctx.send({ msg });
+  },
+
   async UpdateUserReferralCode() {
     let userRef = await strapi.query('user', 'users-permissions').find({referral_code_ne: true});
     let userAllwithNoRefercode  = await strapi.query('user', 'users-permissions').find({referral_code_null: true});
@@ -99,8 +147,6 @@ module.exports = {
       throw createError;
     }
 
-    
-
     // Check if the provided email is valid or not.
     const isEmail = emailRegExp.test(params.email);
 
@@ -119,9 +165,6 @@ module.exports = {
       email: params.email,
     });
 
-    const otpCheck = await strapi.query('otp').findOne({
-      otp: params.otp,
-    });
 
     if (user && user.provider === params.provider) {
       createError = new Error('Email is already taken.');
@@ -135,13 +178,6 @@ module.exports = {
       throw createError;
     }
 
-    if (otpCheck && otpCheck.otp !== params.otp ) {
-      createError = new Error('OTP verificatio failed.');
-      createError.code = 400;
-      throw createError;
-    }
-
-    
     try {
       params.confirmed = true;
       params.provider = 'local';

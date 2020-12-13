@@ -663,6 +663,12 @@
               "enable_refer_and_earn": {
                 "type": "boolean"
               },
+              "otp": {
+                "type": "string"
+              },
+              "otp_generated_at": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -854,6 +860,12 @@
               },
               "enable_refer_and_earn": {
                 "type": "boolean"
+              },
+              "otp": {
+                "type": "string"
+              },
+              "otp_generated_at": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"

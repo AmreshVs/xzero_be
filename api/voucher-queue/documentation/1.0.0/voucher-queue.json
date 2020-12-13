@@ -617,6 +617,12 @@
               "enable_refer_and_earn": {
                 "type": "boolean"
               },
+              "otp": {
+                "type": "string"
+              },
+              "otp_generated_at": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -696,7 +702,11 @@
             }
           },
           "status": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
+          },
+          "user_status": {
+            "type": "string"
           },
           "created_by": {
             "required": [
@@ -797,7 +807,11 @@
             "type": "string"
           },
           "status": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
+          },
+          "user_status": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

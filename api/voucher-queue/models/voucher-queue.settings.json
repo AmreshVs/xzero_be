@@ -17,7 +17,11 @@
       "model": "vouchers"
     },
     "status": {
-      "type": "boolean"
+      "type": "boolean",
+      "default": true
+    },
+    "user_status": {
+      "type": "string"
     }
   }
 }

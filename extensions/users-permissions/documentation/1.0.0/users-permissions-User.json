@@ -1411,6 +1411,12 @@
             "type": "boolean",
             "default": true
           },
+          "otp": {
+            "type": "string"
+          },
+          "otp_generated_at": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -1584,6 +1590,12 @@
           "enable_refer_and_earn": {
             "type": "boolean",
             "default": true
+          },
+          "otp": {
+            "type": "string"
+          },
+          "otp_generated_at": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

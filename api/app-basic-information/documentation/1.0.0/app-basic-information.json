@@ -342,6 +342,14 @@
           "ios_version_check": {
             "type": "boolean"
           },
+          "otp_expiry_seconds": {
+            "type": "integer",
+            "default": 10
+          },
+          "voucher_queue_expiry_seconds": {
+            "type": "integer",
+            "default": 10
+          },
           "created_by": {
             "required": [
               "id",
@@ -452,6 +460,17 @@
           },
           "ios_version_check": {
             "type": "boolean"
+          },
+          "otp_expiry_seconds": {
+            "type": "integer",
+            "default": 10
+          },
+          "voucher_queue_expiry_seconds": {
+            "type": "integer",
+            "default": 10
+          },
+          "total_downloads": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"
