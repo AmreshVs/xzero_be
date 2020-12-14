@@ -24,13 +24,18 @@ const formatError = error => [
 ];
 
 async function ApplyCode(receiver, price, code) {
+  let userExistCount = await strapi.query("user", "users-permissions").count({ id: receiver });
   if(code === null) {
     return { applied: false, msg: "No code used" };
+  } else if(userExistCount === 0) {
+    return { applied: false, msg: "User Doesn't exist" };
   }
   let referralCode = sanitizeEntity(code, 'string');
   let userCode = await strapi.query('user', 'users-permissions').findOne({ referral_code: referralCode, enable_refer_and_earn: true });
   let promocode = await strapi.query("promocode").findOne({ promocode: referralCode, status: true });
   let affiliate = await strapi.query("affiliate").findOne({ referral_code: referralCode, status: true });
+
+
 
   let referProgram = await strapi.query("referral-program").findOne({ status: true });    
   

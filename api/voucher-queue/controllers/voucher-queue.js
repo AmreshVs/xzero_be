@@ -55,7 +55,7 @@ module.exports = {
   async QueueCheck(user, voucher) {
     let voucherAvailed = await strapi.query('voucher-availed').count({ user:user, voucher: voucher });
     if(!voucherAvailed) {
-     //await strapi.query('voucher-queue').delete({user: user, voucher: voucher });
+     await strapi.query('voucher-queue').delete({user: user, voucher: voucher });
     } else {
       let appBasicInfo = await strapi.query('app-basic-information').findOne();
       let voucherOnQueue = await strapi.query('voucher-queue').findOne({ user: user, voucher: voucher });
