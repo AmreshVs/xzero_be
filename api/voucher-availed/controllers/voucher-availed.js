@@ -184,13 +184,19 @@ module.exports = {
       };
     }
     
+    if(code === null) {
+      var paidAmount = voucher.cost;
+    } else {
+      var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
+    }
+
     let dataToSave = {
       user: user_id,
       voucher: voucher.id,
       status: true,
       cost: voucher.cost,
       promocode_applied: afterCodeApply.applied === true ? code: null, 
-      paid_amount: afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: null, 
+      paid_amount: paidAmount, 
       discount: afterCodeApply.discount ? afterCodeApply.discount: null,
     };
 

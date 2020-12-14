@@ -298,7 +298,13 @@ module.exports = {
           expiry: expiryDate.addDays(365),
         });
 
-      
+        if(code === null) {
+          var paidAmount = packageSelected.price;
+        } else {
+          var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
+        }  
+
+
       await strapi
         .query("membership-transactions")
         .create({
@@ -309,7 +315,7 @@ module.exports = {
           amount: packageSelected.price,
           promocode_applied: afterCodeApply.applied === true ? code: null,
           discount: afterCodeApply.discount ? afterCodeApply.discount: null,
-          paid_amount: afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: null
+          paid_amount: paidAmount
         });
 
         //updating the promocode transaction table
@@ -402,6 +408,12 @@ module.exports = {
       var userInfo = { userid: user_id, serial: serial };;
       let qrCodeFile = await createQR(userInfo);
 
+      if(code === null) {
+        var paidAmount = packageSelected.price;
+      } else {
+        var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
+      }
+
       await strapi
         .query("membership-transactions")
         .create({
@@ -412,7 +424,7 @@ module.exports = {
           amount: packageSelected.price,
           promocode_applied: afterCodeApply.applied === true ? code: null,
           discount: afterCodeApply.discount ? afterCodeApply.discount: null,
-          paid_amount: afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: null
+          paid_amount: paidAmount
         });
         //updating the promocode transaction table
 
