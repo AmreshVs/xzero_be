@@ -31,6 +31,9 @@ module.exports = {
     let memberShip = await strapi
       .query("membership")
       .findOne({ user: params.user_id });
+
+      
+
     if (memberShip === null || new Date() > new Date(memberShip.expiry)) {
       return ctx.badRequest(
         null,
@@ -41,18 +44,26 @@ module.exports = {
       ); 
     }
 
+
     if (params.user_id !== null && params.center_id !== null) {
       let centerAdd;
       let limit = 0;
       let iterateCount = 0;
       let offerArray = params.offers.split(",");
       let trId = await generateTransactionId();
+      let offerNames = [];
+      let centerName = "xzero";
       if (offerArray.length <= memberShip.limit) {
         for (let index = 0; index < offerArray.length; index++) {
           //getting the original price, discounted price, and offer per
           let offersAvailable = await strapi
             .query("offers")
             .findOne({ id: offerArray[index] });
+            
+          offerNames.push(offersAvailable.title_en);
+          centerName = offersAvailable.center.title_en;
+
+          
           centerAdd = await strapi.query("center-check-in").create({
             user_id: params.user_id,
             center: params.center_id,
@@ -73,14 +84,46 @@ module.exports = {
             }
           );
 
-          return ctx.send(
-            centerAdd
-         );
+        //   return ctx.send(
+        //     centerAdd
+        //  );
+
         }
+
+          
+          let titleNoti = "Thank you for visiting "+centerName; 
+          let bodyMsg  = "You have opted for "+offerNames.join(", ")+ " at "+centerName;
+
+
+          try {
+            await fetch('https://exp.host/--/api/v2/push/send', {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: {
+                'accept': 'application/json',
+                'accept-encoding': 'gzip, deflate',
+                'content-type': 'application/json',
+              },
+              body: JSON.stringify({
+                to: memberShip.user.notification_token,
+                title: titleNoti,
+                body: bodyMsg,
+                sound: 'default',
+                priority: 'high'
+              })
+            });
+          }
+          catch (e) {
+            console.log('Checkin Notification Push', e)
+          }
+        
 
         return ctx.send(
           centerAdd
        );
+
+
+    
 
       } else {
         if (memberShip.limit > 0) {
