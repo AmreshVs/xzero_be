@@ -573,6 +573,15 @@
               "status": {
                 "type": "boolean"
               },
+              "users_for_limited_types": {
+                "type": "string"
+              },
+              "fixed_amount_status": {
+                "type": "boolean"
+              },
+              "fixed_amount": {
+                "type": "number"
+              },
               "created_by": {
                 "type": "string"
               },

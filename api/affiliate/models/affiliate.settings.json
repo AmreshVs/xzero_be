@@ -55,6 +55,18 @@
     "status": {
       "type": "boolean",
       "default": true
+    },
+    "users_for_limited_types": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "fixed_amount_status": {
+      "type": "boolean",
+      "default": false
+    },
+    "fixed_amount": {
+      "type": "decimal",
+      "default": 0
     }
   }
 }

@@ -661,6 +661,110 @@
             "type": "boolean",
             "default": true
           },
+          "users_for_limited_types": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "notification_token": {
+                "type": "string"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "favourites": {
+                "type": "string"
+              },
+              "dob": {
+                "type": "string"
+              },
+              "birthday": {
+                "type": "datetime"
+              },
+              "platform": {
+                "type": "string"
+              },
+              "app_version": {
+                "type": "string"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "favourite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "membership": {
+                "type": "string"
+              },
+              "referral_code": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "enable_refer_and_earn": {
+                "type": "boolean"
+              },
+              "otp": {
+                "type": "string"
+              },
+              "otp_generated_at": {
+                "type": "string"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "fixed_amount_status": {
+            "type": "boolean",
+            "default": false
+          },
+          "fixed_amount": {
+            "type": "number",
+            "default": 0
+          },
           "created_by": {
             "required": [
               "id",
@@ -798,6 +902,17 @@
           "status": {
             "type": "boolean",
             "default": true
+          },
+          "users_for_limited_types": {
+            "type": "string"
+          },
+          "fixed_amount_status": {
+            "type": "boolean",
+            "default": false
+          },
+          "fixed_amount": {
+            "type": "number",
+            "default": 0
           },
           "created_by": {
             "type": "string"
