@@ -220,12 +220,14 @@ module.exports = {
     let centerOffers = await strapi
       .query("center-check-in")
       .find({ center: center_id, _limit: 5, _sort: "id:desc" });
-      
-  
-    if (centerOffers === null) {
+
+ 
+    
+    if (centerOffers === null || centerOffers.length === 0) {
       offers = await strapi
         .query("offers")
         .find({ status: true, center: center_id, _limit: 5, _sort: "id:desc" });
+      
     } else {
       centerOffers.map((center) => {
         if (center.offer_id !== null) {
@@ -240,6 +242,7 @@ module.exports = {
       });
     }
 
+  
     let center = await strapi.query("centers").findOne({ id: center_id });
 
     //queries to get the count
@@ -267,6 +270,7 @@ module.exports = {
       favourites: favouritesCount,
     };
 
+    
     return {
       counts: counts,
       offers: [
