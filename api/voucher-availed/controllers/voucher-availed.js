@@ -199,7 +199,10 @@ async function ApplyCode(receiver, price, code, voucher) {
 module.exports = {
   //function will add voucher to bought list
   async BuyVoucher(user_id, voucher_id, code = null) {
-    let voucher = await strapi.query("vouchers").findOne({ id: voucher_id });
+    let voucher = await strapi.query("vouchers").findOne({ id: voucher_id, status: true });
+    
+    let membership = await strapi.query("membership").count({ user: user_id });
+    
     if(voucher != null && voucher.total_bought >=  voucher.limit) {
         await strapi.query("vouchers").update({ id: voucher.id },
             { draw_status: 'closed'
@@ -207,7 +210,13 @@ module.exports = {
         return { disabled: true, bought: 'Limit is reached' }
 		}
     
-    let afterCodeApply = await ApplyCode(user_id, voucher.cost, code, voucher_id);
+    if(voucher.enable_for_non_members === true) {
+      var voucherCost = voucher.cost_for_non_members;
+    } else {
+      var voucherCost = voucher.cost;
+    }
+
+    let afterCodeApply = await ApplyCode(user_id, voucherCost, code, voucher_id);
     if(code !== null &&  afterCodeApply !== null && afterCodeApply.applied === false) {
       return {
         codeStatus: afterCodeApply.msg,
@@ -217,12 +226,16 @@ module.exports = {
       };
     }
     
-    if(code === null) {
+    
+    if( code === null && voucher.enable_for_non_members === true ) {
+      var paidAmount = voucher.cost_for_non_members;
+    } else if(code === null ) {
       var paidAmount = voucher.cost;
     } else {
       var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
     }
 
+    
     let dataToSave = {
       user: user_id,
       voucher: voucher.id,
@@ -238,6 +251,13 @@ module.exports = {
       let voucher_availed = await strapi
         .query("voucher-availed")
         .create(dataToSave);
+
+        if(voucher_availed && voucher.enable_for_non_members === true && membership === 0 ) {
+          let membershipUpdate = await strapi.services.membership.generateMembership( user_id, 2,  "1year" );
+          if(membershipUpdate) {
+            await strapi.query("membership").update({ id: membershipUpdate.id }, { remarks: "generated via voucher for non members" });
+          }
+        }
 
         if(afterCodeApply !== null && afterCodeApply.applied === true) {
           var codeStatus = "Success";

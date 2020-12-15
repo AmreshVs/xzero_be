@@ -123,7 +123,7 @@ module.exports = {
           membership_id: membership.id,
           serial: serial,
           type: "New",
-          expiry: expiryDate,
+          expiry: expiry,
           amount: packageSelected.price,
         });
 
@@ -136,23 +136,24 @@ module.exports = {
       var userInfo = { userid: user_id, serial: serial };;
       let qrCodeFile = await createQR(userInfo);
 
+      if(duration === "6months") {
+        var expiry =  new Date(checkUserExist.expiry).addDays(180);
+      } else if(duration === "1year") {
+        var expiry =  new Date(checkUserExist.expiry).addDays(365);
+      }
+
       await strapi
         .query("membership-transactions")
         .create({
           membership_id: checkUserExist.id,
           serial: serial,
           type: "Renewal",
-          expiry: checkUserExist.expiry,
+          expiry: expiry,
           amount: packageSelected.price,
         });
         //updating the promocode transaction table
 
-        if(duration === "6months") {
-          var expiry =  new Date(checkUserExist.expiry).addDays(180)
-        } else if(duration === "1year") {
-          var expiry =  new Date(checkUserExist.expiry).addDays(365)
-        }
-  
+       
 
       let membership = await strapi
         .query("membership")

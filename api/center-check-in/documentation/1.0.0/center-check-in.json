@@ -734,6 +734,9 @@
               "package": {
                 "type": "string"
               },
+              "remarks": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
