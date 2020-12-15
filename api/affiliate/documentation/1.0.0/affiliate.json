@@ -766,6 +766,124 @@
             "type": "number",
             "default": 0
           },
+          "membership_plans": {
+            "required": [
+              "id",
+              "duration",
+              "color"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "name_en": {
+                "type": "string"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "price": {
+                "type": "number"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "name_ar": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "featured_img": {
+                "type": "string"
+              },
+              "duration": {
+                "type": "integer"
+              },
+              "color": {
+                "type": "string"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
+          "vouchers": {
+            "required": [
+              "id"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "buy_title_en": {
+                "type": "string"
+              },
+              "buy_title_ar": {
+                "type": "string"
+              },
+              "win_title_en": {
+                "type": "string"
+              },
+              "win_title_ar": {
+                "type": "string"
+              },
+              "desc_en": {
+                "type": "string"
+              },
+              "desc_ar": {
+                "type": "string"
+              },
+              "featured_img": {
+                "type": "string"
+              },
+              "product": {
+                "type": "string"
+              },
+              "cost": {
+                "type": "number"
+              },
+              "status": {
+                "type": "boolean"
+              },
+              "limit": {
+                "type": "integer"
+              },
+              "total_bought": {
+                "type": "integer"
+              },
+              "membership_plans": {
+                "type": "string"
+              },
+              "draw_status": {
+                "type": "string"
+              },
+              "assured_gift": {
+                "type": "string"
+              },
+              "draw_gift": {
+                "type": "string"
+              },
+              "enable_for_non_members": {
+                "type": "boolean"
+              },
+              "cost_for_non_members": {
+                "type": "number"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
+          },
           "created_by": {
             "required": [
               "id",
@@ -915,6 +1033,12 @@
           "fixed_amount": {
             "type": "number",
             "default": 0
+          },
+          "membership_plans": {
+            "type": "string"
+          },
+          "vouchers": {
+            "type": "string"
           },
           "created_by": {
             "type": "string"

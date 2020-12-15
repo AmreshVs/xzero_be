@@ -68,6 +68,12 @@
     "fixed_amount": {
       "type": "decimal",
       "default": 0
+    },
+    "membership_plans": {
+      "collection": "membership-plans"
+    },
+    "vouchers": {
+      "collection": "vouchers"
     }
   }
 }

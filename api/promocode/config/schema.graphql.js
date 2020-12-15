@@ -29,7 +29,7 @@ module.exports = {
 				`
 			, 
 
-    query: 'ApplyCode(receiver: Int!, price: Int!, code: String!): ApplyCodePayLoad',
+    query: 'ApplyCode(receiver: Int!, price: Int!, code: String!, plan: Int, voucher: Int): ApplyCodePayLoad',
 
     resolver: {
       Query: {
@@ -45,6 +45,7 @@ module.exports = {
             checkBadRequest(output);
 
             return output;
+
             // return { 
             //   discount: output.discount || output,
             //   applied: output.applied,
