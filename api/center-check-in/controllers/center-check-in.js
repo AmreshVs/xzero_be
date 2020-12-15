@@ -32,8 +32,7 @@ module.exports = {
       .query("membership")
       .findOne({ user: params.user_id });
 
-      
-
+    
     if (memberShip === null || new Date() > new Date(memberShip.expiry)) {
       return ctx.badRequest(
         null,

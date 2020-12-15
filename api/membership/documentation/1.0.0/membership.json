@@ -757,6 +757,9 @@
               "color": {
                 "type": "string"
               },
+              "limit": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },

@@ -17,7 +17,8 @@
       "type": "string"
     },
     "limit": {
-      "type": "integer"
+      "type": "integer",
+      "default": 0
     },
     "type": {
       "type": "enumeration",

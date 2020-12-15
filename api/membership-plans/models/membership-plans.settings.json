@@ -45,6 +45,10 @@
     "color": {
       "type": "string",
       "required": true
+    },
+    "limit": {
+      "type": "integer",
+      "default": 0
     }
   }
 }
