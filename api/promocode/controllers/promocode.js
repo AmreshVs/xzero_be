@@ -16,7 +16,7 @@ module.exports = {
     async ApplyCode(ctx) {
       let params = ctx.request.body;
       let receiver = params.receiver;
-      //let price = params.price;
+      
       let code = params.code;
       let plan = params.plan;
       let voucher = params.voucher;

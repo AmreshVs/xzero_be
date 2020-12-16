@@ -29,7 +29,7 @@ module.exports = {
 				`
 			, 
 
-    query: 'ApplyCode(receiver: Int!, price: Int!, code: String!, plan: Int, voucher: Int): ApplyCodePayLoad',
+    query: 'ApplyCode(receiver: Int!, code: String!, plan: Int, voucher: Int): ApplyCodePayLoad',
 
     resolver: {
       Query: {
@@ -38,7 +38,7 @@ module.exports = {
           policies: [],
           resolverOf: 'application::promocode.promocode.find',
           resolver: async (obj, options, { context }) => {
-            //return await strapi.api.promocode.controllers.promocode.ApplyCode(options.receiver, options.price, options.code);
+            
             context.request.body = _.toPlainObject(options);
             await strapi.api.promocode.controllers.promocode.ApplyCode(context);
             let output = context.body.toJSON ? context.body.toJSON() : context.body;
@@ -46,21 +46,7 @@ module.exports = {
 
             return output;
 
-            // return { 
-            //   discount: output.discount || output,
-            //   applied: output.applied,
-            //   codeApplied: output.codeApplied,
-            //   from: output.from,
-
-            //   discountYouGet: output.discountYouGet,
-            //   discountedPrice: output.discountedPrice,
-            //   applicableFor: output.applicableFor,
-            //   msg: output.msg
-
-            //       }
-
-            
-
+          
           }
         },
       }
