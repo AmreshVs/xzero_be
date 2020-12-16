@@ -412,7 +412,7 @@ const EditViewDataManagerProvider = ({
 
       emitEvent(isCreatingEntry ? 'willCreateEntry' : 'willEditEntry');
       if (currentContentTypeLayout.apiID === 'vouchers') { 
-          let voucherDetails = await request('/vouchers/'+cleanedData.id, {
+          var voucherDetails = await request('/vouchers/'+cleanedData.id, {
             method: 'GET'
           });
       }
