@@ -51,9 +51,12 @@
     {
       "method": "POST",
       "path": "/DeclareVoucherWinner",
-      "handler": "voucher-availed.DeclareVoucherWinner"
+      "handler": "voucher-availed.DeclareVoucherWinner",
+      "config": {
+        "policies": []
+      }
+      
     }
 
-  
   ]
 }
