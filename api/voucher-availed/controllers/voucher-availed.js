@@ -201,7 +201,7 @@ module.exports = {
   //function will add voucher to bought list
   async BuyVoucher(user_id, voucher_id, code = null) {
     let voucher = await strapi.query("vouchers").findOne({ id: voucher_id, status: true });
-    
+    //console.log(voucher); return false;
     let membership = await strapi.query("membership").count({ user: user_id });
     
     if(voucher != null && voucher.total_bought >=  voucher.limit) {
@@ -254,7 +254,7 @@ module.exports = {
         .create(dataToSave);
 
         if(voucher_availed && voucher.enable_for_non_members === true && membership === 0 ) {
-          let membershipUpdate = await strapi.services.membership.generateMembership( user_id, 2,  "1year" );
+          let membershipUpdate = await strapi.services.membership.generateMembership( user_id, voucher.membership_plans[0].id,  voucher.membership_plans[0].duration );
           if(membershipUpdate) {
             await strapi.query("membership").update({ id: membershipUpdate.id }, { remarks: "generated via voucher for non members" });
           }

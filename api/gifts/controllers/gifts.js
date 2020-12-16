@@ -58,7 +58,7 @@ module.exports = {
 
           // when the gift become membership plan
           if( giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membership1year") || giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membershiponeyear") ) {
-            let membership = await strapi.services.membership.generateMembership( user_id, memberArray.package.id,  "1year" );
+            let membership = await strapi.services.membership.generateMembership( user_id, memberArray.package.id,  12 );
             if(membership) {
               var remarks = "Added 6 months membership plan as gift";
             } else {
@@ -66,7 +66,7 @@ module.exports = {
             }
             
           } else if ( giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membership6months") || giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membershipsixmonths") ) {
-            let membership = await strapi.services.membership.generateMembership( user_id, memberArray.package.id, "6months" );
+            let membership = await strapi.services.membership.generateMembership( user_id, memberArray.package.id, 6 );
             if(membership) {
               var remarks = "Added 1 year membership plan as gift";
             } else {

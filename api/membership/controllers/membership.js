@@ -220,6 +220,7 @@ async function sendMail(user_id, status) {
 module.exports = {
   async generateMembership(ctx) {
 
+    
     //new code
     const params = ctx.request.body;
     let user_id = params.user_id;
@@ -311,11 +312,16 @@ module.exports = {
     
 
     if (checkUserExist === null) {
-      let expiryDate = new Date();
+      
+      let expiryDate = new Date(new Date().setMonth(new Date().getMonth() + packageSelected.duration));
+      
       let serial = await generateSerial();
       
       var userInfo = { userid: user_id, serial: serial };
       let qrCodeFile = await createQR(userInfo);
+
+      
+
       let membership = await strapi
         .query("membership")
         .create({
@@ -324,7 +330,7 @@ module.exports = {
           user: user_id,
           package: plan,
           limit: offerLimit,
-          expiry: expiryDate.addDays(365),
+          expiry: expiryDate,
         });
 
         if(code === null) {
@@ -333,6 +339,7 @@ module.exports = {
           var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
         }  
 
+     
 
       await strapi
         .query("membership-transactions")
@@ -340,7 +347,7 @@ module.exports = {
           membership_id: membership.id,
           serial: serial,
           type: "New",
-          expiry: expiryDate.addDays(365),
+          expiry: expiryDate,
           amount: packageSelected.price,
           promocode_applied: afterCodeApply.applied === true ? code: null,
           discount: afterCodeApply.discount ? afterCodeApply.discount: null,
@@ -445,13 +452,15 @@ module.exports = {
         var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
       }
 
+      let expiryDate = new Date(checkUserExist.expiry.setMonth(checkUserExist.expiry.getMonth()+packageSelected.duration));
+
       await strapi
         .query("membership-transactions")
         .create({
           membership_id: checkUserExist.id,
           serial: serial,
           type: "Renewal",
-          expiry: new Date(checkUserExist.expiry).addDays(365),
+          expiry: expiryDate,
           amount: packageSelected.price,
           promocode_applied: afterCodeApply.applied === true ? code: null,
           discount: afterCodeApply.discount ? afterCodeApply.discount: null,
@@ -468,7 +477,7 @@ module.exports = {
             qrcode_url: qrCodeFile,
             package: plan,
             limit: totalOfferLimit,
-            expiry: new Date(checkUserExist.expiry).addDays(365),
+            expiry: expiryDate,
 
           }
         );

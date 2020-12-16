@@ -93,17 +93,22 @@ module.exports = {
     }
 
     if (checkUserExist === null) {
-      let expiryDate = new Date();
+      
       let serial = await generateSerial();
       
       var userInfo = { userid: user_id, serial: serial };
       let qrCodeFile = await createQR(userInfo);
 
-      if(duration === "6months") {
-        var expiry =  expiryDate.addDays(180)
-      } else if(duration === "1year") {
-        var expiry =  expiryDate.addDays(365)
-      }
+
+      // if(duration === "6months") {
+      //   var expiry =  expiryDate.addDays(180)
+      // } else if(duration === "1year") {
+      //   var expiry =  expiryDate.addDays(365);
+      // } else {
+      //   var expiry = new Date(new Date().setMonth(new Date().getMonth()+duration)); 
+      // }
+
+      var expiry = new Date(new Date().setMonth(new Date().getMonth()+duration)); 
 
       let membership = await strapi
         .query("membership")
@@ -136,11 +141,15 @@ module.exports = {
       var userInfo = { userid: user_id, serial: serial };;
       let qrCodeFile = await createQR(userInfo);
 
-      if(duration === "6months") {
-        var expiry =  new Date(checkUserExist.expiry).addDays(180);
-      } else if(duration === "1year") {
-        var expiry =  new Date(checkUserExist.expiry).addDays(365);
-      }
+      // if(duration === "6months") {
+      //   var expiry =  new Date(checkUserExist.expiry).addDays(180);
+      // } else if(duration === "1year") {
+      //   var expiry =  new Date(checkUserExist.expiry).addDays(365);
+      // } else {
+      //   var expiry = new Date(new Date().setMonth(new Date().getMonth()+duration)); 
+      // }
+
+      var expiry = new Date(checkUserExist.expiry.setMonth(checkUserExist.expiry.getMonth()+duration)); 
 
       await strapi
         .query("membership-transactions")
@@ -151,9 +160,8 @@ module.exports = {
           expiry: expiry,
           amount: packageSelected.price,
         });
-        //updating the promocode transaction table
 
-       
+      //updating the promocode transaction table
 
       let membership = await strapi
         .query("membership")
