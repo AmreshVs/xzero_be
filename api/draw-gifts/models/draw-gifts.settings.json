@@ -43,6 +43,9 @@
         "additional_gift"
       ],
       "default": "additional_gift"
+    },
+    "quantity": {
+      "type": "integer"
     }
   }
 }

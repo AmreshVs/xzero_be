@@ -629,6 +629,9 @@
               "additional_gift"
             ]
           },
+          "quantity": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -744,6 +747,9 @@
               "main_gift",
               "additional_gift"
             ]
+          },
+          "quantity": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

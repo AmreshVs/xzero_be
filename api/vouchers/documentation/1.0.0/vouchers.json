@@ -788,6 +788,9 @@
               "gift_type": {
                 "type": "string"
               },
+              "quantity": {
+                "type": "integer"
+              },
               "created_by": {
                 "type": "string"
               },
