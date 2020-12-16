@@ -37,6 +37,9 @@
     },
     "cost": {
       "type": "decimal"
+    },
+    "draw_gift_won": {
+      "model": "draw-gifts"
     }
   }
 }

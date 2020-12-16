@@ -785,6 +785,9 @@
               "status": {
                 "type": "boolean"
               },
+              "gift_type": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },

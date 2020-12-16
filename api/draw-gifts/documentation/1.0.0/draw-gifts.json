@@ -621,6 +621,14 @@
             "type": "boolean",
             "default": true
           },
+          "gift_type": {
+            "type": "string",
+            "default": "additional_gift",
+            "enum": [
+              "main_gift",
+              "additional_gift"
+            ]
+          },
           "created_by": {
             "required": [
               "id",
@@ -728,6 +736,14 @@
           "status": {
             "type": "boolean",
             "default": true
+          },
+          "gift_type": {
+            "type": "string",
+            "default": "additional_gift",
+            "enum": [
+              "main_gift",
+              "additional_gift"
+            ]
           },
           "created_by": {
             "type": "string"

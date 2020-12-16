@@ -779,6 +779,9 @@
               "cost": {
                 "type": "number"
               },
+              "draw_gift_won": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
