@@ -16,11 +16,24 @@ module.exports = {
     async ApplyCode(ctx) {
       let params = ctx.request.body;
       let receiver = params.receiver;
-      let price = params.price;
+      //let price = params.price;
       let code = params.code;
       let plan = params.plan;
       let voucher = params.voucher;
       
+      if( typeof params.voucher !== 'undefined' ) {
+        let voucher = await strapi.query("vouchers").findOne({ id: params.voucher, status: true });  
+        var price = voucher.cost;
+        if(voucher.enable_for_non_members === true) {
+          var price = voucher.cost_for_non_members;
+        }
+        
+      } else if( typeof params.plan !== 'undefined' ) {
+        let membershipPlan = await strapi.query("membership-plans").findOne({ id: params.plan, status: true });
+        var price = membershipPlan.price;
+        
+      }
+
       let userExistCount = await strapi.query("user", "users-permissions").count({ id: receiver });
 
       if(userExistCount === 0) {
@@ -226,7 +239,7 @@ module.exports = {
                 })
               ); 
             }
-            } else if( promocode !== null && (promocode.applied_for === "voucher" || affiliate.applied_for === "membership" || promocode.applied_for === 'both')) {
+            } else if( promocode !== null && (promocode.applied_for === "voucher" || promocode.applied_for === "membership" || promocode.applied_for === 'both')) {
           
                 let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: referralCode, status: true });
                 let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: referralCode, user: receiver, status: true });

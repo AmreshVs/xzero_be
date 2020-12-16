@@ -35,6 +35,7 @@ async function sendMail(user_id) {
 
 async function ApplyCode(receiver, price, code, voucher) {
   let userExistCount = await strapi.query("user", "users-permissions").count({ id: receiver });
+  
 
   if(code === null) {
     return { applied: false, msg: "No code used" };
