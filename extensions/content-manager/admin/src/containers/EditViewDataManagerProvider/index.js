@@ -412,6 +412,10 @@ const EditViewDataManagerProvider = ({
 
       emitEvent(isCreatingEntry ? 'willCreateEntry' : 'willEditEntry');
 
+      let voucherDetails = await request('/vouchers/'+cleanedData.id, {
+        method: 'GET'
+      });
+
       try {
         // Time to actually send the data
         await request(
@@ -475,11 +479,8 @@ const EditViewDataManagerProvider = ({
         //update the voucher status upon draw status change on strapi admin 
         if (currentContentTypeLayout.apiID === 'vouchers') { 
           
-          let voucherDetails = await request('/vouchers/'+cleanedData.id, {
-            method: 'GET'
-          });
           
-          
+        
           if(voucherDetails.draw_status !== 'declare' && voucherDetails.draw_status !== 'publish' && (cleanedData.draw_status == 'declare' || cleanedData.draw_status == 'publish')) {
             const axios = require('axios');
             let confirmAct;
