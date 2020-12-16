@@ -304,18 +304,11 @@ module.exports = {
     let afterCodeApply = await ApplyCode(user_id, packageSelected.price, code, plan);
 
     if( code!==null && afterCodeApply !== null && afterCodeApply.applied === false ) {
-      //return { codeStatus: afterCodeApply.msg };
-      // return ctx.send ({
-      //   codeStatus: afterCodeApply.msg
-      // });
+      
+      return ctx.send ({
+        codeStatus: afterCodeApply.msg
+      });
 
-      return ctx.badRequest(
-        null,
-        formatError({
-          id: 'membership.codestatus.error',
-          message: afterCodeApply.msg,
-        })
-      ); 
 
     }
     
@@ -438,14 +431,8 @@ module.exports = {
 
            }
         } else {
-          //var msg = afterCodeApply.msg;
-          return ctx.badRequest(
-            null,
-            formatError({
-              id: 'membership.codestatus.error',
-              message: afterCodeApply.msg,
-            })
-          ); 
+          var msg = afterCodeApply.msg;
+        
         }
     
       //sendMail(user_id, "create");
@@ -467,7 +454,7 @@ module.exports = {
         var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
       }
 
-      let expiryDate = new Date(checkUserExist.expiry.setMonth(checkUserExist.expiry.getMonth()+packageSelected.duration));
+      let expiryDate = new Date(new Date(checkUserExist.expiry).setMonth(new Date(checkUserExist.expiry).getMonth()+packageSelected.duration));
 
       await strapi
         .query("membership-transactions")
@@ -577,15 +564,7 @@ module.exports = {
 
         }
       } else {
-        //var msg = afterCodeApply.msg;
-
-        return ctx.badRequest(
-          null,
-          formatError({
-            id: 'membership.codestatus.error',
-            message: afterCodeApply.msg,
-          })
-        ); 
+        var msg = afterCodeApply.msg;
       }
       //sendMail(user_id, "renewal");
 

@@ -149,7 +149,7 @@ module.exports = {
       //   var expiry = new Date(new Date().setMonth(new Date().getMonth()+duration)); 
       // }
 
-      var expiry = new Date(checkUserExist.expiry.setMonth(checkUserExist.expiry.getMonth()+duration)); 
+      var expiry = new Date(new Date(checkUserExist.expiry).setMonth(new Date(checkUserExist.expiry).getMonth()+duration)); 
 
       await strapi
         .query("membership-transactions")
