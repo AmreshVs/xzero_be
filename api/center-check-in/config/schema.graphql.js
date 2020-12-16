@@ -87,7 +87,7 @@ module.exports = {
           await strapi.api['center-check-in'].controllers['center-check-in'].Checkin(context);
           let output = context.body.toJSON ? context.body.toJSON() : context.body;
           checkBadRequest(output);
-          return output
+          return output;
         },
       },
 

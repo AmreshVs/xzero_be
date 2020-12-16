@@ -305,9 +305,18 @@ module.exports = {
 
     if( code!==null && afterCodeApply !== null && afterCodeApply.applied === false ) {
       //return { codeStatus: afterCodeApply.msg };
-      return ctx.send ({
-        codeStatus: afterCodeApply.msg
-      });
+      // return ctx.send ({
+      //   codeStatus: afterCodeApply.msg
+      // });
+
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'membership.codestatus.error',
+          message: afterCodeApply.msg,
+        })
+      ); 
+
     }
     
 
@@ -321,7 +330,6 @@ module.exports = {
       let qrCodeFile = await createQR(userInfo);
 
       
-
       let membership = await strapi
         .query("membership")
         .create({
@@ -430,7 +438,14 @@ module.exports = {
 
            }
         } else {
-          var msg = afterCodeApply.msg;
+          //var msg = afterCodeApply.msg;
+          return ctx.badRequest(
+            null,
+            formatError({
+              id: 'membership.codestatus.error',
+              message: afterCodeApply.msg,
+            })
+          ); 
         }
     
       //sendMail(user_id, "create");
@@ -562,7 +577,15 @@ module.exports = {
 
         }
       } else {
-        var msg = afterCodeApply.msg;
+        //var msg = afterCodeApply.msg;
+
+        return ctx.badRequest(
+          null,
+          formatError({
+            id: 'membership.codestatus.error',
+            message: afterCodeApply.msg,
+          })
+        ); 
       }
       //sendMail(user_id, "renewal");
 
