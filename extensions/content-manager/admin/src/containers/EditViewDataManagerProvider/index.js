@@ -482,13 +482,20 @@ const EditViewDataManagerProvider = ({
           
           if(voucherDetails.draw_status !== 'declare' && voucherDetails.draw_status !== 'publish' && (cleanedData.draw_status == 'declare' || cleanedData.draw_status == 'publish')) {
             const axios = require('axios');
-            let confirmAct;
+            var confirmAct = false;
             if(cleanedData.draw_status == 'declare') {
-              confirmAct = confirm('Do you really want to declare winner ?');
+              let x = confirm('Do you really want to declare winner ?');
+              if(x == true) {
+                confirmAct = true;
+              } 
             } else if(cleanedData.draw_status == 'publish') {
-              confirmAct = confirm('Do you really want to publish winner, note that this will send email to the winner ?');
+              let y  = confirm('Do you really want to publish winner, note that this will send email to the winner ?');
+              if(y == true) {
+                confirmAct = true;
+              } 
             }
-            if(confirmAct) {  
+
+            if(confirmAct == true) {  
               let res = await axios.post('/DeclareVoucherWinner', {
                 id: cleanedData.id,
                 draw_status: cleanedData.draw_status
