@@ -474,7 +474,12 @@ const EditViewDataManagerProvider = ({
 
         //update the voucher status upon draw status change on strapi admin 
         if (currentContentTypeLayout.apiID === 'vouchers') { 
-          const voucherDetails = await strapi.query('vouchers').findOne({ id: cleanedData.id });
+          
+          let voucherDetails = await request('/vouchers/'+cleanedData.id, {
+            method: 'GET'
+          });
+          
+          
           if(voucherDetails.draw_status !== 'declare' && voucherDetails.draw_status !== 'publish' && (cleanedData.draw_status == 'declare' || cleanedData.draw_status == 'publish')) {
             const axios = require('axios');
             let confirmAct;
