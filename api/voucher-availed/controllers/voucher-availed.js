@@ -8,6 +8,10 @@ const _ = require("lodash");
 const { sanitizeEntity } = require('strapi-utils'); 
 const voucherWinnerEmailTemplate = require("../voucherWinnerEmailTemplate");
 
+const formatError = error => [
+  { messages: [{ id: error.id, message: error.message, field: error.field }] },
+];
+
 async function sendMail(user_id) {
   let user = await strapi
     .query("user", "users-permissions")
@@ -36,7 +40,6 @@ async function sendMail(user_id) {
 async function ApplyCode(receiver, price, code, voucher) {
   let userExistCount = await strapi.query("user", "users-permissions").count({ id: receiver });
   
-
   if(code === null) {
     return { applied: false, msg: "No code used" };
   } else if(userExistCount === 0) {
@@ -358,39 +361,76 @@ module.exports = {
 
   //function randomly select a user and would declare as a winner
 	DeclareVoucherWinner: async (ctx) => {
-		let postData = ctx.request.body;
+    let postData = ctx.request.body;
+  
 		let voucher = await strapi
       .query("vouchers")
-      .findOne({ status: true, id: postData.id });
+      .findOne({ status: true, id: postData.id  });
 		
     let voucherAvailedArray = await strapi
 			.query("voucher-availed")
-			.find({ status: true, voucher: voucher.id });
+      .find({ status: true, voucher: voucher.id,  _limit: -1 });
 
-      if (voucherAvailedArray !== null && postData.draw_status === "declare") {
-				let selectVoucher = [].concat(...voucherAvailedArray.map((voucher_availed) => voucher_availed.id));
-				let winner = _.sampleSize(selectVoucher, 1);
-				//reverting the exisiting winner
-				let existingWinner = await strapi
-				.query("voucher-availed")
-				.findOne({ status: true, is_won: true });
-        await strapi
-          .query("voucher-availed")
-					.update({ id: existingWinner["id"] }, { is_won: false });
-				//end of revert
-         await strapi
-          .query("voucher-availed")
-					.update({ id: winner[0] }, { is_won: true });
-					ctx.send('declared winner')
+      
+      if (voucherAvailedArray !== null && postData.draw_status === "declare" && voucher.length !==0) {
+        //let selectVoucher = [].concat(...voucherAvailedArray.map((voucher_availed) => voucher_availed.id));
+        let voucherAvailedIds = [].concat(...voucherAvailedArray.map((voucher_availed) => voucher_availed.id));
+        
+      
+        let Totalwinners = [];
+        let wonUsers = [];
+        var giftAchievers = [];
+        let history = [];
+        let winnersName = [];
+        
+        await Promise.all(voucher.draw_gift.map(async (gift) => {
+          let winnersGot = _.sampleSize(voucherAvailedIds, gift.quantity); 
+          giftAchievers.push({ gift: gift.title_en, winnersVocherAvailedId: winnersGot, winnersCount: winnersGot.length });
+          for (let i = 0; i < winnersGot.length; i++) {
+            var voucherIdIndex = voucherAvailedIds.indexOf(winnersGot[i]); 
+            voucherAvailedIds.splice(voucherIdIndex, 1); 
+            let voucherAvailed = await strapi.query('voucher-availed').update({id: winnersGot[i] }, { is_won: true, draw_gift_won: gift.id });
+            //await strapi.query('vouchers').update({id: voucher.id }, { draw_status: "closed" });
+            Totalwinners.push(winnersGot[i]);
+            wonUsers.push(voucherAvailed.user.id);
+            winnersName.push(voucherAvailed.user.username);
+            
+          }
+          history = { winners: wonUsers.join(), winnersName: winnersName.join(), winnerDetails: giftAchievers, totalWinners: Totalwinners.length, voucher: voucher.id, voucherTitle: voucher.buy_title_en }
+          
+        }));
+        
+        await strapi.query('draw-history').create({ draw_details: history });
+        ctx.send({ winners: history });
+
 				
       } else if (postData.draw_status === "publish") {
-        let winner = await strapi
+        let winners = await strapi
           .query("voucher-availed")
-					.findOne({ is_won: true });
-					if(winner) {
-						//sendMail(winner.user.id);
+					.find({ is_won: true });
+					if(winners) {
+            winners.forEach(winner => {
+              //sendMail(winner.user.id);
+            });
+						
 						ctx.send('published winner, email is sent');
 					}
-			}
+			} else if(voucher.length == 0) {
+        return ctx.badRequest(
+          null,
+          formatError({
+            id: 'voucher.availed.status',
+            message: 'Voucher status is not in progress',
+          })
+        );
+      } else {
+        return ctx.badRequest(
+          null,
+          formatError({
+            id: 'voucher.availed.status',
+            message: 'Something gone wrong',
+          })
+        );
+      }
 	}
 };

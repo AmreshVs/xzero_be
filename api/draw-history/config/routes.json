@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/draw-histories",
+      "handler": "draw-history.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/draw-histories/count",
+      "handler": "draw-history.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/draw-histories/:id",
+      "handler": "draw-history.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/draw-histories",
+      "handler": "draw-history.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/draw-histories/:id",
+      "handler": "draw-history.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/draw-histories/:id",
+      "handler": "draw-history.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
