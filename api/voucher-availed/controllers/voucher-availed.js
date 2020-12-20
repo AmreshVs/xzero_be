@@ -370,13 +370,9 @@ module.exports = {
     let voucherAvailedArray = await strapi
 			.query("voucher-availed")
       .find({ status: true, voucher: voucher.id,  _limit: -1 });
-
-      
       if (voucherAvailedArray !== null && postData.draw_status === "declare" && voucher.length !==0) {
-        //let selectVoucher = [].concat(...voucherAvailedArray.map((voucher_availed) => voucher_availed.id));
         let voucherAvailedIds = [].concat(...voucherAvailedArray.map((voucher_availed) => voucher_availed.id));
-        
-      
+
         let Totalwinners = [];
         let wonUsers = [];
         var giftAchievers = [];
@@ -384,6 +380,7 @@ module.exports = {
         let winnersName = [];
         
         await Promise.all(voucher.draw_gift.map(async (gift) => {
+          if(gift.quantity > 0 && gift.status === true ) {
           let winnersGot = _.sampleSize(voucherAvailedIds, gift.quantity); 
           giftAchievers.push({ gift: gift.title_en, winnersVocherAvailedId: winnersGot, winnersCount: winnersGot.length });
           for (let i = 0; i < winnersGot.length; i++) {
@@ -397,10 +394,13 @@ module.exports = {
             
           }
           history = { winners: wonUsers.join(), winnersName: winnersName.join(), winnerDetails: giftAchievers, totalWinners: Totalwinners.length, voucher: voucher.id, voucherTitle: voucher.buy_title_en }
-          
+          }
         }));
         
-        await strapi.query('draw-history').create({ draw_details: history });
+        if(history.length > 0) {
+          await strapi.query('draw-history').create({ draw_details: history });
+        }
+        
         ctx.send({ winners: history });
 
 				

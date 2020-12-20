@@ -18,25 +18,96 @@ const formatError = error => [
 
 module.exports = {
 
-  async generateOtp(user) {
+  async SendSms(ctx) {
+    var sentStatus = false;
+    let params = ctx.request.body;
     
-    let dt = new Date();
-    let localTime = dt.getTime(); 
-    let localOffset = dt.getTimezoneOffset(); 
-    let utc = localTime + localOffset;
-    let offset = 4; // GST (Gulf Standard Time) ahead +4 hours from utc
-    let currentDateTime = utc + (3600000*offset); 
-    let current = new Date(currentDateTime); 
+    let user = params.user;
+    let mobile = params.mobile;
+    let lang = params.lang;
+    let smsInfo = await strapi.query('sms').findOne({ status : true });
+    if(smsInfo.status == true) {
+    
+    let type = "";
+    let msg = smsInfo.otp_msg_en;
+    var unicode = false;
+    if(lang === "ar" ) {
+      type = "&type=unicode";
+      msg = smsInfo.otp_msg_ar;
+      unicode = true;
+    }
 
+    let otp = Math.floor(1000 + Math.random() * 9000);
+    let sendMsg = msg ? msg: "Thank you for using xzero app";
+    sendMsg = msg+otp;
+    
+ 
+    let dateTime = await strapi.services['app-basic-information'].CurrentDateTime();
+    
+    let updatedUser =  await strapi.query('user', 'users-permissions').update({ id: user }, { otp: otp,  otp_generated_at: dateTime });
 
-    let otp =  Math.random().toFixed(4).substr(`-${4}`);
-    let otpData = { otp: otp, otp_generated_at: current };
-    return await strapi.query('user', 'users-permissions').update({ id: user }, otpData);
+    let balance =  await strapi.services.sms.QueryBalance();
+
+    // if(updatedUser && balance > 0) {
+    //   let sent  =  await strapi.services.sms.SendMessage(mobile, sendMsg, unicode);
+    //   console.log(sent);
+    //   if(sent) {
+    //     sentStatus = true;
+    //   }
+          
+    // } else {
+    //   return ctx.badRequest(
+    //     null,
+    //     formatError({
+    //       id: 'otp.authenticate',
+    //       message: 'something went wrong, please try again later',
+    //     })
+    //   ); 
+    // }
+    
+    //console.log(sendMsg); return false;
+
+    return ctx.send({
+      otp: otp,
+      msg: sendMsg,
+      status: sentStatus,
+      balance: balance
+    });
+    
+    }
+
   },
 
+
+  //function for verfiy otp
   async verifyOtp(ctx) {
     let params = ctx.request.body;
+    
     let user = await strapi.query('user', 'users-permissions').findOne({id: params.user});
+
+    let smsInfo = await strapi.query('sms').findOne({ status: true});
+    
+    let status = false;
+
+    if(smsInfo.status !== true) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'otp.authenticate',
+          message: 'otp verification disabled',
+        })
+      ); 
+    }
+    
+
+    var startDate = await strapi.services['app-basic-information'].CurrentDateTime(user.otp_generated_at);
+    
+    var endDate   =  await strapi.services['app-basic-information'].CurrentDateTime();
+
+    var seconds = (endDate.getTime() - startDate.getTime());
+    var Seconds_from_T1_to_T2 = seconds / 1000;
+    var Seconds_Between_Dates = Math.floor(Seconds_from_T1_to_T2);
+    
     if(user.otp === null) {
       return ctx.badRequest(
         null,
@@ -45,25 +116,30 @@ module.exports = {
           message: 'No otp found',
         })
       );
-    } else if(user.otp === params.otp) {
+    } else if(Seconds_Between_Dates >= smsInfo.expiry_seconds) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'otp.authenticate',
+          message: 'otp expired.',
+        })
+      );
+    } else if(parseInt(user.otp) === params.otp) {
       var msg  = "Verification successfull";
+      status = true;
     } else {
-      var startDate = new Date(user.otp_generated_at);
-      var endDate   = new Date();
-      var seconds = Math.floor((endDate.getTime() - startDate.getTime()) / 1000);
-      if(seconds>1800) {
+    
         return ctx.badRequest(
           null,
           formatError({
             id: 'otp.authenticate',
-            message: 'otp expired.',
+            message: 'otp is not valid.',
           })
         );
-
-      }
     }
-    
-    return ctx.send({ msg });
+
+    return ctx.send({ msg: msg, status: status });
+
   },
 
   async UpdateUserReferralCode() {
@@ -76,7 +152,7 @@ module.exports = {
       userAllwithNoRefercode.forEach(user => {
       let referral_code = Math.random().toString(36).substr(2,6);
       if(!filterReferralCode.includes(referral_code)) {
-        var updatedUser =  strapi.query('user', 'users-permissions').update({id: user.id}, {referral_code: referral_code.toUpperCase()});
+        var updatedUser =   strapi.query('user', 'users-permissions').update({id: user.id}, {referral_code: referral_code.toUpperCase()});
         //continue;
       } else {
         let referral_code = Math.random().toString(36).substr(2,6); 
@@ -89,6 +165,8 @@ module.exports = {
     let result = "success";
     return { result }
   },
+
+
 
   async createNewUser(ctx, params) {
     const pluginStore = await strapi.store({
@@ -141,11 +219,6 @@ module.exports = {
       throw createError;
     }
 
-    if (!params.otp) {
-      createError = new Error('Please verify OTP.');
-      createError.code = 400;
-      throw createError;
-    }
 
     // Check if the provided email is valid or not.
     const isEmail = emailRegExp.test(params.email);

@@ -1,0 +1,25 @@
+{
+  "kind": "singleType",
+  "collectionName": "sms",
+  "info": {
+    "name": "SMS"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "otp_msg_en": {
+      "type": "string"
+    },
+    "otp_msg_ar": {
+      "type": "string"
+    },
+    "expiry_seconds": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "boolean"
+    }
+  }
+}

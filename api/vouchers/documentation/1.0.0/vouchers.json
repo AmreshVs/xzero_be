@@ -785,9 +785,6 @@
               "status": {
                 "type": "boolean"
               },
-              "gift_type": {
-                "type": "string"
-              },
               "quantity": {
                 "type": "integer"
               },

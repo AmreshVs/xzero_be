@@ -1,19 +1,18 @@
 {
   "paths": {
-    "/draw-gifts": {
+    "/sms": {
       "get": {
         "deprecated": false,
-        "description": "Find all the draw-gifts's records",
+        "description": "Find all the sms's records",
         "responses": {
           "200": {
-            "description": "Retrieve draw-gifts document(s)",
+            "description": "Retrieve sms document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Sms"
                   }
                 }
               }
@@ -52,7 +51,7 @@
         },
         "summary": "",
         "tags": [
-          "Draw-gifts"
+          "Sms"
         ],
         "parameters": [
           {
@@ -193,210 +192,16 @@
           }
         ]
       },
-      "post": {
-        "deprecated": false,
-        "description": "Create a new draw-gifts record",
-        "responses": {
-          "200": {
-            "description": "Retrieve draw-gifts document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Draw-gifts"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewDraw-gifts"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/draw-gifts/count": {
-      "get": {
-        "deprecated": false,
-        "description": "Retrieve the numver of draw-gifts documents",
-        "responses": {
-          "200": {
-            "description": "Retrieve draw-gifts document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Draw-gifts"
-        ],
-        "parameters": []
-      }
-    },
-    "/draw-gifts/{id}": {
-      "get": {
-        "deprecated": false,
-        "description": "Find one draw-gifts record",
-        "responses": {
-          "200": {
-            "description": "Retrieve draw-gifts document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Draw-gifts"
-        ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
-      },
       "put": {
         "deprecated": false,
-        "description": "Update a single draw-gifts record",
+        "description": "Update a single sms record",
         "responses": {
           "200": {
-            "description": "Retrieve draw-gifts document(s)",
+            "description": "Retrieve sms document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "properties": {
-                    "foo": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Sms"
                 }
               }
             }
@@ -434,7 +239,7 @@
         },
         "summary": "",
         "tags": [
-          "Draw-gifts"
+          "Sms"
         ],
         "requestBody": {
           "description": "",
@@ -442,30 +247,19 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewDraw-gifts"
+                "$ref": "#/components/schemas/NewSms"
               }
             }
           }
         },
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        "parameters": []
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single draw-gifts record",
+        "description": "Delete a single sms record",
         "responses": {
           "200": {
-            "description": "deletes a single draw-gifts based on the ID supplied",
+            "description": "deletes a single sms based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -508,26 +302,15 @@
         },
         "summary": "",
         "tags": [
-          "Draw-gifts"
+          "Sms"
         ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "",
-            "deprecated": false,
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ]
+        "parameters": []
       }
     }
   },
   "components": {
     "schemas": {
-      "Draw-gifts": {
+      "Sms": {
         "required": [
           "id"
         ],
@@ -535,94 +318,17 @@
           "id": {
             "type": "string"
           },
-          "title_en": {
+          "otp_msg_en": {
             "type": "string"
           },
-          "title_ar": {
+          "otp_msg_ar": {
             "type": "string"
           },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "featured_imgs": {
-            "type": "array",
-            "items": {
-              "required": [
-                "id",
-                "name",
-                "hash",
-                "mime",
-                "size",
-                "url",
-                "provider"
-              ],
-              "properties": {
-                "id": {
-                  "type": "string"
-                },
-                "name": {
-                  "type": "string"
-                },
-                "alternativeText": {
-                  "type": "string"
-                },
-                "caption": {
-                  "type": "string"
-                },
-                "width": {
-                  "type": "integer"
-                },
-                "height": {
-                  "type": "integer"
-                },
-                "formats": {
-                  "type": "object"
-                },
-                "hash": {
-                  "type": "string"
-                },
-                "ext": {
-                  "type": "string"
-                },
-                "mime": {
-                  "type": "string"
-                },
-                "size": {
-                  "type": "number"
-                },
-                "url": {
-                  "type": "string"
-                },
-                "previewUrl": {
-                  "type": "string"
-                },
-                "provider": {
-                  "type": "string"
-                },
-                "provider_metadata": {
-                  "type": "object"
-                },
-                "related": {
-                  "type": "string"
-                },
-                "created_by": {
-                  "type": "string"
-                },
-                "updated_by": {
-                  "type": "string"
-                }
-              }
-            }
+          "expiry_seconds": {
+            "type": "integer"
           },
           "status": {
-            "type": "boolean",
-            "default": true
-          },
-          "quantity": {
-            "type": "integer"
+            "type": "boolean"
           },
           "created_by": {
             "required": [
@@ -714,26 +420,19 @@
           }
         }
       },
-      "NewDraw-gifts": {
+      "NewSms": {
         "properties": {
-          "title_en": {
+          "otp_msg_en": {
             "type": "string"
           },
-          "title_ar": {
+          "otp_msg_ar": {
             "type": "string"
           },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
+          "expiry_seconds": {
+            "type": "integer"
           },
           "status": {
-            "type": "boolean",
-            "default": true
-          },
-          "quantity": {
-            "type": "integer"
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"
@@ -745,5 +444,9 @@
       }
     }
   },
-  "tags": []
+  "tags": [
+    {
+      "name": "Sms"
+    }
+  ]
 }

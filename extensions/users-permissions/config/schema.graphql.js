@@ -21,15 +21,27 @@ module.exports = {
       jwt: String
       user: UsersPermissionsUser!
     }
+
+    type otpVerification {
+      msg: String,
+      status: Boolean
+    }
+
+    type SmsInfo {
+      otp: String
+      msg: String
+      status: Boolean
+      balance: Float
+    }
   `,
   mutation: `
-    createNewUser(username: String!, email: String!, password: String!, mobile_number: Long!, notification_token: String!, dob: String, birthday: DateTime, otp: String): CreateUserPayload!
-    userlogin(input: UsersPermissionsLoginInput!): CreateUserPayload!,
+    createNewUser(username: String!, email: String!, password: String!, mobile_number: Long!, notification_token: String!, dob: String, birthday: DateTime): CreateUserPayload!
+    userlogin(input: UsersPermissionsLoginInput!): CreateUserPayload!
     UpdateUserReferralCode: JSON
-    generateOtp(user: ID!): UsersPermissionsUser
+    SendSms(user: Int!, mobile: Long, lang: String): SmsInfo
   `,
 
-  query : `verifyOtp(user: ID!, otp: Int): JSON`, 
+  query : `verifyOtp(user: ID!, otp: Int): otpVerification`, 
 
   resolver: {
     Query: {
@@ -44,7 +56,7 @@ module.exports = {
           let output = context.body.toJSON ? context.body.toJSON() : context.body;
 
           checkBadRequest(output);
-          return output;
+          return output
           
         }
       }
@@ -67,13 +79,20 @@ module.exports = {
         }
       },
 
-      generateOtp: {
-        description: "function to generate Otp",
+      SendSms: {
+        description: 'function to verify otp',
+        policies: [],
         resolverOf: 'plugins::users-permissions.auth.callback',
-        resolver: async (obj, options, { context }) => {
-          return await strapi.plugins['users-permissions'].controllers.auth.generateOtp(options.user);
+        resolver: async (obj, options, {context}) => {
+         
+          context.request.body = _.toPlainObject(options);
+          await strapi.plugins['users-permissions'].controllers.auth.SendSms(context);
+          let output = context.body.toJSON ? context.body.toJSON() : context.body;
+          checkBadRequest(output);
+          return output;
         }
       },
+
   
       userlogin: {
         resolverOf: 'plugins::users-permissions.auth.callback',
@@ -91,6 +110,7 @@ module.exports = {
           };
         },
       },
+      
     }
   }
 }

@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/sms",
+      "handler": "sms.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/sms",
+      "handler": "sms.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/sms",
+      "handler": "sms.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

@@ -36,14 +36,6 @@
       "type": "boolean",
       "default": true
     },
-    "gift_type": {
-      "type": "enumeration",
-      "enum": [
-        "main_gift",
-        "additional_gift"
-      ],
-      "default": "additional_gift"
-    },
     "quantity": {
       "type": "integer"
     }
