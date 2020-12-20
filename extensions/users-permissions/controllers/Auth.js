@@ -10,6 +10,8 @@
 const _ = require('lodash');
 const { sanitizeEntity } = require('strapi-utils');
 const registerEmailTemplate = require('../registerEmailTemplate');
+const otpVerificationTemplate = require('../otpVerificationTemplate');
+
 
 const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 const formatError = error => [
@@ -18,30 +20,37 @@ const formatError = error => [
 
 module.exports = {
 
-  async SendSms(ctx) {
+  async SendSms(ctx) {  
     var sentStatus = false;
     let params = ctx.request.body;
     
     let user = params.user;
     let mobile = params.mobile;
     let lang = params.lang;
+    
     let smsInfo = await strapi.query('sms').findOne({ status : true });
     if(smsInfo.status == true) {
     
     let type = "";
     let msg = smsInfo.otp_msg_en;
-    var unicode = false;
+    let unicode = false; 
+    let email = true;
+
+    if(typeof params.email != 'undefined') {
+      email = params.email;
+    }
+    
     if(lang === "ar" ) {
       type = "&type=unicode";
       msg = smsInfo.otp_msg_ar;
       unicode = true;
     }
 
-    let otp = Math.floor(1000 + Math.random() * 9000);
+
+    var otp = Math.floor(1000 + Math.random() * 9000);
     let sendMsg = msg ? msg: "Thank you for using xzero app";
     sendMsg = msg+otp;
     
- 
     let dateTime = await strapi.services['app-basic-information'].CurrentDateTime();
     
     let updatedUser =  await strapi.query('user', 'users-permissions').update({ id: user }, { otp: otp,  otp_generated_at: dateTime });
@@ -65,6 +74,35 @@ module.exports = {
     //   ); 
     // }
     
+
+    if(email === true) {
+      try {
+        let otpEmailTemplate = {};
+        
+          otpEmailTemplate = {
+            subject: "Your OTP for Xzero App",
+            text: `Thank You for using Xzero App`,
+            html: otpVerificationTemplate,
+          };
+        
+        // Send an email to the user.
+        await strapi.plugins["email"].services.email.sendTemplatedEmail(
+          {
+            to: "noufal@xzero.app",
+            from: "support@xzero.app",
+          },
+          otpEmailTemplate,
+
+          {
+            otp: { otp: 1223 }
+          }
+
+        );
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
     //console.log(sendMsg); return false;
 
     return ctx.send({

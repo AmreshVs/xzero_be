@@ -38,7 +38,7 @@ module.exports = {
     createNewUser(username: String!, email: String!, password: String!, mobile_number: Long!, notification_token: String!, dob: String, birthday: DateTime): CreateUserPayload!
     userlogin(input: UsersPermissionsLoginInput!): CreateUserPayload!
     UpdateUserReferralCode: JSON
-    SendSms(user: Int!, mobile: Long, lang: String): SmsInfo
+    SendSms(user: Int!, mobile: Long, lang: String, email: Boolean): SmsInfo
   `,
 
   query : `verifyOtp(user: ID!, otp: Int): otpVerification`, 
@@ -110,7 +110,7 @@ module.exports = {
           };
         },
       },
-      
+
     }
   }
 }
