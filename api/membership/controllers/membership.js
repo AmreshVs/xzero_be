@@ -220,7 +220,6 @@ async function sendMail(user_id, status) {
 module.exports = {
   async generateMembership(ctx) {
 
-    
     //new code
     const params = ctx.request.body;
     let user_id = params.user_id;

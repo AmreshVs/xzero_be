@@ -5,7 +5,7 @@
  * to customize this controller
  */
 const _ = require("lodash");
-const { trim } = require("../../membership/membershipEmailTemplate");
+
 
 function DateDiffInDaysWithCurrentDate(date) {
   let dt = new Date();

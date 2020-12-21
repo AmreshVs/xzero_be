@@ -26,7 +26,7 @@ module.exports = {
     let fieldstring = "username="+username+"&password="+password+"&api_key="+apikey+"";
     let balance = 0; 
     
-    await  axios({
+    await axios({
        method: 'get',
        url: base_url_QueryBalance+fieldstring,
        data: fieldstring,

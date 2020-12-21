@@ -8,6 +8,8 @@ const _ = require("lodash");
 const { sanitizeEntity } = require('strapi-utils'); 
 const voucherWinnerEmailTemplate = require("../voucherWinnerEmailTemplate");
 
+const fetch = require("node-fetch");
+
 const formatError = error => [
   { messages: [{ id: error.id, message: error.message, field: error.field }] },
 ];
@@ -35,6 +37,8 @@ async function sendMail(user_id) {
     console.log(err);
   }
 }
+
+
 
 
 async function ApplyCode(receiver, price, code, voucher) {
@@ -358,9 +362,53 @@ module.exports = {
     }
   },
 
+  async NotifyDrawDetails(ctx) {
+    
+    let params = ctx.request.body;
+    
+    let users = await strapi.query("user", "users-permissions").find({ _limit: -1 });
+    
+    let expoTokens = [];
+    await users.filter((user) => {
+      if ((user.notification_token !== null) && (user.notification_token !== '')) {
+        expoTokens.push(user.notification_token);
+        return true;
+      }
+      return false;
+    })
+
+    
+     try {
+       await fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+          'accept': 'application/json',
+          'accept-encoding': 'gzip, deflate',
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: 'ExponentPushToken[fhwRxDCBR3vVli8XIDG8AJ]',
+          title: "XZERO - Draw Winners are out!",
+          body: "Checkout whether you are in the list. ",
+          sound: 'default',
+          priority: 'high'
+        })
+      });
+      
+    }
+    catch (e) {
+      console.log('Notification Push', e);
+      
+    }
+    
+  },
+
+
 
   //function randomly select a user and would declare as a winner
 	DeclareVoucherWinner: async (ctx) => {
+ 
     let postData = ctx.request.body;
   
 		let voucher = await strapi
@@ -410,7 +458,32 @@ module.exports = {
 					.find({ is_won: true });
 					if(winners) {
             winners.forEach(winner => {
-              //sendMail(winner.user.id);
+
+            //   try {
+            //     await fetch('https://exp.host/--/api/v2/push/send', {
+            //      method: 'POST',
+            //      mode: 'no-cors',
+            //      headers: {
+            //        'accept': 'application/json',
+            //        'accept-encoding': 'gzip, deflate',
+            //        'content-type': 'application/json',
+            //      },
+            //      body: JSON.stringify({
+            //        to: 'ExponentPushToken[fhwRxDCBR3vVli8XIDG8AJ]',
+            //        title: "XZERO - Draw Winners are out!",
+            //        body: "Checkout whether you are in the list. ",
+            //        sound: 'default',
+            //        priority: 'high'
+            //      })
+            //    });
+               
+            //  }
+            //  catch (e) {
+            //    console.log('Notification Push', e);
+               
+            //  }
+              
+             //sendMail(winner.user.id);
             });
 						
 						ctx.send('published winner, email is sent');

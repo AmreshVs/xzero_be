@@ -5,6 +5,7 @@ var fs = require("fs");
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
  * to customize this controller
  */
+const fetch = require("node-fetch");
 
 async function generateTransactionId() {
   let trId = Math.random().toString(10).substr(2, 8);
@@ -93,7 +94,7 @@ module.exports = {
           let titleNoti = "Thank you for visiting "+centerName; 
           let bodyMsg  = "You have opted for "+offerNames.join(", ")+ " at "+centerName;
 
-
+ 
           try {
             await fetch('https://exp.host/--/api/v2/push/send', {
               method: 'POST',
