@@ -291,7 +291,7 @@ module.exports = {
     }
 
     try {
-      
+      params.confirmed = false;
       params.provider = 'local';
       
       //for adding referral code while adding a user via app
