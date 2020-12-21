@@ -165,6 +165,7 @@ module.exports = {
     } else if(parseInt(user.otp) === params.otp) {
       var msg  = "Verification successfull";
       await strapi.query('user', 'users-permissions').update({ id: params.user }, { confirmed: true });
+      await strapi.query('user', 'users-permissions').update({ id: params.user }, { otp: null, otp_generated_at: null });
       status = true;
     } else {
     
