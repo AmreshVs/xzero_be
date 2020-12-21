@@ -408,8 +408,7 @@ module.exports = {
     }
 
     if (
-      _.get(await store.get({ key: 'advanced' }), 'email_confirmation') &&
-      user.confirmed !== true
+      _.get(await store.get({ key: 'advanced' }), 'email_confirmation') 
     ) {
       return ctx.badRequest(
         null,
