@@ -20,98 +20,98 @@ const formatError = error => [
 
 module.exports = {
 
-  async SendSms(ctx) {  
+  async SendSms(ctx) {
     var sentStatus = false;
     let params = ctx.request.body;
-    
+
     let user = params.user;
     let mobile = params.mobile;
     let lang = params.lang;
-    
-    let smsInfo = await strapi.query('sms').findOne({ status : true });
-    if(smsInfo.status == true) {
-    
-    let type = "";
-    let msg = smsInfo.otp_msg_en;
-    let unicode = false; 
-    let email = true;
 
-    if(typeof params.email != 'undefined') {
-      email = params.email;
-    }
-    
-    if(lang === "ar" ) {
-      type = "&type=unicode";
-      msg = smsInfo.otp_msg_ar;
-      unicode = true;
-    }
+    let smsInfo = await strapi.query('sms').findOne({ status: true });
+    if (smsInfo.status == true) {
+
+      let type = "";
+      let msg = smsInfo.otp_msg_en;
+      let unicode = false;
+      let email = true;
+
+      if (typeof params.email != 'undefined') {
+        email = params.email;
+      }
+
+      if (lang === "ar") {
+        type = "&type=unicode";
+        msg = smsInfo.otp_msg_ar;
+        unicode = true;
+      }
 
 
-    var otp = Math.floor(1000 + Math.random() * 9000);
-    let sendMsg = msg ? msg: "Thank you for using xzero app";
-    sendMsg = msg+otp;
-    
-    let dateTime = await strapi.services['app-basic-information'].CurrentDateTime();
-    
-    let updatedUser =  await strapi.query('user', 'users-permissions').update({ id: user }, { otp: otp,  otp_generated_at: dateTime });
+      var otp = Math.floor(1000 + Math.random() * 9000);
+      let sendMsg = msg ? msg : "Thank you for using xzero app";
+      sendMsg = msg + otp;
 
-    let balance =  await strapi.services.sms.QueryBalance();
+      let dateTime = await strapi.services['app-basic-information'].CurrentDateTime();
 
-    // if(updatedUser && balance > 0) {
-    //   let sent  =  await strapi.services.sms.SendMessage(mobile, sendMsg, unicode);
-    //   console.log(sent);
-    //   if(sent) {
-    //     sentStatus = true;
-    //   }
-          
-    // } else {
-    //   return ctx.badRequest(
-    //     null,
-    //     formatError({
-    //       id: 'otp.authenticate',
-    //       message: 'something went wrong, please try again later',
-    //     })
-    //   ); 
-    // }
-    
+      let updatedUser = await strapi.query('user', 'users-permissions').update({ id: user }, { otp: otp, otp_generated_at: dateTime });
 
-    if(email === true) {
-      try {
-        let otpEmailTemplate = {};
-        
+      let balance = await strapi.services.sms.QueryBalance();
+
+      // if(updatedUser && balance > 0) {
+      //   let sent  =  await strapi.services.sms.SendMessage(mobile, sendMsg, unicode);
+      //   console.log(sent);
+      //   if(sent) {
+      //     sentStatus = true;
+      //   }
+
+      // } else {
+      //   return ctx.badRequest(
+      //     null,
+      //     formatError({
+      //       id: 'otp.authenticate',
+      //       message: 'something went wrong, please try again later',
+      //     })
+      //   ); 
+      // }
+
+
+      if (email === true) {
+        try {
+          let otpEmailTemplate = {};
+
           otpEmailTemplate = {
             subject: "Your OTP for Xzero App",
             text: `Thank You for using Xzero App`,
             html: otpVerificationTemplate,
           };
-        
-        // Send an email to the user.
-        await strapi.plugins["email"].services.email.sendTemplatedEmail(
-          {
-            to: "noufal@xzero.app",
-            from: "support@xzero.app",
-          },
-          otpEmailTemplate,
 
-          {
-            otp: { otp: 1223 }
-          }
+          // Send an email to the user.
+          await strapi.plugins["email"].services.email.sendTemplatedEmail(
+            {
+              to: "noufal@xzero.app",
+              from: "support@xzero.app",
+            },
+            otpEmailTemplate,
 
-        );
-      } catch (err) {
-        console.log(err);
+            {
+              otp: { otp: 1223 }
+            }
+
+          );
+        } catch (err) {
+          console.log(err);
+        }
       }
-    }
 
-    //console.log(sendMsg); return false;
+      //console.log(sendMsg); return false;
 
-    return ctx.send({
-      otp: otp,
-      msg: sendMsg,
-      status: sentStatus,
-      balance: balance
-    });
-    
+      return ctx.send({
+        otp: otp,
+        msg: sendMsg,
+        status: sentStatus,
+        balance: balance
+      });
+
     }
 
   },
@@ -120,33 +120,33 @@ module.exports = {
   //function for verfiy otp
   async verifyOtp(ctx) {
     let params = ctx.request.body;
-    
-    let user = await strapi.query('user', 'users-permissions').findOne({id: params.user});
 
-    let smsInfo = await strapi.query('sms').findOne({ status: true});
-    
+    let user = await strapi.query('user', 'users-permissions').findOne({ id: params.user });
+
+    let smsInfo = await strapi.query('sms').findOne({ status: true });
+
     let status = false;
 
-    if(smsInfo.status !== true) {
+    if (smsInfo.status !== true) {
       return ctx.badRequest(
         null,
         formatError({
           id: 'otp.authenticate',
           message: 'otp verification disabled',
         })
-      ); 
+      );
     }
-    
+
 
     var startDate = await strapi.services['app-basic-information'].CurrentDateTime(user.otp_generated_at);
-    
-    var endDate   =  await strapi.services['app-basic-information'].CurrentDateTime();
+
+    var endDate = await strapi.services['app-basic-information'].CurrentDateTime();
 
     var seconds = (endDate.getTime() - startDate.getTime());
     var Seconds_from_T1_to_T2 = seconds / 1000;
     var Seconds_Between_Dates = Math.floor(Seconds_from_T1_to_T2);
-    
-    if(user.otp === null) {
+
+    if (user.otp === null) {
       return ctx.badRequest(
         null,
         formatError({
@@ -154,7 +154,7 @@ module.exports = {
           message: 'No otp found',
         })
       );
-    } else if(Seconds_Between_Dates >= smsInfo.expiry_seconds) {
+    } else if (Seconds_Between_Dates >= smsInfo.expiry_seconds) {
       return ctx.badRequest(
         null,
         formatError({
@@ -162,20 +162,20 @@ module.exports = {
           message: 'otp expired.',
         })
       );
-    } else if(parseInt(user.otp) === params.otp) {
-      var msg  = "Verification successfull";
+    } else if (parseInt(user.otp) === params.otp) {
+      var msg = "Verification successfull";
       await strapi.query('user', 'users-permissions').update({ id: params.user }, { confirmed: true });
       await strapi.query('user', 'users-permissions').update({ id: params.user }, { otp: null, otp_generated_at: null });
       status = true;
     } else {
-    
-        return ctx.badRequest(
-          null,
-          formatError({
-            id: 'otp.authenticate',
-            message: 'otp is not valid.',
-          })
-        );
+
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'otp.authenticate',
+          message: 'otp is not valid.',
+        })
+      );
     }
 
     return ctx.send({ msg: msg, status: status });
@@ -183,21 +183,21 @@ module.exports = {
   },
 
   async UpdateUserReferralCode() {
-    let userRef = await strapi.query('user', 'users-permissions').find({referral_code_ne: true});
-    let userAllwithNoRefercode  = await strapi.query('user', 'users-permissions').find({referral_code_null: true});
-    let filterReferralCode = userRef.map(user=> user.referral_code);
+    let userRef = await strapi.query('user', 'users-permissions').find({ referral_code_ne: true });
+    let userAllwithNoRefercode = await strapi.query('user', 'users-permissions').find({ referral_code_null: true });
+    let filterReferralCode = userRef.map(user => user.referral_code);
     //console.log(userAllwithNoRefercode); return false;
-    
-    if(userAllwithNoRefercode.length>0) {
+
+    if (userAllwithNoRefercode.length > 0) {
       userAllwithNoRefercode.forEach(user => {
-      let referral_code = Math.random().toString(36).substr(2,6);
-      if(!filterReferralCode.includes(referral_code)) {
-        var updatedUser =   strapi.query('user', 'users-permissions').update({id: user.id}, {referral_code: referral_code.toUpperCase()});
-        //continue;
-      } else {
-        let referral_code = Math.random().toString(36).substr(2,6); 
-      }
-    });
+        let referral_code = Math.random().toString(36).substr(2, 6);
+        if (!filterReferralCode.includes(referral_code)) {
+          var updatedUser = strapi.query('user', 'users-permissions').update({ id: user.id }, { referral_code: referral_code.toUpperCase() });
+          //continue;
+        } else {
+          let referral_code = Math.random().toString(36).substr(2, 6);
+        }
+      });
     } else {
       let result = "no users with empty referral code";
       return { result };
@@ -293,18 +293,15 @@ module.exports = {
 
     try {
       params.confirmed = false;
-      params.provider = 'local';
-      
+      params.provider = params.provider || 'local';
+
       //for adding referral code while adding a user via app
-      var referral_code = Math.random().toString(36).substr(2,6);
+      var referral_code = Math.random().toString(36).substr(2, 6);
       const userRef = await strapi.query('user', 'users-permissions').findOne({
         referral_code: referral_code
       });
-      params.referral_code = userRef ? Math.random().toString(36).substr(2,6).toUpperCase(): referral_code.toUpperCase(); 
+      params.referral_code = userRef ? Math.random().toString(36).substr(2, 6).toUpperCase() : referral_code.toUpperCase();
       //code referral ends
-
-      let userDate = params.dob !== '' ? new Date(params.dob) : '';
-      params.dob = params.dob !== '' ? new Date(userDate.getTime() + Math.abs(userDate.getTimezoneOffset() * 60000)) : null;
 
       const user = await strapi.query('user', 'users-permissions').create(params);
 
