@@ -35,7 +35,7 @@ module.exports = {
     }
   `,
   mutation: `
-    createNewUser(UserInput!): CreateUserPayload!
+    createNewUser(input: UserInput!): CreateUserPayload!
     userlogin(input: UsersPermissionsLoginInput!): CreateUserPayload!
     UpdateUserReferralCode: JSON
     SendSms(user: Int!, mobile: Long, lang: String, email: Boolean): SmsInfo
