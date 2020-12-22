@@ -11,6 +11,7 @@ const _ = require('lodash');
 const { sanitizeEntity } = require('strapi-utils');
 const registerEmailTemplate = require('../registerEmailTemplate');
 const otpVerificationTemplate = require('../otpVerificationTemplate');
+const otpConfirmationTemplate = require('../otpConfirmationTemplate');
 
 
 const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -94,7 +95,7 @@ module.exports = {
             otpEmailTemplate,
 
             {
-              otp: { otp: 1223 }
+              otp: { otp: otp }
             }
 
           );
@@ -167,6 +168,39 @@ module.exports = {
       await strapi.query('user', 'users-permissions').update({ id: params.user }, { confirmed: true });
       await strapi.query('user', 'users-permissions').update({ id: params.user }, { otp: null, otp_generated_at: null });
       status = true;
+
+      // email will be send after confirmation
+      //if (email === true) {
+        try {
+          let otpEmailTemplate = {};
+
+          otpEmailTemplate = {
+            subject: "Your Account has been verified",
+            text: `Thank You for using Xzero App`,
+            html: otpConfirmationTemplate,
+          };
+
+          // Send an email to the user.
+          await strapi.plugins["email"].services.email.sendTemplatedEmail(
+            {
+              to: "noufal@xzero.app",
+              from: "support@xzero.app",
+            },
+            otpEmailTemplate,
+
+            {
+              otp: { otp: params.otp }
+            }
+
+          );
+        } catch (err) {
+          console.log(err);
+        }
+      //}
+
+      //end of email code
+
+
     } else {
 
       return ctx.badRequest(
