@@ -103,7 +103,7 @@ module.exports = {
       .get();
 
     const { id } = ctx.params;
-    const { email, username, password } = ctx.request.body;
+    const { email, username, password, mobile_number } = ctx.request.body;
 
     const user = await strapi.plugins['users-permissions'].services.user.fetch({
       id,
