@@ -303,9 +303,6 @@ module.exports = {
       params.referral_code = userRef ? Math.random().toString(36).substr(2, 6).toUpperCase() : referral_code.toUpperCase();
       //code referral ends
 
-      let userDate = params.dob !== '' ? new Date(params.dob) : '';
-      params.dob = params.dob !== '' ? new Date(userDate.getTime() + Math.abs(userDate.getTimezoneOffset() * 60000)) : null;
-
       const user = await strapi.query('user', 'users-permissions').create(params);
 
       const jwt = strapi.plugins['users-permissions'].services.jwt.issue(

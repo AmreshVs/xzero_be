@@ -67,7 +67,7 @@ module.exports = {
         description: "To create a user via app",
         resolverOf: 'plugins::users-permissions.auth.register',
         resolver: async (obj, options, { context }) => {
-          return await strapi.plugins['users-permissions'].controllers.auth.createNewUser(context, options);
+          return await strapi.plugins['users-permissions'].controllers.auth.createNewUser(context, { ...options.input });
         }
       },
 
