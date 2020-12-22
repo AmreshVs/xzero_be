@@ -35,13 +35,13 @@ module.exports = {
     }
   `,
   mutation: `
-    createNewUser(username: String!, email: String!, password: String!, mobile_number: Long!, notification_token: String!, dob: String, birthday: DateTime): CreateUserPayload!
+    createNewUser(UserInput!): CreateUserPayload!
     userlogin(input: UsersPermissionsLoginInput!): CreateUserPayload!
     UpdateUserReferralCode: JSON
     SendSms(user: Int!, mobile: Long, lang: String, email: Boolean): SmsInfo
   `,
 
-  query : `verifyOtp(user: ID!, otp: Int): otpVerification`, 
+  query: `verifyOtp(user: ID!, otp: Int): otpVerification`,
 
   resolver: {
     Query: {
@@ -49,7 +49,7 @@ module.exports = {
         description: "function will verift otp return the message",
         resolverOf: 'plugins::users-permissions.auth.register',
         resolver: async (obj, options, { context }) => {
-        
+
           context.request.body = _.toPlainObject(options);
 
           await strapi.plugins['users-permissions'].controllers.auth.verifyOtp(context);
@@ -57,7 +57,7 @@ module.exports = {
 
           checkBadRequest(output);
           return output
-          
+
         }
       }
     },
@@ -83,8 +83,8 @@ module.exports = {
         description: 'function to verify otp',
         policies: [],
         resolverOf: 'plugins::users-permissions.auth.callback',
-        resolver: async (obj, options, {context}) => {
-         
+        resolver: async (obj, options, { context }) => {
+
           context.request.body = _.toPlainObject(options);
           await strapi.plugins['users-permissions'].controllers.auth.SendSms(context);
           let output = context.body.toJSON ? context.body.toJSON() : context.body;
@@ -93,7 +93,7 @@ module.exports = {
         }
       },
 
-  
+
       userlogin: {
         resolverOf: 'plugins::users-permissions.auth.callback',
         resolver: async (obj, options, { context }) => {
