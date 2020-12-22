@@ -154,7 +154,7 @@ module.exports = {
   async getMembershipInfo(serial, condition) {
     let offers = await strapi
       .query("offers")
-      .find({ center: condition.center, status: true });
+      .find({ center: condition.center, status: true, _limit: -1 });
     let memberShips = await strapi
       .query("membership")
       .findOne({ serial: serial });
@@ -165,7 +165,7 @@ module.exports = {
   async getuserCheckinDetails(user_id, condition) {
     let centers = await strapi
       .query("center-check-in")
-      .find({ user_id: user_id, center_id: condition.center });
+      .find({ user_id: user_id, center_id: condition.center, _limit: -1 });
     return { center: centers };
   },
 
@@ -201,7 +201,7 @@ module.exports = {
   async getOffers(center_id) {
     let offersByCenter = await strapi
       .query("offers")
-      .find({ status: true, center: center_id, _sort: "id:desc" });
+      .find({ status: true, center: center_id, _sort: "id:desc", _limit: -1 });
     return offersByCenter;
   },
 
@@ -209,7 +209,7 @@ module.exports = {
   async UserCheckins(center_id) {
     let userCheckinsAvailed = await strapi
       .query("center-check-in")
-      .find({ center: center_id });
+      .find({ center: center_id, _limit: -1, _sort: "id:desc" });
     return userCheckinsAvailed;
   },
 
@@ -221,8 +221,6 @@ module.exports = {
       .query("center-check-in")
       .find({ center: center_id, _limit: 5, _sort: "id:desc" });
 
- 
-    
     if (centerOffers === null || centerOffers.length === 0) {
       offers = await strapi
         .query("offers")

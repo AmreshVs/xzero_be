@@ -8,7 +8,7 @@
 module.exports = {
   async categoriesWithCenterCount(options) {
     // Reusing the same for both Categories on Homepage and for specialist page
-    let categories = await strapi.query('categories').find({ enabled: 1 });
+    let categories = await strapi.query('categories').find({ enabled: 1, _limit: -1 });
 
     let categoriesWithCenters = await Promise.all(categories.map(async ({ id, title_en, title_ar, featured_img }) => {
       let centersCount = await strapi.query(options.specialist ? 'specialist' : 'centers').count({ category: id });
@@ -27,7 +27,7 @@ module.exports = {
     }
 
     let specialistCount = await strapi.query('specialist').count();
-    let specialistData = await strapi.query('specialist-help').find();
+    let specialistData = await strapi.query('specialist-help').find({ _limit: -1 });
     let specialistHelp = [{
       type: 'specialist',
       title_en: specialistData[0].title_en,

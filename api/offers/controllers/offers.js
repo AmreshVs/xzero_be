@@ -114,12 +114,10 @@ module.exports = {
     
     const updatedArr = [];
     await Promise.all(columnA.map(async (centerLocDetails) => { 
-      //console.log(centerLocDetails.centerId); return false;
+      
       //try {
 
         if( typeof centerLocDetails.centerId !== 'undefined'  && typeof centerLocDetails.loc != 'undefined' ) {
-          //console.log(centerLocDetails.centerId);
-          //console.log(centerLocDetails.loc); return false;
           let updateCenter = await strapi.query('offers').update({ center: centerLocDetails.centerId }, {  	google_map_location: centerLocDetails.loc
         }); 
 
@@ -132,7 +130,7 @@ module.exports = {
     }));
 
     console.log(updatedArr); return false;
-    return {updatedArr};
+    return { updatedArr };
   }
 
 };
