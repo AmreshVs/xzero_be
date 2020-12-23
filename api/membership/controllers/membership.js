@@ -217,9 +217,58 @@ async function sendMail(user_id, status) {
   }
 }
 
-module.exports = {
-  async generateMembership(ctx) {
+//Generate the QRCode image
+async function createQRForExisting(userInfo) {
+  let fileName = "/qrcode/qr_" + userInfo.user.id + ".png";
+  let logo = "../../../public/qrcode/logo.png";
+  let serial = JSON.stringify({ serial: userInfo.serial });
+  await brandedQRCode
+  .generate({
+  text: serial,
+  path: logo,
+  ratio: 6,
+  opt: {
+  color: { dark: "#000", light: "#fff" },
+  width: 200,
+  errorCorrectionLevel: "H",
+  },
+  })
+  .then((buf) => {
+  fs.writeFile("public" + fileName, buf, (err) => {
+  if (err) {
+  throw err;
+  }
+  });
+  });
+  
+  return fileName;
+  }
+  
 
+
+module.exports = {
+
+//Generate the QRCode image
+async QRforExistingUser() {
+  let membershipWithNoQRcode = await strapi.query('membership').find({ qrcode_url_eq: ""} || {qrcode_url_null: true});
+  // console.log(membershipWithNoQRcode.length); return false;
+  
+  if (membershipWithNoQRcode.length > 0) {
+  await Promise.all(membershipWithNoQRcode.map(async (member) => {
+  let qr = await createQRForExisting(member);
+  var updatedUser = await strapi.query('membership').update({ id: member.id }, { qrcode_url: qr });
+  }));
+  } else {
+  let result = "no users with empty referral code";
+  return { result };
+  }
+  let result = "success";
+  return { result }
+},
+
+
+
+  async generateMembership(ctx) {
     //new code
     const params = ctx.request.body;
     let user_id = params.user_id;
