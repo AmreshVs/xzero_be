@@ -21,7 +21,9 @@ module.exports = {
       let plan = params.plan;
       let voucher = params.voucher;
       
+      let applied_for = 'membership';
       if( typeof params.voucher !== 'undefined' ) {
+        applied_for = 'voucher';
         let voucher = await strapi.query("vouchers").findOne({ id: params.voucher, status: true });  
         var price = voucher.cost;
         if(voucher.enable_for_non_members === true) {
@@ -33,6 +35,10 @@ module.exports = {
         var price = membershipPlan.price;
         
       }
+
+    
+      //console.log(applied_for); return false;
+      
 
       let userExistCount = await strapi.query("user", "users-permissions").count({ id: receiver });
 
@@ -98,12 +104,11 @@ module.exports = {
             //return { applied:false, from: 'referral', codeApplied: referralCode, msg: "Invalid referral code" };
           }
     
-        } else if( affiliate !== null && ( affiliate.applied_for === "voucher"|| affiliate.applied_for === "membership" || affiliate.applied_for === 'both' ) && affiliate.user.id !== parseInt(receiver)) {
-
+        } else if( affiliate !== null &&  ( affiliate.applied_for === applied_for || affiliate.applied_for === "both" )  && affiliate.user.id !== parseInt(receiver)) {
+        
           let affiliateAllowedPlan = affiliate.membership_plans.map((membershipPlan) => membershipPlan.id); 
           let affiliateAllowedVouchers = affiliate.vouchers.map((voucher) => voucher.id); 
         
-       
           if(affiliateAllowedVouchers.includes(voucher) && (voucher != "" || typeof voucher !== 'undefined' )) {
             var support = true;
           } else if(affiliateAllowedPlan.includes(plan) && (voucher == ""|| voucher == null || typeof voucher == 'undefined')) {
@@ -239,7 +244,7 @@ module.exports = {
                 })
               ); 
             }
-            } else if( promocode !== null && (promocode.applied_for === "voucher" || promocode.applied_for === "membership" || promocode.applied_for === 'both')) {
+            } else if( promocode !== null && ( promocode.applied_for === applied_for || promocode.applied_for === "both" )) {
           
                 let getPromoCodeUsedCountByAllUsers = await strapi.query("promocode-transaction").count({ promocode: referralCode, status: true });
                 let getPromoCodeUsedCountByUser = await strapi.query("promocode-transaction").count({ promocode: referralCode, user: receiver, status: true });
