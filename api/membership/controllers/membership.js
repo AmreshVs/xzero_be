@@ -250,7 +250,7 @@ module.exports = {
 
 //Generate the QRCode image
 async QRforExistingUser() {
-  let membershipWithNoQRcode = await strapi.query('membership').find({ qrcode_url_eq: ""} || {qrcode_url_null: true});
+  let membershipWithNoQRcode = await strapi.query('membership').find({ qrcode_url_null: true });
   // console.log(membershipWithNoQRcode.length); return false;
   
   if (membershipWithNoQRcode.length > 0) {
