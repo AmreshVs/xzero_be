@@ -58,23 +58,23 @@ module.exports = {
 
       let balance = await strapi.services.sms.QueryBalance();
 
-      // if(updatedUser && balance > 0) {
-      //   let sent  =  await strapi.services.sms.SendMessage(mobile, sendMsg, unicode);
-      //   console.log(sent);
-      //   if(sent) {
-      //     sentStatus = true;
-      //   }
+      if(updatedUser && balance > 0) {
+        
+        let sent  =  await strapi.services.sms.SendMessage(mobile, sendMsg, unicode);
+        
+        if(sent) {
+          sentStatus = true;
+        }
 
-      // } else {
-      //   return ctx.badRequest(
-      //     null,
-      //     formatError({
-      //       id: 'otp.authenticate',
-      //       message: 'something went wrong, please try again later',
-      //     })
-      //   ); 
-      // }
-
+      } else {
+        return ctx.badRequest(
+          null,
+          formatError({
+            id: 'otp.authenticate',
+            message: 'something went wrong, please try again later',
+          })
+        ); 
+      }
 
       if (email === true) {
         try {

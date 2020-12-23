@@ -11,9 +11,9 @@
   
   //Public Variables that are used as parameters in API calls
   let username = 'xzero';  
-  let password = 'X@123456789';
+  let password = 'Xzerodxb@@@02020';
   let apikey = 'kj7q5bk5ej31ib7';
-  let from = 'DEFAULT';	// USE DEFAULT IN MOST CASES, CONTACT SUPPORT FOR FURTHER DETAILS>
+  let from = 'XzeroApp';	// USE DEFAULT IN MOST CASES, CONTACT SUPPORT FOR FURTHER DETAILS>
   let to = '';		// LET THIS REMAIN BLANK
   let msgtext = ''; 	// LET THIS REMAIN BLANK
 

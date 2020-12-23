@@ -43,7 +43,10 @@ async function ApplyCode(receiver, price, code, plan) {
       if(userUsedHistory < referProgram.usage_limit && usedHistory < referProgram.user_can_refer  ) {
           //receiver get
           let discountAmount = (parseInt(referProgram.discount)/100) * parseInt(price);
-          discountAmount = (discountAmount <= referProgram.allowed_maximum_discount) ? discountAmount: referProgram.allowed_maximum_discount; 
+          if(referProgram.allowed_maximum_discount !== null) {
+            discountAmount = (discountAmount <= referProgram.allowed_maximum_discount) ? discountAmount: referProgram.allowed_maximum_discount; 
+          }
+          
           let afterDiscount = price - Math.floor(discountAmount);
           //sender will get
           let referrerCredit = (parseInt(referProgram.referrer_get)/100) * parseInt(price);  
@@ -86,7 +89,10 @@ async function ApplyCode(receiver, price, code, plan) {
       
           if( userUsedHistory < affiliate.allowed_usage_per_user && usedHistory < affiliate.limit ) {
             let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
-            discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+            if(affiliate.maximum_allowed_discount !== null) {
+              discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+            }
+            
             let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
 
             if(affiliate.fixed_amount_status === true ) {
@@ -118,7 +124,9 @@ async function ApplyCode(receiver, price, code, plan) {
       
           if( userUsedHistory < affiliate.allowed_usage_per_user && usedHistory < affiliate.limit ) {
             let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
-            discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+            if(affiliate.maximum_allowed_discount !== null) {
+              discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+            }
             let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
 
             if(affiliate.fixed_amount_status === true ) {
@@ -155,8 +163,12 @@ async function ApplyCode(receiver, price, code, plan) {
         if(new Date().toString() >= start_date && end_date >= start_date || (promocode.start_date ===null || promocode.end_date === null) )  {
           if( getPromoCodeUsedCountByUser < promocode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers < promocode.limit ) {
             let discountAmount = (parseInt(promocode.discount)/parseInt(100)) * parseInt(price);
-            discountAmount = (discountAmount <= promocode.allowed_maximum_discount) ? discountAmount: promocode.allowed_maximum_discount; 
+            if(promocode.allowed_maximum_discount !== null) {
+              discountAmount = (discountAmount <= promocode.allowed_maximum_discount) ? discountAmount: promocode.allowed_maximum_discount; 
+            } 
+            
             let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+            
             return { discount: promocode.discount, discountedPrice: discountedPrice, promocodeId: promocode.id, from: 'promocode', discountYouGet: Math.floor(discountAmount), applied: true, CodeAapplied: referralCode }
           } else {
             if(promocode.limit <= 0 || promocode.maximum_usage_per_user <= 0 ) {
@@ -395,7 +407,7 @@ async QRforExistingUser() {
         .create({
           membership_id: membership.id,
           serial: serial,
-          type: "New",
+          type: process.env.membershipNew ? process.env.membershipNew: "New",
           expiry: expiryDate,
           amount: packageSelected.price,
           promocode_applied: afterCodeApply.applied === true ? code: null,
@@ -509,7 +521,7 @@ async QRforExistingUser() {
         .create({
           membership_id: checkUserExist.id,
           serial: serial,
-          type: "Renewal",
+          type: process.env.membershipRenewal ? process.env.membershipRenewal: "Renewal",
           expiry: expiryDate,
           amount: packageSelected.price,
           promocode_applied: afterCodeApply.applied === true ? code: null,

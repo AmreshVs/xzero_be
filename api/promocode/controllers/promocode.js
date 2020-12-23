@@ -24,9 +24,10 @@ module.exports = {
       let applied_for = 'membership';
       if( typeof params.voucher !== 'undefined' ) {
         applied_for = 'voucher';
+        let membership = await strapi.query("membership").count({ user: receiver });
         let voucher = await strapi.query("vouchers").findOne({ id: params.voucher, status: true });  
         var price = voucher.cost;
-        if(voucher.enable_for_non_members === true) {
+        if(voucher.enable_for_non_members === true && membership === 0 ) {
           var price = voucher.cost_for_non_members;
         }
         
@@ -66,7 +67,9 @@ module.exports = {
           if(userUsedHistory < referProgram.usage_limit && usedHistory < referProgram.user_can_refer  ) {
               //receiver get
               let discountAmount = (parseInt(referProgram.discount)/100) * parseInt(price);
-              discountAmount = (discountAmount <= referProgram.allowed_maximum_discount) ? discountAmount: referProgram.allowed_maximum_discount; 
+              if(referProgram.allowed_maximum_discount !== null ) {
+                discountAmount = (discountAmount <= referProgram.allowed_maximum_discount) ? discountAmount: referProgram.allowed_maximum_discount; 
+              }
               let afterDiscount = price - Math.floor(discountAmount);
               //sender will get
               let referrerCredit = (parseInt(referProgram.referrer_get)/100) * parseInt(price);  
@@ -134,7 +137,10 @@ module.exports = {
             
                 if( userUsedHistory < affiliate.allowed_usage_per_user && usedHistory < affiliate.limit ) {
                   let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
-                  discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+                  if(affiliate.maximum_allowed_discount !== null) {
+                    discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+                  }
+                  
                   let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
                   let msg = "success";
                   return ctx.send({
@@ -255,7 +261,10 @@ module.exports = {
             if(new Date().toString() >= start_date && end_date >= start_date || (promocode.start_date === null || promocode.end_date === null) )  {
               if( getPromoCodeUsedCountByUser < promocode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers < promocode.limit ) {
                 let discountAmount = (parseInt(promocode.discount)/parseInt(100)) * parseInt(price);
-                discountAmount = (discountAmount <= promocode.allowed_maximum_discount) ? discountAmount: promocode.allowed_maximum_discount; 
+                if(promocode.allowed_maximum_discount !== null) {
+                  discountAmount = (discountAmount <= promocode.allowed_maximum_discount) ? discountAmount: promocode.allowed_maximum_discount; 
+                }
+                
                 let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
 
                 return ctx.send({
