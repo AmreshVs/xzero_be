@@ -411,10 +411,17 @@ const EditViewDataManagerProvider = ({
       }
 
       emitEvent(isCreatingEntry ? 'willCreateEntry' : 'willEditEntry');
+      
       if (currentContentTypeLayout.apiID === 'vouchers') { 
           var voucherDetails = await request('/vouchers/'+cleanedData.id, {
             method: 'GET'
           });
+      }
+
+      if (currentContentTypeLayout.apiID === 'send-sms') { 
+        var smsDetails = await request('/send-sms/'+cleanedData.id, {
+          method: 'GET'
+        });
       }
 
       try {
@@ -510,6 +517,27 @@ const EditViewDataManagerProvider = ({
           } 
         }
         //update voucher status end here
+
+        //function will send sms on strapi admin
+        if (currentContentTypeLayout.apiID === 'send-sms') { 
+          if(smsDetails.status !== true  && (cleanedData.status == true)) {
+            var send = await request('/SendBulkSms', {
+              method: 'POST',
+              headers: {},
+              body: {
+                id: cleanedData.id
+              },
+            });
+            
+            if(send === true) {
+              console.log("sms sent");
+            } else {
+              console.log("sms send failed, something went wrong");
+            }
+          }
+        }
+        //end sms send function
+
 
         //update the withdrawal status on change on strapi admin 
         if (currentContentTypeLayout.apiID === 'withdrawal-history') {   

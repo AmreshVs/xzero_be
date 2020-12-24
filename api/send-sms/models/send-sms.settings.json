@@ -28,7 +28,8 @@
       "type": "enumeration",
       "enum": [
         "English",
-        "Arabic"
+        "Arabic",
+        "User_language"
       ],
       "default": "English"
     },

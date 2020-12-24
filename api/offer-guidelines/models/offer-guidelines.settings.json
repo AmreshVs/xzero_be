@@ -1,0 +1,19 @@
+{
+  "kind": "singleType",
+  "collectionName": "offer_guidelines",
+  "info": {
+    "name": "Offer guidelines"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "text_en": {
+      "type": "string"
+    },
+    "text_ar": {
+      "type": "string"
+    }
+  }
+}

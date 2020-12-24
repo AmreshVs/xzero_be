@@ -1,18 +1,19 @@
 {
   "paths": {
-    "/sms": {
+    "/offer-guidelines": {
       "get": {
         "deprecated": false,
-        "description": "Find all the sms's records",
+        "description": "Find all the offer-guidelines's records",
         "responses": {
           "200": {
-            "description": "Retrieve sms document(s)",
+            "description": "Retrieve offer-guidelines document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Sms"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Sms"
+          "Offer-guidelines"
         ],
         "parameters": [
           {
@@ -194,14 +195,18 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single sms record",
+        "description": "Update a single offer-guidelines record",
         "responses": {
           "200": {
-            "description": "Retrieve sms document(s)",
+            "description": "Retrieve offer-guidelines document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Sms"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -239,7 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "Sms"
+          "Offer-guidelines"
         ],
         "requestBody": {
           "description": "",
@@ -247,7 +252,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewSms"
+                "$ref": "#/components/schemas/NewOffer-guidelines"
               }
             }
           }
@@ -256,10 +261,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single sms record",
+        "description": "Delete a single offer-guidelines record",
         "responses": {
           "200": {
-            "description": "deletes a single sms based on the ID supplied",
+            "description": "deletes a single offer-guidelines based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -302,7 +307,7 @@
         },
         "summary": "",
         "tags": [
-          "Sms"
+          "Offer-guidelines"
         ],
         "parameters": []
       }
@@ -310,7 +315,7 @@
   },
   "components": {
     "schemas": {
-      "Sms": {
+      "Offer-guidelines": {
         "required": [
           "id"
         ],
@@ -318,21 +323,11 @@
           "id": {
             "type": "string"
           },
-          "otp_msg_en": {
+          "text_en": {
             "type": "string"
           },
-          "otp_msg_ar": {
+          "text_ar": {
             "type": "string"
-          },
-          "expiry_seconds": {
-            "type": "integer"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "total_sms_sent": {
-            "type": "integer",
-            "default": 0
           },
           "created_by": {
             "required": [
@@ -424,23 +419,13 @@
           }
         }
       },
-      "NewSms": {
+      "NewOffer-guidelines": {
         "properties": {
-          "otp_msg_en": {
+          "text_en": {
             "type": "string"
           },
-          "otp_msg_ar": {
+          "text_ar": {
             "type": "string"
-          },
-          "expiry_seconds": {
-            "type": "integer"
-          },
-          "status": {
-            "type": "boolean"
-          },
-          "total_sms_sent": {
-            "type": "integer",
-            "default": 0
           },
           "created_by": {
             "type": "string"
@@ -452,9 +437,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Sms"
-    }
-  ]
+  "tags": []
 }

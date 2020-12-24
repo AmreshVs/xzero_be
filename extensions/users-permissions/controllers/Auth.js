@@ -64,6 +64,9 @@ module.exports = {
         
         if(sent) {
           sentStatus = true;
+          await strapi.query('sms').update({ id: smsInfo.id }, {
+            total_sms_sent: parseInt(smsInfo.total_sms_sent)+1
+          });
         }
 
       } else {

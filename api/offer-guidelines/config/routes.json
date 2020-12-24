@@ -1,0 +1,28 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/offer-guidelines",
+      "handler": "offer-guidelines.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/offer-guidelines",
+      "handler": "offer-guidelines.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/offer-guidelines",
+      "handler": "offer-guidelines.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

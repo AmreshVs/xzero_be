@@ -20,6 +20,10 @@
     },
     "status": {
       "type": "boolean"
+    },
+    "total_sms_sent": {
+      "type": "integer",
+      "default": 0
     }
   }
 }
