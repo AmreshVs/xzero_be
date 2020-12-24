@@ -50,12 +50,21 @@ module.exports = {
 
    },
 
-  async SendMessage(mobileNumber, msg, unicode = false)
+  async SendMessage(mobileNumber, msg, unicode = false, senderId = null)
   {
    let type = "";
    if(unicode === true ) {
      type = "&type=unicode";
    }
+
+   if(senderId !== null ) {
+    if(senderId.toLowerCase() === "promotional") {
+      from = 'AD-XzeroApp';
+    } else if(senderId.toLowerCase() === "transactional") {
+      from = 'XzeroApp';
+    }
+   }
+
 
    var fieldstring = "username="+username+"&password="+password+"&api_key="+apikey+"&FROM="+from+"&to="+mobileNumber+"&text="+msg+type;
    var send = false;

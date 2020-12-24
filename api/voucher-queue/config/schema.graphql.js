@@ -13,7 +13,7 @@ function checkBadRequest(contextBody) {
 module.exports = {
 
   definition: ` 
-      type BuyNow {
+      type Queue {
           queueCount: Int,
           queuedData: VoucherQueue,
           disabled: Boolean,
@@ -29,7 +29,7 @@ module.exports = {
       , 
 
   mutation: `
-    BuyNowQueue(user: Int!, voucher: Int!): BuyNow!,
+  VoucherQueue(user: Int!, voucher: Int!): Queue!,
     
   `,
 
@@ -37,14 +37,14 @@ module.exports = {
 
   resolver: {
     Mutation: {
-      BuyNowQueue: {
+      VoucherQueue: {
           description: 'function for to buy vouchers queuing',
           policies: [],
           resolverOf: 'application::voucher-queue.voucher-queue.create',
           resolver: async (obj, options, {context}) => {
             
             context.request.body = _.toPlainObject(options);
-            await strapi.api['voucher-queue'].controllers['voucher-queue'].BuyNowQueue(context);
+            await strapi.api['voucher-queue'].controllers['voucher-queue'].VoucherQueue(context);
             let output = context.body.toJSON ? context.body.toJSON() : context.body;
             
             checkBadRequest(output);

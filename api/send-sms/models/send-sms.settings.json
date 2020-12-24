@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "send_sms",
+  "info": {
+    "name": "Send SMS"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "text_en": {
+      "type": "string"
+    },
+    "users": {
+      "plugin": "users-permissions",
+      "collection": "user"
+    },
+    "type": {
+      "type": "enumeration",
+      "enum": [
+        "promotional",
+        "transactional"
+      ],
+      "default": "promotional"
+    },
+    "lang": {
+      "type": "enumeration",
+      "enum": [
+        "English",
+        "Arabic"
+      ],
+      "default": "English"
+    },
+    "status": {
+      "type": "boolean"
+    },
+    "text_ar": {
+      "type": "string"
+    }
+  }
+}

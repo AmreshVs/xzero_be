@@ -12,7 +12,7 @@ const formatError = error => [
 ]; 
 
 module.exports = {
-  async BuyNowQueue(ctx) {
+  async VoucherQueue(ctx) {
     let params = ctx.request.body;
     let user = params.user;
     let voucher = params.voucher; 
