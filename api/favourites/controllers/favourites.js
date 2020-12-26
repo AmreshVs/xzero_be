@@ -25,6 +25,7 @@ module.exports = {
     if (userFavourites !== null && userFavourites.includes(',')) {
         userFavourites.replace(' ', '');
         newFavourites = userFavourites.split(',');
+        
       }
   
       if (userFavourites !== null && userFavourites !== '' && !userFavourites.includes(',')) {
@@ -61,5 +62,15 @@ module.exports = {
       return {
         status
       }
-    }   
+    },
+
+    async ClearAllFavourites(user) {
+      let clearFavourite = await strapi.query("favourites").update({ user: user, status: true }, { favourites: null}); 
+      if(clearFavourite) {
+        return true;
+      }
+      return false;
+    }
+
+
 };
