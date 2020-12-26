@@ -6,7 +6,7 @@
  */
 
 module.exports = {
-    async AddAsFavourite(user, offer, center, plan) {
+    async AddAsFavourite(user, offer, center) {
       let FavouriteStatus = true;
       if(user === null && offer === null && center === null) {
           return false;
@@ -50,11 +50,11 @@ module.exports = {
 
       if(favouriteExist !== null) {
         await strapi.query('favourites').update({ user: user, center: center }, {
-            favourites: newFavourites.length > 1 ? newFavourites.join(',') : (pop === false || newFavourites.length === 1) ? newFavourites[0] : null, membership_plan: plan, status: FavouriteStatus
+            favourites: newFavourites.length > 1 ? newFavourites.join(',') : (pop === false || newFavourites.length === 1) ? newFavourites[0] : null, status: FavouriteStatus
           });
           status = true;
       } else {
-        await strapi.query('favourites').create({ user: user, center: center, membership_plan: plan, favourites: newFavourites[0], status: FavouriteStatus });
+        await strapi.query('favourites').create({ user: user, center: center, favourites: newFavourites[0], status: FavouriteStatus });
           status = true;
       }
       
