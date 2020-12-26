@@ -1,10 +1,26 @@
 module.exports = {
+  definition: `
+    type OfferWithFavourite {
+      id: Int
+      title_en: String
+      title_ar: String
+      discount: Int
+      desc_en: String
+      desc_ar: String
+      status: Boolean!
+      actual_price: Int
+      discounted_price: Int
+      featured_img: UploadFile
+      center: Centers
+      is_favourite: Boolean
+    }
+  `,
   mutation: `
     addFavourite(user_id: Int!, offer_id: Int!): JSON!,
     updateLocation: JSON
   `,
   query: `
-    offerListWithFavourites(where: JSON, user_id: Int): JSON!,
+    offerListWithFavourites(where: JSON, user_id: Int): [OfferWithFavourite],
     offerIsFavourite(id: Int, user_id: Int): Boolean!,
     favouritesByUser(user_id: Int!): [Offers]
   `,

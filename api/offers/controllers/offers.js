@@ -11,24 +11,20 @@ const _ = require('lodash');
 
 module.exports = {
 
-  async offerListWithFavourites(condition, user_id = 1) {
+  async offerListWithFavourites(condition, user_id = null) {
     let offers = await strapi.query('offers').find(condition);
-
-    return Promise.all(offers.map(async ({ id, title_en, title_ar, desc_en, desc_ar, featured_img, discount }) => {
-      let user = await strapi.query('user', 'users-permissions').findOne({ id: user_id }) || { favourites: "" };
+    
+    return Promise.all(offers.map(async (offer) => {
+      let user = await strapi.query('favourites').findOne({ user: user_id  });
       let favourites = user.favourites || "";
-      let is_favourite = favourites.includes(id);
+      
+      let is_favourite = favourites.includes(offer.id);
 
       return Promise.resolve({
-        id,
-        title_en,
-        title_ar,
-        desc_en,
-        desc_ar,
-        featured_img: { url: featured_img.url },
-        discount,
+        ...offer,
         is_favourite
       });
+
     }));
   },
 
