@@ -1,7 +1,7 @@
 
 module.exports = {
     mutation: 
-    `AddAsFavourite(user: Int!, offer: Int!, center: Int!): JSON!
+    `AddAsFavourite(user: Int!, offer: Int!, center: Int): JSON!
      ClearAllFavourites(user:Int): Boolean
     `,
     resolver: {

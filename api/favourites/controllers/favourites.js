@@ -6,11 +6,17 @@
  */
 
 module.exports = {
-    async AddAsFavourite(user, offer, center) {
+    async AddAsFavourite(user, offer, center = null) {
       let FavouriteStatus = true;
       if(user === null && offer === null && center === null) {
           return false;
       }
+
+      if(center === null) {
+        let offerDetails = await strapi.query("offers").findOne({ id: offer, status: true });  
+        center = offerDetails.center.id;
+      }
+
      //checking user is exist or not
      let favouriteExist = await strapi.query("favourites").findOne({ user: user, center: center, status: true }); 
      let userFavourites  = '';
