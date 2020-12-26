@@ -41,8 +41,13 @@ module.exports = {
   },
 
   async favouritesByUser(user_id) {
-    let user = await strapi.query('user', 'users-permissions').findOne({ id: user_id }) || { favourites: "" };
-    let favourites = user.favourites.replace(' ', '').split(',') || [];
+    let user = await strapi.query('favourites').findOne({ user: user_id }) ;
+    if(user !== null) {
+      var favourites = user.favourites.replace(' ', '').split(',');
+    } else {
+      var favourites = [];
+    }
+    
     let offers = await strapi.query('offers').find({ id_in: favourites })
 
     return offers;
