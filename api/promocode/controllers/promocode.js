@@ -198,8 +198,15 @@ module.exports = {
             let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, status: true });
           
               if( userUsedHistory < affiliate.allowed_usage_per_user && usedHistory < affiliate.limit ) {
+
+                // let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
+                // discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+
                 let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
-                discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+                if(affiliate.maximum_allowed_discount !== null) {
+                  discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+                }
+                
                 let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
 
                 return ctx.send({
