@@ -21,7 +21,7 @@ module.exports = {
   `,
   query: `
     offerListWithFavourites(where: JSON, user_id: Int): [OfferWithFavourite],
-    offerIsFavourite(id: Int, user_id: Int): Boolean!,
+    offerIsFavourite(offer_id: Int, user_id: Int): Boolean!,
     favouritesByUser(user_id: Int!): [Offers]
   `,
   resolver: {
@@ -37,7 +37,7 @@ module.exports = {
         description: 'Return the If the offer is favourite or not',
         resolverOf: 'application::offers.offers.find',
         resolver: async (obj, options, ctx) => {
-          return await strapi.api.offers.controllers.offers.offerIsFavourite(options.id, options.user_id);
+          return await strapi.api.offers.controllers.offers.offerIsFavourite(options.offer_id, options.user_id);
         },
       },
       favouritesByUser: {
