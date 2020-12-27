@@ -448,10 +448,25 @@ const EditViewDataManagerProvider = ({
 
         // Send Notifications
         if (currentContentTypeLayout.apiID === 'notifications') {
-          let users = await request('/users', {
-            method: 'GET'
-          });
 
+          var confirmBox = confirm("Press OK to send notification");
+          if(cleanedData.status == true && confirmBox === true) {
+
+          if(cleanedData.users.length === 0) {
+            var users = await request('/users', {
+              method: 'GET'
+            });
+            
+          } else {
+            const axios = require('axios');
+            let res = await axios.post('/SendNotificationToSelected', {
+              userIds: cleanedData.users
+              
+            });
+
+            var users = res.data.users;
+          }
+          
           let expoTokens = [];
           await users.filter((user) => {
             if ((user.notification_token !== null) && (user.notification_token !== '')) {
@@ -482,6 +497,7 @@ const EditViewDataManagerProvider = ({
           catch (e) {
             console.log('Notification Push', e)
           }
+        }
         }
 
         //update the voucher status upon draw status change on strapi admin 

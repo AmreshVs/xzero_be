@@ -52,6 +52,14 @@
       "method": "POST",
       "path": "/log",
       "handler": "notifications.log"
+    },
+
+    {
+      "method": "POST",
+      "path": "/SendNotificationToSelected",
+      "handler": "notifications.SendNotificationToSelected"
+      
     }
+
   ]
 }

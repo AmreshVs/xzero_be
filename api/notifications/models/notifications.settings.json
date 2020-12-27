@@ -27,6 +27,10 @@
     "status": {
       "type": "boolean",
       "default": true
+    },
+    "users": {
+      "plugin": "users-permissions",
+      "collection": "user"
     }
   }
 }
