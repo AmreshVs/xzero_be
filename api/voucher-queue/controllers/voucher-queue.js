@@ -19,7 +19,7 @@ module.exports = {
     let queue = { user: user, voucher:voucher, user_status : "pending" };
     let voucherDetails = await strapi.query('vouchers').findOne({ id:voucher, status: true });
     let voucherQueueCount = await strapi.query('voucher-queue').count({ user_status: "pending", status: true });
-    
+
       if( voucherQueueCount > voucherDetails.limit ) {
         
         var disabled = true;

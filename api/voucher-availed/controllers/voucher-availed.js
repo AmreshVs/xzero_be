@@ -39,8 +39,7 @@ async function sendMail(user_id) {
 }
 
 
-
-
+//apply code 
 async function ApplyCode(receiver, price, code, voucher) {
   let userExistCount = await strapi.query("user", "users-permissions").count({ id: receiver });
   
@@ -59,7 +58,7 @@ async function ApplyCode(receiver, price, code, voucher) {
   let referProgram = await strapi.query("referral-program").findOne({ status: true });    
   let promocode = await strapi.query("promocode").findOne({ promocode: referralCode, status: true });
   
-  //console.log(userCode.referral_code); return false;
+  
   if( referProgram !== null && userCode!==null && userCode.referral_code !== null && userCode.id !== parseInt(receiver)) {
       let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
       let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, from: 'referral' , status: true });
@@ -137,7 +136,9 @@ async function ApplyCode(receiver, price, code, voucher) {
       
           if( userUsedHistory < affiliate.allowed_usage_per_user && usedHistory < affiliate.limit ) {
             let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
-            discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+            if(affiliate.maximum_allowed_discount !== null ) {
+              discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
+            }
             let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
 
             if(affiliate.fixed_amount_status === true ) {
@@ -174,8 +175,13 @@ async function ApplyCode(receiver, price, code, voucher) {
         if(new Date().toString() >= start_date && end_date >= start_date || (promocode.start_date ===null || promocode.end_date === null) )  {
           if( getPromoCodeUsedCountByUser < promocode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers < promocode.limit ) {
             let discountAmount = (parseInt(promocode.discount)/parseInt(100)) * parseInt(price);
-            discountAmount = (discountAmount <= promocode.allowed_maximum_discount) ? discountAmount: promocode.allowed_maximum_discount; 
+            
+            if(promocode.allowed_maximum_discount !== null ) {
+              discountAmount = (discountAmount <= promocode.allowed_maximum_discount) ? discountAmount: promocode.allowed_maximum_discount; 
+            } 
+          
             let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+            
             return { discount: promocode.discount, discountedPrice: discountedPrice, promocodeId: promocode.id,  from: 'promocode', discountYouGet: Math.floor(discountAmount), applied: true, CodeAapplied: referralCode }
           } else {
             if( promocode.limit <= 0 || promocode.maximum_usage_per_user <= 0 ) {
@@ -208,7 +214,6 @@ module.exports = {
   //function will add voucher to bought list
   async BuyVoucher(user_id, voucher_id, code = null) {
     let voucher = await strapi.query("vouchers").findOne({ id: voucher_id, status: true });
-    //console.log(voucher); return false;
     let membership = await strapi.query("membership").count({ user: user_id });
     
     if(voucher != null && voucher.total_bought >=  voucher.limit) {
@@ -218,7 +223,7 @@ module.exports = {
         return { disabled: true, bought: 'Limit is reached' }
 		}
     
-    if(voucher.enable_for_non_members === true) {
+    if(voucher.enable_for_non_members === true && membership === 0) {
       var voucherCost = voucher.cost_for_non_members;
     } else {
       var voucherCost = voucher.cost;
@@ -235,20 +240,21 @@ module.exports = {
     }
     
     
-    if( code === null && voucher.enable_for_non_members === true ) {
-      var paidAmount = voucher.cost_for_non_members;
-    } else if(code === null ) {
-      var paidAmount = voucher.cost;
-    } else {
-      var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
+   if(afterCodeApply.applied === true) {
+      var cost = voucherCost;
+      var paidAmount = afterCodeApply.discountedPrice;
+    } else if(afterCodeApply.applied === false || code === null ) {
+      var cost = voucherCost;
+      var paidAmount = voucherCost;
     }
 
-    
+      
+
     let dataToSave = {
       user: user_id,
       voucher: voucher.id,
       status: true,
-      cost: voucher.cost,
+      cost: cost,
       promocode_applied: afterCodeApply.applied === true ? code: null, 
       paid_amount: paidAmount, 
       discount: afterCodeApply.discount ? afterCodeApply.discount: null,
@@ -275,7 +281,7 @@ module.exports = {
               paid_amount: afterCodeApply.discountedPrice,
               discount: afterCodeApply.discount,
               applied_for: 'voucher',
-              cost:  voucher.cost,
+              cost: cost,
               inserted_id: voucher_availed.id,
               status: true
             };
@@ -300,7 +306,7 @@ module.exports = {
               paid_amount: afterCodeApply.discountedPrice,
               discount: afterCodeApply.discount,
               applied_for: 'voucher',
-              cost: voucher.cost,
+              cost: cost,
               affiliate: afterCodeApply.affiliateId ?  afterCodeApply.affiliateId: null,
               voucher_availed: voucher.id,
               from: afterCodeApply.from,
@@ -363,7 +369,9 @@ module.exports = {
   },
 
   async NotifyDrawDetails(ctx) {
-    
+
+    // let vou = process.env.applied_for_membership ? process.env.applied_for_membership: "applied for membership";
+    // console.log(vou); return false;
     let params = ctx.request.body;
     
     let users = await strapi.query("user", "users-permissions").find({ _limit: -1 });

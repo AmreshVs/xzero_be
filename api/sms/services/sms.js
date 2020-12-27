@@ -65,7 +65,6 @@ module.exports = {
     }
    }
 
-
    var fieldstring = "username="+username+"&password="+password+"&api_key="+apikey+"&FROM="+from+"&to="+mobileNumber+"&text="+msg+type;
    var send = false;
    await axios({
