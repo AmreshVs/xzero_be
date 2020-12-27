@@ -10,7 +10,7 @@
   },
   "attributes": {
     "text_en": {
-      "type": "string"
+      "type": "text"
     },
     "users": {
       "plugin": "users-permissions",
@@ -37,7 +37,7 @@
       "type": "boolean"
     },
     "text_ar": {
-      "type": "string"
+      "type": "text"
     }
   }
 }

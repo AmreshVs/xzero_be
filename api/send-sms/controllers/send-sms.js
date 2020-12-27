@@ -41,6 +41,8 @@ module.exports = {
           }
         }
 
+        
+
         let send = await strapi.services.sms.SendMessage(user.mobile_number, msg, unicode, type);
         if(send === true) {
           status = true;
