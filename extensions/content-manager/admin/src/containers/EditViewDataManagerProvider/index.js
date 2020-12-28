@@ -449,56 +449,82 @@ const EditViewDataManagerProvider = ({
         // Send Notifications
         if (currentContentTypeLayout.apiID === 'notifications') {
 
-          var confirmBox = confirm("Press OK to send notification");
-          if(cleanedData.status == true && confirmBox === true) {
-
-          if(cleanedData.users.length === 0) {
-            var users = await request('/users', {
-              method: 'GET'
-            });
-            
-          } else {
-            const axios = require('axios');
-            let res = await axios.post('/SendNotificationToSelected', {
-              userIds: cleanedData.users
-              
-            });
-
-            var users = res.data.users;
-          }
           
-          let expoTokens = [];
-          await users.filter((user) => {
-            if ((user.notification_token !== null) && (user.notification_token !== '')) {
-              expoTokens.push(user.notification_token);
-              return true;
-            }
-            return false;
-          })
+          if(cleanedData.status === true) {
+            let confirmBox = confirm("Press OK to send notification");
+            if(confirmBox === true) {
 
-          try {
-            await fetch('https://exp.host/--/api/v2/push/send', {
-              method: 'POST',
-              mode: 'no-cors',
-              headers: {
-                'accept': 'application/json',
-                'accept-encoding': 'gzip, deflate',
-                'content-type': 'application/json',
-              },
-              body: JSON.stringify({
-                to: expoTokens,
-                title: cleanedData.title_en,
-                body: cleanedData.desc_en,
-                sound: 'default',
-                priority: 'high'
-              })
-            });
-          }
-          catch (e) {
-            console.log('Notification Push', e)
-          }
-        }
-        }
+            if(cleanedData.users.length === 0) {
+              var users = await request('/users', {
+                method: 'GET'
+              });
+              
+            } else {
+              const axios = require('axios');
+              let res = await axios.post('/SendNotificationToSelected', {
+                userIds: cleanedData.users
+                
+              });
+
+              var users = res.data.users;
+            }
+
+
+          
+          let title  = cleanedData.title_en
+          let desc  = cleanedData.desc_en
+          
+          await Promise.all(users.map(async (user) => {
+            if ((user.notification_token !== null) && (user.notification_token !== '')) {
+              //expoTokens.push(user.notification_token);
+              //return true;
+              
+              if(typeof cleanedData.language !== 'undefined') {
+              if(cleanedData.language.toLowerCase() === "arabic") {
+                title  = cleanedData.title_ar
+                desc  = cleanedData.desc_ar
+              } else if(cleanedData.language.toLowerCase() === "english") {
+                title  = cleanedData.title_en
+                desc  = cleanedData.desc_en
+              } else if(cleanedData.language.toLowerCase() === "use_user_language") {
+                if(user.language.toLowerCase() === "arabic") {
+                    title  = cleanedData.title_ar;
+                    desc  = cleanedData.desc_ar;
+                } else if(user.language.toLowerCase() === "english") {
+                    title  = cleanedData.title_en;
+                    desc  = cleanedData.desc_en;
+                } else {
+                  title  = cleanedData.title_en;
+                  desc  = cleanedData.desc_en;
+                }
+              }
+            }
+              try {
+                await fetch('https://exp.host/--/api/v2/push/send', {
+                  method: 'POST',
+                  mode: 'no-cors',
+                  headers: {
+                    'accept': 'application/json',
+                    'accept-encoding': 'gzip, deflate',
+                    'content-type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    to: user.notification_token,
+                    title: title,
+                    body: desc,
+                    sound: 'default',
+                    priority: 'high'
+                  })
+                });
+              }
+              catch (e) {
+                console.log('Notification Push', e)
+              }
+            }
+          }));
+      }
+    }
+    }
 
         //update the voucher status upon draw status change on strapi admin 
         if (currentContentTypeLayout.apiID === 'vouchers') { 

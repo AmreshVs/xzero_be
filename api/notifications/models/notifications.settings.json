@@ -31,6 +31,14 @@
     "users": {
       "plugin": "users-permissions",
       "collection": "user"
+    },
+    "language": {
+      "type": "enumeration",
+      "enum": [
+        "Arabic",
+        "English",
+        "Use_user_language"
+      ]
     }
   }
 }

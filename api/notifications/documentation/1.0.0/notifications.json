@@ -779,6 +779,14 @@
               }
             }
           },
+          "language": {
+            "type": "string",
+            "enum": [
+              "Arabic",
+              "English",
+              "Use_user_language"
+            ]
+          },
           "created_by": {
             "required": [
               "id",
@@ -892,6 +900,14 @@
           },
           "users": {
             "type": "string"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "Arabic",
+              "English",
+              "Use_user_language"
+            ]
           },
           "created_by": {
             "type": "string"
