@@ -22,6 +22,9 @@
     },
     "user_status": {
       "type": "string"
+    },
+    "is_notified": {
+      "type": "boolean"
     }
   }
 }

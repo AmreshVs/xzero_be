@@ -708,6 +708,9 @@
           "user_status": {
             "type": "string"
           },
+          "is_notified": {
+            "type": "boolean"
+          },
           "created_by": {
             "required": [
               "id",
@@ -812,6 +815,9 @@
           },
           "user_status": {
             "type": "string"
+          },
+          "is_notified": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"

@@ -358,6 +358,9 @@
             "type": "boolean",
             "default": true
           },
+          "voucher_queue_delete_after": {
+            "type": "integer"
+          },
           "created_by": {
             "required": [
               "id",
@@ -487,6 +490,9 @@
           "payment_logging": {
             "type": "boolean",
             "default": true
+          },
+          "voucher_queue_delete_after": {
+            "type": "integer"
           },
           "created_by": {
             "type": "string"

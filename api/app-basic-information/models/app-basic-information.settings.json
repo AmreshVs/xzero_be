@@ -47,6 +47,9 @@
     "payment_logging": {
       "type": "boolean",
       "default": true
+    },
+    "voucher_queue_delete_after": {
+      "type": "integer"
     }
   }
 }
