@@ -246,6 +246,7 @@ module.exports = {
 
 
   async createNewUser(ctx, params) {
+ 
     const pluginStore = await strapi.store({
       environment: '',
       type: 'plugin',
@@ -314,6 +315,16 @@ module.exports = {
     const user = await strapi.query('user', 'users-permissions').findOne({
       email: params.email,
     });
+
+    //clear the non-user token upon being a user
+    const nonuser = await strapi.query('non-users').findOne({
+      notification_token: params.notification_token
+    });    
+    if(nonuser !== null) {
+      await strapi.query('non-users').delete({
+        id: nonuser.id
+      });
+    }
 
 
     if (user && user.provider === params.provider) {

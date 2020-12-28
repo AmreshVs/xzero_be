@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "non_users",
+  "info": {
+    "name": "Non users"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "notification_token": {
+      "type": "text"
+    },
+    "status": {
+      "type": "boolean"
+    },
+    "language": {
+      "type": "string"
+    }
+  }
+}
