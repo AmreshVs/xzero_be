@@ -13,15 +13,16 @@ const formatError = error => [
 
 module.exports = {
   async AddNotificationToken(ctx) {
+
     let params = ctx.request.body;
     let addToken; 
-    if(params) {
+    if(params) {  
       //let params = sanitizeEntity(params.token, 'string');
       const sanitizedParams = sanitizeEntity(params.toJSON ? params.toJSON() : params, {
         model: strapi.query('non-users').model,
       });
 
-       addToken = await strapi.query("non-users").create({ notification_token: sanitizedParams.token, lang: sanitizedParams.lang })
+       addToken = await strapi.query("non-users").create({ notification_token: sanitizedParams.token, lang: sanitizedParams.lang, status: true })
     } else {
       return ctx.badRequest(
         null,
