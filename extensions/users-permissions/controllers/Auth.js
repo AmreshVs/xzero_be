@@ -22,6 +22,10 @@ const formatError = error => [
 module.exports = {
 
   async SendSms(ctx) {
+  
+
+    const phoneRegExpINTL =  /^(\+\d{1,3}[- ]?)?\d{10}$/;
+
     var sentStatus = false;
     let params = ctx.request.body;
 
@@ -30,6 +34,28 @@ module.exports = {
     let lang = params.lang;
 
     let smsInfo = await strapi.query('sms').findOne({ status: true });
+
+    if(user === 0 || user === null) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'otp.authenticate',
+          message: 'No record found',
+        })
+      ); 
+    } else if(!String(mobile).match(phoneRegExpINTL)) {
+      return ctx.badRequest(
+        null,
+        formatError({
+          id: 'otp.authenticate',
+          message: 'Mobile number is not valid',
+        })
+      ); 
+
+    } 
+
+    
+
     if (smsInfo.status == true) {
 
       let type = "";
@@ -67,6 +93,8 @@ module.exports = {
           await strapi.query('sms').update({ id: smsInfo.id }, {
             total_sms_sent: parseInt(smsInfo.total_sms_sent)+1
           });
+        } else {
+          let updatedUser = await strapi.query('user', 'users-permissions').update({ id: user }, { otp: null, otp_generated_at: null });
         }
 
       } else {
@@ -219,12 +247,18 @@ module.exports = {
 
   },
 
-  async UpdateUserReferralCode() {
+  async UpdateUserReferralCode(user = null) {
     let userRef = await strapi.query('user', 'users-permissions').find({ referral_code_ne: true });
-    let userAllwithNoRefercode = await strapi.query('user', 'users-permissions').find({ referral_code_null: true });
+    
+    if(user === null || user === 0) {
+      var condition =  { referral_code_eq: null || '' };
+    } else {
+      var condition =  { id: user, referral_code_eq: '' || null };
+    }
+    
+    let userAllwithNoRefercode = await strapi.query('user', 'users-permissions').find(condition);
     let filterReferralCode = userRef.map(user => user.referral_code);
-    //console.log(userAllwithNoRefercode); return false;
-
+    
     if (userAllwithNoRefercode.length > 0) {
       userAllwithNoRefercode.forEach(user => {
         let referral_code = Math.random().toString(36).substr(2, 6);
@@ -232,7 +266,7 @@ module.exports = {
           var updatedUser = strapi.query('user', 'users-permissions').update({ id: user.id }, { referral_code: referral_code.toUpperCase() });
           //continue;
         } else {
-          let referral_code = Math.random().toString(36).substr(2, 6);
+          referral_code = Math.random().toString(36).substr(2, 6);
         }
       });
     } else {

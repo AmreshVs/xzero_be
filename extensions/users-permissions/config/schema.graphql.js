@@ -37,7 +37,7 @@ module.exports = {
   mutation: `
     createNewUser(input: UserInput!): CreateUserPayload!
     userlogin(input: UsersPermissionsLoginInput!): CreateUserPayload!
-    UpdateUserReferralCode: JSON
+    UpdateUserReferralCode(user: Int): JSON
     SendSms(user: Int!, mobile: String, lang: String, email: Boolean): SmsInfo
   `,
 
@@ -75,7 +75,7 @@ module.exports = {
         description: "update the user referral code",
         resolverOf: 'plugins::users-permissions.auth.callback',
         resolver: async (obj, options, { context }) => {
-          return await strapi.plugins['users-permissions'].controllers.auth.UpdateUserReferralCode();
+          return await strapi.plugins['users-permissions'].controllers.auth.UpdateUserReferralCode(options.user );
         }
       },
 
