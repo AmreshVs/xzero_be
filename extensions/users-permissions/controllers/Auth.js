@@ -24,7 +24,7 @@ module.exports = {
   async SendSms(ctx) {
   
 
-    const phoneRegExpINTL =  /^(\+\d{1,3}[- ]?)?\d{10}$/;
+    const phoneRegExpINTL =  /^(\+?\d{1,3}[- ]?)?\d{10}$/;
 
     var sentStatus = false;
     let params = ctx.request.body;
