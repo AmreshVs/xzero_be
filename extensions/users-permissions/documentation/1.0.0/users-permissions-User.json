@@ -1420,6 +1420,9 @@
           "otp_generated_at": {
             "type": "string"
           },
+          "device_id": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -1598,6 +1601,9 @@
             "type": "string"
           },
           "otp_generated_at": {
+            "type": "string"
+          },
+          "device_id": {
             "type": "string"
           },
           "created_by": {

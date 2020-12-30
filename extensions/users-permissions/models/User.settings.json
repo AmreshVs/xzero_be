@@ -86,8 +86,8 @@
       "via": "user"
     },
     "membership": {
-      "via": "user",
-      "model": "membership"
+      "model": "membership",
+      "via": "user"
     },
     "referral_code": {
       "type": "string"
@@ -103,6 +103,9 @@
       "type": "string"
     },
     "otp_generated_at": {
+      "type": "string"
+    },
+    "device_id": {
       "type": "string"
     }
   }

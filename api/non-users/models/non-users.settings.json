@@ -17,6 +17,15 @@
     },
     "language": {
       "type": "string"
+    },
+    "app_version": {
+      "type": "string"
+    },
+    "platform": {
+      "type": "string"
+    },
+    "device_id": {
+      "type": "string"
     }
   }
 }

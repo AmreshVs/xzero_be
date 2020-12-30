@@ -59,7 +59,15 @@
       "path": "/SendNotificationToSelected",
       "handler": "notifications.SendNotificationToSelected"
       
+    },
+
+    {
+      "method": "POST",
+      "path": "/SendNotificationToNonUsers",
+      "handler": "notifications.SendNotificationToNonUsers"
+      
     }
+    
 
   ]
 }

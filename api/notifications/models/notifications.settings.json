@@ -39,6 +39,14 @@
         "English",
         "Use_user_language"
       ]
+    },
+    "send_to": {
+      "type": "enumeration",
+      "enum": [
+        "Users",
+        "Non_users"
+      ],
+      "default": "Users"
     }
   }
 }

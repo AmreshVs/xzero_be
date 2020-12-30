@@ -19,5 +19,15 @@ module.exports = {
       return ctx.send ({
         users
       })
-  },
+    },
+
+    SendNotificationToNonUsers: async (ctx) => {
+      
+      let users = await strapi.query('non-users').find({ status: true,  notification_token_ne: null||'' });
+      return ctx.send ({
+        users
+      })
+    },
+
+  
 };

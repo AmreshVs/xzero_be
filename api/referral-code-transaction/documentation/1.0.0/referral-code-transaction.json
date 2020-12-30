@@ -684,6 +684,9 @@
               "otp_generated_at": {
                 "type": "string"
               },
+              "device_id": {
+                "type": "string"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -886,6 +889,9 @@
                 "type": "string"
               },
               "otp_generated_at": {
+                "type": "string"
+              },
+              "device_id": {
                 "type": "string"
               },
               "created_by": {

@@ -544,6 +544,15 @@
           "language": {
             "type": "string"
           },
+          "app_version": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "device_id": {
+            "type": "string"
+          },
           "created_by": {
             "required": [
               "id",
@@ -643,6 +652,15 @@
             "type": "boolean"
           },
           "language": {
+            "type": "string"
+          },
+          "app_version": {
+            "type": "string"
+          },
+          "platform": {
+            "type": "string"
+          },
+          "device_id": {
             "type": "string"
           },
           "created_by": {

@@ -454,11 +454,18 @@ const EditViewDataManagerProvider = ({
             let confirmBox = confirm("Press OK to send notification");
             if(confirmBox === true) {
 
-            if(cleanedData.users.length === 0) {
+            if(cleanedData.users.length === 0 && cleanedData.send_to.toLowerCase() === 'users' ) {
               var users = await request('/users', {
                 method: 'GET'
               });
               
+            } else if(cleanedData.users.length === 0 && cleanedData.send_to.toLowerCase() === 'non_users') {
+              const axios = require('axios');
+              let res = await axios.post('/SendNotificationToNonUsers', {
+
+              });
+              var users = res.data.users;
+               
             } else {
               const axios = require('axios');
               let res = await axios.post('/SendNotificationToSelected', {
@@ -467,10 +474,9 @@ const EditViewDataManagerProvider = ({
               });
 
               var users = res.data.users;
+              
             }
 
-
-          
           let title  = cleanedData.title_en
           let desc  = cleanedData.desc_en
           
