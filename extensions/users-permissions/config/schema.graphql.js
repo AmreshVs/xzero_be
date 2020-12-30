@@ -33,10 +33,18 @@ module.exports = {
       status: Boolean
       balance: Float
     }
+    input UserLoginInput {
+      identifier: String!
+      password: String!
+      provider: String = "local"
+      device_id: String
+      app_version: String
+      platform: String
+    }
   `,
   mutation: `
     createNewUser(input: UserInput!): CreateUserPayload!
-    userlogin(input: UsersPermissionsLoginInput!): CreateUserPayload!
+    userlogin(input: UserLoginInput): CreateUserPayload!
     UpdateUserReferralCode(user: Int): JSON
     SendSms(user: Int!, mobile: String, lang: String, email: Boolean): SmsInfo
   `,
