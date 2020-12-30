@@ -34,12 +34,12 @@ module.exports = {
       balance: Float
     }
     input UserLoginInput {
-      identifier: String!
-      password: String!
-      provider: String = "local"
-      device_id: String
-      app_version: String
-      platform: String
+        identifier: String!
+        password: String!
+        provider: String = "local"
+        device_id: String
+        app_version: String
+        platform: String
     }
   `,
   mutation: `

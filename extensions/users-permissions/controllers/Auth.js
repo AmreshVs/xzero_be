@@ -349,6 +349,9 @@ module.exports = {
     const user = await strapi.query('user', 'users-permissions').findOne({
       email: params.email,
     });
+    const userInfoMobile = await strapi.query('user', 'users-permissions').findOne({
+      mobile_number: params.mobile_number,
+    });
 
     //clear the non-user token upon being a user
     const nonuser = await strapi.query('non-users').findOne({
@@ -363,6 +366,12 @@ module.exports = {
 
     if (user && user.provider === params.provider) {
       createError = new Error('Email is already taken.');
+      createError.code = 400;
+      throw createError;
+    }
+
+    if (userInfoMobile && userInfoMobile.mobile_number === params.mobile_number) {
+      createError = new Error('Mobile number is already used.');
       createError.code = 400;
       throw createError;
     }
@@ -521,6 +530,9 @@ module.exports = {
         })
       );
     } else {
+
+      const userSave = await strapi.query('user', 'users-permissions').create({app_version: params.app_version, platform: params.platform, device_id: params.device_id });
+      
       ctx.send({
         jwt: strapi.plugins['users-permissions'].services.jwt.issue({
           id: user.id,
