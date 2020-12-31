@@ -460,20 +460,22 @@ const EditViewDataManagerProvider = ({
               });
               
             } else if(cleanedData.users.length === 0 && cleanedData.send_to.toLowerCase() === 'non_users') {
-              const axios = require('axios');
-              let res = await axios.post('/SendNotificationToNonUsers', {
-
+              
+              var res = await request('/SendNotificationToNonUsers', {
+                method: 'POST'
+    
               });
-              var users = res.data.users;
+
+              var users = res.users;
                
             } else {
-              const axios = require('axios');
-              let res = await axios.post('/SendNotificationToSelected', {
-                userIds: cleanedData.users
-                
+             
+              var res = await request('/SendNotificationToSelected', {
+                method: 'POST',
+                body: {userIds: cleanedData.users}
               });
 
-              var users = res.data.users;
+              var users = res.users;
               
             }
 
@@ -482,14 +484,12 @@ const EditViewDataManagerProvider = ({
           
           await Promise.all(users.map(async (user) => {
             if ((user.notification_token !== null) && (user.notification_token !== '')) {
-              //expoTokens.push(user.notification_token);
-              //return true;
               
               if(typeof cleanedData.language !== 'undefined') {
-              if(cleanedData.language.toLowerCase() === "ar") {
+              if(cleanedData.language.toLowerCase() === "arabic") {
                 title  = cleanedData.title_ar
                 desc  = cleanedData.desc_ar
-              } else if(cleanedData.language.toLowerCase() === "en") {
+              } else if(cleanedData.language.toLowerCase() === "english") {
                 title  = cleanedData.title_en
                 desc  = cleanedData.desc_en
               } else if(cleanedData.language.toLowerCase() === "use_user_language") {

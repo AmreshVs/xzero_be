@@ -25,7 +25,7 @@ module.exports = {
       let unicode = false; 
       let msg = smsContent.text_en;
       let type = smsContent.type;
-      if( smsContent.lang === "ar" ) {
+      if( smsContent.lang.toLowerCase() === "arabic" ) {
         unicode = true; 
         msg = smsContent.text_ar
       }
