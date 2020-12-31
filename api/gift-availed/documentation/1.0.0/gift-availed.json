@@ -626,6 +626,9 @@
               "device_id": {
                 "type": "string"
               },
+              "show_popup": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },
@@ -816,6 +819,9 @@
           "remarks": {
             "type": "string"
           },
+          "is_delivered": {
+            "type": "boolean"
+          },
           "created_by": {
             "required": [
               "id",
@@ -934,6 +940,9 @@
           },
           "remarks": {
             "type": "string"
+          },
+          "is_delivered": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"

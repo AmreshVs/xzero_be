@@ -47,6 +47,9 @@
     },
     "remarks": {
       "type": "string"
+    },
+    "is_delivered": {
+      "type": "boolean"
     }
   }
 }

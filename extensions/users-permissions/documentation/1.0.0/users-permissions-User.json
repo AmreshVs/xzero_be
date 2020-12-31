@@ -1423,6 +1423,9 @@
           "device_id": {
             "type": "string"
           },
+          "show_popup": {
+            "type": "boolean"
+          },
           "created_by": {
             "required": [
               "id",
@@ -1605,6 +1608,9 @@
           },
           "device_id": {
             "type": "string"
+          },
+          "show_popup": {
+            "type": "boolean"
           },
           "created_by": {
             "type": "string"
