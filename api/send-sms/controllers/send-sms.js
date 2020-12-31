@@ -25,17 +25,17 @@ module.exports = {
       let unicode = false; 
       let msg = smsContent.text_en;
       let type = smsContent.type;
-      if( smsContent.lang === "Arabic" ) {
+      if( smsContent.lang === "ar" ) {
         unicode = true; 
         msg = smsContent.text_ar
       }
       
       await Promise.all(usersForSms.map(async (user) => {
         if(smsContent.lang === "User_language") {
-          if(user.language === "English") {
+          if(user.language === "en") {
             unicode = false; 
             msg = smsContent.text_en;
-          } else if(user.language === "Arabic") {
+          } else if(user.language === "ar") {
             unicode = true; 
             msg = smsContent.text_ar;
           }

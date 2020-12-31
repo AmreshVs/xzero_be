@@ -486,17 +486,17 @@ const EditViewDataManagerProvider = ({
               //return true;
               
               if(typeof cleanedData.language !== 'undefined') {
-              if(cleanedData.language.toLowerCase() === "arabic") {
+              if(cleanedData.language.toLowerCase() === "ar") {
                 title  = cleanedData.title_ar
                 desc  = cleanedData.desc_ar
-              } else if(cleanedData.language.toLowerCase() === "english") {
+              } else if(cleanedData.language.toLowerCase() === "en") {
                 title  = cleanedData.title_en
                 desc  = cleanedData.desc_en
               } else if(cleanedData.language.toLowerCase() === "use_user_language") {
-                if(user.language.toLowerCase() === "arabic") {
+                if(user.language.toLowerCase() === "ar") {
                     title  = cleanedData.title_ar;
                     desc  = cleanedData.desc_ar;
-                } else if(user.language.toLowerCase() === "english") {
+                } else if(user.language.toLowerCase() === "en") {
                     title  = cleanedData.title_en;
                     desc  = cleanedData.desc_en;
                 } else {
