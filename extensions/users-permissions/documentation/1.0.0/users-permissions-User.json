@@ -1424,7 +1424,8 @@
             "type": "string"
           },
           "show_popup": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "required": [
@@ -1610,7 +1611,8 @@
             "type": "string"
           },
           "show_popup": {
-            "type": "boolean"
+            "type": "boolean",
+            "default": true
           },
           "created_by": {
             "type": "string"
