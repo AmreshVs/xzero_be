@@ -400,8 +400,6 @@ async QRforExistingUser() {
           var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
         }  
 
-     
-
       await strapi
         .query("membership-transactions")
         .create({
@@ -495,13 +493,13 @@ async QRforExistingUser() {
         
         }
     
-      //sendMail(user_id, "create");
+      sendMail(user_id, "create");
       return ctx.send ({
         membership: membership, 
         codeStatus: msg
       });
       
-      //return { membership: membership, codeStatus: msg };
+      
 
     } else {
       let serial = await generateSerial();
@@ -626,14 +624,14 @@ async QRforExistingUser() {
       } else {
         var msg = afterCodeApply.msg;
       }
-      //sendMail(user_id, "renewal");
+      sendMail(user_id, "renewal");
 
       return ctx.send ({
         membership: membership, 
         codeStatus: msg
       });
 
-      //return { membership: membership, codeStatus: msg };
+      
     }
   },
 
