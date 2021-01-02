@@ -29,5 +29,26 @@ module.exports = {
       })
     },
 
+    async NotificationsByUser(user_id = null) {
+      let is_read = false
+      let notifications = await strapi.query('notifications').find({ status: true });
+      
+      return Promise.all(notifications.map(async (notification) => {
+        let read = await strapi.query('notification-read-receipts').findOne({ user: user_id });
+        
+        if(read !== null) {
+          let readNotification = read.notifications_read || "";
+          is_read = readNotification.includes(notification.id);
+        }
+        
+
+        return Promise.resolve({
+          ...notification,
+          is_read
+        });
+
+      }));
+
+    }
   
 };

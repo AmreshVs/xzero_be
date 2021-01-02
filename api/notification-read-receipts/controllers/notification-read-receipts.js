@@ -6,6 +6,8 @@
  */
 
 module.exports = {
+
+  
     async MarkAsRead(user, notification) {
      //checking user is exist or not
      let readExist = await strapi.query("notification-read-receipts").findOne({ user: user }); 
