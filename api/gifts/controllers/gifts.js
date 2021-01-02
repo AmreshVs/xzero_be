@@ -6,7 +6,6 @@
  */
 const _ = require("lodash");
 
-
 function DateDiffInDaysWithCurrentDate(date) {
   let dt = new Date();
   let localTime = dt.getTime(); 
@@ -112,9 +111,12 @@ module.exports = {
 
   //function to get gift added
   async AvailableGifts(condtion) {
-    let gifts = await strapi
+    let gifts = [];
+    if(typeof condtion.membership_plan !== 'undefined' || condtion.membership_plan !== null ) {
+      gifts = await strapi
       .query("gifts")
       .find({ status: true, membership_plans: condtion.membership_plan, _limit: -1 });
+    }
     let giftAvailed = await strapi.query("gift-availed").find(condtion);
     return { gifts: gifts, AvailedGifts: giftAvailed };
   }
