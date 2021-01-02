@@ -64,7 +64,8 @@ module.exports = {
        if( referProgram !== null && userCode!==null && userCode.referral_code !== null && userCode.id !== parseInt(receiver)) {
           let usedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, status: true });
           let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, from: 'referral' , status: true });
-          if(userUsedHistory < referProgram.usage_limit && usedHistory < referProgram.user_can_refer  ) {
+          
+          if(userUsedHistory < referProgram.usage_limit && (usedHistory < referProgram.user_can_refer || referProgram.user_can_refer === null )) {
               //receiver get
               let discountAmount = (parseInt(referProgram.discount)/100) * parseInt(price);
               if(referProgram.allowed_maximum_discount !== null ) {
