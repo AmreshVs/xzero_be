@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/notification-read-receipts",
+      "handler": "notification-read-receipts.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/notification-read-receipts/count",
+      "handler": "notification-read-receipts.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/notification-read-receipts/:id",
+      "handler": "notification-read-receipts.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/notification-read-receipts",
+      "handler": "notification-read-receipts.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/notification-read-receipts/:id",
+      "handler": "notification-read-receipts.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/notification-read-receipts/:id",
+      "handler": "notification-read-receipts.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}

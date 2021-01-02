@@ -1,0 +1,20 @@
+{
+  "kind": "collectionType",
+  "collectionName": "notification_read_receipts",
+  "info": {
+    "name": "notification_read_receipts"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "notifications_read": {
+      "type": "text"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    }
+  }
+}
