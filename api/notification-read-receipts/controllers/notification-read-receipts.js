@@ -10,6 +10,8 @@ module.exports = {
   
     async MarkAsRead(user, notification) {
      //checking user is exist or not
+     let count = 0;
+     let totalNotifications = await strapi.query("notifications").count({ status: true }); 
      let readExist = await strapi.query("notification-read-receipts").findOne({ user: user }); 
      let userReads  = '';
      if(readExist!==null) {
@@ -48,17 +50,22 @@ module.exports = {
       }
 
       if(readExist !== null) {
-        await strapi.query('notification-read-receipts').update({ id: readExist.id }, {
+        var receipts = await strapi.query('notification-read-receipts').update({ id: readExist.id }, {
           notifications_read: newReads.length > 1 ? newReads.join(',') : (newReads.length === 1) ? newReads[0] : null
           });
           status = true;
       } else {
-        await strapi.query('notification-read-receipts').create({ user: user, notifications_read: newReads[0] });
+        var receipts = await strapi.query('notification-read-receipts').create({ user: user, notifications_read: newReads[0] });
           status = true;
       }
       
+      if(receipts && receipts.notifications_read !== "") {
+        let redNotification = receipts.notifications_read.split(",").length; 
+        count = totalNotifications - redNotification;
+      }
+
       return {
-        status
+        status: status, notificationCount: count >0? count: 0
       }
     },
 
