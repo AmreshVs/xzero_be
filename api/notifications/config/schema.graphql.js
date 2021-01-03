@@ -13,6 +13,8 @@ module.exports = {
       send_to: ENUM_NOTIFICATIONS_SEND_TO
       created_by: ID
       updated_by: ID
+      created_at: DateTime
+      updated_at: DateTime
       is_read: Boolean
     }
   `,
