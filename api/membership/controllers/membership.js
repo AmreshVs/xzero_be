@@ -268,7 +268,6 @@ async QRforExistingUser(reset = false) {
   } else {
     var membershipWithNoQRcode = await strapi.query('membership').find({ qrcode_url_null: true });
   }
-
   if (membershipWithNoQRcode.length > 0) {
   await Promise.all(membershipWithNoQRcode.map(async (member) => {
     if(member.user) {

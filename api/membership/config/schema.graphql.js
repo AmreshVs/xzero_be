@@ -53,6 +53,7 @@ module.exports = {
         },
       },
 
+      
       QRforExistingUser: {
         description: 'Generate Membership for user',
         policies: ['plugins::users-permissions.isAuthenticated'],
