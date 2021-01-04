@@ -15,15 +15,15 @@ module.exports = {
     let is_favourite = false
     let offers = await strapi.query('offers').find(condition);
     
+    let user = await strapi.query('favourites').findOne({ user: user_id  });
     return Promise.all(offers.map(async (offer) => {
-      let user = await strapi.query('favourites').findOne({ user: user_id  });
-      
+
       if(user !== null) {
-        let favourites = user.favourites ? user.favourites.split(","): "";
-        is_favourite = favourites.includes(offer.id);
+        let favourites = user.favourites ? user.favourites: "";
+
+        is_favourite = favourites.includes(String(offer.id));
       }
       
-
       return Promise.resolve({
         ...offer,
         is_favourite
