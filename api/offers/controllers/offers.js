@@ -19,7 +19,7 @@ module.exports = {
       let user = await strapi.query('favourites').findOne({ user: user_id  });
       
       if(user !== null) {
-        let favourites = user.favourites || "";
+        let favourites = user.favourites ? user.favourites.split(","): "";
         is_favourite = favourites.includes(offer.id);
       }
       
