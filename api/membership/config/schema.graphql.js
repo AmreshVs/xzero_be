@@ -38,7 +38,6 @@ module.exports = {
         policies: ['plugins::users-permissions.isAuthenticated'],
         resolverOf: 'application::membership.membership.create',
         resolver: async (obj, options, {context}) => {
-          //return await strapi.api.membership.controllers.membership.generateMembership(options.user_id, options.plan, options.code);
 
           context.request.body = _.toPlainObject(options);
           await strapi.api.membership.controllers.membership.generateMembership(context);
@@ -53,7 +52,7 @@ module.exports = {
         },
       },
 
-      
+
       QRforExistingUser: {
         description: 'Generate Membership for user',
         policies: ['plugins::users-permissions.isAuthenticated'],

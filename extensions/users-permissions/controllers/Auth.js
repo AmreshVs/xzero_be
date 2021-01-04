@@ -120,7 +120,7 @@ module.exports = {
           // Send an email to the user.
           await strapi.plugins["email"].services.email.sendTemplatedEmail(
             {
-              to: "noufal@xzero.app",
+              to: updatedUser.email,
               from: "support@xzero.app",
             },
             otpEmailTemplate,
@@ -214,7 +214,7 @@ module.exports = {
           // Send an email to the user.
           await strapi.plugins["email"].services.email.sendTemplatedEmail(
             {
-              to: "noufal@xzero.app",
+              to: user.email,
               from: "support@xzero.app",
             },
             otpEmailTemplate,

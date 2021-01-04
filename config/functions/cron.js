@@ -87,7 +87,7 @@ async function QueueCheck() {
         body: JSON.stringify({
           to: expoTokens,
           title: "Xzero voucher available",
-          body: "You have tried to buy xzero voucher",
+          body: "We found that you tried to buy xzero voucher, its available now !",
           sound: 'default',
           priority: 'high'
         })
@@ -105,7 +105,7 @@ async function QueueCheck() {
 
 
 module.exports = {
-  '*/200 * * * * *': () => {
+  '*/500 * * * * *': () => {
     QueueCheck();
   },
   options: {

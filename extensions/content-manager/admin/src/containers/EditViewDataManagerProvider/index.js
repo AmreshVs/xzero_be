@@ -536,7 +536,7 @@ const EditViewDataManagerProvider = ({
         if (currentContentTypeLayout.apiID === 'vouchers') { 
           
           if(voucherDetails.draw_status !== 'declare' && voucherDetails.draw_status !== 'publish' && (cleanedData.draw_status == 'declare' || cleanedData.draw_status == 'publish')) {
-            const axios = require('axios');
+           // const axios = require('axios');
             var confirmAct = false;
             if(cleanedData.draw_status == 'declare') {
               let x = confirm('Do you really want to declare winner ?');
@@ -551,13 +551,25 @@ const EditViewDataManagerProvider = ({
             }
 
             if(confirmAct == true) {  
-              let res = await axios.post('/DeclareVoucherWinner', {
-                id: cleanedData.id,
-                draw_status: cleanedData.draw_status
+              // let res = await axios.post('/DeclareVoucherWinner', {
+              //   id: cleanedData.id,
+              //   draw_status: cleanedData.draw_status
+              // });
+
+
+              var res = await request('/DeclareVoucherWinner', {
+                method: 'POST',
+                headers: {},
+                body: {
+                  id: cleanedData.id,
+                  draw_status: cleanedData.draw_status
+                },
               });
 
+
+
               if(res) {
-                console.log( res.data );
+                console.log( res);
               } else {
                 console.log("something is went wrong")
               }
@@ -588,14 +600,26 @@ const EditViewDataManagerProvider = ({
 
 
         //update the withdrawal status on change on strapi admin 
-        if (currentContentTypeLayout.apiID === 'withdrawal-history') {   
-            const axios = require('axios');
-              let res = await axios.post('/WithdrawMoney', {
-                id: cleanedData.id,
-                draw_status: cleanedData.withdrawal_status
+        if (currentContentTypeLayout.apiID === 'withdrawal-history') { 
+
+            // const axios = require('axios');
+            //   let res = await axios.post('/WithdrawMoney', {
+            //     id: cleanedData.id,
+            //     draw_status: cleanedData.withdrawal_status
+            //   });
+
+              var res = await request('/WithdrawMoney', {
+                method: 'POST',
+                headers: {},
+                body: {
+                  id: cleanedData.id,
+                  draw_status: cleanedData.withdrawal_status
+                },
               });
+
+
               if(res) {
-                console.log( res.data );
+                console.log( res );
               } else {
                 console.log("something is went wrong")
               }
