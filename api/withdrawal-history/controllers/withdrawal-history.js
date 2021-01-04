@@ -52,7 +52,7 @@ module.exports = {
 
       if(params.withdraw_status && params.withdraw_status === "completed" ) {
         var withdrawStatus = params.withdraw_status;
-
+        //let sendEmail = await sendMail(user, {withdraw:withdrawAmount, remaining: RemainingAmount, total:totalAmount})
       } else {
         var withdrawStatus = "pending";
       }      

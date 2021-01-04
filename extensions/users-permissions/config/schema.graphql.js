@@ -90,7 +90,7 @@ module.exports = {
       SendSms: {
         description: 'function to verify otp',
 
-        resolverOf: 'plugins::users-permissions.auth.callback',
+        resolverOf: 'plugins::users-permissions.auth.register',
         resolver: async (obj, options, { context }) => {
 
           context.request.body = _.toPlainObject(options);

@@ -606,7 +606,7 @@ const EditViewDataManagerProvider = ({
 
 
         //update the withdrawal status on change on strapi admin 
-        if (currentContentTypeLayout.apiID === 'withdrawal-history' && withdrawalDetails.withdrawal_status === 'completed') { 
+        if (currentContentTypeLayout.apiID === 'withdrawal-history' && withdrawalDetails.withdrawal_status !== 'completed' && cleanedData.withdrawal_status === "completed") { 
 
 
             // const axios = require('axios');
