@@ -10,6 +10,8 @@ const formatError = error => [
 ];
 
 const withdrawalEmailTemplate = require("../withdrawalEmailTemplate");
+const transferCompleteEmailTemplate = require("../transferCompleteEmailTemplate");
+
 
 async function sendMail(user_id, withdrawDetails) {
   let user = await strapi
@@ -48,10 +50,11 @@ module.exports = {
       let user = params.user;
       let withdrawAmount = params.withdrawAmount;
 
-      if(params.status) {
-        var status = status.code;
+      if(params.withdraw_status && params.withdraw_status === "completed" ) {
+        var withdrawStatus = params.withdraw_status;
+
       } else {
-        var status = null;
+        var withdrawStatus = "pending";
       }      
 
         let dataArray = {};
@@ -96,22 +99,23 @@ module.exports = {
             );
         }
 
-        dataArray = {user:user, withdraw_amount: withdrawAmount, remaining_amount: RemainingAmount, withdrawal_status: status, total_amount: totalAmount, status: true };
+        dataArray = {user:user, withdraw_amount: withdrawAmount, remaining_amount: RemainingAmount, withdrawal_status: withdrawStatus, total_amount: totalAmount, status: true };
         withdrawHistory = await strapi.query('withdrawal-history').create(dataArray);
 
         //emailto admin
         await strapi.plugins['email'].services.email.send({
-          to: 'noufal@xzero.app',
+          to: 'support@xzero.app',
+          cc:'ali@xzero.app',
           from: 'admin@xzero.app',
           replyTo: 'admin@xzero.app',
           subject: 'Referrer money withdrawal',
           text: userDetails.username+' withdrawed ' +withdrawAmount+ ' money ',
-          html: userDetails.username+' raised a request to withdraw ' +withdrawAmount+ ' money. wallet balance is '+RemainingAmount+ ' and total amount is '+totalAmount+"." ,
+          html: userDetails.username+' raised a request to withdraw ' +withdrawAmount+ 'AED. wallet balance is '+RemainingAmount+ 'AED and total amount is '+totalAmount+"AED." ,
         });
 
 
         //email to user
-        let sendemail = await sendMail("132", {withdraw:1, remaining: RemainingAmount, total:totalAmount})
+        let sendEmail = await sendMail(user, {withdraw:withdrawAmount, remaining: RemainingAmount, total:totalAmount})
         
         return ctx.send ({ 
           withdrawal: withdrawHistory,  
