@@ -231,26 +231,27 @@ async function sendMail(user_id, status) {
 
 //Generate the QRCode image
 async function createQRForExisting(userInfo) {
+  
   let fileName = "/qrcode/qr_" + userInfo.user.id + ".png";
   let logo = "../../../public/qrcode/logo.png";
   let serial = JSON.stringify({ serial: userInfo.serial });
   await brandedQRCode
-  .generate({
-  text: serial,
-  path: logo,
-  ratio: 6,
-  opt: {
-  color: { dark: "#000", light: "#fff" },
-  width: 200,
-  errorCorrectionLevel: "H",
-  },
-  })
-  .then((buf) => {
-  fs.writeFile("public" + fileName, buf, (err) => {
-  if (err) {
-  throw err;
-  }
-  });
+    .generate({
+    text: serial,
+    path: logo,
+    ratio: 6,
+    opt: {
+    color: { dark: "#000", light: "#fff" },
+    width: 200,
+    errorCorrectionLevel: "H",
+    },
+    })
+    .then((buf) => {
+    fs.writeFile("public" + fileName, buf, (err) => {
+    if (err) {
+    throw err;
+    }
+    });
   });
   
   return fileName;
@@ -261,20 +262,28 @@ async function createQRForExisting(userInfo) {
 module.exports = {
 
 //Generate the QRCode image
-async QRforExistingUser() {
-  let membershipWithNoQRcode = await strapi.query('membership').find({ qrcode_url_null: true });
-  // console.log(membershipWithNoQRcode.length); return false;
-  
+async QRforExistingUser(reset = false) {
+  if(reset === true) {
+    var membershipWithNoQRcode = await strapi.query('membership').find({ qrcode_url_ne: null });
+  } else {
+    var membershipWithNoQRcode = await strapi.query('membership').find({ qrcode_url_null: true });
+  }
+
   if (membershipWithNoQRcode.length > 0) {
   await Promise.all(membershipWithNoQRcode.map(async (member) => {
-  let qr = await createQRForExisting(member);
-  var updatedUser = await strapi.query('membership').update({ id: member.id }, { qrcode_url: qr });
-  }));
-  } else {
-  let result = "no users with empty referral code";
-  return { result };
-  }
-  let result = "success";
+    if(member.user) {
+      var qr = await createQRForExisting(member);
+      await strapi.query('membership').update({ id: member.id }, { qrcode_url: qr });
+    } else {
+      var qr = null;
+    } 
+    }));
+    
+    } else {
+      let result = "no users with empty referral code";
+      return { result };
+    }
+    let result = "success";
   return { result }
 },
 
@@ -356,9 +365,12 @@ async QRforExistingUser() {
       .findOne({ id: plan });
 
     // updating the limit upon renewal
-    if (packageSelected !== null && checkUserExist !== null) {
+    if (packageSelected !== null && checkUserExist !== null && packageSelected.limit !== null) {
       offerLimit = packageSelected.limit;
-      totalOfferLimit = parseInt(packageSelected.limit) + parseInt(checkUserExist.limit);
+      totalOfferLimit = parseInt(offerLimit) + parseInt(checkUserExist.limit);
+    } else if(packageSelected !== null && checkUserExist !== null) {
+      offerLimit = process.env.membershipPlanOfferLimit ? process.env.membershipPlanOfferLimit: 2000;
+      totalOfferLimit = parseInt(offerLimit) + parseInt(checkUserExist.limit);
     }
 
     let afterCodeApply = await ApplyCode(user_id, packageSelected.price, code, plan);

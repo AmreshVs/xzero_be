@@ -26,7 +26,7 @@ module.exports = {
 
   mutation: `
     generateMembership(user_id: ID!, plan :Int!, code: String): membership!,
-    QRforExistingUser: JSON
+    QRforExistingUser(reset: Boolean): JSON
   `,
 
   query: 'getMembershipExpiryDays(user_id:ID!): JSON',
@@ -58,7 +58,7 @@ module.exports = {
         policies: ['plugins::users-permissions.isAuthenticated'],
         resolverOf: 'application::membership.membership.create',
         resolver: async (obj, options, ctx) => {
-          return await strapi.api.membership.controllers.membership.QRforExistingUser();
+          return await strapi.api.membership.controllers.membership.QRforExistingUser(options.reset);
         },
       }
 
