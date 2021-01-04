@@ -89,8 +89,8 @@ module.exports = {
 
       SendSms: {
         description: 'function to verify otp',
-
-        resolverOf: 'plugins::users-permissions.auth.register',
+        policies: ['plugins::users-permissions.isAuthenticated'],
+        resolverOf: 'plugins::users-permissions.auth.callback',
         resolver: async (obj, options, { context }) => {
 
           context.request.body = _.toPlainObject(options);
