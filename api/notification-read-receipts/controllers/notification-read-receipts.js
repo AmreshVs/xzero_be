@@ -77,7 +77,7 @@ module.exports = {
       let readCount = readExist.notifications_read.split(",").length;
       count = notifications - readCount;
     }
-    return { notificationsCount:count };
+    return count;
 
   }    
 

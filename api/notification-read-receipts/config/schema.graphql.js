@@ -2,7 +2,7 @@
 module.exports = {
   
 
-  query: `NotificationCount(user: Int!):JSON`,
+  query: `notificationCount(user: Int!):Int`,
 
   mutation: 
   `MarkAsRead(user: Int!, notification: Int!): JSON!
@@ -21,7 +21,7 @@ module.exports = {
       },
 
       Query: {
-        NotificationCount: {
+        notificationCount: {
           description: 'getting the unread count of notification',
           //policies: ['plugins::users-permissions.isAuthenticated'],
           resolverOf: 'application::notification-read-receipts.notification-read-receipts.find',
