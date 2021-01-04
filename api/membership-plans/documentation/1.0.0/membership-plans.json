@@ -629,8 +629,7 @@
             "type": "string"
           },
           "limit": {
-            "type": "integer",
-            "default": 0
+            "type": "integer"
           },
           "created_by": {
             "required": [
@@ -753,8 +752,7 @@
             "type": "string"
           },
           "limit": {
-            "type": "integer",
-            "default": 0
+            "type": "integer"
           },
           "created_by": {
             "type": "string"
