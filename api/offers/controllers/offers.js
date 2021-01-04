@@ -14,13 +14,12 @@ module.exports = {
   async offerListWithFavourites(condition, user_id = null) {
     let is_favourite = false
     let offers = await strapi.query('offers').find(condition);
-    
-    let user = await strapi.query('favourites').findOne({ user: user_id  });
+    let userFavourites = await strapi.query('favourites').find({ user: user_id  });
+    let allFav = [].concat(...userFavourites.map((userFavourite) => userFavourite.favourites? userFavourite.favourites.split(","):"0"  ));
     return Promise.all(offers.map(async (offer) => {
-
-      if(user !== null) {
-        let favourites = user.favourites ? user.favourites: "";
-
+      
+      if(userFavourites) {
+        let favourites = allFav || "";
         is_favourite = favourites.includes(String(offer.id));
       }
       
@@ -34,72 +33,35 @@ module.exports = {
 
   async offerIsFavourite(offer_id, user_id) {
     let favourites  = "";
-    let user = await strapi.query('favourites').findOne({ user: user_id });
+    let userFavourites = await strapi.query('favourites').find({ user: user_id });
+    let allFav = [].concat(...userFavourites.map((userFavourite) => userFavourite.favourites? userFavourite.favourites.split(","):"0"  ));
     
-    if(user !== null) {
-      favourites = user.favourites;
+    if(userFavourites) {
+      favourites = allFav;
     }
     
-    let is_favourite = favourites.includes(offer_id);
+    let is_favourite = favourites.includes(String(offer_id));
     return is_favourite;
   },
 
   async favouritesByUser(user_id) {
-    let user = await strapi.query('favourites').findOne({ user: user_id }) ;
-    if(user !== null) {
-      var favourites = user.favourites.replace(' ', '').split(',');
+  
+    let userFavourites = await strapi.query('favourites').find({ user: user_id });
+    let fav = [].concat(...userFavourites.map((userFavourite) => userFavourite.favourites? userFavourite.favourites.split(","):"0"  ));
+  
+    if(userFavourites) {
+      var favourites = fav;
+      
     } else {
       var favourites = [];
     }
-    
+  
     let offers = await strapi.query('offers').find({ id_in: favourites })
 
     return offers;
   },
 
-  // async addFavourite(user_id, offer_id) {
-  //   let user = await strapi.query('user', 'users-permissions').findOne({ id: user_id });
-  //   let userFav = user.favourites;
-
-  //   let favArr = [];
-  //   let status = false;
-  //   let pop = false;
-
-  //   // Pop
-  //   if (userFav !== null && userFav.includes(',')) {
-  //     userFav.replace(' ', '');
-  //     favArr = userFav.split(',');
-  //   }
-
-  //   if (userFav !== null && userFav !== '' && !userFav.includes(',')) {
-  //     favArr.push(String(userFav));
-  //   }
-
-  //   if (favArr.includes(String(offer_id))) {
-  //     favArr = favArr.filter((fav) => Number(fav) !== Number(offer_id));
-  //     pop = true
-  //   }
-
-  //   if (pop === false) {
-  //     // Push
-  //     if (userFav === null || userFav === '') {
-  //       favArr.push(Number(offer_id));
-  //       status = true;
-  //     }
-  //     else {
-  //       favArr.push(Number(offer_id));
-  //       status = true;
-  //     }
-  //   }
-
-  //   await strapi.query('user', 'users-permissions').update({ id: user_id }, {
-  //     favourites: favArr.length > 1 ? favArr.join(',') : (pop === false || favArr.length === 1) ? favArr[0] : null
-  //   });
-
-  //   return {
-  //     status
-  //   }
-  // },
+  
 
   async updateLocation() {
   
