@@ -31,10 +31,9 @@ module.exports = {
 
     async NotificationsByUser(user_id = null) {
       let is_read = false
-      let notifications = await strapi.query('notifications').find({ status: true });
-      
+      let notifications = await strapi.query('notifications').find({ status: true, _sort: 'id:desc' });
+      let read = await strapi.query('notification-read-receipts').findOne({ user: user_id });
       return Promise.all(notifications.map(async (notification) => {
-        let read = await strapi.query('notification-read-receipts').findOne({ user: user_id });
         
         if(read !== null) {
           let readNotification = read.notifications_read || "";

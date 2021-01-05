@@ -92,7 +92,7 @@ module.exports = {
           } else {
 
             if(referProgram.user_can_refer <= 0 || referProgram.usage_limit <= 0) {
-              var msg = "User can refer or usage limit is set 0";
+              var msg = "User referral is not supported";
             } else {
               var msg = "Invalid referral code!";
             }
@@ -162,9 +162,9 @@ module.exports = {
   
                 } else {
                   if(affiliate.limit <= 0 || affiliate.allowed_usage_per_user <= 0 ) {
-                    var msg = "Affiliate limit or user limit is set to 0";
+                    var msg = "Affiliate limit exceeded";
                   } else if(userUsedHistory >= affiliate.allowed_usage_per_user) {
-                    var msg = "Affiliate user limit exceeded";
+                    var msg = "User limit is exceeded";
                   } else if(usedHistory >= affiliate.limit) {
                     var msg = "Affiliate maximum limit has reached, try again later";
                   } else {
@@ -187,7 +187,7 @@ module.exports = {
                 null,
                 formatError({
                   id: 'applycode.affiliateuser.typelimited',
-                  message: "Affiliate is limited, check the user for privilege",
+                  message: "Affiliate is limited, you are not privileged to use this code",
                 })
               ); 
             }
@@ -229,9 +229,9 @@ module.exports = {
             
 
                 if(affiliate.limit <= 0 || affiliate.allowed_usage_per_user <= 0 ) {
-                  var msg = "Affiliate limit or user limit is set to 0";
+                  var msg = "User or code limit has reached";
                 } else if(userUsedHistory >= affiliate.allowed_usage_per_user) {
-                  var msg = "Affiliate user limit exceeded";
+                  var msg = "User limit exceeded";
                 } else if(usedHistory >= affiliate.limit) {
                   var msg = "Affiliate maximum limit has reached, try again later";
                 } else {
@@ -291,7 +291,7 @@ module.exports = {
                
 
                 if(promocode.limit <= 0 || promocode.maximum_usage_per_user <= 0 ) {
-                  var msg = "Promocode limit or user limit is set to 0";
+                  var msg = "User or code limit exceeded";
                 } else if(getPromoCodeUsedCountByUser>=promocode.maximum_usage_per_user) {
                   var msg = "Promocode user limit exceeded";
                 } else if(getPromoCodeUsedCountByAllUsers>=promocode.limit) {
@@ -326,7 +326,7 @@ module.exports = {
         } else {
           var msg = "Invalid Code"
           if((userCode!==null && parseInt(receiver) === userCode.id) || (affiliate !== null && parseInt(receiver) === affiliate.user.id)) {
-             msg = "Referrer and receiver can'be same";
+             msg = "Referrer and receiver can't be same";
           } 
 
           return ctx.badRequest(
