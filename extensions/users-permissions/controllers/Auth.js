@@ -248,15 +248,15 @@ module.exports = {
   },
 
   async UpdateUserReferralCode(user = null) {
-    let userRef = await strapi.query('user', 'users-permissions').find({ referral_code_ne: true });
+
+    let userRef = await strapi.query('user', 'users-permissions').find({ referral_code_ne: null || '' });
     
     if(user === null || user === 0) {
-      var condition =  { referral_code_eq: null || '' };
+      var userAllwithNoRefercode = await strapi.query('user', 'users-permissions').find({ referral_code_eq: null });
     } else {
-      var condition =  { id: user, referral_code_eq: '' || null };
+      var userAllwithNoRefercode = await strapi.query('user', 'users-permissions').find({ id: user, referral_code_eq: null });
     }
     
-    let userAllwithNoRefercode = await strapi.query('user', 'users-permissions').find(condition);
     let filterReferralCode = userRef.map(user => user.referral_code);
     
     if (userAllwithNoRefercode.length > 0) {
