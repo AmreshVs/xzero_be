@@ -70,8 +70,8 @@ module.exports = {
     },
 
   async NotificationCount(user) {
-    let count = 0;
     let notifications = await strapi.query('notifications').count({ status: true });
+    let count = notifications;
     let readExist = await strapi.query("notification-read-receipts").findOne({ user: user }); 
     if(readExist !==null && (readExist.notifications_read !=="" )) {
       let readCount = readExist.notifications_read.split(",").length;
