@@ -71,10 +71,14 @@ module.exports = {
     },
 
     async ClearAllFavourites(user) {
-      let clearFavourite = await strapi.query("favourites").update({ user: user, status: true }, { favourites: null}); 
-      if(clearFavourite) {
+      let clearedFav = await strapi.query('favourites').model.query(qb => {
+        qb.where({user:user, status: true})
+        }).save( {favourites: null}, {patch:true} ).then(function(x) {
         return true;
-      }
+        })
+      if(clearedFav === true) {
+        return true
+      } 
       return false;
     }
 
