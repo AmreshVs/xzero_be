@@ -19,7 +19,7 @@ function DateDiffInDaysWithCurrentDate(date) {
 }
 
 module.exports = {
-    //generate gifts
+  //generate gifts
   async GenerateGift(user_id) {
     if (user_id) {
       let days = 0;
@@ -29,19 +29,20 @@ module.exports = {
       let giftArray = await strapi
         .query("gifts")
         .find({ membership_plans: memberArray.package.id, status: true, _limit: -1 });
-      if (memberArray !== null && giftArray !== null) {
+      if (memberArray !== null && giftArray !== null) { 
         let selectGifts = [].concat(...giftArray.map((gift) => gift.id));
         let shuffledGifts = _.shuffle(
           selectGifts.concat(Array(100-selectGifts.length).fill(0))
         );
 
         let giftsGotId = _.sampleSize(shuffledGifts, 1);
-        let giftAvailedCount = await strapi.query("gift-availed").count({ user: user_id, status: true });
 
-        if(memberArray.gift_generated_date)
-        days = DateDiffInDaysWithCurrentDate(new Date(memberArray.gift_generated_date));
+        // let giftAvailedCount = await strapi.query("gift-availed").count({ user: user_id, status: true });
 
-        if( days < 7 && giftAvailedCount > 0 && memberArray.is_gift_generated === true ) {
+        // if(memberArray.gift_generated_date)
+        // days = DateDiffInDaysWithCurrentDate(new Date(memberArray.gift_generated_date));
+
+        if( memberArray.is_gift_generated === true ) {
           return { disabled: true,  won: false };
         }
 
@@ -73,7 +74,6 @@ module.exports = {
             }
           }
           // code ends
-          
           await strapi.query("gift-availed").create({
             name_en: giftGotDetails.name_en,
             name_ar: giftGotDetails.name_ar,
@@ -102,6 +102,18 @@ module.exports = {
           );
           return { won: true, gift: gift };
 
+        } else if(giftsGotId[0] === 0) {
+
+          await strapi.query("membership").update(
+            { id: memberArray.id },
+            {
+              is_gift_generated: true,
+              gift_generated_date: new Date()
+            }
+          );
+
+          return { disabled: true, won: false };
+          
         } else {
           return { disabled: false, won: false };
         }

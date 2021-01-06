@@ -103,11 +103,29 @@ async function QueueCheck() {
   console.log(voucherOnQueue, "on queue" ); 
 }
 
+async function resetGiftDraw() {
+  try {
+    await strapi.query('membership').model.query(qb => {
+      qb.where({is_gift_generated: true})
+      }).save( {is_gift_generated: false}, {patch:true} ).then(function(x) {
+      console.log(x.toJSON());
+      })
+  } catch(err) {
+    return false;
+  }
+  
+
+}
 
 module.exports = {
-  '*/500 * * * * *': () => {
-    QueueCheck();
+  // '*/5 * * * * *': () => {
+  //   QueueCheck();
+  // },
+
+  '0 0 * * SUN': () => {
+    resetGiftDraw();
   },
+
   options: {
     tz: "Asia/Dubai"
   }
