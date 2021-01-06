@@ -521,7 +521,7 @@ module.exports = {
       );
     } else {
 
-      const userSave = await strapi.query('user', 'users-permissions').update({ id: user.id }, {app_version: params.app_version, platform: params.platform, device_id: params.device_id });
+      const userSave = await strapi.query('user', 'users-permissions').update({ id: user.id }, { app_version: params.app_version, device_id: params.device_id });
       
       ctx.send({
         jwt: strapi.plugins['users-permissions'].services.jwt.issue({

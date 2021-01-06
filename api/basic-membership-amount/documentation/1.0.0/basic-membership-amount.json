@@ -326,13 +326,6 @@
           "currency_code": {
             "type": "string"
           },
-          "amount": {
-            "type": "integer"
-          },
-          "multiplier": {
-            "type": "integer",
-            "default": 1000
-          },
           "created_by": {
             "required": [
               "id",
@@ -427,13 +420,6 @@
         "properties": {
           "currency_code": {
             "type": "string"
-          },
-          "amount": {
-            "type": "integer"
-          },
-          "multiplier": {
-            "type": "integer",
-            "default": 1000
           },
           "created_by": {
             "type": "string"

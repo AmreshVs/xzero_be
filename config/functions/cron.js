@@ -103,7 +103,7 @@ async function QueueCheck() {
   console.log(voucherOnQueue, "on queue" ); 
 }
 
-async function resetGiftDraw() {
+async function ResetGiftDraw() {
   try {
     await strapi.query('membership').model.query(qb => {
       qb.where({is_gift_generated: true})
@@ -123,7 +123,7 @@ module.exports = {
   // },
 
   '0 0 * * SUN': () => {
-    resetGiftDraw();
+    ResetGiftDraw();
   },
 
   options: {

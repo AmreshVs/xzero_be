@@ -11,13 +11,6 @@
   "attributes": {
     "currency_code": {
       "type": "string"
-    },
-    "amount": {
-      "type": "integer"
-    },
-    "multiplier": {
-      "type": "integer",
-      "default": 1000
     }
   }
 }

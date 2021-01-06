@@ -10,10 +10,10 @@
   },
   "attributes": {
     "text_en": {
-      "type": "string"
+      "type": "richtext"
     },
     "text_ar": {
-      "type": "string"
+      "type": "richtext"
     }
   }
 }
