@@ -34,6 +34,19 @@ module.exports = {
     let lang = params.lang;
 
     let smsInfo = await strapi.query('sms').findOne({ status: true });
+    
+    if(params.mobile) {
+      let existingUser = await strapi.query('user', 'users-permissions').count({ mobile_number: params.mobile });
+      if(existingUser > 0 ){
+        return ctx.badRequest (
+          null,
+          formatError({
+            id: 'otp.mobilenumber.exist',
+            message: 'Mobile number is already choosen',
+          })
+        )
+      }
+    }
 
     if(user === 0 || user === null) {
       return ctx.badRequest(
@@ -521,7 +534,7 @@ module.exports = {
       );
     } else {
 
-      const userSave = await strapi.query('user', 'users-permissions').update({ id: user.id }, {app_version: params.app_version, provider: params.provider,  platform: params.platform, device_id: params.device_id });
+      await strapi.query('user', 'users-permissions').update({ id: user.id }, { app_version: params.app_version, platform: params.platform, device_id: params.device_id });
       
       ctx.send({
         jwt: strapi.plugins['users-permissions'].services.jwt.issue({
