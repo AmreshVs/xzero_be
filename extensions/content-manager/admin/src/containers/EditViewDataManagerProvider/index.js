@@ -419,7 +419,7 @@ const EditViewDataManagerProvider = ({
       }
 
       if (currentContentTypeLayout.apiID === 'withdrawal-history') { 
-        var withdrawalDetails = await request('/withdrawal-history/'+cleanedData.id, {
+        var withdrawalDetails = await request('/withdrawal-histories/'+cleanedData.id, {
           method: 'GET'
         });
       }
@@ -606,15 +606,9 @@ const EditViewDataManagerProvider = ({
 
 
         //update the withdrawal status on change on strapi admin 
-        if (currentContentTypeLayout.apiID === 'withdrawal-history' && withdrawalDetails.withdrawal_status !== 'completed' && cleanedData.withdrawal_status === "completed") { 
+        if (currentContentTypeLayout.apiID === 'withdrawal-history' && withdrawalDetails.withdrawal_status !== 'completed' && cleanedData.withdrawal_status === "completed" &&  cleanedData.status === 1) { 
 
-
-            // const axios = require('axios');
-            //   let res = await axios.post('/WithdrawMoney', {
-            //     id: cleanedData.id,
-            //     draw_status: cleanedData.withdrawal_status
-            //   });
-
+          
               var res = await request('/WithdrawMoney', {
                 method: 'POST',
                 headers: {},
@@ -623,6 +617,7 @@ const EditViewDataManagerProvider = ({
                   withdraw_status: cleanedData.withdrawal_status
                 },
               });
+
 
 
               if(res) {

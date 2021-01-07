@@ -461,6 +461,19 @@ module.exports = {
     }
   },
 
+
+  async updateUserData(ctx) 
+  {
+    let params = ctx.request.body;
+
+    let updatedOne = await strapi.query('user', 'users-permissions').update({ id: params?.where?.id }, { ...params?.data });
+    
+    return {
+      user: updatedOne
+    };
+  
+  },
+
   async userLogin(ctx) {
 
     const params = ctx.request.body;

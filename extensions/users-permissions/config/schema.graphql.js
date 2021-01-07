@@ -41,11 +41,18 @@ module.exports = {
         app_version: String
         platform: String
     }
+
+   
   `,
+
+
+
+
   mutation: `
     createNewUser(input: UserInput!): CreateUserPayload!
     userlogin(input: UserLoginInput): CreateUserPayload!
     UpdateUserReferralCode(user: Int): JSON
+    updateUserData(input: updateUserInput!): updateUserPayload
     SendSms(user: Int!, mobile: String, lang: String, email: Boolean): SmsInfo
   `,
 
@@ -118,6 +125,21 @@ module.exports = {
           };
         },
       },
+
+      updateUserData: {
+        resolverOf: 'plugins::users-permissions.auth.callback',
+        resolver: async (obj, options, { context }) => {
+
+          context.request.body = _.toPlainObject(options.input);
+
+          let output = await strapi.plugins['users-permissions'].controllers.auth.updateUserData(context);
+          
+
+          checkBadRequest(output);
+
+          return output;
+        },
+      }
 
     }
   }

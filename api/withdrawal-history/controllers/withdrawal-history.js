@@ -13,23 +13,31 @@ const withdrawalEmailTemplate = require("../withdrawalEmailTemplate");
 const transferCompleteEmailTemplate = require("../transferCompleteEmailTemplate");
 
 
-async function sendMail(user_id, withdrawDetails) {
+async function sendMail(user_id, withdrawDetails, status) {
   let user = await strapi
     .query("user", "users-permissions")
     .findOne({ id: user_id });
   try {
     let emailTemplate = {};
-    
+    if(status === "pending") {
       emailTemplate = {
         subject: "Referrer money withdrawal",
         text: `Your request for withdrawing money has been received, `,
         html: withdrawalEmailTemplate,
       };
-  
+    } else if(status === "completed") {
+      emailTemplate = {
+        subject: "Transfer completed",
+        text: `Your request for withdrawing money has been transferred, `,
+        html: transferCompleteEmailTemplate,
+      };
+    }
+
+     
     // Send an email to the user.
     await strapi.plugins["email"].services.email.sendTemplatedEmail(
       {
-        to: user.email,
+        to: "noufal@xzero.app",
         from: "support@xzero.app",
       },
      
@@ -49,14 +57,20 @@ module.exports = {
       const params = ctx.request.body;
       let user = params.user;
       let withdrawAmount = params.withdrawAmount;
-
+      
+      
       if(params.withdraw_status && params.withdraw_status === "completed" ) {
+        
         var withdrawStatus = params.withdraw_status;
-        //let sendEmail = await sendMail(user, {withdraw:withdrawAmount, remaining: RemainingAmount, total:totalAmount})
+        await sendMail(user, {}, withdrawStatus);
+        return ctx.send ({ 
+          withdrawal: {},  
+          msg: 'success'
+        })
       } else {
         var withdrawStatus = "pending";
       }      
-
+      
         let dataArray = {};
         let RemainingAmount = 0;
         let withdrawHistory = await strapi.query('withdrawal-history').findOne({ user: user, status: true, _sort: 'id:desc' });
@@ -115,7 +129,7 @@ module.exports = {
 
 
         //email to user
-        let sendEmail = await sendMail(user, {withdraw:withdrawAmount, remaining: RemainingAmount, total:totalAmount})
+        let sendEmail = await sendMail(user, {withdraw:withdrawAmount, remaining: RemainingAmount, total:totalAmount}, withdrawStatus)
         
         return ctx.send ({ 
           withdrawal: withdrawHistory,  
