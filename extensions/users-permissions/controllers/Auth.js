@@ -35,18 +35,18 @@ module.exports = {
 
     let smsInfo = await strapi.query('sms').findOne({ status: true });
     
-    if(params.mobile) {
-      let existingUser = await strapi.query('user', 'users-permissions').count({ mobile_number: params.mobile });
-      if(existingUser > 0 ){
-        return ctx.badRequest (
-          null,
-          formatError({
-            id: 'otp.mobilenumber.exist',
-            message: 'Mobile number is already choosen',
-          })
-        )
-      }
-    }
+    // if(params.mobile) {
+    //   let existingUser = await strapi.query('user', 'users-permissions').count({ mobile_number: params.mobile });
+    //   if(existingUser > 0 ){
+    //     return ctx.badRequest (
+    //       null,
+    //       formatError({
+    //         id: 'otp.mobilenumber.exist',
+    //         message: 'Mobile number is already choosen',
+    //       })
+    //     )
+    //   }
+    // }
 
     if(user === 0 || user === null) {
       return ctx.badRequest(
