@@ -170,7 +170,7 @@ a[x-apple-data-detectors] {
                   <td class="es-m-p0r es-m-p20b" valign="top" align="center" style="padding:0;Margin:0;width:180px">
                    <table width="100%" cellspacing="0" cellpadding="0" role="presentation" style="mso-table-lspace:0pt;mso-table-rspace:0pt;border-collapse:collapse;border-spacing:0px">
                      <tr style="border-collapse:collapse">
-                      <td class="es-m-txt-c" align="center" style="padding:0;Margin:0;font-size:0px"><a target="_blank" href="https://www.xzero.app" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:11px;text-decoration:underline;color:#666666"><img src="https://hxsjhu.stripocdn.email/content/guids/CABINET_d9fcf976e448d4501172361baf07a936/images/79421602159046393.png" alt="Xzero APP logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" title="Xzero APP logo" width="180"></a></td>
+                      <td class="es-m-txt-c" align="center" style="padding:0;Margin:0;font-size:0px"><a target="_blank" href="https://www.xzero.app" style="-webkit-text-size-adjust:none;-ms-text-size-adjust:none;mso-line-height-rule:exactly;font-family:arial, 'helvetica neue', helvetica, sans-serif;font-size:11px;text-decoration:underline;color:#666666"><img src="https://xzero.app/wp-content/themes/XzeroApp/assets/images/logo/logo.png" alt="Xzero APP logo" style="display:block;border:0;outline:none;text-decoration:none;-ms-interpolation-mode:bicubic" title="Xzero APP logo" width="180"></a></td>
                      </tr>
                    </table></td>
                  </tr>
