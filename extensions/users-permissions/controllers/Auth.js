@@ -466,7 +466,8 @@ module.exports = {
   {
     let params = ctx.request.body;
 
-    let updatedOne = await strapi.query('user', 'users-permissions').update({ id: params?.where?.id }, { ...params?.data });
+  
+    let updatedOne = await strapi.query('user', 'users-permissions').update({ id: params.where.id }, { ...params.data });
     
     return {
       user: updatedOne
