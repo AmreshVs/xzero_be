@@ -5,18 +5,19 @@ module.exports = {
             discount: String  
             applied: JSON!,
             referralCodeAppliedInfo: String,
-            discountYouGet: Int
+            discountYouGet: Float
             discountedPrice: Int,
             applicableFor: String,
-            referrerCredit: Int,
+            referrerCredit: Float,
             from: String
             },
+            
         type ReferralHistory {
             referProgram : ReferralProgram,
             referralCode: JSON 
-            totalEarned: Int, 
+            totalEarned: Float, 
             totalReferred: Int , 
-            balance: Int
+            balance: Float
             },
 			`
 	, 
