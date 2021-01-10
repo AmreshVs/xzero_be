@@ -23,6 +23,7 @@ module.exports = {
           from: String,
           discountYouGet: Float,
           discountedPrice: Float,
+          referrerCredit: Float
           applicableFor: String,
           msg: JSON
       }
