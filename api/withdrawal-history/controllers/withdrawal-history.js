@@ -13,12 +13,13 @@ const withdrawalEmailTemplate = require("../withdrawalEmailTemplate");
 const transferCompleteEmailTemplate = require("../transferCompleteEmailTemplate");
 
 
-async function sendMail(user_id, withdrawDetails, status) {
+async function sendMail(user_id, withdrawDetails = {}, status) {
+  let emailTemplate = {};
   let user = await strapi
     .query("user", "users-permissions")
     .findOne({ id: user_id });
   try {
-    let emailTemplate = {};
+    
     if(status === "pending") {
       emailTemplate = {
         subject: "Referrer money withdrawal",
@@ -33,11 +34,12 @@ async function sendMail(user_id, withdrawDetails, status) {
       };
     }
 
+    
      
     // Send an email to the user.
     await strapi.plugins["email"].services.email.sendTemplatedEmail(
       {
-        to: "noufal@xzero.app",
+        to: user.email,
         from: "support@xzero.app",
       },
      
@@ -46,34 +48,44 @@ async function sendMail(user_id, withdrawDetails, status) {
         withdraw: withdrawDetails
       },
     );
+    
+    
   } catch (err) {
     console.log(err);
   }
+  
+
 }
 
 module.exports = {
     async WithdrawMoney(ctx) {
-      
-      const params = ctx.request.body;
+  
+      let params = ctx.request.body;
+      params = JSON.parse(params);
+    
       let user = params.user;
       let withdrawAmount = params.withdrawAmount;
       
-      
-      if(params.withdraw_status && params.withdraw_status === "completed" ) {
-        
-        var withdrawStatus = params.withdraw_status;
-        await sendMail(user, {}, withdrawStatus);
-        return ctx.send ({ 
-          withdrawal: {},  
-          msg: 'success'
-        })
-      } else {
-        var withdrawStatus = "pending";
-      }      
-      
+    
         let dataArray = {};
         let RemainingAmount = 0;
         let withdrawHistory = await strapi.query('withdrawal-history').findOne({ user: user, status: true, _sort: 'id:desc' });
+      
+        if(params.status === "completed" ) {
+          
+          var withdrawStatus = params.status;
+          await sendMail(user, withdrawHistory, withdrawStatus);
+        
+         return ctx.send ({ 
+          withdrawal: withdrawHistory,  
+          msg: 'success'
+        })
+
+        } else {
+          var withdrawStatus = "pending";
+        }
+
+        
         let transactions = await strapi.query('referral-code-transaction').find({ referrer: user, status: true });
         let userDetails = await strapi.query('user', 'users-permissions').findOne({ id: user });
        
@@ -83,7 +95,7 @@ module.exports = {
         if(withdrawAmount <= totalAmount ){
             totalAmount =  totalAmount;
         } else {
-            //return { msg: "please check the amount you entered" }
+            
             return ctx.badRequest(
               null,
               formatError({

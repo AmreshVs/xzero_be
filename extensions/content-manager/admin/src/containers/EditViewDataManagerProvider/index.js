@@ -606,28 +606,29 @@ const EditViewDataManagerProvider = ({
 
 
         //update the withdrawal status on change on strapi admin 
-        if (currentContentTypeLayout.apiID === 'withdrawal-history' && withdrawalDetails.withdrawal_status !== 'completed' && cleanedData.withdrawal_status === "completed" &&  cleanedData.status === 1) { 
+      
+        if (currentContentTypeLayout.apiID === 'withdrawal-history' && withdrawalDetails.withdrawal_status !== 'completed' && cleanedData.withdrawal_status === "completed" &&  cleanedData.status === true) { 
 
-          
               var res = await request('/WithdrawMoney', {
                 method: 'POST',
                 headers: {},
                 body: {
-                  id: cleanedData.id,
-                  withdraw_status: cleanedData.withdrawal_status
+                  user: cleanedData.user,
+                  status: cleanedData.withdrawal_status,
+                  withdrawAmount: cleanedData.withdraw_amount
+
                 },
               });
-
-
 
               if(res) {
                 console.log( res );
               } else {
                 console.log("something is went wrong")
               }
-        }
-        //update withdrawal status end here
 
+        }
+
+        //update withdrawal status end here
         if (isSingleType) {
           setIsCreatingEntry(false);
         } else {
