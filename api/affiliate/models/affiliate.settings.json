@@ -46,11 +46,11 @@
       "default": "0"
     },
     "discount": {
-      "type": "integer",
+      "type": "decimal",
       "default": 0
     },
     "maximum_allowed_discount": {
-      "type": "integer",
+      "type": "decimal",
       "default": 0
     },
     "status": {

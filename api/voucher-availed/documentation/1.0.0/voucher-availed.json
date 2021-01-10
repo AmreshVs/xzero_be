@@ -792,7 +792,7 @@
             "type": "number"
           },
           "discount": {
-            "type": "integer"
+            "type": "number"
           },
           "cost": {
             "type": "number"
@@ -949,7 +949,7 @@
             "type": "number"
           },
           "discount": {
-            "type": "integer"
+            "type": "number"
           },
           "cost": {
             "type": "number"

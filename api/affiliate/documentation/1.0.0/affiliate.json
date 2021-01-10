@@ -657,11 +657,11 @@
             "default": "0"
           },
           "discount": {
-            "type": "integer",
+            "type": "number",
             "default": 0
           },
           "maximum_allowed_discount": {
-            "type": "integer",
+            "type": "number",
             "default": 0
           },
           "status": {
@@ -1024,11 +1024,11 @@
             "default": "0"
           },
           "discount": {
-            "type": "integer",
+            "type": "number",
             "default": 0
           },
           "maximum_allowed_discount": {
-            "type": "integer",
+            "type": "number",
             "default": 0
           },
           "status": {

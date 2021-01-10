@@ -33,7 +33,7 @@
       "type": "decimal"
     },
     "discount": {
-      "type": "integer"
+      "type": "decimal"
     },
     "cost": {
       "type": "decimal"

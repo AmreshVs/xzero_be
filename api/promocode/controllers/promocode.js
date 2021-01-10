@@ -14,6 +14,7 @@ const formatError = error => [
 module.exports = {
   
     async ApplyCode(ctx) {
+      
       let params = ctx.request.body;
       let receiver = params.receiver;
       
@@ -38,9 +39,6 @@ module.exports = {
       }
 
     
-      //console.log(applied_for); return false;
-      
-
       let userExistCount = await strapi.query("user", "users-permissions").count({ id: receiver });
 
       if(userExistCount === 0) {
@@ -67,24 +65,24 @@ module.exports = {
           
           if(userUsedHistory < referProgram.usage_limit && (usedHistory < referProgram.user_can_refer || referProgram.user_can_refer === null )) {
               //receiver get
-              let discountAmount = (parseInt(referProgram.discount)/100) * parseInt(price);
+              let discountAmount = (parseFloat(referProgram.discount)/100) *  parseFloat(price);
               if(referProgram.allowed_maximum_discount !== null ) {
                 discountAmount = (discountAmount <= referProgram.allowed_maximum_discount) ? discountAmount: referProgram.allowed_maximum_discount; 
               }
-              let afterDiscount = price - Math.floor(discountAmount);
+              let afterDiscount = parseFloat(price) - parseFloat(discountAmount.toFixed(2));
               //sender will get
-              let referrerCredit = (parseInt(referProgram.referrer_get)/100) * parseInt(price);  
+              let referrerCredit = (parseFloat(referProgram.referrer_get)/100) * parseFloat(price);  
               referrerCredit = (referrerCredit <= referProgram.referrer_allowed_maximum_amount) ? referrerCredit: referProgram.referrer_allowed_maximum_amount;
             
               return ctx.send({
                 discount: referProgram.discount, 
-                discountYouGet: discountAmount, 
-                discountedPrice: afterDiscount, 
+                discountYouGet: discountAmount.toFixed(2), 
+                discountedPrice: afterDiscount.toFixed(2), 
                 applied:true, 
                 userId: userCode.id, 
                 from: 'referral', 
                 codeApplied: referralCode, 
-                referrerCredit: referrerCredit 
+                referrerCredit: referrerCredit.toFixed(2) 
               });
 
               //return { discount: referProgram.discount , discountYouGet: discountAmount, discountedPrice: afterDiscount, applied:true, userId: userCode.id, from: 'referral', codeApplied: referralCode, referrerCredit: referrerCredit};
@@ -137,24 +135,32 @@ module.exports = {
               let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, status: true });
             
                 if( userUsedHistory < affiliate.allowed_usage_per_user && usedHistory < affiliate.limit ) {
-                  let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
+                  let discountAmount = (parseFloat(affiliate.discount)/parseFloat(100)) * parseFloat(price);
                   if(affiliate.maximum_allowed_discount !== null) {
                     discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
                   }
                   
-                  let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+                  let discountedPrice = parseFloat(price) - parseFloat(discountAmount.toFixed(2));
+
+                  if(affiliate.fixed_amount_status === true ) {
+                    var affiliateCredit = affiliate.fixed_amount;
+                  } else {
+                    var affiliateCredit =  (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount;
+                  }
+
                   let msg = "success";
                   return ctx.send({
                     applicableFor: affiliate.applied_for, 
                     affiliate_id: affiliate.id, 
                     userId: affiliate.user.id, 
-                    discount: affiliate.discount, 
+                    discount: affiliate.discount.toFixed(2), 
                     from: 'affiliate', 
-                    discountedPrice: discountedPrice, 
-                    discountYouGet: Math.floor(discountAmount), 
+                    discountedPrice: discountedPrice.toFixed(2), 
+                    discountYouGet: discountAmount.toFixed(2), 
                     applied: true, 
                     codeApplied :referralCode,
-                    msg: msg
+                    msg: msg,
+                    referrerCredit: affiliateCredit.toFixed(2)
                   });
   
   
@@ -200,26 +206,32 @@ module.exports = {
           
               if( userUsedHistory < affiliate.allowed_usage_per_user && usedHistory < affiliate.limit ) {
 
-                // let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
-                // discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
-
-                let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
+                let discountAmount = (parseFloat(affiliate.discount)/parseFloat(100)) * parseFloat(price);
                 if(affiliate.maximum_allowed_discount !== null) {
                   discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
                 }
                 
-                let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+                let discountedPrice = parseFloat(price) - parseFloat(discountAmount.toFixed(2));
 
+                if(affiliate.fixed_amount_status === true ) {
+                  var affiliateCredit = affiliate.fixed_amount;
+                } else {
+                  var affiliateCredit =  (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount;
+                }
+
+                let msg = "success";
                 return ctx.send({
                   applicableFor: affiliate.applied_for, 
                   affiliate_id: affiliate.id, 
                   userId: affiliate.user.id, 
-                  discount: affiliate.discount, 
+                  discount: affiliate.discount.toFixed(2), 
                   from: 'affiliate', 
-                  discountedPrice: discountedPrice, 
-                  discountYouGet: Math.floor(discountAmount), 
+                  discountedPrice: discountedPrice.toFixed(2), 
+                  discountYouGet: discountAmount.toFixed(2), 
                   applied: true, 
-                  codeApplied :referralCode
+                  codeApplied :referralCode,
+                  msg: msg,
+                  referrerCredit: affiliateCredit.toFixed(2)
                 });
 
 
@@ -268,25 +280,25 @@ module.exports = {
     
             if(new Date().toString() >= start_date && end_date >= start_date || (promocode.start_date === null || promocode.end_date === null) )  {
               if( getPromoCodeUsedCountByUser < promocode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers < promocode.limit ) {
-                let discountAmount = (parseInt(promocode.discount)/parseInt(100)) * parseInt(price);
+                let discountAmount = (parseFloat(promocode.discount)/parseFloat(100)) * parseFloat(price);
                 if(promocode.allowed_maximum_discount !== null) {
                   discountAmount = (discountAmount <= promocode.allowed_maximum_discount) ? discountAmount: promocode.allowed_maximum_discount; 
                 }
                 
-                let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+                let discountedPrice = parseFloat(price) - parseFloat(discountAmount.toFixed(2));
 
                 return ctx.send({
-                  discount: promocode.discount, 
-                  discountedPrice: discountedPrice, 
+                  discount: promocode.discount.toFixed(2), 
+                  discountedPrice: discountedPrice.toFixed(2), 
                   promocodeId: promocode.id,
                   from: 'promocode', 
-                  discountYouGet: Math.floor(discountAmount), 
+                  discountYouGet: discountAmount.toFixed(2), 
                   applied: true, 
                   codeApplied: referralCode,
 
                 });
 
-                //return { discount: promocode.discount, discountedPrice: discountedPrice, from: 'promocode', discountYouGet: Math.floor(discountAmount), applied: true, codeApplied: referralCode }
+                
               } else {
                
 

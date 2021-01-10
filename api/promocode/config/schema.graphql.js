@@ -17,12 +17,12 @@ function checkBadRequest(contextBody) {
 module.exports = {
     definition: ` 
         type ApplyCodePayLoad {
-          discount: String,  
+          discount: Float,  
           applied: Boolean!,
           codeApplied: String,
           from: String,
-          discountYouGet: Int,
-          discountedPrice: Int,
+          discountYouGet: Float,
+          discountedPrice: Float,
           applicableFor: String,
           msg: JSON
       }

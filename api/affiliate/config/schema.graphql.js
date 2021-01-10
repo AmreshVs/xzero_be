@@ -1,11 +1,11 @@
 module.exports = {
     definition: ` 
         type ApplyReferralCode {
-            discount: String  
+            discount: Float
             applied: JSON!,
             ReferralCodeApplied: String,
-            discountYouGet: Int
-            discountedPrice: Int,
+            discountYouGet: Float
+            discountedPrice: Float,
             ApplicableFor: String
 		    },
 				`

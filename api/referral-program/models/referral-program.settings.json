@@ -10,7 +10,7 @@
   },
   "attributes": {
     "discount": {
-      "type": "integer",
+      "type": "decimal",
       "default": 0
     },
     "allowed_maximum_discount": {
@@ -25,7 +25,7 @@
       "default": true
     },
     "referrer_get": {
-      "type": "integer",
+      "type": "decimal",
       "default": 0
     },
     "referrer_allowed_maximum_amount": {

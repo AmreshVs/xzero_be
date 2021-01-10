@@ -42,17 +42,17 @@ async function ApplyCode(receiver, price, code, plan) {
       let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, from: 'referral' , status: true });
       if(userUsedHistory < referProgram.usage_limit && (usedHistory < referProgram.user_can_refer || referProgram.user_can_refer === null )) {
           //receiver get
-          let discountAmount = (parseInt(referProgram.discount)/100) * parseInt(price);
+          let discountAmount = (parseFloat(referProgram.discount)/100) * parseFloat(price);
           if(referProgram.allowed_maximum_discount !== null) {
             discountAmount = (discountAmount <= referProgram.allowed_maximum_discount) ? discountAmount: referProgram.allowed_maximum_discount; 
           }
           
-          let afterDiscount = price - Math.floor(discountAmount);
+          let afterDiscount = parseFloat(price) - parseFloat(discountAmount.toFixed(2));
           //sender will get
-          let referrerCredit = (parseInt(referProgram.referrer_get)/100) * parseInt(price);  
+          let referrerCredit = (parseFloat(referProgram.referrer_get)/100) * parseFloat(price);  
           referrerCredit = (referrerCredit <= referProgram.referrer_allowed_maximum_amount) ? referrerCredit: referProgram.referrer_allowed_maximum_amount;
 
-          return { discount: referProgram.discount, discountYouGet: discountAmount,  discountedPrice: afterDiscount, applied: true, userId: userCode.id, from: 'referral', codeApplied: referralCode, referrerCredit: referrerCredit};
+          return { discount: referProgram.discount.toFixed(2), discountYouGet: discountAmount.toFixed(2),  discountedPrice: afterDiscount.toFixed(2), applied: true, userId: userCode.id, from: 'referral', codeApplied: referralCode, referrerCredit: referrerCredit.toFixed(2) };
           
       } else {
         
@@ -88,20 +88,21 @@ async function ApplyCode(receiver, price, code, plan) {
         let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, status: true });
       
           if( userUsedHistory < affiliate.allowed_usage_per_user && usedHistory < affiliate.limit ) {
-            let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
+            let discountAmount = (parseFloat(affiliate.discount)/parseFloat(100)) * parseFloat(price);
             if(affiliate.maximum_allowed_discount !== null) {
               discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
             }
             
-            let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+            let discountedPrice = parseFloat(price) - parseFloat(discountAmount.toFixed(2));
 
             if(affiliate.fixed_amount_status === true ) {
               var affiliateCredit = affiliate.fixed_amount;
             } else {
               var affiliateCredit =  (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount;
             }
-    
-            return {referrerCredit: affiliateCredit, applicableFor: affiliate.applied_for, affiliateId: affiliate.id, userId: affiliate.user.id, discount: affiliate.discount, from: 'affiliate', discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, CodeApplied :referralCode }
+
+            return {referrerCredit: affiliateCredit.toFixed(2), applicableFor: affiliate.applied_for, affiliateId: affiliate.id, userId: affiliate.user.id, discount: affiliate.discount.toFixed(2), from: 'affiliate', discountedPrice: discountedPrice.toFixed(2), discountYouGet: discountAmount.toFixed(2), applied: true, CodeApplied :referralCode }
+
           } else {
             if(affiliate.limit <= 0 || affiliate.allowed_usage_per_user <= 0) {
               var msg = "Affiliate limit or user limit is set 0";
@@ -123,11 +124,11 @@ async function ApplyCode(receiver, price, code, plan) {
         let userUsedHistory = await strapi.query("referral-code-transaction").count({ referral_code: referralCode, user: receiver, status: true });
       
           if( userUsedHistory < affiliate.allowed_usage_per_user && usedHistory < affiliate.limit ) {
-            let discountAmount = (parseInt(affiliate.discount)/parseInt(100)) * parseInt(price);
+            let discountAmount = (parseFloat(affiliate.discount)/parseFloat(100)) * parseFloat(price);
             if(affiliate.maximum_allowed_discount !== null) {
               discountAmount = (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount; 
             }
-            let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+            let discountedPrice = parseFloat(price) - parseFloat(discountAmount.toFixed(2));
 
             if(affiliate.fixed_amount_status === true ) {
               var affiliateCredit = affiliate.fixed_amount;
@@ -135,7 +136,7 @@ async function ApplyCode(receiver, price, code, plan) {
               var affiliateCredit =  (discountAmount <= affiliate.maximum_allowed_discount) ? discountAmount: affiliate.maximum_allowed_discount;
             }
 
-            return { referrerCredit: affiliateCredit, applicableFor: affiliate.applied_for, affiliateId: affiliate.id, userId: affiliate.user.id, discount: affiliate.discount, from: 'affiliate', discountedPrice: discountedPrice, discountYouGet: Math.floor(discountAmount), applied: true, CodeApplied :referralCode }
+            return { referrerCredit: affiliateCredit.toFixed(2), applicableFor: affiliate.applied_for, affiliateId: affiliate.id, userId: affiliate.user.id, discount: affiliate.discount.toFixed(2), from: 'affiliate', discountedPrice: discountedPrice.toFixed(2), discountYouGet: discountAmount.toFixed(2), applied: true, CodeApplied :referralCode }
           } else {
             if(affiliate.limit <= 0 || affiliate.allowed_usage_per_user <= 0) {
               var msg = "Affiliate limit or user limit is set 0";
@@ -162,14 +163,14 @@ async function ApplyCode(receiver, price, code, plan) {
 
         if(new Date().toString() >= start_date && end_date >= start_date || (promocode.start_date ===null || promocode.end_date === null) )  {
           if( getPromoCodeUsedCountByUser < promocode.maximum_usage_per_user && getPromoCodeUsedCountByAllUsers < promocode.limit ) {
-            let discountAmount = (parseInt(promocode.discount)/parseInt(100)) * parseInt(price);
+            let discountAmount = (parseFloat(promocode.discount)/parseFloat(100)) * parseFloat(price);
             if(promocode.allowed_maximum_discount !== null) {
               discountAmount = (discountAmount <= promocode.allowed_maximum_discount) ? discountAmount: promocode.allowed_maximum_discount; 
             } 
             
-            let discountedPrice = parseInt(price) - parseInt(Math.floor(discountAmount));
+            let discountedPrice = parseFloat(price) - parseFloat(discountAmount.toFixed(2));
             
-            return { discount: promocode.discount, discountedPrice: discountedPrice, promocodeId: promocode.id, from: 'promocode', discountYouGet: Math.floor(discountAmount), applied: true, CodeAapplied: referralCode }
+            return { discount: promocode.discount.toFixed(2), discountedPrice: discountedPrice.toFixed(2), promocodeId: promocode.id, from: 'promocode', discountYouGet: discountAmount.toFixed(2), applied: true, CodeAapplied: referralCode }
           } else {
             if(promocode.limit <= 0 || promocode.maximum_usage_per_user <= 0 ) {
               var msg = "Promocode limit or user limit is set to 0";

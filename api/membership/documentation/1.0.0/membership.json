@@ -648,7 +648,7 @@
                 "type": "string"
               },
               "amount": {
-                "type": "integer"
+                "type": "number"
               },
               "expiry": {
                 "type": "datetime"
@@ -657,7 +657,7 @@
                 "type": "string"
               },
               "discount": {
-                "type": "integer"
+                "type": "number"
               },
               "paid_amount": {
                 "type": "number"

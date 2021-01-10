@@ -19,7 +19,7 @@
       "type": "string"
     },
     "amount": {
-      "type": "integer"
+      "type": "decimal"
     },
     "expiry": {
       "type": "datetime"
@@ -28,7 +28,7 @@
       "type": "string"
     },
     "discount": {
-      "type": "integer"
+      "type": "decimal"
     },
     "paid_amount": {
       "type": "decimal"

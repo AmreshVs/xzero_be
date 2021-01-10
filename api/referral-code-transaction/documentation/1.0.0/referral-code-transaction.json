@@ -565,10 +565,10 @@
                 "type": "integer"
               },
               "discount": {
-                "type": "integer"
+                "type": "number"
               },
               "maximum_allowed_discount": {
-                "type": "integer"
+                "type": "number"
               },
               "status": {
                 "type": "boolean"
@@ -780,7 +780,7 @@
                 "type": "number"
               },
               "discount": {
-                "type": "integer"
+                "type": "number"
               },
               "cost": {
                 "type": "number"
@@ -912,7 +912,7 @@
             "type": "number"
           },
           "discount": {
-            "type": "integer"
+            "type": "number"
           },
           "paid_amount": {
             "type": "number"
@@ -1047,7 +1047,7 @@
             "type": "number"
           },
           "discount": {
-            "type": "integer"
+            "type": "number"
           },
           "paid_amount": {
             "type": "number"
