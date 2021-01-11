@@ -430,6 +430,7 @@ const EditViewDataManagerProvider = ({
         });
       }
 
+      
       try {
         // Time to actually send the data
         await request(
@@ -565,13 +566,15 @@ const EditViewDataManagerProvider = ({
 
               var res = await request('/DeclareVoucherWinner', {
                 method: 'POST',
-                headers: {},
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
                 body: {
                   id: cleanedData.id,
                   draw_status: cleanedData.draw_status
                 },
               });
-
 
 
               if(res) {
@@ -589,7 +592,10 @@ const EditViewDataManagerProvider = ({
           if(smsDetails.status !== true  && (cleanedData.status == true)) {
             var send = await request('/SendBulkSms', {
               method: 'POST',
-              headers: {},
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
               body: {
                 id: cleanedData.id
               },
@@ -611,7 +617,10 @@ const EditViewDataManagerProvider = ({
 
               var res = await request('/WithdrawMoney', {
                 method: 'POST',
-                headers: {},
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json'
+                },
                 body: {
                   user: cleanedData.user,
                   status: cleanedData.withdrawal_status,
@@ -627,6 +636,33 @@ const EditViewDataManagerProvider = ({
               }
 
         }
+
+        
+        if (currentContentTypeLayout.apiID === 'membership'  ) { 
+          let bodyData = {
+            user_id: cleanedData.user,
+            plan: cleanedData.package,
+            type: "manual",
+            serial: cleanedData.serial
+          }
+          
+          var res = await request('/generateMembership', {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: bodyData,
+          });
+
+          if(res) {
+            console.log( res );
+          } else {
+            console.log("something is went wrong")
+          }
+        }
+
+
 
         //update withdrawal status end here
         if (isSingleType) {

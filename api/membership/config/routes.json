@@ -24,6 +24,7 @@
         "policies": []
       }
     },
+    
     {
       "method": "POST",
       "path": "/memberships",
@@ -47,6 +48,14 @@
       "config": {
         "policies": []
       }
+    },
+
+    {
+      "method": "POST",
+      "path": "/generateMembership",
+      "handler": "membership.generateMembership"
     }
+
+    
   ]
 }

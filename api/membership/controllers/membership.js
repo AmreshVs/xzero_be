@@ -292,6 +292,7 @@ async QRforExistingUser(reset = false) {
   async generateMembership(ctx) {
     //new code
     const params = ctx.request.body;
+    
     let user_id = params.user_id;
     let plan = params.plan;
     if(params.code) {
@@ -299,6 +300,8 @@ async QRforExistingUser(reset = false) {
     } else {
       var code = null;
     }
+
+
     //ends
   
     function generateMemberId(length) {
@@ -384,16 +387,30 @@ async QRforExistingUser(reset = false) {
 
     }
     
-
+    
     if (checkUserExist === null) {
+      
+      let serial = await generateSerial();
+
+      if(typeof params.type !== 'undefined' && params.type === 'manual') {
+        var paidAmount = 0;
+        var remarks = "Added from strapi manually";
+        serial = params.serial.toUpperCase();
+      } else if(code === null) {
+        var paidAmount = packageSelected.price;
+      } else {
+        var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
+      }
+
       
       let expiryDate = new Date(new Date().setMonth(new Date().getMonth() + packageSelected.duration));
       
-      let serial = await generateSerial();
+      
       
       var userInfo = { userid: user_id, serial: serial };
       let qrCodeFile = await createQR(userInfo);
 
+       
       
       let membership = await strapi
         .query("membership")
@@ -404,13 +421,10 @@ async QRforExistingUser(reset = false) {
           package: plan,
           limit: offerLimit,
           expiry: expiryDate,
+          remarks: remarks ? remarks:null
         });
 
-        if(code === null) {
-          var paidAmount = packageSelected.price;
-        } else {
-          var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
-        }  
+        
 
       await strapi
         .query("membership-transactions")
@@ -514,18 +528,29 @@ async QRforExistingUser(reset = false) {
       
 
     } else {
-      let serial = await generateSerial();
-      var userInfo = { userid: user_id, serial: serial };;
-      let qrCodeFile = await createQR(userInfo);
 
-      if(code === null) {
+      let serial = await generateSerial();
+
+      if(typeof params.type !== 'undefined' && params.type === 'manual') {
+        var paidAmount = 0;
+        var remarks = "Added from strapi manually";
+        serial = params.serial.toUpperCase();
+      } else if(code === null) {
         var paidAmount = packageSelected.price;
       } else {
         var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
       }
 
-      let expiryDate = new Date(new Date(checkUserExist.expiry).setMonth(new Date(checkUserExist.expiry).getMonth()+packageSelected.duration));
+      var userInfo = { userid: user_id, serial: serial };;
+      let qrCodeFile = await createQR(userInfo);
 
+      if(checkUserExist !==null && checkUserExist.expiry !== null) {
+        var expiryDate = new Date(new Date(checkUserExist.expiry).setMonth(new Date(checkUserExist.expiry).getMonth()+packageSelected.duration));
+      } else {
+        var expiryDate = new Date(new Date().setMonth(new Date().getMonth() + packageSelected.duration));
+      }
+      
+      
       await strapi
         .query("membership-transactions")
         .create({
@@ -550,6 +575,7 @@ async QRforExistingUser(reset = false) {
             package: plan,
             limit: totalOfferLimit,
             expiry: expiryDate,
+            remarks: remarks ? remarks:null
 
           }
         );

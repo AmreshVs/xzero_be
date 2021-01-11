@@ -60,9 +60,8 @@ async function sendMail(user_id, withdrawDetails = {}, status) {
 module.exports = {
     async WithdrawMoney(ctx) {
   
-      let params = ctx.request.body;
-      params = JSON.parse(params);
-    
+      const params = ctx.request.body;
+      
       let user = params.user;
       let withdrawAmount = params.withdrawAmount;
       
