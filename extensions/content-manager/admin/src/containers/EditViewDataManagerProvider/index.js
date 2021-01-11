@@ -639,12 +639,6 @@ const EditViewDataManagerProvider = ({
 
         
         if (currentContentTypeLayout.apiID === 'membership'  ) { 
-          let bodyData = {
-            user_id: cleanedData.user,
-            plan: cleanedData.package,
-            type: "manual",
-            serial: cleanedData.serial
-          }
           
           var res = await request('/generateMembership', {
             method: 'POST',
@@ -652,11 +646,16 @@ const EditViewDataManagerProvider = ({
               'Accept': 'application/json',
               'Content-Type': 'application/json'
             },
-            body: bodyData,
+            body: {
+              user_id: cleanedData.user,
+              plan: cleanedData.package,
+              type: "manual",
+              serial: cleanedData.serial
+            },
           });
 
           if(res) {
-            console.log( res );
+            console.log( "created");
           } else {
             console.log("something is went wrong")
           }
