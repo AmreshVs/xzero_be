@@ -395,7 +395,7 @@ async QRforExistingUser(reset = false) {
       if(typeof params.type !== 'undefined' && params.type === 'manual') {
         var paidAmount = 0;
         var remarks = "Added from strapi manually";
-        serial = params.serial.toUpperCase();
+        serial = params.serial? params.serial.toUpperCase(): serial
       } else if(code === null) {
         var paidAmount = packageSelected.price;
       } else {
@@ -534,14 +534,16 @@ async QRforExistingUser(reset = false) {
       if(typeof params.type !== 'undefined' && params.type === 'manual') {
         var paidAmount = 0;
         var remarks = "Added from strapi manually";
-        serial = params.serial.toUpperCase();
+      
+        serial = params.serial? params.serial.toUpperCase(): serial
+        
       } else if(code === null) {
         var paidAmount = packageSelected.price;
       } else {
         var paidAmount = afterCodeApply.discountedPrice ? afterCodeApply.discountedPrice: 0;
       }
 
-      var userInfo = { userid: user_id, serial: serial };;
+      var userInfo = { userid: user_id, serial: serial };
       let qrCodeFile = await createQR(userInfo);
 
       if(checkUserExist !==null && checkUserExist.expiry !== null) {
