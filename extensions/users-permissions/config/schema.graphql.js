@@ -132,12 +132,11 @@ module.exports = {
 
           context.request.body = _.toPlainObject(options.input);
 
-          let output = await strapi.plugins['users-permissions'].controllers.auth.updateUserData(context);
+          await strapi.plugins['users-permissions'].controllers.auth.updateUserData(context);
+          let output = context.body.toJSON ? context.body.toJSON() : context.body;
           
-
           checkBadRequest(output);
-
-          return output;
+          return output
         },
       }
 

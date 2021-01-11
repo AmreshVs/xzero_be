@@ -146,7 +146,7 @@ module.exports = {
         }
       }
 
-      //console.log(sendMsg); return false;
+      
 
       return ctx.send({
         otp: otp,
@@ -464,12 +464,39 @@ module.exports = {
   {
     let params = ctx.request.body;
 
-  
+    
+    if(params.data.birthday) {
+      let minimumAge = 10;
+      let born = params.data.birthday;
+      let now = new Date();
+        var birthday = new Date(now.getFullYear(), born.getMonth(), born.getDate());
+        if (now >= birthday) {
+          var diff =  now.getFullYear() - born.getFullYear();
+        } else {
+          var diff= now.getFullYear() - born.getFullYear() - 1;
+        }
+        if(diff <= 0) { 
+          return ctx.badRequest(
+            null,
+            formatError({
+              id: 'Profile.form.error.birthday.provide',
+              message: 'Please check the date you entered',
+            })
+          );
+        } else if(diff < minimumAge) {
+          return ctx.badRequest(
+                null,
+                formatError({
+                  id: 'Profile.form.error.birthday.provide',
+                  message: 'You need to be atleast '+minimumAge+' years old',
+                })
+              );
+        }
+    }
+   
     let updatedOne = await strapi.query('user', 'users-permissions').update({ id: params.where.id }, { ...params.data });
     
-    return {
-      user: updatedOne
-    };
+    return ctx.send({user: updatedOne});
   
   },
 
