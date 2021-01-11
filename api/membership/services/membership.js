@@ -11,8 +11,8 @@ let fs = require("fs");
 const { sanitizeEntity } = require('strapi-utils');
 
 
-// const membershipEmailTemplate = require("../membershipEmailTemplate");
-// const membershipRenewalEmailTemplate = require("../membershipRenewalEmailTemplate");
+const membershipEmailTemplate = require("../membershipEmailTemplate");
+const membershipRenewalEmailTemplate = require("../membershipRenewalEmailTemplate");
 
 
 Date.prototype.addDays = function (days) {
@@ -20,6 +20,39 @@ Date.prototype.addDays = function (days) {
   date.setDate(date.getDate() + days);
   return date;
 };
+
+
+async function sendMail(user_id, status) {
+  let user = await strapi
+    .query("user", "users-permissions")
+    .findOne({ id: user_id });
+  try {
+    let emailTemplate = {};
+    if (status === "create") {
+      emailTemplate = {
+        subject: "Gift from xzero - Xzero Membership activated",
+        text: `Thank you for using Xzero App`,
+        html: membershipEmailTemplate,
+      };
+    } else {
+      emailTemplate = {
+        subject: "Xzero Membership Renewed!",
+        text: `Thank you for using Xzero App`,
+        html: membershipRenewalEmailTemplate,
+      };
+    }
+    // Send an email to the user.
+    await strapi.plugins["email"].services.email.sendTemplatedEmail(
+      {
+        to: user.email,
+        from: "support@xzero.app",
+      },
+      emailTemplate
+    );
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 module.exports = {
   async generateMembership(user_id, plan, duration = null) {
@@ -99,15 +132,6 @@ module.exports = {
       var userInfo = { userid: user_id, serial: serial };
       let qrCodeFile = await createQR(userInfo);
 
-
-      // if(duration === "6months") {
-      //   var expiry =  expiryDate.addDays(180)
-      // } else if(duration === "1year") {
-      //   var expiry =  expiryDate.addDays(365);
-      // } else {
-      //   var expiry = new Date(new Date().setMonth(new Date().getMonth()+duration)); 
-      // }
-
       var expiry = new Date(new Date().setMonth(new Date().getMonth()+duration)); 
 
       let membership = await strapi
@@ -133,7 +157,7 @@ module.exports = {
         });
 
           
-      //sendMail(user_id, "create");
+      sendMail(user_id, "create");
       return membership;
       
     } else {
@@ -141,14 +165,7 @@ module.exports = {
       var userInfo = { userid: user_id, serial: serial };;
       let qrCodeFile = await createQR(userInfo);
 
-      // if(duration === "6months") {
-      //   var expiry =  new Date(checkUserExist.expiry).addDays(180);
-      // } else if(duration === "1year") {
-      //   var expiry =  new Date(checkUserExist.expiry).addDays(365);
-      // } else {
-      //   var expiry = new Date(new Date().setMonth(new Date().getMonth()+duration)); 
-      // }
-
+    
       var expiry = new Date(new Date(checkUserExist.expiry).setMonth(new Date(checkUserExist.expiry).getMonth()+duration)); 
 
       await strapi
@@ -177,7 +194,7 @@ module.exports = {
           }
         );
 
-      //sendMail(user_id, "renewal");
+      sendMail(user_id, "renewal");
       return membership;
     }
   }
