@@ -14,6 +14,8 @@ module.exports = {
             
         type ReferralHistory {
             referProgram : ReferralProgram,
+            affiliate: Affiliate,
+            label: JSON,
             referralCode: JSON 
             totalEarned: Float, 
             totalReferred: Int , 

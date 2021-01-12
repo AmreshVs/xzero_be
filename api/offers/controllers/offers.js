@@ -14,7 +14,7 @@ module.exports = {
   async offerListWithFavourites(condition, user_id = null) {
     let is_favourite = false
     let offers = await strapi.query('offers').find(condition);
-    let userFavourites = await strapi.query('favourites').find({ user: user_id  });
+    let userFavourites = await strapi.query('favourites').find({ user: user_id, _limit: -1  });
     let allFav = [].concat(...userFavourites.map((userFavourite) => userFavourite.favourites? userFavourite.favourites.split(","):"0"  ));
     return Promise.all(offers.map(async (offer) => {
       
