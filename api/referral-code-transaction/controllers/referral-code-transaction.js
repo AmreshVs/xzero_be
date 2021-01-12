@@ -85,7 +85,7 @@ module.exports = {
           label = user ? "referral":null;
         }
         
-        return { referProgram: referralCode? referProgram:null, affiliate: affiliate, referralCode: referralCode, label: label, totalEarned: totalEarned, totalReferred: totalReferred, balance: totalAmountDebited } ;
+        return { referProgram: referralCode? referProgram:null, referralCode: referralCode, label: label, totalEarned: totalEarned, totalReferred: totalReferred, balance: totalAmountDebited } ;
     }
     
 }
