@@ -64,7 +64,7 @@ module.exports = {
         let totalAmountDebited = withdrawalHistory ? withdrawalHistory.remaining_amount: totalEarned;
         let totalReferred = referHistory.length;
 
-        let affiliate = await strapi.query('affiliate').findOne({ user: referrer });
+        let affiliate = await strapi.query('affiliate').findOne({ user: referrer, _sort:'id:desc', status: true });
 
         let referralCode = affiliate ? affiliate.referral_code : null;
 
