@@ -66,18 +66,26 @@ module.exports = {
 
         let affiliate = await strapi.query('affiliate').findOne({ user: referrer });
 
-        let referralCode = affiliate.referral_code ? affiliate.referral_code : null;
+        let referralCode = affiliate ? affiliate.referral_code : null;
 
         let label = "affiliate"
-
+        if(affiliate !== null){
+          referProgram.discount = affiliate.discount;
+          referProgram.allowed_maximum_discount= affiliate.maximum_allowed_discount;
+          referProgram.referrer_allowed_maximum_amount = affiliate.maximum_allowed_discount;
+          if(affiliate.fixed_amount_status === true) {
+            referProgram.referrer_allowed_maximum_amount = affiliate.fixed_amount;
+          }
+          
+        }
         
         if(referralCode === null) {
           let user = await strapi.query('user', 'users-permissions').findOne({ id: referrer });
           referralCode = user ? user.referral_code: null;
-          label = "referral";
+          label = user ? "referral":null;
         }
         
-        return { referProgram: referProgram, affiliate: affiliate, referralCode: referralCode, label: label, totalEarned: totalEarned, totalReferred: totalReferred, balance: totalAmountDebited } ;
+        return { referProgram: referralCode? referProgram:null, affiliate: affiliate, referralCode: referralCode, label: label, totalEarned: totalEarned, totalReferred: totalReferred, balance: totalAmountDebited } ;
     }
     
 }
