@@ -127,7 +127,8 @@ module.exports = {
       },
 
       updateUserData: {
-        resolverOf: 'plugins::users-permissions.auth.callback',
+        //policies: ['plugins::users-permissions.isAuthenticated'],
+        resolverOf: 'plugins::users-permissions.user.update',
         resolver: async (obj, options, { context }) => {
 
           context.request.body = _.toPlainObject(options.input);
