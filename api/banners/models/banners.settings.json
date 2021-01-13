@@ -21,7 +21,7 @@
       "required": false
     },
     "banner_img_en": {
-      "collection": "file",
+      "model": "file",
       "via": "related",
       "allowedTypes": [
         "images",
@@ -32,7 +32,7 @@
       "required": false
     },
     "banner_img_ar": {
-      "collection": "file",
+      "model": "file",
       "via": "related",
       "allowedTypes": [
         "images",
