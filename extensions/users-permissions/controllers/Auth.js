@@ -291,7 +291,7 @@ module.exports = {
 
 
   async createNewUser(ctx, params) {
- 
+    
     const pluginStore = await strapi.store({
       environment: '',
       type: 'plugin',
@@ -322,6 +322,33 @@ module.exports = {
       createError = new Error('Please provide your email.');
       createError.code = 400;
       throw createError;
+    }
+    
+
+     // birthday is required field validation.
+     if (!params.birthday) {
+      createError = new Error('Birthday cannot be blank');
+      createError.code = 400;
+      throw createError;
+    } else if(params.birthday) {
+      let minimumAge = 10;
+      let born = params.birthday;
+      let now = new Date();
+        var birthday = new Date(now.getFullYear(), born.getMonth(), born.getDate());
+        if (now >= birthday) {
+          var diff =  now.getFullYear() - born.getFullYear();
+        } else {
+          var diff = now.getFullYear() - born.getFullYear() - 1;
+        }
+        if(diff < 0) { 
+          createError = new Error('Please check the date you entered');
+          createError.code = 400;
+          throw createError;
+        } else if(diff < minimumAge) {
+          createError = new Error('You need to be atleast '+minimumAge+' years old');
+          createError.code = 400;
+          throw createError;
+        }
     }
 
     // Throw an error if the password selected by the user
@@ -475,7 +502,7 @@ module.exports = {
         } else {
           var diff= now.getFullYear() - born.getFullYear() - 1;
         }
-        if(diff <= 0) { 
+        if(diff < 0) { 
           return ctx.badRequest(
             null,
             formatError({
