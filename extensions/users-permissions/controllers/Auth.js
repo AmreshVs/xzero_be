@@ -326,7 +326,7 @@ module.exports = {
     
 
      // birthday is required field validation.
-     if (!params.birthday) {
+     if (!params.birthday && typeof params.birthday !== 'undefined') {
       createError = new Error('Birthday cannot be blank');
       createError.code = 400;
       throw createError;
