@@ -393,7 +393,7 @@ module.exports = {
 
     //clear the non-user token upon being a user
     const nonuser = await strapi.query('non-users').findOne({
-      notification_token: params.notification_token
+      device_id: params.device_id
     });    
     if(nonuser !== null) {
       await strapi.query('non-users').delete({
