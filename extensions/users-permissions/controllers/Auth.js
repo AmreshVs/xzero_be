@@ -373,6 +373,14 @@ module.exports = {
     // Check if the provided email is valid or not.
     const isEmail = emailRegExp.test(params.email);
 
+    var ranges = [
+      '\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
+      '\ud83d[\udc00-\ude4f]', // U+1F400 to U+1F64F
+      '\ud83d[\ude80-\udeff]',  // U+1F680 to U+1F6FF
+    ];
+      
+    params.username = params.username.replace(new RegExp(ranges.join('|'), 'g'), '');
+
     if (isEmail) {
       params.email = params.email.toLowerCase();
     } else {

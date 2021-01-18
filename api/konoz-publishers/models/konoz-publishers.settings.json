@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "konoz_publishers",
+  "info": {
+    "name": "Konoz publishers"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "fullname": {
+      "type": "string"
+    },
+    "email": {
+      "type": "email"
+    },
+    "password": {
+      "type": "password"
+    },
+    "mobile_number": {
+      "type": "biginteger"
+    },
+    "status": {
+      "type": "boolean",
+      "default": true,
+      "private": false
+    },
+    "no_of_times_announced": {
+      "type": "integer",
+      "default": 0
+    },
+    "winner_id": {
+      "type": "integer"
+    }
+  }
+}
