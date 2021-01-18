@@ -22,6 +22,7 @@ const formatError = error => [
 module.exports = {
 
   async SendSms(ctx) {
+    
     const phoneRegExpINTL =  /^(\+?\d{1,4}[- ]?)?\d{10}$/;
 
     var sentStatus = false;
@@ -29,7 +30,13 @@ module.exports = {
 
     let user = params.user;
     let mobile = params.mobile;
+    
     let lang = params.lang;
+
+    if(mobile.length === 9 || mobile.length === 10) {
+      mobile = '971'+mobile;
+    }
+    
 
     let smsInfo = await strapi.query('sms').findOne({ status: true });
     
@@ -399,6 +406,8 @@ module.exports = {
       mobile_number: params.mobile_number,
     });
 
+
+
     //clear the non-user token upon being a user
     const nonuser = await strapi.query('non-users').findOne({
       device_id: params.device_id
@@ -415,7 +424,7 @@ module.exports = {
       createError.code = 400;
       throw createError;
     }
-
+    
     if (userInfoMobile && userInfoMobile.mobile_number === params.mobile_number) {
       createError = new Error('Mobile number is already used.');
       createError.code = 400;
@@ -432,6 +441,7 @@ module.exports = {
       params.confirmed = false;
       params.provider = params.provider || 'local';
 
+   
       //for adding referral code while adding a user via app
       var referral_code = Math.random().toString(36).substr(2, 6);
       const userRef = await strapi.query('user', 'users-permissions').findOne({
