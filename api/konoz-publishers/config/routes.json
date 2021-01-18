@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/konoz-publishers",
+      "handler": "konoz-publishers.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/konoz-publishers/count",
+      "handler": "konoz-publishers.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/konoz-publishers/:id",
+      "handler": "konoz-publishers.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/konoz-publishers",
+      "handler": "konoz-publishers.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/konoz-publishers/:id",
+      "handler": "konoz-publishers.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/konoz-publishers/:id",
+      "handler": "konoz-publishers.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
