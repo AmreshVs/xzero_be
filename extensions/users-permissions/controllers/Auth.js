@@ -33,11 +33,7 @@ module.exports = {
     
     let lang = params.lang;
 
-    // if(mobile.length === 9 || mobile.length === 10) {
-    //   mobile = '971'+mobile;
-    // }
     
-
     let smsInfo = await strapi.query('sms').findOne({ status: true });
     
     // if(params.mobile) {
@@ -66,7 +62,7 @@ module.exports = {
         null,
         formatError({
           id: 'otp.authenticate',
-          message: 'Mobile number is not valid',
+          message: 'Please enter country code, Ex - +971 if number in UAE',
         })
       ); 
 
