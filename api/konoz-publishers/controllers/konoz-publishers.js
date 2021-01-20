@@ -5,10 +5,18 @@
  * to customize this controller
  */
 
-module.exports = {
-  async announcerLogin(ctx) {
+const { sanitizeEntity } = require('strapi-utils');
+const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+const formatError = error => [
+  { messages: [{ id: error.id, message: error.message, field: error.field }] },
+];
+
+
+module.exports = {
+  async publisherLogin(ctx) {
     const params = ctx.request.body;
+    //console.log(params); return false;
 
     // The password is required.
     if (!params.password) {
@@ -26,16 +34,16 @@ module.exports = {
     // Check if the provided identifier is an email or not.
     const isEmail = emailRegExp.test(params.email);
 
+    
+
     // Set the identifier to the appropriate query field.
     if (isEmail) {
       query.email = params.email.toLowerCase();
-    } else {
-      query.username = params.identifier;
-    }
+    } 
 
     // Check if the user exists.
-    const user = await strapi.query('partner').findOne(query);
-
+    const user = await strapi.query('konoz-publishers').findOne(query);
+    
     if (!user) {
       return ctx.badRequest(
         null,
@@ -74,7 +82,7 @@ module.exports = {
           id: user.id,
         }),
         user: sanitizeEntity(user.toJSON ? user.toJSON() : user, {
-          model: strapi.query('partner').model,
+          model: strapi.query('konoz-publishers').model,
         }),
       });
     }

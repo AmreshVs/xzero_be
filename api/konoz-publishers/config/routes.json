@@ -47,6 +47,15 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/publisherLogin",
+      "handler": "konoz-publishers.publisherLogin",
+      "config": {
+        "policies": []
+      }
     }
+    
   ]
 }

@@ -467,31 +467,32 @@ module.exports = {
 					if(winners) {
             await Promise.all(winners.map(async (winner) => {
 
-              try {
-                await fetch('https://exp.host/--/api/v2/push/send', {
-                 method: 'POST',
-                 mode: 'no-cors',
-                 headers: {
-                   'accept': 'application/json',
-                   'accept-encoding': 'gzip, deflate',
-                   'content-type': 'application/json',
-                 },
-                 body: JSON.stringify({
-                   to: winner.user.notification_token,
-                   title: "XZERO - Draw Winners are out!",
-                   body: "Checkout whether you are in the list. Good luck",
-                   sound: 'default',
-                   priority: 'high'
-                 })
-               });
+            //   try {
+            //     await fetch('https://exp.host/--/api/v2/push/send', {
+            //      method: 'POST',
+            //      mode: 'no-cors',
+            //      headers: {
+            //        'accept': 'application/json',
+            //        'accept-encoding': 'gzip, deflate',
+            //        'content-type': 'application/json',
+            //      },
+            //      body: JSON.stringify({
+            //        to: winner.user.notification_token,
+            //        title: "XZERO - Draw Winners are out!",
+            //        body: "Checkout whether you are in the list. Good luck",
+            //        sound: 'default',
+            //        priority: 'high'
+            //      })
+            //    });
                
-             }
-             catch (e) {
-               console.log('Notification Push', e);
+            //  }
+            //  catch (e) {
+            //    console.log('Notification Push', e);
                
-             }
+            //  }
               
-             sendMail(winner.user.id);
+             //sendMail(winner.user.id);
+             
             }));
 						
 						ctx.send('published winner, email is sent');
