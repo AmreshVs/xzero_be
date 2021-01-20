@@ -33,6 +33,10 @@ module.exports = {
     
     let lang = params.lang;
 
+    if(mobile.length === 9 || mobile.length === 10 ){
+      mobile = "971"+mobile;
+    }
+    
     
     let smsInfo = await strapi.query('sms').findOne({ status: true });
     
@@ -319,6 +323,13 @@ module.exports = {
       createError.code = 400;
       throw createError;
     }
+
+    const phoneRegExpINTL =  /^(\+?\d{1,4}[- ]?)?\d{12}$/;
+    if(!String(params.mobile_number).match(phoneRegExpINTL)) {
+      createError = new Error('Please enter country code, Ex - +971 if number in UAE.');
+      createError.code = 400;
+      throw createError;
+    } 
 
     // Email is require d.
     if (!params.email) {
