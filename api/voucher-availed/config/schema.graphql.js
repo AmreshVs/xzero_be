@@ -31,6 +31,7 @@ module.exports = {
     mutation: `
         BuyVoucher(user_id: ID!, voucher_id: Int!, code: String): BoughtVoucher!,
         DeclareVoucherWinner(id: Int!, draw_status: String): JSON
+        WinnersList(id: Int!, draw_status: String): JSON
     `,
 
     query: `NotifyDrawDetails(user: Int): JSON`,
@@ -59,7 +60,23 @@ module.exports = {
             return output;
   
             }
+          },
+
+          WinnersList: {
+            description: 'function for to declare voucher winner',
+            policies: [],
+            resolverOf: 'application::voucher-availed.voucher-availed.find',
+            resolver: async (obj, options, {context}) => {
+          
+            context.request.body = _.toPlainObject(options);
+            await strapi.api['voucher-availed'].controllers['voucher-availed'].WinnersList(context);
+            let output = context.body.toJSON ? context.body.toJSON() : context.body;
+            checkBadRequest(output);
+            return output;
+  
+            }
           }
+
       },
 
       Query: {
