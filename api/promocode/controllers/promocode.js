@@ -262,11 +262,20 @@ module.exports = {
                 //return { applied: false, codeApplied: referralCode, msg: msg }
               }   
             } else {
+
+              
+              const plansInclude = affiliate.membership_plans.map(x => x.name_en).join(", ");
+              if(plansInclude) {
+                var msg = "Referral code is supported only for "+plansInclude+" memberships plan";
+              } else {
+                var msg = "Referral code is supported only for specific membership plan";
+              }
+
               return ctx.badRequest(
                 null,
                 formatError({
                   id: 'applycode.affiliateplan.support',
-                  message: "Referral code is supported only for specific membership plan",
+                  message: msg,
                 })
               ); 
             }
