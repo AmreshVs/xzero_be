@@ -324,12 +324,7 @@ module.exports = {
       throw createError;
     }
 
-    // const phoneRegExpINTL =  /^(\+?\d{1,4}[- ]?)?\d{12}$/;
-    // if(!String(params.mobile_number).match(phoneRegExpINTL) ) {
-    //   createError = new Error('Please enter country code, Ex - +971 if number in UAE.');
-    //   createError.code = 400;
-    //   throw createError;
-    // } 
+  
 
     // Email is require d.
     if (!params.email) {
@@ -447,6 +442,13 @@ module.exports = {
     try {
       params.confirmed = false;
       params.provider = params.provider || 'local';
+
+    // const phoneRegExpINTL =  /^(\+?\d{1,4}[- ]?)?\d{12}$/;
+    if(!String(params.mobile_number).match(phoneRegExpINTL) &&  params.provider === "local" ) {
+      createError = new Error('Please enter country code, Ex - +971 if number in UAE.');
+      createError.code = 400;
+      throw createError;
+    } 
 
    
       //for adding referral code while adding a user via app
