@@ -80,8 +80,7 @@ module.exports = {
      })
      .then(function(response) {
 
-       console.log(response.data.Status); 
-       
+      
       if(response.data.Status == 0) { 
          send = true;
        }

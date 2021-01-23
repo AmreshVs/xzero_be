@@ -120,7 +120,7 @@ module.exports = {
           null,
           formatError({
             id: 'otp.authenticate',
-            message: 'something went wrong, please try again later',
+            message: 'Error occured, try again later',
           })
         ); 
       }
@@ -209,7 +209,7 @@ module.exports = {
         null,
         formatError({
           id: 'otp.authenticate',
-          message: 'OTP expired. try resend OTP',
+          message: 'OTP expired, try resend OTP',
         })
       );
     } else if (parseInt(user.otp) === params.otp) {
@@ -256,7 +256,7 @@ module.exports = {
         null,
         formatError({
           id: 'otp.authenticate',
-          message: 'otp is not valid.',
+          message: 'OTP is invalid',
         })
       );
     }
@@ -312,14 +312,14 @@ module.exports = {
     let createError = null;
 
     if (!settings.allow_register) {
-      createError = new Error('Register action is currently disabled.');
+      createError = new Error('Register action is currently disabled');
       createError.code = 400;
       throw createError;
     }
 
     // Password is requ ired.
     if (!params.password) {
-      createError = new Error('Please provide your password.');
+      createError = new Error('Please provide your password');
       createError.code = 400;
       throw createError;
     }
@@ -328,7 +328,7 @@ module.exports = {
 
     // Email is require d.
     if (!params.email) {
-      createError = new Error('Please provide your email.');
+      createError = new Error('Please provide your email');
       createError.code = 400;
       throw createError;
     }
