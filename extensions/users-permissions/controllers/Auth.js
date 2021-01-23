@@ -182,7 +182,7 @@ module.exports = {
         null,
         formatError({
           id: 'otp.authenticate',
-          message: 'otp verification disabled',
+          message: 'OTP verification disabled',
         })
       );
     }
@@ -209,7 +209,7 @@ module.exports = {
         null,
         formatError({
           id: 'otp.authenticate',
-          message: 'otp expired.',
+          message: 'OTP expired. try resend OTP',
         })
       );
     } else if (parseInt(user.otp) === params.otp) {
