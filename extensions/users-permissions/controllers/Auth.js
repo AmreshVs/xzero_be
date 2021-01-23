@@ -397,6 +397,9 @@ module.exports = {
     }
 
 
+
+
+
     if (user && user.provider === params.provider) {
       createError = new Error('Email is already taken.');
       createError.code = 400;
@@ -415,8 +418,7 @@ module.exports = {
       throw createError;
     }
 
-     // birthday is required field validation.
-     if (!params.birthday && typeof params.birthday === 'undefined' && params.provider === "local") {
+    if (!params.birthday && typeof params.birthday === 'undefined' && params.provider === "local") {
       createError = new Error('Birthday cannot be blank');
       createError.code = 400;
       throw createError;
@@ -442,18 +444,19 @@ module.exports = {
     }
 
 
-    try {
-      params.confirmed = false;
-      params.provider = params.provider || 'local';
-
-    // const phoneRegExpINTL =  /^(\+?\d{1,4}[- ]?)?\d{12}$/;
+    const phoneRegExpINTL =  /^(\+?\d{1,4}[- ]?)?\d{12}$/;
     if(!String(params.mobile_number).match(phoneRegExpINTL) &&  params.provider === "local" ) {
       createError = new Error('Please enter country code, Ex - +971 if number in UAE.');
       createError.code = 400;
       throw createError;
     } 
-
    
+
+
+    try {
+      params.confirmed = false;
+      params.provider = params.provider || 'local';
+
       //for adding referral code while adding a user via app
       var referral_code = Math.random().toString(36).substr(2, 6);
       const userRef = await strapi.query('user', 'users-permissions').findOne({
