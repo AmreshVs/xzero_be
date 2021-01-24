@@ -523,7 +523,9 @@ module.exports = {
   async updateUserData(ctx) 
   {
     let params = ctx.request.body;
-
+    if(params.data.password) {
+      params.data.password = await strapi.plugins['users-permissions'].services.user.hashPassword({...params.data});
+    }
     
     if(params.data.birthday) {
       let minimumAge = 10;
