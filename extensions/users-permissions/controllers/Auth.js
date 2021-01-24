@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 /**
  * Auth.js controller
@@ -7,81 +7,58 @@
  */
 
 /* eslint-disable no-useless-escape */
-const _ = require('lodash');
-const { sanitizeEntity } = require('strapi-utils');
-const registerEmailTemplate = require('../registerEmailTemplate');
-const otpVerificationTemplate = require('../otpVerificationTemplate');
-const otpConfirmationTemplate = require('../otpConfirmationTemplate');
-
+const _ = require("lodash");
+const { sanitizeEntity } = require("strapi-utils");
+const registerEmailTemplate = require("../registerEmailTemplate");
+const otpVerificationTemplate = require("../otpVerificationTemplate");
+const otpConfirmationTemplate = require("../otpConfirmationTemplate");
 
 const emailRegExp = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const formatError = error => [
+const formatError = (error) => [
   { messages: [{ id: error.id, message: error.message, field: error.field }] },
 ];
 
 module.exports = {
-
   async SendSms(ctx) {
-    
-    const phoneRegExpINTL =  /^(\+?\d{1,4}[- ]?)?\d{12}$/;
-
+    const phoneRegExpINTL = /^(\+?\d{1,4}[- ]?)?\d{12}$/;
     var sentStatus = false;
     let params = ctx.request.body;
-
     let user = params.user;
     let mobile = params.mobile;
-    
+
     let lang = params.lang;
 
-    if(mobile.length === 9 || mobile.length === 10 ){
-      mobile = "971"+mobile;
+    if (mobile.length === 9 || mobile.length === 10) {
+      mobile = "971" + mobile;
     }
-    
-    
-    let smsInfo = await strapi.query('sms').findOne({ status: true });
-    
-    // if(params.mobile) {
-    //   let existingUser = await strapi.query('user', 'users-permissions').count({ mobile_number: params.mobile });
-    //   if(existingUser > 0 ){
-    //     return ctx.badRequest (
-    //       null,
-    //       formatError({
-    //         id: 'otp.mobilenumber.exist',
-    //         message: 'Mobile number is already choosen',
-    //       })
-    //     )
-    //   }
-    // }
 
-    if(user === 0 || user === null) {
+    let smsInfo = await strapi.query("sms").findOne({ status: true });
+
+    if (user === 0 || user === null) {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'otp.authenticate',
-          message: 'No record found',
+          id: "otp.authenticate",
+          message: "No record found",
         })
-      ); 
-    } else if(!String(mobile).match(phoneRegExpINTL)) {
+      );
+    } else if (!String(mobile).match(phoneRegExpINTL)) {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'otp.authenticate',
-          message: 'Please enter country code, Ex - +971 if number in UAE',
+          id: "otp.authenticate",
+          message: "Please enter country code, Ex - +971 if number in UAE",
         })
-      ); 
-
-    } 
-
-    
+      );
+    }
 
     if (smsInfo.status == true) {
-
       let type = "";
       let msg = smsInfo.otp_msg_en;
       let unicode = false;
       let email = true;
 
-      if (typeof params.email != 'undefined') {
+      if (typeof params.email != "undefined") {
         email = params.email;
       }
 
@@ -91,38 +68,48 @@ module.exports = {
         unicode = true;
       }
 
-
       var otp = Math.floor(1000 + Math.random() * 9000);
       let sendMsg = msg ? msg : "Thank you for using xzero app";
       sendMsg = msg + otp;
 
-      let dateTime = await strapi.services['app-basic-information'].CurrentDateTime();
+      let dateTime = await strapi.services[
+        "app-basic-information"
+      ].CurrentDateTime();
 
-      let updatedUser = await strapi.query('user', 'users-permissions').update({ id: user }, { otp: otp, otp_generated_at: dateTime });
+      let updatedUser = await strapi
+        .query("user", "users-permissions")
+        .update({ id: user }, { otp: otp, otp_generated_at: dateTime });
 
       let balance = await strapi.services.sms.QueryBalance();
 
-      if(updatedUser && balance > 0) {
-        
-        let sent  =  await strapi.services.sms.SendMessage(mobile, sendMsg, unicode);
-        
-        if(sent) {
-          sentStatus = true;
-          await strapi.query('sms').update({ id: smsInfo.id }, {
-            total_sms_sent: parseInt(smsInfo.total_sms_sent)+1
-          });
-        } else {
-          let updatedUser = await strapi.query('user', 'users-permissions').update({ id: user }, { otp: null, otp_generated_at: null });
-        }
+      if (updatedUser && balance > 0) {
+        let sent = await strapi.services.sms.SendMessage(
+          mobile,
+          sendMsg,
+          unicode
+        );
 
+        if (sent) {
+          sentStatus = true;
+          await strapi.query("sms").update(
+            { id: smsInfo.id },
+            {
+              total_sms_sent: parseInt(smsInfo.total_sms_sent) + 1,
+            }
+          );
+        } else {
+          let updatedUser = await strapi
+            .query("user", "users-permissions")
+            .update({ id: user }, { otp: null, otp_generated_at: null });
+        }
       } else {
         return ctx.badRequest(
           null,
           formatError({
-            id: 'otp.authenticate',
-            message: 'Error occured, try again later',
+            id: "otp.authenticate",
+            message: "Error occured, try again later",
           })
-        ); 
+        );
       }
 
       if (email === true) {
@@ -144,36 +131,32 @@ module.exports = {
             otpEmailTemplate,
 
             {
-              otp: { otp: otp }
+              otp: { otp: otp },
             }
-
           );
         } catch (err) {
           console.log(err);
         }
       }
 
-      
-
       return ctx.send({
         otp: otp,
         msg: sendMsg,
         status: sentStatus,
-        balance: balance
+        balance: balance,
       });
-
     }
-
   },
-
 
   //function for verfiy otp
   async verifyOtp(ctx) {
     let params = ctx.request.body;
 
-    let user = await strapi.query('user', 'users-permissions').findOne({ id: params.user });
+    let user = await strapi
+      .query("user", "users-permissions")
+      .findOne({ id: params.user });
 
-    let smsInfo = await strapi.query('sms').findOne({ status: true });
+    let smsInfo = await strapi.query("sms").findOne({ status: true });
 
     let status = false;
 
@@ -181,18 +164,19 @@ module.exports = {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'otp.authenticate',
-          message: 'OTP verification disabled',
+          id: "otp.authenticate",
+          message: "OTP verification disabled",
         })
       );
     }
 
-
-    var startDate = await strapi.services['app-basic-information'].CurrentDateTime(user.otp_generated_at);
-
-    var endDate = await strapi.services['app-basic-information'].CurrentDateTime();
-
-    var seconds = (endDate.getTime() - startDate.getTime());
+    var startDate = await strapi.services[
+      "app-basic-information"
+    ].CurrentDateTime(user.otp_generated_at);
+    var endDate = await strapi.services[
+      "app-basic-information"
+    ].CurrentDateTime();
+    var seconds = endDate.getTime() - startDate.getTime();
     var Seconds_from_T1_to_T2 = seconds / 1000;
     var Seconds_Between_Dates = Math.floor(Seconds_from_T1_to_T2);
 
@@ -200,88 +184,97 @@ module.exports = {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'otp.authenticate',
-          message: 'No otp found',
+          id: "otp.authenticate",
+          message: "No otp found",
         })
       );
     } else if (Seconds_Between_Dates >= smsInfo.expiry_seconds) {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'otp.authenticate',
-          message: 'OTP expired, try resend OTP',
+          id: "otp.authenticate",
+          message: "OTP expired, try resend OTP",
         })
       );
     } else if (parseInt(user.otp) === params.otp) {
       var msg = "Verification successfull";
-      await strapi.query('user', 'users-permissions').update({ id: params.user }, { confirmed: true });
-      await strapi.query('user', 'users-permissions').update({ id: params.user }, { otp: null, otp_generated_at: null });
+      await strapi
+        .query("user", "users-permissions")
+        .update({ id: params.user }, { confirmed: true });
+      await strapi
+        .query("user", "users-permissions")
+        .update({ id: params.user }, { otp: null, otp_generated_at: null });
       status = true;
 
       // email will be send after confirmation
       //if (email === true) {
-        try {
-          let otpEmailTemplate = {};
+      try {
+        let otpEmailTemplate = {};
 
-          otpEmailTemplate = {
-            subject: "Your Account has been verified",
-            text: `Thank You for using Xzero App`,
-            html: otpConfirmationTemplate,
-          };
+        otpEmailTemplate = {
+          subject: "Your Account has been verified",
+          text: `Thank You for using Xzero App`,
+          html: otpConfirmationTemplate,
+        };
 
-          // Send an email to the user.
-          await strapi.plugins["email"].services.email.sendTemplatedEmail(
-            {
-              to: user.email,
-              from: "support@xzero.app",
-            },
-            otpEmailTemplate,
+        // Send an email to the user.
+        await strapi.plugins["email"].services.email.sendTemplatedEmail(
+          {
+            to: user.email,
+            from: "support@xzero.app",
+          },
+          otpEmailTemplate,
 
-            {
-              otp: { otp: params.otp }
-            }
-
-          );
-        } catch (err) {
-          console.log(err);
-        }
+          {
+            otp: { otp: params.otp },
+          }
+        );
+      } catch (err) {
+        console.log(err);
+      }
       //}
 
       //end of email code
-
-
     } else {
-
       return ctx.badRequest(
         null,
         formatError({
-          id: 'otp.authenticate',
-          message: 'OTP is invalid',
+          id: "otp.authenticate",
+          message: "OTP is invalid",
         })
       );
     }
 
     return ctx.send({ msg: msg, status: status });
-
   },
 
   async UpdateUserReferralCode(user = null) {
+    let userRef = await strapi
+      .query("user", "users-permissions")
+      .find({ referral_code_ne: null || "" });
 
-    let userRef = await strapi.query('user', 'users-permissions').find({ referral_code_ne: null || '' });
-    
-    if(user === null || user === 0) {
-      var userAllwithNoRefercode = await strapi.query('user', 'users-permissions').find({ referral_code_eq: null });
+    if (user === null || user === 0) {
+      var userAllwithNoRefercode = await strapi
+        .query("user", "users-permissions")
+        .find({ referral_code_eq: null });
     } else {
-      var userAllwithNoRefercode = await strapi.query('user', 'users-permissions').find({ id: user, referral_code_eq: null });
+      var userAllwithNoRefercode = await strapi
+        .query("user", "users-permissions")
+        .find({ id: user, referral_code_eq: null });
     }
-    
-    let filterReferralCode = userRef.map(user => user.referral_code);
-    
+
+    let filterReferralCode = userRef.map((user) => user.referral_code);
+
     if (userAllwithNoRefercode.length > 0) {
-      userAllwithNoRefercode.forEach(user => {
+      userAllwithNoRefercode.forEach((user) => {
         let referral_code = Math.random().toString(36).substr(2, 6);
         if (!filterReferralCode.includes(referral_code)) {
-          var updatedUser = strapi.query('user', 'users-permissions').update({ id: user.id }, { referral_code: referral_code.toUpperCase() });
+          var updatedUser = strapi
+            .query("user", "users-permissions")
+            .update(
+              { id: user.id },
+              { referral_code: referral_code.toUpperCase() }
+            );
           //continue;
         } else {
           referral_code = Math.random().toString(36).substr(2, 6);
@@ -292,214 +285,230 @@ module.exports = {
       return { result };
     }
     let result = "success";
-    return { result }
+    return { result };
   },
 
-
-
   async createNewUser(ctx, params) {
-    
     const pluginStore = await strapi.store({
-      environment: '',
-      type: 'plugin',
-      name: 'users-permissions',
+      environment: "",
+      type: "plugin",
+      name: "users-permissions",
     });
 
     const settings = await pluginStore.get({
-      key: 'advanced',
+      key: "advanced",
     });
 
     let createError = null;
 
     if (!settings.allow_register) {
-      createError = new Error('Register action is currently disabled');
+      createError = new Error("Register action is currently disabled");
       createError.code = 400;
       throw createError;
     }
 
     // Password is requ ired.
     if (!params.password) {
-      createError = new Error('Please provide your password');
+      createError = new Error("Please provide your password");
       createError.code = 400;
       throw createError;
     }
-
-  
 
     // Email is require d.
     if (!params.email) {
-      createError = new Error('Please provide your email');
+      createError = new Error("Please provide your email");
       createError.code = 400;
       throw createError;
     }
-    
-
-    
 
     // Throw an error if the password selected by the user
     // contains more th an two times the symbol '$'.
-    if (strapi.plugins['users-permissions'].services.user.isHashed(params.password)) {
-      createError = new Error('Your password cannot contain more than three times the symbol `$`.');
+    if (
+      strapi.plugins["users-permissions"].services.user.isHashed(
+        params.password
+      )
+    ) {
+      createError = new Error(
+        "Your password cannot contain more than three times the symbol `$`."
+      );
       createError.code = 400;
       throw createError;
     }
 
     const role = await strapi
-      .query('role', 'users-permissions')
+      .query("role", "users-permissions")
       .findOne({ type: settings.default_role }, []);
 
     if (!role) {
-      createError = new Error('Impossible to find the default role.');
+      createError = new Error("Impossible to find the default role.");
       createError.code = 400;
       throw createError;
     }
-
 
     // Check if the provided email is valid or not.
     const isEmail = emailRegExp.test(params.email);
 
     var ranges = [
-      '\ud83c[\udf00-\udfff]', // U+1F300 to U+1F3FF
-      '\ud83d[\udc00-\ude4f]', // U+1F400 to U+1F64F
-      '\ud83d[\ude80-\udeff]',  // U+1F680 to U+1F6FF
+      "\ud83c[\udf00-\udfff]", // U+1F300 to U+1F3FF
+      "\ud83d[\udc00-\ude4f]", // U+1F400 to U+1F64F
+      "\ud83d[\ude80-\udeff]", // U+1F680 to U+1F6FF
     ];
-      
-    params.username = params.username.replace(new RegExp(ranges.join('|'), 'g'), '');
+
+    params.username = params.username.replace(
+      new RegExp(ranges.join("|"), "g"),
+      ""
+    );
 
     if (isEmail) {
       params.email = params.email.toLowerCase();
     } else {
-      createError = new Error('Please provide valid email address.');
+      createError = new Error("Please provide valid email address.");
       createError.code = 400;
       throw createError;
     }
 
     params.role = role.id;
-    params.password = await strapi.plugins['users-permissions'].services.user.hashPassword(params);
+    params.password = await strapi.plugins[
+      "users-permissions"
+    ].services.user.hashPassword(params);
 
-    const user = await strapi.query('user', 'users-permissions').findOne({
+    const user = await strapi.query("user", "users-permissions").findOne({
       email: params.email,
     });
-    const userInfoMobile = await strapi.query('user', 'users-permissions').findOne({
-      mobile_number: params.mobile_number,
-    });
-
-
+    const userInfoMobile = await strapi
+      .query("user", "users-permissions")
+      .findOne({
+        mobile_number: params.mobile_number,
+      });
 
     //clear the non-user token upon being a user
-    const nonuser = await strapi.query('non-users').findOne({
-      device_id: params.device_id
-    });    
-    if(nonuser !== null) {
-      await strapi.query('non-users').delete({
-        id: nonuser.id
+    const nonuser = await strapi.query("non-users").findOne({
+      device_id: params.device_id,
+    });
+    if (nonuser !== null) {
+      await strapi.query("non-users").delete({
+        id: nonuser.id,
       });
     }
 
-
-
-
-
     if (user && user.provider === params.provider) {
-      createError = new Error('Email is already taken.');
+      createError = new Error("Email is already taken.");
       createError.code = 400;
       throw createError;
     }
-    
-    if (userInfoMobile && userInfoMobile.mobile_number === params.mobile_number) {
-      createError = new Error('Mobile number is already used.');
+
+    if (
+      userInfoMobile &&
+      userInfoMobile.mobile_number === params.mobile_number
+    ) {
+      createError = new Error("Mobile number is already used.");
       createError.code = 400;
       throw createError;
     }
 
     if (user && user.provider !== params.provider && settings.unique_email) {
-      createError = new Error('Email is already taken.');
+      createError = new Error("Email is already taken.");
       createError.code = 400;
       throw createError;
     }
 
-    if (!params.birthday && typeof params.birthday === 'undefined' && params.provider === "local") {
-      createError = new Error('Birthday cannot be blank');
+    if (
+      !params.birthday &&
+      typeof params.birthday === "undefined" &&
+      params.provider === "local"
+    ) {
+      createError = new Error("Birthday cannot be blank");
       createError.code = 400;
       throw createError;
-    } else if(params.birthday && params.provider === "local") {
+    } else if (params.birthday && params.provider === "local") {
       let minimumAge = 10;
       let born = params.birthday;
       let now = new Date();
-        var birthday = new Date(now.getFullYear(), born.getMonth(), born.getDate());
-        if (now >= birthday) {
-          var diff =  now.getFullYear() - born.getFullYear();
-        } else {
-          var diff = now.getFullYear() - born.getFullYear() - 1;
-        }
-        if(diff < 0) { 
-          createError = new Error('Please check the date you entered');
-          createError.code = 400;
-          throw createError;
-        } else if(diff < minimumAge) {
-          createError = new Error('You need to be atleast '+minimumAge+' years old');
-          createError.code = 400;
-          throw createError;
-        }
+      var birthday = new Date(
+        now.getFullYear(),
+        born.getMonth(),
+        born.getDate()
+      );
+      if (now >= birthday) {
+        var diff = now.getFullYear() - born.getFullYear();
+      } else {
+        var diff = now.getFullYear() - born.getFullYear() - 1;
+      }
+      if (diff < 0) {
+        createError = new Error("Please check the date you entered");
+        createError.code = 400;
+        throw createError;
+      } else if (diff < minimumAge) {
+        createError = new Error(
+          "You need to be atleast " + minimumAge + " years old"
+        );
+        createError.code = 400;
+        throw createError;
+      }
     }
 
-
-    const phoneRegExpINTL =  /^(\+?\d{1,4}[- ]?)?\d{12}$/;
-    if(!String(params.mobile_number).match(phoneRegExpINTL) &&  params.provider === "local" ) {
-      createError = new Error('Please enter country code, Ex - +971 if number in UAE.');
+    const phoneRegExpINTL = /^(\+?\d{1,4}[- ]?)?\d{12}$/;
+    if (
+      !String(params.mobile_number).match(phoneRegExpINTL) &&
+      params.provider === "local"
+    ) {
+      createError = new Error(
+        "Please enter country code, Ex - +971 if number in UAE."
+      );
       createError.code = 400;
       throw createError;
-    } 
-   
-
+    }
 
     try {
       params.confirmed = false;
-      params.provider = params.provider || 'local';
+      params.provider = params.provider || "local";
 
       //for adding referral code while adding a user via app
       var referral_code = Math.random().toString(36).substr(2, 6);
-      const userRef = await strapi.query('user', 'users-permissions').findOne({
-        referral_code: referral_code
+      const userRef = await strapi.query("user", "users-permissions").findOne({
+        referral_code: referral_code,
       });
-      params.referral_code = userRef ? Math.random().toString(36).substr(2, 6).toUpperCase() : referral_code.toUpperCase();
+      params.referral_code = userRef
+        ? Math.random().toString(36).substr(2, 6).toUpperCase()
+        : referral_code.toUpperCase();
       //code referral ends
 
-      const user = await strapi.query('user', 'users-permissions').create(params);
+      const user = await strapi
+        .query("user", "users-permissions")
+        .create(params);
 
-      const jwt = strapi.plugins['users-permissions'].services.jwt.issue(
-        _.pick(user.toJSON ? user.toJSON() : user, ['id'])
+      const jwt = strapi.plugins["users-permissions"].services.jwt.issue(
+        _.pick(user.toJSON ? user.toJSON() : user, ["id"])
       );
 
       const sanitizedUser = sanitizeEntity(user.toJSON ? user.toJSON() : user, {
-        model: strapi.query('user', 'users-permissions').model,
+        model: strapi.query("user", "users-permissions").model,
       });
 
       try {
         const emailTemplate = {
-          subject: 'Thank You for registering to Xzero App - <%= user.firstname %>!',
+          subject:
+            "Thank You for registering to Xzero App - <%= user.firstname %>!",
           text: `Thank You for registering to Xzero App`,
           html: registerEmailTemplate,
         };
         // Send an email to the user.
-        await strapi.plugins['email'].services.email.sendTemplatedEmail(
+        await strapi.plugins["email"].services.email.sendTemplatedEmail(
           {
             to: (user.toJSON ? user.toJSON() : user).email,
             from: "admin@xzero.app",
           },
           emailTemplate,
           {
-            user: { firstname: (user.toJSON ? user.toJSON() : user).username }
+            user: { firstname: (user.toJSON ? user.toJSON() : user).username },
           }
         );
-        await strapi.plugins['email'].services.email.send(
-          {
-            to: 'user@xzero.app',
-            from: "admin@xzero.app",
-            subject: 'New User Registration - ' + user.username,
-            text: `New user registered to Xzero App. User Information \n Name: ${user.username} \n Email: ${user.email}`,
-          },
-        );
+        await strapi.plugins["email"].services.email.send({
+          to: "user@xzero.app",
+          from: "admin@xzero.app",
+          subject: "New User Registration - " + user.username,
+          text: `New user registered to Xzero App. User Information \n Name: ${user.username} \n Email: ${user.email}`,
+        });
       } catch (err) {
         console.log(err);
         return ctx.badRequest(null, err);
@@ -509,77 +518,79 @@ module.exports = {
         jwt,
         user: sanitizedUser,
       };
-
     } catch (err) {
-      if (_.includes(err.message, 'email')) {
-        createError = new Error('Email is already taken.');
+      if (_.includes(err.message, "email")) {
+        createError = new Error("Email is already taken.");
         createError.code = 400;
         throw createError;
       }
     }
   },
 
-
-  async updateUserData(ctx) 
-  {
+  async updateUserData(ctx) {
     let params = ctx.request.body;
-    if(params.data.password) {
-      params.data.password = await strapi.plugins['users-permissions'].services.user.hashPassword({...params.data});
+    if (params.data.password) {
+      params.data.password = await strapi.plugins[
+        "users-permissions"
+      ].services.user.hashPassword({ ...params.data });
     }
-    
-    if(params.data.birthday) {
+
+    if (params.data.birthday) {
       let minimumAge = 10;
       let born = params.data.birthday;
       let now = new Date();
-        var birthday = new Date(now.getFullYear(), born.getMonth(), born.getDate());
-        if (now >= birthday) {
-          var diff =  now.getFullYear() - born.getFullYear();
-        } else {
-          var diff= now.getFullYear() - born.getFullYear() - 1;
-        }
-        if(diff < 0) { 
-          return ctx.badRequest(
-            null,
-            formatError({
-              id: 'Profile.form.error.birthday.provide',
-              message: 'Please check the date you entered',
-            })
-          );
-        } else if(diff < minimumAge) {
-          return ctx.badRequest(
-                null,
-                formatError({
-                  id: 'Profile.form.error.birthday.provide',
-                  message: 'You need to be atleast '+minimumAge+' years old',
-                })
-              );
-        }
+      var birthday = new Date(
+        now.getFullYear(),
+        born.getMonth(),
+        born.getDate()
+      );
+      if (now >= birthday) {
+        var diff = now.getFullYear() - born.getFullYear();
+      } else {
+        var diff = now.getFullYear() - born.getFullYear() - 1;
+      }
+      if (diff < 0) {
+        return ctx.badRequest(
+          null,
+          formatError({
+            id: "Profile.form.error.birthday.provide",
+            message: "Please check the date you entered",
+          })
+        );
+      } else if (diff < minimumAge) {
+        return ctx.badRequest(
+          null,
+          formatError({
+            id: "Profile.form.error.birthday.provide",
+            message: "You need to be atleast " + minimumAge + " years old",
+          })
+        );
+      }
     }
-   
-    let updatedOne = await strapi.query('user', 'users-permissions').update({ id: params.where.id }, { ...params.data });
-    
-    return ctx.send({user: updatedOne});
-  
+
+    let updatedOne = await strapi
+      .query("user", "users-permissions")
+      .update({ id: params.where.id }, { ...params.data });
+
+    return ctx.send({ user: updatedOne });
   },
 
   async userLogin(ctx) {
-
     const params = ctx.request.body;
 
     const store = await strapi.store({
-      environment: '',
-      type: 'plugin',
-      name: 'users-permissions',
+      environment: "",
+      type: "plugin",
+      name: "users-permissions",
     });
-
 
     // The password is required.
     if (!params.password) {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'Auth.form.error.password.provide',
-          message: 'Please provide your password.',
+          id: "Auth.form.error.password.provide",
+          message: "Please provide your password.",
         })
       );
     }
@@ -597,52 +608,58 @@ module.exports = {
     }
 
     // Check if the user exists.
-    const user = await strapi.query('user', 'users-permissions').findOne(query);
+    const user = await strapi.query("user", "users-permissions").findOne(query);
 
     if (!user) {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'Auth.form.error.invalid',
-          message: 'Identifier or password invalid.',
+          id: "Auth.form.error.invalid",
+          message: "Identifier or password invalid.",
         })
       );
     }
-
-   
 
     if (user.blocked === true) {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'Auth.form.error.blocked',
-          message: 'Your account has been blocked by an administrator',
+          id: "Auth.form.error.blocked",
+          message: "Your account has been blocked by an administrator",
         })
       );
     }
 
     const validPassword = await strapi.plugins[
-      'users-permissions'
+      "users-permissions"
     ].services.user.validatePassword(params.password, user.password);
 
     if (!validPassword) {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'Auth.form.error.invalid',
-          message: 'Email or password invalid!',
+          id: "Auth.form.error.invalid",
+          message: "Email or password invalid!",
         })
       );
     } else {
+      await strapi
+        .query("user", "users-permissions")
+        .update(
+          { id: user.id },
+          {
+            app_version: params.app_version,
+            platform: params.platform,
+            device_id: params.device_id,
+          }
+        );
 
-      await strapi.query('user', 'users-permissions').update({ id: user.id }, { app_version: params.app_version, platform: params.platform, device_id: params.device_id });
-      
       ctx.send({
-        jwt: strapi.plugins['users-permissions'].services.jwt.issue({
+        jwt: strapi.plugins["users-permissions"].services.jwt.issue({
           id: user.id,
         }),
         user: sanitizeEntity(user.toJSON ? user.toJSON() : user, {
-          model: strapi.query('user', 'users-permissions').model,
+          model: strapi.query("user", "users-permissions").model,
         }),
       });
     }

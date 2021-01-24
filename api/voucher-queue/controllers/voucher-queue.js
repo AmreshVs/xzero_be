@@ -20,7 +20,6 @@ module.exports = {
     let voucherQueueCount = await strapi
       .query("voucher-queue")
       .count({ user_status: "pending", status: true });
-
     if (voucherQueueCount > voucherDetails.limit) {
       var disabled = true;
       return ctx.badRequest(
@@ -34,14 +33,12 @@ module.exports = {
       var msg = "Success";
       var disabled = false;
     }
-
     if (voucherQueueCount < voucherDetails.limit) {
       var create = await strapi.query("voucher-queue").create(queue);
     } else {
       let queued = { user: user, voucher: voucher, user_status: "queued" };
       var create = await strapi.query("voucher-queue").create(queued);
     }
-
     return ctx.send({
       queuedData: create,
       msg: msg,
@@ -77,7 +74,6 @@ module.exports = {
         }
       }
     }
-
     let voucherOnQueue = await strapi
       .query("voucher-queue")
       .count({ user_status: "pending", status: true });

@@ -200,7 +200,6 @@ module.exports = {
     let centerOffers = await strapi
       .query("center-check-in")
       .find({ center: center_id, _limit: 5, _sort: "id:desc" });
-
     if (centerOffers === null || centerOffers.length === 0) {
       offers = await strapi
         .query("offers")
@@ -218,24 +217,19 @@ module.exports = {
         return null;
       });
     }
-
     let center = await strapi.query("centers").findOne({ id: center_id });
     //queries to get the count
     let offersCount = await strapi
       .query("offers")
       .count({ center: center_id, status: true });
-
     const result = await strapi
       .query("center-check-in")
       .model.query((qb) => {
         qb.where("center", center_id), qb.distinct("user_id");
       })
       .fetchAll();
-
     const fields = result.toJSON();
-
     let visitsCount = fields.length;
-
     let favouritesCount = await strapi
       .query("favourites")
       .count({ center: center_id, status: true });
@@ -244,7 +238,6 @@ module.exports = {
       visits: visitsCount,
       favourites: favouritesCount,
     };
-
     return {
       counts: counts,
       offers: [

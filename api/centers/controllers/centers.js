@@ -9,7 +9,6 @@ const _ = require("lodash");
 module.exports = {
   async top_centers(condition) {
     let centers = await strapi.query("centers").find(condition);
-
     let offersByCenter = await Promise.all(
       centers.map(
         async ({ id, title_en, title_ar, place, city, featured_img }) => {
@@ -17,7 +16,6 @@ module.exports = {
           let discount = await strapi
             .query("offers")
             .find({ center: id, _limit: 1, _sort: "discount:desc" });
-
           return Promise.resolve({
             id,
             title_en,
@@ -32,7 +30,6 @@ module.exports = {
         }
       )
     );
-
     return _.orderBy(offersByCenter, ["discount"], ["desc"]);
   },
 };

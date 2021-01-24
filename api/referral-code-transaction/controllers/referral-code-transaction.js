@@ -53,7 +53,6 @@ module.exports = {
       referralCode = user ? user.referral_code : null;
       label = user ? "referral" : null;
     }
-
     return {
       referProgram: referralCode ? referProgram : null,
       referralCode: referralCode,

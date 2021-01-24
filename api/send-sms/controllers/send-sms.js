@@ -65,7 +65,6 @@ module.exports = {
           }
         })
       );
-
       return ctx.send(status);
     }
   },

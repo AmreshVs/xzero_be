@@ -13,9 +13,7 @@ const formatError = error => [
 
 module.exports = {
   async partnerLogin(ctx) {
-
     const params = ctx.request.body;
-
     // The password is required.
     if (!params.password) {
       return ctx.badRequest(
@@ -26,22 +24,17 @@ module.exports = {
         })
       );
     }
-
     const query = {};
-
     // Check if the provided identifier is an email or not.
     const isEmail = emailRegExp.test(params.email);
-
     // Set the identifier to the appropriate query field.
     if (isEmail) {
       query.email = params.email.toLowerCase();
     } else {
       query.username = params.identifier;
     }
-
     // Check if the user exists.
     const user = await strapi.query('partner').findOne(query);
-
     if (!user) {
       return ctx.badRequest(
         null,
@@ -51,7 +44,6 @@ module.exports = {
         })
       );
     }
-
     if (user.blocked === true) {
       return ctx.badRequest(
         null,
@@ -61,11 +53,9 @@ module.exports = {
         })
       );
     }
-
     const validPassword = await strapi.plugins[
       'users-permissions'
     ].services.user.validatePassword(params.password, user.password);
-
     if (!validPassword) {
       return ctx.badRequest(
         null,
