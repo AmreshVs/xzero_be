@@ -40,6 +40,24 @@ module.exports = {
           is_read = readNotification.includes(notification.id);
         }
         
+        // if(user_id !== null && notification.users.length !==0 )  {
+        //   let notificationToSpecifieduser = notification.users.map(x => {
+        //     return x.id });
+            
+        //   if(notificationToSpecifieduser.includes(user_id) === false) {
+            
+        //     var index = notifications.map(x => {
+        //        return x.id;
+        //     }).indexOf(notification.id);
+            
+        //     return;
+            
+            
+        //     //notification.splice(index, 1);
+              
+        //   } 
+        
+        // } 
 
         return Promise.resolve({
           ...notification,
