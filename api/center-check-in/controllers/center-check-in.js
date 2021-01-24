@@ -19,31 +19,26 @@ async function generateTransactionId() {
   }
 }
 
-const formatError = error => [
+const formatError = (error) => [
   { messages: [{ id: error.id, message: error.message, field: error.field }] },
 ];
-
 
 module.exports = {
   //insert check-in data and update limit in membership table
   async Checkin(ctx) {
-   const params = ctx.request.body;
-
+    const params = ctx.request.body;
     let memberShip = await strapi
       .query("membership")
       .findOne({ user: params.user_id });
-
-    
     if (memberShip === null || new Date() > new Date(memberShip.expiry)) {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'center-checkin.membership.expired',
-          message: 'User not exist or membership expired!.',
+          id: "center-checkin.membership.expired",
+          message: "User not exist or membership expired!.",
         })
-      ); 
+      );
     }
-
 
     if (params.user_id !== null && params.center_id !== null) {
       let centerAdd;
@@ -59,11 +54,9 @@ module.exports = {
           let offersAvailable = await strapi
             .query("offers")
             .findOne({ id: offerArray[index] });
-            
+
           offerNames.push(offersAvailable.title_en);
           centerName = offersAvailable.center.title_en;
-
-          
           centerAdd = await strapi.query("center-check-in").create({
             user_id: params.user_id,
             center: params.center_id,
@@ -83,58 +76,46 @@ module.exports = {
               limit: limitBecom,
             }
           );
-
-        //   return ctx.send(
-        //     centerAdd
-        //  );
-
         }
 
-          
-          let titleNoti = "Thank you for visiting "+centerName; 
-          let bodyMsg  = "You have opted for "+offerNames.join(", ")+ " at "+centerName;
+        let titleNoti = "Thank you for visiting " + centerName;
+        let bodyMsg =
+          "You have opted for " + offerNames.join(", ") + " at " + centerName;
 
- 
-          try {
-            await fetch('https://exp.host/--/api/v2/push/send', {
-              method: 'POST',
-              mode: 'no-cors',
-              headers: {
-                'accept': 'application/json',
-                'accept-encoding': 'gzip, deflate',
-                'content-type': 'application/json',
-              },
-              body: JSON.stringify({
-                to: memberShip.user.notification_token,
-                title: titleNoti,
-                body: bodyMsg,
-                sound: 'default',
-                priority: 'high'
-              })
-            });
-          }
-          catch (e) {
-            console.log('Checkin Notification Push', e)
-          }
-        
-
-        return ctx.send(
-          centerAdd
-       );
-
-
-    
-
+        try {
+          await fetch("https://exp.host/--/api/v2/push/send", {
+            method: "POST",
+            mode: "no-cors",
+            headers: {
+              accept: "application/json",
+              "accept-encoding": "gzip, deflate",
+              "content-type": "application/json",
+            },
+            body: JSON.stringify({
+              to: memberShip.user.notification_token,
+              title: titleNoti,
+              body: bodyMsg,
+              sound: "default",
+              priority: "high",
+            }),
+          });
+        } catch (e) {
+          console.log("Checkin Notification Push", e);
+        }
+        return ctx.send(centerAdd);
       } else {
         if (memberShip.limit > 0) {
           limit = memberShip.limit;
         }
-      
+
         return ctx.badRequest(
           null,
           formatError({
-            id: 'center-checkin.offerlimit.exceeded',
-            message: 'You have chosen offers which exceeds the limit. Your limit is '+limit+', To add more please renew the membership.',
+            id: "center-checkin.offerlimit.exceeded",
+            message:
+              "You have chosen offers which exceeds the limit. Your limit is " +
+              limit +
+              ", To add more please renew the membership.",
           })
         );
       }
@@ -142,11 +123,10 @@ module.exports = {
       return ctx.badRequest(
         null,
         formatError({
-          id: 'center-checkin.offerlimit.emptyparams',
-          message: 'empty params.',
+          id: "center-checkin.offerlimit.emptyparams",
+          message: "empty params.",
         })
       );
-      
     }
   },
 
@@ -225,7 +205,6 @@ module.exports = {
       offers = await strapi
         .query("offers")
         .find({ status: true, center: center_id, _limit: 5, _sort: "id:desc" });
-      
     } else {
       centerOffers.map((center) => {
         if (center.offer_id !== null) {
@@ -240,25 +219,23 @@ module.exports = {
       });
     }
 
-  
     let center = await strapi.query("centers").findOne({ id: center_id });
-
     //queries to get the count
     let offersCount = await strapi
       .query("offers")
       .count({ center: center_id, status: true });
 
-      const result = await strapi
-        .query('center-check-in')
-        .model.query(qb => {
-          qb.where('center', center_id), qb.distinct('user_id');
-        })
-        .fetchAll();
+    const result = await strapi
+      .query("center-check-in")
+      .model.query((qb) => {
+        qb.where("center", center_id), qb.distinct("user_id");
+      })
+      .fetchAll();
 
-      const fields = result.toJSON();
+    const fields = result.toJSON();
 
     let visitsCount = fields.length;
-      
+
     let favouritesCount = await strapi
       .query("favourites")
       .count({ center: center_id, status: true });
@@ -268,7 +245,6 @@ module.exports = {
       favourites: favouritesCount,
     };
 
-    
     return {
       counts: counts,
       offers: [

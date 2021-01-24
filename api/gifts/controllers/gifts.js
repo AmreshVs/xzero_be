@@ -36,16 +36,9 @@ module.exports = {
         );
 
         let giftsGotId = _.sampleSize(shuffledGifts, 1);
-
-        // let giftAvailedCount = await strapi.query("gift-availed").count({ user: user_id, status: true });
-
-        // if(memberArray.gift_generated_date)
-        // days = DateDiffInDaysWithCurrentDate(new Date(memberArray.gift_generated_date));
-
         if( memberArray.is_gift_generated === true ) {
           return { disabled: true,  won: false };
         }
-
         let giftGotDetails = await strapi
           .query("gifts")
           .findOne({ id: giftsGotId[0], status: true });
@@ -55,7 +48,6 @@ module.exports = {
           giftGotDetails.quantity !== null &&
           giftGotDetails.quantity > 0
         ) {
-
           // when the gift become membership plan
           if( giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membership1year") || giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membershiponeyear") ) {
             let membership = await strapi.services.membership.generateMembership( user_id, memberArray.package.id,  12 );
@@ -64,7 +56,6 @@ module.exports = {
             } else {
               var remarks = "got gift as membership 6 months plan and renewal failed";
             }
-            
           } else if ( giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membership6months") || giftGotDetails.name_en.toLowerCase().replace(/\s/g,'').trim() === String("membershipsixmonths") ) {
             let membership = await strapi.services.membership.generateMembership( user_id, memberArray.package.id, 6 );
             if(membership) {
@@ -92,7 +83,6 @@ module.exports = {
               quantity: giftGotDetails.quantity - 1,
             }
           );
- 
           await strapi.query("membership").update(
             { id: memberArray.id },
             {
@@ -111,9 +101,7 @@ module.exports = {
               gift_generated_date: new Date()
             }
           );
-
           return { disabled: true, won: false };
-          
         } else {
           return { disabled: false, won: false };
         }

@@ -15,6 +15,7 @@ File - node_modules/strapi-plugin-content-manager/controllers/ContentManager.js
     if (model === 'application::check.check') {
       data.password = await hashPassword(data);
     }
+    
 
     if (model === 'application::konoz-publishers.konoz-publishers') {
       data.password = await hashPassword(data);

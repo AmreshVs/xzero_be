@@ -626,9 +626,6 @@
             "type": "integer",
             "default": 0
           },
-          "winner_id": {
-            "type": "integer"
-          },
           "created_by": {
             "required": [
               "id",
@@ -740,9 +737,6 @@
           "no_of_times_announced": {
             "type": "integer",
             "default": 0
-          },
-          "winner_id": {
-            "type": "integer"
           },
           "created_by": {
             "type": "string"

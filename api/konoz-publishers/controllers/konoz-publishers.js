@@ -16,7 +16,6 @@ const formatError = error => [
 module.exports = {
   async publisherLogin(ctx) {
     const params = ctx.request.body;
-    //console.log(params); return false;
 
     // The password is required.
     if (!params.password) {
