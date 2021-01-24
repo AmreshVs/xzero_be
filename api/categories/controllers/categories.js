@@ -45,7 +45,6 @@ module.exports = {
         centersCount: specialistCount,
       },
     ];
-
     return categoriesWithCenters.concat(specialistHelp);
   },
 };
