@@ -455,25 +455,25 @@ const EditViewDataManagerProvider = ({
 
         // Send Notifications
         if (currentContentTypeLayout.apiID === 'notifications') {
-
+          var users;
           
           if(cleanedData.status === true) {
             let confirmBox = confirm("Press OK to send notification");
             if(confirmBox === true) {
-
-            if(cleanedData.users.length === 0 && cleanedData.send_to.toLowerCase() === 'users' ) {
-              var users = await request('/users', {
+            
+            if((typeof cleanedData.users !== 'undefined' && cleanedData.users.length === 0 || (typeof cleanedData.users === 'undefined'))  && cleanedData.send_to.toLowerCase() === 'users' ) {
+              users = await request('/users', {
                 method: 'GET'
               });
               
-            } else if(cleanedData.users.length === 0 && cleanedData.send_to.toLowerCase() === 'non_users') {
+            } else  if((typeof cleanedData.users !== 'undefined' && cleanedData.users.length === 0 || (typeof cleanedData.users === 'undefined'))  && cleanedData.send_to.toLowerCase() === 'non_users' ) {
               
               var res = await request('/SendNotificationToNonUsers', {
                 method: 'POST'
     
               });
 
-              var users = res.users;
+              users = res.users;
                
             } else {
              
@@ -482,17 +482,17 @@ const EditViewDataManagerProvider = ({
                 body: {userIds: cleanedData.users}
               });
 
-              var users = res.users;
+              users = res.users;
               
             }
 
-          let title  = cleanedData.title_en
-          let desc  = cleanedData.desc_en
+          let title  = cleanedData.title_en;
+          let desc  = cleanedData.desc_en;
           
           await Promise.all(users.map(async (user) => {
             if ((user.notification_token !== null) && (user.notification_token !== '')) {
               
-              if(typeof cleanedData.language !== 'undefined') {
+              if(typeof cleanedData.language !== 'undefined' && typeof cleanedData.language !== null ) {
               if(cleanedData.language.toLowerCase() === "arabic") {
                 title  = cleanedData.title_ar
                 desc  = cleanedData.desc_ar
@@ -512,6 +512,7 @@ const EditViewDataManagerProvider = ({
                 }
               }
             }
+
               try {
                 await fetch('https://exp.host/--/api/v2/push/send', {
                   method: 'POST',
