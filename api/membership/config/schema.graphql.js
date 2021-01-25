@@ -16,13 +16,12 @@ function checkBadRequest(contextBody) {
 
 module.exports = {
   definition: ` 
-        type membership {
-            membership : Membership,
-            codeStatus: JSON
-        } 
-
-				`
-				, 
+      type membership {
+          membership : Membership,
+          codeStatus: JSON
+      } 
+			`
+		, 
 
   mutation: `
     generateMembership(user_id: ID!, plan :Int!, code: String): membership!,
@@ -38,20 +37,16 @@ module.exports = {
         policies: ['plugins::users-permissions.isAuthenticated'],
         resolverOf: 'application::membership.membership.create',
         resolver: async (obj, options, {context}) => {
-
           context.request.body = _.toPlainObject(options);
           await strapi.api.membership.controllers.membership.generateMembership(context);
-          
           let output = context.body.toJSON ? context.body.toJSON() : context.body;
           checkBadRequest(output);
           return { 
             membership: output.membership || output,
             codeStatus: output.codeStatus
           }
-
         },
       },
-
 
       QRforExistingUser: {
         description: 'Generate Membership for user',
@@ -61,8 +56,6 @@ module.exports = {
           return await strapi.api.membership.controllers.membership.QRforExistingUser(options.reset);
         },
       }
-
-
     },
 
     Query: {
@@ -75,8 +68,5 @@ module.exports = {
         },
       },
     }
-
   },
-
-  
 }

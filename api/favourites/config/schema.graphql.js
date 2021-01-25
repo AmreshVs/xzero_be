@@ -8,7 +8,6 @@ module.exports = {
         Mutation: {
             AddAsFavourite: {
               description: 'adding the favourite offers',
-              //policies: ['plugins::users-permissions.isAuthenticated'],
               resolverOf: 'application::favourites.favourites.create',
               resolver: async (obj, options, ctx) => {
                   return await strapi.api['favourites'].controllers['favourites'].AddAsFavourite(options.user, options.offer, options.center);
@@ -17,15 +16,11 @@ module.exports = {
 
             ClearAllFavourites: {
               description: 'adding the favourite offers',
-              //policies: ['plugins::users-permissions.isAuthenticated'],
               resolverOf: 'application::favourites.favourites.update',
               resolver: async (obj, options, ctx) => {
                   return await strapi.api['favourites'].controllers['favourites'].ClearAllFavourites(options.user);
               }
           }
         },
-
-        
-
     }
 }

@@ -5,7 +5,6 @@
  * to customize this controller
  */
 const _ = require("lodash");
-
 module.exports = {
   async top_centers(condition) {
     let centers = await strapi.query("centers").find(condition);

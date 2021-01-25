@@ -20,17 +20,19 @@ module.exports = {
   `,
 
   query: `
-  NotificationsByUser(user_id: Int): [NotificationByUser],
+    NotificationsByUser(user_id: Int): [NotificationByUser],
   `,
   resolver: {
     Query: {
       NotificationsByUser: {
-        description: 'Return the notifications',
-        resolverOf: 'application::notifications.notifications.find',
+        description: "Return the notifications",
+        resolverOf: "application::notifications.notifications.find",
         resolver: async (obj, options, ctx) => {
-          return await strapi.api.notifications.controllers.notifications.NotificationsByUser(options.user_id);
+          return await strapi.api.notifications.controllers.notifications.NotificationsByUser(
+            options.user_id
+          );
         },
       },
-    }
+    },
   },
 };

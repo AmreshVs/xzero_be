@@ -14,6 +14,7 @@ module.exports = {
   `,
   mutation: `GenerateGift(user_id: Int!): GiftsPayLoad!`,
   query: 'AvailableGifts(where: JSON): UserGifts!',
+  
   resolver: {
     Mutation: {
       GenerateGift: {

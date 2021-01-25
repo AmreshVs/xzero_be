@@ -6,7 +6,6 @@ var fs = require("fs");
  * to customize this controller
  */
 const fetch = require("node-fetch");
-
 async function generateTransactionId() {
   let trId = Math.random().toString(10).substr(2, 8);
   let trnExist = await strapi
@@ -165,7 +164,6 @@ module.exports = {
         discount: center.discount,
       });
     });
-
     return { userInfo, offers };
   },
 

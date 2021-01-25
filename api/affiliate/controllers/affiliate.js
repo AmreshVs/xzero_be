@@ -4,9 +4,4 @@
  * to customize this controller
  */
 
-const _ = require('lodash');
-const { sanitizeEntity } = require('strapi-utils');
-
-module.exports = {
-    
-};
+module.exports = {};

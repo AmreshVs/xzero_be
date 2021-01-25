@@ -1,5 +1,4 @@
 const _ = require('lodash');
-
 /**
  * Throws an ApolloError if context body contains a bad request
  * @param contextBody - body of the context object given to the resolver
@@ -36,12 +35,9 @@ module.exports = {
       publisherLogin: {
         resolverOf: 'application::konoz-publishers.konoz-publishers.create',
         resolver: async (obj, options, { context }) => {
-
           context.request.body = _.toPlainObject(options.input);
-          
           await strapi.api['konoz-publishers'].controllers['konoz-publishers'].publisherLogin(context);
           let output = context.body.toJSON ? context.body.toJSON() : context.body;
-
           checkBadRequest(output);
           return {
             user: output.user || output,

@@ -1,14 +1,14 @@
-const _ = require('lodash');
+const _ = require("lodash");
 /**
  * Throws an ApolloError if context body contains a bad request
  * @param contextBody - body of the context object given to the resolver
  * @throws ApolloError if the body is a bad request
  */
 function checkBadRequest(contextBody) {
-  if (_.get(contextBody, 'statusCode', 200) !== 200) {
-    const message = _.get(contextBody, 'error', 'Bad Request');
+  if (_.get(contextBody, "statusCode", 200) !== 200) {
+    const message = _.get(contextBody, "error", "Bad Request");
     const exception = new Error(message);
-    exception.code = _.get(contextBody, 'statusCode', 400);
+    exception.code = _.get(contextBody, "statusCode", 400);
     exception.data = contextBody;
     throw exception;
   }
@@ -59,7 +59,6 @@ module.exports = {
       center: Centers
     }
 
-
   `,
   mutation: `Checkin(user_id: Int!,  center_id: Int!,   offers : String!): CenterCheckIn,
 
@@ -78,75 +77,91 @@ module.exports = {
   resolver: {
     Mutation: {
       Checkin: {
-        description: 'Scan QR code and process data',
+        description: "Scan QR code and process data",
         policies: [],
-        resolverOf: 'application::center-check-in.center-check-in.create',
-
+        resolverOf: "application::center-check-in.center-check-in.create",
         resolver: async (obj, options, { context }) => {
           context.request.body = _.toPlainObject(options);
-          await strapi.api['center-check-in'].controllers['center-check-in'].Checkin(context);
-          let output = context.body.toJSON ? context.body.toJSON() : context.body;
+          await strapi.api["center-check-in"].controllers[
+            "center-check-in"
+          ].Checkin(context);
+          let output = context.body.toJSON
+            ? context.body.toJSON()
+            : context.body;
           checkBadRequest(output);
           return output;
         },
       },
-
     },
     Query: {
       getMembershipInfo: {
-        description: 'Return the membership with offers',
-        resolverOf: 'application::offers.offers.find',
+        description: "Return the membership with offers",
+        resolverOf: "application::offers.offers.find",
         resolver: async (obj, options, ctx) => {
-          return await strapi.api['center-check-in'].controllers['center-check-in'].getMembershipInfo(options.serial, options.where || {});
+          return await strapi.api["center-check-in"].controllers[
+            "center-check-in"
+          ].getMembershipInfo(options.serial, options.where || {});
         },
       },
 
       getuserCheckinDetails: {
-        description: 'Return the user with offers',
-        resolverOf: 'application::center-check-in.center-check-in.find',
+        description: "Return the user with offers",
+        resolverOf: "application::center-check-in.center-check-in.find",
         resolver: async (obj, options, ctx) => {
-          return await strapi.api['center-check-in'].controllers['center-check-in'].getuserCheckinDetails(options.user_id, options.where || {});
+          return await strapi.api["center-check-in"].controllers[
+            "center-check-in"
+          ].getuserCheckinDetails(options.user_id, options.where || {});
         },
       },
       CenterCheckinByTransactionId: {
-        description: 'Return center chckins by transactionid',
-        resolverOf: 'application::center-check-in.center-check-in.find',
+        description: "Return center chckins by transactionid",
+        resolverOf: "application::center-check-in.center-check-in.find",
         resolver: async (obj, options, ctx) => {
-          return await strapi.api['center-check-in'].controllers['center-check-in'].CenterCheckinByTransactionId(options.transaction_id);
+          return await strapi.api["center-check-in"].controllers[
+            "center-check-in"
+          ].CenterCheckinByTransactionId(options.transaction_id);
         },
       },
       RecentUsers: {
-        description: 'Return the recent users for a center',
-        resolverOf: 'application::center-check-in.center-check-in.find',
+        description: "Return the recent users for a center",
+        resolverOf: "application::center-check-in.center-check-in.find",
         resolver: async (obj, options, ctx) => {
-          return await strapi.api['center-check-in'].controllers['center-check-in'].RecentUsers(options.center_id);
+          return await strapi.api["center-check-in"].controllers[
+            "center-check-in"
+          ].RecentUsers(options.center_id);
         },
       },
 
       getOffers: {
-        description: 'Return all offers for a specific center',
-        resolverOf: 'application::offers.offers.find',
+        description: "Return all offers for a specific center",
+        resolverOf: "application::offers.offers.find",
         resolver: async (obj, options, ctx) => {
-          return await strapi.api['center-check-in'].controllers['center-check-in'].getOffers(options.center_id);
+          return await strapi.api["center-check-in"].controllers[
+            "center-check-in"
+          ].getOffers(options.center_id);
         },
       },
 
       UserCheckins: {
-        description: 'Return the list of users availed offers for a specific center',
-        resolverOf: 'application::center-check-in.center-check-in.find',
+        description:
+          "Return the list of users availed offers for a specific center",
+        resolverOf: "application::center-check-in.center-check-in.find",
         resolver: async (obj, options, ctx) => {
-          return await strapi.api['center-check-in'].controllers['center-check-in'].UserCheckins(options.center_id);
+          return await strapi.api["center-check-in"].controllers[
+            "center-check-in"
+          ].UserCheckins(options.center_id);
         },
       },
 
       getCenterHomeData: {
-        description: 'Return the data required for the profile',
-        resolverOf: 'application::offers.offers.find',
+        description: "Return the data required for the profile",
+        resolverOf: "application::offers.offers.find",
         resolver: async (obj, options, ctx) => {
-          return await strapi.api['center-check-in'].controllers['center-check-in'].getCenterHomeData(options.center_id);
+          return await strapi.api["center-check-in"].controllers[
+            "center-check-in"
+          ].getCenterHomeData(options.center_id);
         },
-      }
-
-    }
-  }
-}
+      },
+    },
+  },
+};
