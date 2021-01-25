@@ -16,21 +16,24 @@ function checkBadRequest(contextBody) {
 
 module.exports = {
   definition: ` 
-        type BoughtVoucher {
-          codeStatus: JSON,
-          disabled: Boolean,
-          bought: JSON!,
-          voucherAvailed: VoucherAvailed
-        },
+    type BoughtVoucher {
+      codeStatus: JSON,
+      disabled: Boolean,
+      bought: JSON!,
+      voucherAvailed: VoucherAvailed
+    },
 				`,
   mutation: `
-        BuyVoucher(user_id: ID!, voucher_id: Int!, code: String): BoughtVoucher!,
-        DeclareVoucherWinner(id: Int!, draw_status: String): JSON
-        WinnersList(id: Int!, draw_status: String): JSON
+    BuyVoucher(user_id: ID!, voucher_id: Int!, code: String): BoughtVoucher!,
+    DeclareVoucherWinner(id: Int!, draw_status: String): JSON
+    WinnersList(id: Int!, draw_status: String): JSON
     `,
 
-  query: `NotifyDrawDetails(user: Int): JSON`,
-
+  query: ` 
+    NotifyDrawDetails(user: Int): JSON
+    GetWinnersData(voucher: Int): JSON
+  `,
+    
   resolver: {
     Mutation: {
       BuyVoucher: {
@@ -96,6 +99,23 @@ module.exports = {
           return output;
         },
       },
+
+      GetWinnersData: {
+        description: "function will return the users won gift",
+        policies: [],
+        resolverOf: "application::voucher-availed.voucher-availed.find",
+        resolver: async (obj, options, { context }) => {
+          context.request.body = _.toPlainObject(options);
+          await strapi.api["voucher-availed"].controllers[
+            "voucher-availed"
+          ].GetWinnersData(context);
+          let output = context.body.toJSON
+            ? context.body.toJSON()
+            : context.body;
+          checkBadRequest(output);
+          return output;
+        },
+      }
     },
   },
 };

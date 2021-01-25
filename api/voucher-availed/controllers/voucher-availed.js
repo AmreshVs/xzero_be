@@ -718,6 +718,42 @@ module.exports = {
     }
   },
 
+
+  GetWinnersData: async (ctx) => {
+    //let postData = ctx.request.body;
+    let giftWon = [
+      {
+        "title": "Iphone 12 pro max",
+        "winnersName": [
+          "naufall",
+          null
+        ]
+      },
+      {
+        "title": "ipad",
+        "winnersName": [
+          null,
+          "naufall",
+          "naufall"
+        ]
+      },
+      {
+        "title": "apple watch",
+        "winnersName": [
+          "naufall",
+          null,
+          null,
+          "naufall",
+          "ajith",
+          "naufall"
+        ]
+      }
+    ];
+    
+    return giftWon; 
+
+  },
+
   //function randomly select a user and would declare as a winner
   WinnersList: async (ctx) => {
     let postData = ctx.request.body;
@@ -741,7 +777,7 @@ module.exports = {
       var giftAchievers = [];
       let history = [];
 
-      let giftWon = {};
+      let giftWon = [];
 
       await Promise.all(
         voucher.draw_gift.map(async (gift) => {
@@ -769,7 +805,7 @@ module.exports = {
               await strapi
                 .query("vouchers")
                 .update({ id: voucher.id }, { draw_status: "closed" });
-                
+
               Totalwinners.push(winnersGot[i]);
 
               wonUsers.push(voucherAvailed.user.id);
@@ -777,8 +813,9 @@ module.exports = {
               winnersName.push(voucherAvailed.user.username);
             }
 
-            giftWon[gift.id] = { title: gift.title_en, winnersName };
-
+            //giftWon = { title: gift.title_en, winnersName };
+            giftWon.push({title: gift.title_en, winnersName})
+            
             history = { giftWon };
           }
         })
@@ -787,30 +824,59 @@ module.exports = {
       if (history.length > 0) {
         await strapi.query("draw-history").create({ draw_details: history });
       }
-      giftWon = {
-        "1": {
+
+      // giftWon = {
+      //   "1": {
+      //     "title": "Iphone 12 pro max",
+      //     "winnersName": [
+      //       "naufall",
+      //       "nada"
+      //     ]
+      //   },
+      //   "3": {
+      //     "title": "apple watch",
+      //     "winnersName": [
+      //       "naufall",
+      //       "nihal",
+      //       "kiran",
+      //       "thomas"
+      //     ]
+      //   },
+      //   "5": {
+      //     "title": "ipad",
+      //     "winnersName": [
+      //       "naufall",
+      //     ]
+      //   }
+      // }
+      giftWon = [
+        {
           "title": "Iphone 12 pro max",
           "winnersName": [
             "naufall",
-            "nada"
+            null
           ]
         },
-        "3": {
+        {
+          "title": "ipad",
+          "winnersName": [
+            null,
+            "naufall",
+            "naufall"
+          ]
+        },
+        {
           "title": "apple watch",
           "winnersName": [
             "naufall",
-            "nihal",
-            "kiran",
-            "thomas"
-          ]
-        },
-        "5": {
-          "title": "ipad",
-          "winnersName": [
+            null,
+            null,
             "naufall",
+            "ajith",
+            "naufall"
           ]
         }
-      }
+      ];
 
       ctx.send({ giftWon });
     } else if (postData.draw_status === "publish") {
