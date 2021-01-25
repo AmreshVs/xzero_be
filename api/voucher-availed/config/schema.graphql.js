@@ -26,12 +26,12 @@ module.exports = {
   mutation: `
     BuyVoucher(user_id: ID!, voucher_id: Int!, code: String): BoughtVoucher!,
     DeclareVoucherWinner(id: Int!, draw_status: String): JSON
-    WinnersList(id: Int!, draw_status: String): JSON
+    DeclareKonozWinners(id: Int!): JSON
     `,
 
   query: ` 
     NotifyDrawDetails(user: Int): JSON
-    GetWinnersData(voucher: Int): JSON
+    KonozWinners(voucher: Int): JSON
   `,
     
   resolver: {
@@ -64,7 +64,7 @@ module.exports = {
         },
       },
 
-      WinnersList: {
+      DeclareKonozWinners: {
         description: "function for to declare voucher winner",
         policies: [],
         resolverOf: "application::voucher-availed.voucher-availed.find",
@@ -72,7 +72,7 @@ module.exports = {
           context.request.body = _.toPlainObject(options);
           await strapi.api["voucher-availed"].controllers[
             "voucher-availed"
-          ].WinnersList(context);
+          ].DeclareKonozWinners(context);
           let output = context.body.toJSON
             ? context.body.toJSON()
             : context.body;
@@ -100,7 +100,7 @@ module.exports = {
         },
       },
 
-      GetWinnersData: {
+      KonozWinners: {
         description: "function will return the users won gift",
         policies: [],
         resolverOf: "application::voucher-availed.voucher-availed.find",
@@ -108,7 +108,7 @@ module.exports = {
           context.request.body = _.toPlainObject(options);
           await strapi.api["voucher-availed"].controllers[
             "voucher-availed"
-          ].GetWinnersData(context);
+          ].KonozWinners(context);
           let output = context.body.toJSON
             ? context.body.toJSON()
             : context.body;

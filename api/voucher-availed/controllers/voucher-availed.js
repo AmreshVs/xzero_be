@@ -755,7 +755,7 @@ module.exports = {
   },
 
   //function randomly select a user and would declare as a winner
-  WinnersList: async (ctx) => {
+  DeclareKonozWinners: async (ctx) => {
     let postData = ctx.request.body;
 
     let voucher = await strapi
@@ -766,9 +766,7 @@ module.exports = {
       .query("voucher-availed")
       .find({ status: true, voucher: voucher.id, _limit: -1 });
     if (
-      voucherAvailedArray !== null &&
-      postData.draw_status === "declare" &&
-      voucher.length !== 0
+      voucherAvailedArray !== null && voucher.length !== 0
     ) {
       let voucherAvailedIds = [].concat(
         ...voucherAvailedArray.map((voucher_availed) => voucher_availed.id)
@@ -878,7 +876,7 @@ module.exports = {
         }
       ];
 
-      ctx.send({ giftWon });
+      ctx.send( giftWon );
     } else if (postData.draw_status === "publish") {
       let winners = await strapi
         .query("voucher-availed")

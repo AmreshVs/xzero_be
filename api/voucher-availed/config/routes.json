@@ -56,8 +56,8 @@
     },
     {
       "method": "POST",
-      "path": "/WinnersList",
-      "handler": "voucher-availed.WinnersList"
+      "path": "/DeclareKonozWinners",
+      "handler": "voucher-availed.DeclareKonozWinners"
       
     }
 

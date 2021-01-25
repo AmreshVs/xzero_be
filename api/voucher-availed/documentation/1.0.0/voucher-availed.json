@@ -595,7 +595,7 @@
         }
       }
     },
-    "/WinnersList": {
+    "/DeclareKonozWinners": {
       "post": {
         "deprecated": false,
         "description": "Create a new record",
