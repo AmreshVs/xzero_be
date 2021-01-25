@@ -769,6 +769,7 @@ module.exports = {
               await strapi
                 .query("vouchers")
                 .update({ id: voucher.id }, { draw_status: "closed" });
+                
               Totalwinners.push(winnersGot[i]);
 
               wonUsers.push(voucherAvailed.user.id);
@@ -785,6 +786,30 @@ module.exports = {
 
       if (history.length > 0) {
         await strapi.query("draw-history").create({ draw_details: history });
+      }
+      giftWon = {
+        "1": {
+          "title": "Iphone 12 pro max",
+          "winnersName": [
+            "naufall",
+            "nada"
+          ]
+        },
+        "3": {
+          "title": "apple watch",
+          "winnersName": [
+            "naufall",
+            "nihal",
+            "kiran",
+            "thomas"
+          ]
+        },
+        "5": {
+          "title": "ipad",
+          "winnersName": [
+            "naufall",
+          ]
+        }
       }
 
       ctx.send({ giftWon });
