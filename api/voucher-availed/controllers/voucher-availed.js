@@ -725,29 +725,37 @@ module.exports = {
     let giftWon = [
       {
         "title": "Iphone 12 pro max",
+        "featured_imgs": [
+          "https://be.xzero.app/v2/uploads/i_Phone_12_Pro_f1dd993eee.png",
+          "https://be.xzero.app/v2/uploads/i_Phone_12_Mini_a1211842ac.png",
+          "https://be.xzero.app/v2/uploads/Apple_Watch_Series_6_7c130146e0.png"
+        ],
         "winnersName": [
           "naufall",
-          null
+          "naufall"
         ]
       },
       {
         "title": "ipad",
+        "featured_imgs": [
+          "https://be.xzero.app/v2/uploads/i_Phone_12_Pro_f1dd993eee.png",
+          "https://be.xzero.app/v2/uploads/i_Phone_12_Mini_a1211842ac.png"],
         "winnersName": [
+          "ajith",
           null,
-          "naufall",
-          "naufall"
+          null
         ]
       },
       {
         "title": "apple watch",
+        "featured_imgs": [],
         "winnersName": [
           "naufall",
-          null,
-          null,
-          "naufall",
-          "ajith",
-          "naufall"
-        ]
+        ],
+
+        "featured_imgs": [
+          "https://be.xzero.app/v2/uploads/i_Phone_12_Pro_f1dd993eee.png",
+          "https://be.xzero.app/v2/uploads/i_Phone_12_Mini_a1211842ac.png"],
       }
     ];
      
@@ -834,9 +842,9 @@ module.exports = {
         {
           "title": "Iphone 12 pro max",
           "featured_imgs": [
-            "/uploads/apple_iphone_12_pro_46d4f94fd5.jpg",
-            "/uploads/awhite_200319_3944_3_0_87b3bbbff8.jpg",
-            "/uploads/macbook_air_075977cad2.jpg"
+            "https://be.xzero.app/v2/uploads/i_Phone_12_Pro_f1dd993eee.png",
+            "https://be.xzero.app/v2/uploads/i_Phone_12_Mini_a1211842ac.png",
+            "https://be.xzero.app/v2/uploads/Apple_Watch_Series_6_7c130146e0.png"
           ],
           "winnersName": [
             "naufall",
@@ -845,7 +853,9 @@ module.exports = {
         },
         {
           "title": "ipad",
-          "featured_imgs": [],
+          "featured_imgs": [
+            "https://be.xzero.app/v2/uploads/i_Phone_12_Pro_f1dd993eee.png",
+            "https://be.xzero.app/v2/uploads/i_Phone_12_Mini_a1211842ac.png"],
           "winnersName": [
             "ajith",
             null,
@@ -857,12 +867,11 @@ module.exports = {
           "featured_imgs": [],
           "winnersName": [
             "naufall",
-            "naufall",
-            null,
-            null,
-            null,
-            "naufall"
-          ]
+          ],
+  
+          "featured_imgs": [
+            "https://be.xzero.app/v2/uploads/i_Phone_12_Pro_f1dd993eee.png",
+            "https://be.xzero.app/v2/uploads/i_Phone_12_Mini_a1211842ac.png"],
         }
       ];
 
