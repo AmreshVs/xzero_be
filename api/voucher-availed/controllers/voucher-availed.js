@@ -719,8 +719,9 @@ module.exports = {
   },
 
 
-  GetWinnersData: async (ctx) => {
-    //let postData = ctx.request.body;
+  KonozWinners: async (ctx) => {
+    let postData = ctx.request.body;
+    //console.log(postData); return false;
     let giftWon = [
       {
         "title": "Iphone 12 pro max",
@@ -749,8 +750,9 @@ module.exports = {
         ]
       }
     ];
+     
     
-    return giftWon; 
+    ctx.send( giftWon );
 
   },
 
@@ -779,6 +781,7 @@ module.exports = {
 
       await Promise.all(
         voucher.draw_gift.map(async (gift) => {
+          
           let Totalwinners = [];
           let winnersName = [];
           let wonUsers = [];
@@ -809,10 +812,13 @@ module.exports = {
               wonUsers.push(voucherAvailed.user.id);
 
               winnersName.push(voucherAvailed.user.username);
-            }
 
-            //giftWon = { title: gift.title_en, winnersName };
-            giftWon.push({title: gift.title_en, winnersName})
+
+            }
+            let featuredImgs =  gift.featured_imgs.map((imgs) => imgs.url )
+ 
+            
+            giftWon.push({title: gift.title_en, featured_imgs: featuredImgs, winnersName})
             
             history = { giftWon };
           }
@@ -823,54 +829,38 @@ module.exports = {
         await strapi.query("draw-history").create({ draw_details: history });
       }
 
-      // giftWon = {
-      //   "1": {
-      //     "title": "Iphone 12 pro max",
-      //     "winnersName": [
-      //       "naufall",
-      //       "nada"
-      //     ]
-      //   },
-      //   "3": {
-      //     "title": "apple watch",
-      //     "winnersName": [
-      //       "naufall",
-      //       "nihal",
-      //       "kiran",
-      //       "thomas"
-      //     ]
-      //   },
-      //   "5": {
-      //     "title": "ipad",
-      //     "winnersName": [
-      //       "naufall",
-      //     ]
-      //   }
-      // }
+      
       giftWon = [
         {
           "title": "Iphone 12 pro max",
+          "featured_imgs": [
+            "/uploads/apple_iphone_12_pro_46d4f94fd5.jpg",
+            "/uploads/awhite_200319_3944_3_0_87b3bbbff8.jpg",
+            "/uploads/macbook_air_075977cad2.jpg"
+          ],
           "winnersName": [
-            "naufall",
-            null
-          ]
-        },
-        {
-          "title": "ipad",
-          "winnersName": [
-            null,
             "naufall",
             "naufall"
           ]
         },
         {
+          "title": "ipad",
+          "featured_imgs": [],
+          "winnersName": [
+            "ajith",
+            null,
+            null
+          ]
+        },
+        {
           "title": "apple watch",
+          "featured_imgs": [],
           "winnersName": [
             "naufall",
-            null,
-            null,
             "naufall",
-            "ajith",
+            null,
+            null,
+            null,
             "naufall"
           ]
         }
