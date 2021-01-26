@@ -15,7 +15,11 @@ module.exports = {
     
     SendNotificationToSelected: async (ctx) => {
       let params = ctx.request.body;
-      let users = await strapi.query('user', 'users-permissions').find({ id_in: params.userIds });
+      let condition = { id_in: params.userIds };
+      if(typeof params.lang !== 'undefined' && typeof params.lang !== null) {
+        condition = { id_in: params.userIds, language: params.lang };
+      }
+      let users = await strapi.query('user', 'users-permissions').find(condition);
       return ctx.send ({
         users
       })

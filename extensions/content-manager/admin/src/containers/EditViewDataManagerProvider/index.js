@@ -476,66 +476,139 @@ const EditViewDataManagerProvider = ({
               users = res.users;
                
             } else {
-             
               var res = await request('/SendNotificationToSelected', {
                 method: 'POST',
-                body: {userIds: cleanedData.users}
+                body: { userIds: cleanedData.users }
               });
-
               users = res.users;
-              
             }
 
           let title  = cleanedData.title_en;
           let desc  = cleanedData.desc_en;
-          
-          await Promise.all(users.map(async (user) => {
-            if ((user.notification_token !== null) && (user.notification_token !== '')) {
               
-              if(typeof cleanedData.language !== 'undefined' && typeof cleanedData.language !== null ) {
-              if(cleanedData.language.toLowerCase() === "arabic") {
-                title  = cleanedData.title_ar
-                desc  = cleanedData.desc_ar
-              } else if(cleanedData.language.toLowerCase() === "english") {
-                title  = cleanedData.title_en
-                desc  = cleanedData.desc_en
-              } else if(cleanedData.language.toLowerCase() === "use_user_language") {
-                if(user.language.toLowerCase() === "ar") {
-                    title  = cleanedData.title_ar;
-                    desc  = cleanedData.desc_ar;
-                } else if(user.language.toLowerCase() === "en") {
-                    title  = cleanedData.title_en;
-                    desc  = cleanedData.desc_en;
-                } else {
-                  title  = cleanedData.title_en;
-                  desc  = cleanedData.desc_en;
-                }
-              }
+              if(typeof cleanedData.language !== 'undefined' && cleanedData.language !== null ) {
+                if(cleanedData.language.toLowerCase() === "arabic") {
+                  title = cleanedData.title_ar;
+                  desc = cleanedData.desc_ar;
+                } else if(cleanedData.language.toLowerCase() === "english") {
+                  title = cleanedData.title_en;
+                  desc = cleanedData.desc_en;
+                } else if(cleanedData.language.toLowerCase() === 'use_user_language') {
+                  //sending to users who choosed their language as arabic
+                    var resAr = await request('/SendNotificationToSelected', {
+                        method: 'POST',
+                        body: { userIds: cleanedData.users, lang: 'ar' }
+                      });
+        
+                    let usersAr = resAr.users;
+                    if(usersAr.length !==0 ) {
+                       let expoTokensAr = [];
+                        await usersAr.filter((user) => {
+                          if ((user.notification_token !== null) && (user.notification_token !== '')) {
+                            expoTokensAr.push(user.notification_token);
+                            return true;
+                          }
+                          return false;
+                        })
+                        try {
+                          await fetch('https://exp.host/--/api/v2/push/send', {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: {
+                              'accept': 'application/json',
+                              'accept-encoding': 'gzip, deflate',
+                              'content-type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              to: expoTokensAr,
+                              title: cleanedData.title_ar,
+                              body: cleanedData.desc_ar,
+                              sound: 'default',
+                              priority: 'high'
+                            })
+                          });
+                        }
+                        catch (e) {
+                          console.log('Notification Push', e)
+                        }
+                    }  
+
+                    //sending to users who choosed their language as english
+                      var resEn = await request('/SendNotificationToSelected', {
+                        method: 'POST',
+                        body: { userIds: cleanedData.users, lang: 'en' }
+                      });    
+                      let usersEn = resEn.users;
+                      if(usersEn.length !== 0) {
+                        let expoTokensEn = [];
+                        await usersEn.filter((user) => {
+                          if ((user.notification_token !== null) && (user.notification_token !== '')) {
+                            expoTokensEn.push(user.notification_token);
+                            return true;
+                          }
+                          return false;
+                        })
+
+                        try {
+                          await fetch('https://exp.host/--/api/v2/push/send', {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            headers: {
+                              'accept': 'application/json',
+                              'accept-encoding': 'gzip, deflate',
+                              'content-type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                              to: expoTokensEn,
+                              title: cleanedData.title_en,
+                              body: cleanedData.desc_en,
+                              sound: 'default',
+                              priority: 'high'
+                            })
+                          });
+                        }
+                        catch (e) {
+                          console.log('Notification Push', e)
+                        }
+                    }
+                } 
             }
 
-              try {
-                await fetch('https://exp.host/--/api/v2/push/send', {
-                  method: 'POST',
-                  mode: 'no-cors',
-                  headers: {
-                    'accept': 'application/json',
-                    'accept-encoding': 'gzip, deflate',
-                    'content-type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    to: user.notification_token,
-                    title: title,
-                    body: desc,
-                    sound: 'default',
-                    priority: 'high'
-                  })
-                });
+            let expoTokens = [];
+            await users.filter((user) => {
+              if ((user.notification_token !== null) && (user.notification_token !== '')) {
+                expoTokens.push(user.notification_token);
+                return true;
               }
-              catch (e) {
-                console.log('Notification Push', e)
-              }
-            }
-          }));
+              return false;
+            })
+
+
+        if(expoTokens.length !==0) {
+          try {
+            await fetch('https://exp.host/--/api/v2/push/send', {
+              method: 'POST',
+              mode: 'no-cors',
+              headers: {
+                'accept': 'application/json',
+                'accept-encoding': 'gzip, deflate',
+                'content-type': 'application/json',
+              },
+              body: JSON.stringify({
+                to: expoTokens,
+                title: title,
+                body: desc,
+                sound: 'default',
+                priority: 'high'
+              })
+            });
+          }
+          catch (e) {
+            console.log('Notification Push', e)
+          }
+        }
+          
+
       }
     }
     }
