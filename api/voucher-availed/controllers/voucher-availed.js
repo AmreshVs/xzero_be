@@ -107,14 +107,14 @@ async function ApplyCode(receiver, price, code, voucher) {
           : referProgram.referrer_allowed_maximum_amount;
 
       return {
-        discount: referProgram.discount.toFixed(2),
-        discountYouGet: discountAmount.toFixed(2),
-        discountedPrice: afterDiscount.toFixed(2),
+        discount: referProgram.discount? referProgram.discount.toFixed(2): 0,
+        discountYouGet: discountAmount? discountAmount.toFixed(2): 0,
+        discountedPrice: afterDiscount? afterDiscount.toFixed(2): 0,
         applied: true,
         userId: userCode.id,
         from: "referral",
         codeApplied: referralCode,
-        referrerCredit: referrerCredit.toFixed(2),
+        referrerCredit: referrerCredit? referrerCredit.toFixed(2): 0,
       };
     } else {
       if (referProgram.user_can_refer <= 0 || referProgram.usage_limit <= 0) {
@@ -188,14 +188,14 @@ async function ApplyCode(receiver, price, code, voucher) {
             }
 
             return {
-              referrerCredit: affiliateCredit.toFixed(2),
+              referrerCredit: affiliateCredit? affiliateCredit.toFixed(2): 0,
               applicableFor: affiliate.applied_for,
               affiliateId: affiliate.id,
-              discount: affiliate.discount.toFixed(2),
+              discount: affiliate.discount? affiliate.discount.toFixed(2): 0,
               userId: affiliate.user.id,
               from: "affiliate",
-              discountedPrice: discountedPrice.toFixed(2),
-              discountYouGet: discountAmount.toFixed(2),
+              discountedPrice: discountedPrice? discountedPrice.toFixed(2): 0,
+              discountYouGet: discountAmount? discountAmount.toFixed(2): 0,
               applied: true,
               codeApplied: referralCode,
             };
@@ -252,14 +252,14 @@ async function ApplyCode(receiver, price, code, voucher) {
           }
 
           return {
-            referrerCredit: affiliateCredit.toFixed(2),
+            referrerCredit: affiliateCredit? affiliateCredit.toFixed(2): 0,
             applicableFor: affiliate.applied_for,
             affiliateId: affiliate.id,
-            discount: affiliate.discount.toFixed(2),
+            discount: affiliate.discount? affiliate.discount.toFixed(2): 0,
             userId: affiliate.user.id,
             from: "affiliate",
-            discountedPrice: discountedPrice.toFixed(2),
-            discountYouGet: discountAmount.toFixed(2),
+            discountedPrice: discountedPrice? discountedPrice.toFixed(2): 0,
+            discountYouGet: discountAmount? discountAmount.toFixed(2): 0,
             applied: true,
             codeApplied: referralCode,
           };
@@ -321,11 +321,11 @@ async function ApplyCode(receiver, price, code, voucher) {
           parseFloat(price) - parseFloat(discountAmount.toFixed(2));
 
         return {
-          discount: promocode.discount.toFixed(2),
-          discountedPrice: discountedPrice.toFixed(2),
+          discount: promocode.discount? promocode.discount.toFixed(2): 0,
+          discountedPrice: discountedPrice ? discountedPrice.toFixed(2): 0,
           promocodeId: promocode.id,
           from: "promocode",
-          discountYouGet: discountAmount.toFixed(2),
+          discountYouGet: discountAmount? discountAmount.toFixed(2): 0,
           applied: true,
           CodeAapplied: referralCode,
         };

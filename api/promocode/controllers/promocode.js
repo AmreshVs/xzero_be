@@ -112,14 +112,14 @@ module.exports = {
             : referProgram.referrer_allowed_maximum_amount;
 
         return ctx.send({
-          discount: referProgram.discount,
-          discountYouGet: discountAmount.toFixed(2),
-          discountedPrice: afterDiscount.toFixed(2),
+          discount: referProgram.discount ? referProgram.discount: 0,
+          discountYouGet: discountAmount? discountAmount.toFixed(2): 0,
+          discountedPrice: afterDiscount? afterDiscount.toFixed(2): 0,
           applied: true,
           userId: userCode.id,
           from: "referral",
           codeApplied: referralCode,
-          referrerCredit: referrerCredit.toFixed(2),
+          referrerCredit: referrerCredit? referrerCredit.toFixed(2): 0,
         });
       } else {
         if (referProgram.user_can_refer <= 0 || referProgram.usage_limit <= 0) {
@@ -221,14 +221,14 @@ module.exports = {
                 applicableFor: affiliate.applied_for,
                 affiliate_id: affiliate.id,
                 userId: affiliate.user.id,
-                discount: affiliate.discount.toFixed(2),
+                discount: affiliate.discount? affiliate.discount.toFixed(2): 0,
                 from: "affiliate",
-                discountedPrice: discountedPrice.toFixed(2),
-                discountYouGet: discountAmount.toFixed(2),
+                discountedPrice: discountedPrice ? discountedPrice.toFixed(2): 0,
+                discountYouGet: discountAmount ? discountAmount.toFixed(2): 0,
                 applied: true,
                 codeApplied: referralCode,
                 msg: msg,
-                referrerCredit: affiliateCredit.toFixed(2),
+                referrerCredit: affiliateCredit? affiliateCredit.toFixed(2): 0,
               });
             } else {
               let msg = "";
@@ -308,14 +308,14 @@ module.exports = {
               applicableFor: affiliate.applied_for,
               affiliate_id: affiliate.id,
               userId: affiliate.user.id,
-              discount: affiliate.discount.toFixed(2),
+              discount: affiliate.discount? affiliate.discount.toFixed(2): 0,
               from: "affiliate",
-              discountedPrice: discountedPrice.toFixed(2),
-              discountYouGet: discountAmount.toFixed(2),
+              discountedPrice: discountedPrice? discountedPrice.toFixed(2): 0,
+              discountYouGet: discountAmount? discountAmount.toFixed(2): 0,
               applied: true,
               codeApplied: referralCode,
               msg: msg,
-              referrerCredit: affiliateCredit.toFixed(2),
+              referrerCredit: affiliateCredit? affiliateCredit.toFixed(2): 0,
             });
 
           } else {
@@ -401,11 +401,11 @@ module.exports = {
             parseFloat(price) - parseFloat(discountAmount.toFixed(2));
 
           return ctx.send({
-            discount: promocode.discount.toFixed(2),
-            discountedPrice: discountedPrice.toFixed(2),
+            discount: promocode.discount? promocode.discount.toFixed(2): 0,
+            discountedPrice: discountedPrice? discountedPrice.toFixed(2): 0,
             promocodeId: promocode.id,
             from: "promocode",
-            discountYouGet: discountAmount.toFixed(2),
+            discountYouGet: discountAmount? discountAmount.toFixed(2): 0,
             applied: true,
             codeApplied: referralCode,
           });
