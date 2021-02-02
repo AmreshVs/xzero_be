@@ -10,9 +10,9 @@
   },
   "attributes": {
     "user": {
-      "via": "membership",
       "plugin": "users-permissions",
-      "model": "user"
+      "model": "user",
+      "via": "membership"
     },
     "serial": {
       "type": "string"
@@ -45,6 +45,10 @@
     },
     "remarks": {
       "type": "string"
+    },
+    "disable_gift_draw": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

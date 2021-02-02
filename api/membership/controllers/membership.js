@@ -546,7 +546,8 @@ module.exports = {
       code,
       plan
     );
-
+    
+  
     if (
       code !== null &&
       afterCodeApply !== null &&
@@ -579,6 +580,11 @@ module.exports = {
       var userInfo = { userid: user_id, serial: serial };
       let qrCodeFile = await createQR(userInfo);
 
+      let disable_gift_draw = false;
+      if(parseInt(afterCodeApply.discount) === 100) {
+        disable_gift_draw = true;
+      }
+
       let membership = await strapi.query("membership").create({
         serial: serial,
         qrcode_url: qrCodeFile,
@@ -586,6 +592,7 @@ module.exports = {
         package: plan,
         limit: offerLimit,
         expiry: expiryDate,
+        disable_gift_draw: disable_gift_draw,
         remarks: remarks ? remarks : null,
       });
 
@@ -599,6 +606,8 @@ module.exports = {
         discount: afterCodeApply.discount ? afterCodeApply.discount : null,
         paid_amount: paidAmount,
       });
+
+     
 
       //updating the promocode transaction table
       if (afterCodeApply !== null && afterCodeApply.applied === true) {
@@ -753,6 +762,11 @@ module.exports = {
         paid_amount: paidAmount,
       });
       
+      let disable_gift_draw = false;
+      if(parseInt(afterCodeApply.discount) === 100) {
+        disable_gift_draw = true;
+      }
+
       //updating the promocode transaction table
       let membership = await strapi.query("membership").update(
         { user: user_id },
@@ -762,6 +776,7 @@ module.exports = {
           package: plan,
           limit: totalOfferLimit,
           expiry: expiryDate,
+          disable_gift_draw: disable_gift_draw,
           remarks: remarks ? remarks : null,
         }
       );

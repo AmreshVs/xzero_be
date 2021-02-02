@@ -745,6 +745,9 @@
               "remarks": {
                 "type": "string"
               },
+              "disable_gift_draw": {
+                "type": "boolean"
+              },
               "created_by": {
                 "type": "string"
               },

@@ -87,8 +87,8 @@
       "via": "user"
     },
     "membership": {
-      "model": "membership",
-      "via": "user"
+      "via": "user",
+      "model": "membership"
     },
     "referral_code": {
       "type": "string"

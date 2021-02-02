@@ -25,6 +25,12 @@ module.exports = {
       let memberArray = await strapi
         .query("membership")
         .findOne({ user: user_id });
+
+      // disable gifts on free membership
+      if(memberArray.disable_gift_draw === true) {
+        return { disabled: true, won: false };
+      }
+  
       let giftArray = await strapi.query("gifts").find({
         membership_plans: memberArray.package.id,
         status: true,

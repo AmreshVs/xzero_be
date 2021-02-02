@@ -848,6 +848,10 @@
           "remarks": {
             "type": "string"
           },
+          "disable_gift_draw": {
+            "type": "boolean",
+            "default": false
+          },
           "created_by": {
             "required": [
               "id",
@@ -976,6 +980,10 @@
           },
           "remarks": {
             "type": "string"
+          },
+          "disable_gift_draw": {
+            "type": "boolean",
+            "default": false
           },
           "created_by": {
             "type": "string"
