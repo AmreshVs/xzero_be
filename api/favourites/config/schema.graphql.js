@@ -1,9 +1,13 @@
-
+const _ = require("lodash");
 module.exports = {
     mutation: 
     `AddAsFavourite(user: Int!, offer: Int!, center: Int): JSON!
      ClearAllFavourites(user:Int): Boolean
     `,
+
+    query: 
+    `HomeBannerCounts (user: Int!):JSON`,
+
     resolver: {
         Mutation: {
             AddAsFavourite: {
@@ -22,5 +26,22 @@ module.exports = {
               }
           }
         },
+
+        Query: {
+          HomeBannerCounts: {
+            description: 'finding the count of favourites',
+            resolverOf: 'application::favourites.favourites.find',
+            resolver: async (obj, options, { context }) => {
+              context.request.body = _.toPlainObject(options);
+              await strapi.api["favourites"].controllers[
+                "favourites"
+              ].HomeBannerCounts(context);
+              let output = context.body.toJSON
+                ? context.body.toJSON()
+                : context.body;
+              return output;
+            },
+          },
+        }
     }
 }
