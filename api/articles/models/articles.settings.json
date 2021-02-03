@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "articles",
+  "info": {
+    "name": "Articles"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "title_en": {
+      "type": "string"
+    },
+    "title_ar": {
+      "type": "string"
+    },
+    "news_category": {
+      "model": "news-categories"
+    },
+    "featured_img": {
+      "model": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false
+    },
+    "enable_video": {
+      "type": "boolean"
+    },
+    "video_url": {
+      "type": "string"
+    },
+    "views": {
+      "type": "biginteger"
+    },
+    "likes": {
+      "type": "biginteger"
+    },
+    "status": {
+      "type": "boolean"
+    }
+  }
+}
