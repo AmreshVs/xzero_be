@@ -36,10 +36,12 @@
       "type": "string"
     },
     "views": {
-      "type": "biginteger"
+      "type": "biginteger",
+      "default": "0"
     },
     "likes": {
-      "type": "biginteger"
+      "type": "biginteger",
+      "default": "0"
     },
     "status": {
       "type": "boolean"

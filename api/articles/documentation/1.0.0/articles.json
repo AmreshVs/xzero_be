@@ -627,10 +627,12 @@
             "type": "string"
           },
           "views": {
-            "type": "integer"
+            "type": "integer",
+            "default": "0"
           },
           "likes": {
-            "type": "integer"
+            "type": "integer",
+            "default": "0"
           },
           "status": {
             "type": "boolean"
@@ -743,10 +745,12 @@
             "type": "string"
           },
           "views": {
-            "type": "integer"
+            "type": "integer",
+            "default": "0"
           },
           "likes": {
-            "type": "integer"
+            "type": "integer",
+            "default": "0"
           },
           "status": {
             "type": "boolean"
