@@ -15,9 +15,6 @@
     "title_ar": {
       "type": "string"
     },
-    "news_category": {
-      "model": "news-categories"
-    },
     "featured_img": {
       "model": "file",
       "via": "related",
@@ -28,9 +25,6 @@
       ],
       "plugin": "upload",
       "required": false
-    },
-    "enable_video": {
-      "type": "boolean"
     },
     "video_url": {
       "type": "string"
@@ -45,6 +39,15 @@
     },
     "status": {
       "type": "boolean"
+    },
+    "desc_en": {
+      "type": "richtext"
+    },
+    "desc_ar": {
+      "type": "richtext"
+    },
+    "article_category": {
+      "model": "article-categories"
     }
   }
 }

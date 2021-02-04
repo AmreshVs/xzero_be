@@ -1,18 +1,19 @@
 {
   "paths": {
-    "/articles": {
+    "/article-categories": {
       "get": {
         "deprecated": false,
-        "description": "Find all the articles's records",
+        "description": "Find all the article-categories's records",
         "responses": {
           "200": {
-            "description": "Retrieve articles document(s)",
+            "description": "Retrieve article-categories document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/Articles"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
                   }
                 }
               }
@@ -51,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Articles"
+          "Article-categories"
         ],
         "parameters": [
           {
@@ -194,79 +195,16 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new articles record",
+        "description": "Create a new article-categories record",
         "responses": {
           "200": {
-            "description": "Retrieve articles document(s)",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Articles"
-                }
-              }
-            }
-          },
-          "403": {
-            "description": "Forbidden",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "404": {
-            "description": "Not found",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        },
-        "summary": "",
-        "tags": [
-          "Articles"
-        ],
-        "requestBody": {
-          "description": "",
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/NewArticles"
-              }
-            }
-          }
-        }
-      }
-    },
-    "/articles/count": {
-      "get": {
-        "deprecated": false,
-        "description": "Retrieve the numver of articles documents",
-        "responses": {
-          "200": {
-            "description": "Retrieve articles document(s)",
+            "description": "Retrieve article-categories document(s)",
             "content": {
               "application/json": {
                 "schema": {
                   "properties": {
-                    "count": {
-                      "type": "integer"
+                    "foo": {
+                      "type": "string"
                     }
                   }
                 }
@@ -306,22 +244,36 @@
         },
         "summary": "",
         "tags": [
-          "Articles"
+          "Article-categories"
         ],
-        "parameters": []
+        "requestBody": {
+          "description": "",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NewArticle-categories"
+              }
+            }
+          }
+        }
       }
     },
-    "/articles/{id}": {
+    "/article-categories/count": {
       "get": {
         "deprecated": false,
-        "description": "Find one articles record",
+        "description": "Retrieve the numver of article-categories documents",
         "responses": {
           "200": {
-            "description": "Retrieve articles document(s)",
+            "description": "Retrieve article-categories document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Articles"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -359,7 +311,64 @@
         },
         "summary": "",
         "tags": [
-          "Articles"
+          "Article-categories"
+        ],
+        "parameters": []
+      }
+    },
+    "/article-categories/{id}": {
+      "get": {
+        "deprecated": false,
+        "description": "Find one article-categories record",
+        "responses": {
+          "200": {
+            "description": "Retrieve article-categories document(s)",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "summary": "",
+        "tags": [
+          "Article-categories"
         ],
         "parameters": [
           {
@@ -376,14 +385,18 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single articles record",
+        "description": "Update a single article-categories record",
         "responses": {
           "200": {
-            "description": "Retrieve articles document(s)",
+            "description": "Retrieve article-categories document(s)",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Articles"
+                  "properties": {
+                    "foo": {
+                      "type": "string"
+                    }
+                  }
                 }
               }
             }
@@ -421,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Articles"
+          "Article-categories"
         ],
         "requestBody": {
           "description": "",
@@ -429,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewArticles"
+                "$ref": "#/components/schemas/NewArticle-categories"
               }
             }
           }
@@ -449,10 +462,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single articles record",
+        "description": "Delete a single article-categories record",
         "responses": {
           "200": {
-            "description": "deletes a single articles based on the ID supplied",
+            "description": "deletes a single article-categories based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -495,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Articles"
+          "Article-categories"
         ],
         "parameters": [
           {
@@ -514,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Articles": {
+      "Article-categories": {
         "required": [
           "id"
         ],
@@ -522,126 +535,17 @@
           "id": {
             "type": "string"
           },
-          "title_en": {
+          "category_name": {
             "type": "string"
           },
-          "title_ar": {
+          "color_code": {
             "type": "string"
           },
-          "featured_img": {
-            "required": [
-              "id",
-              "name",
-              "hash",
-              "mime",
-              "size",
-              "url",
-              "provider"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "name": {
-                "type": "string"
-              },
-              "alternativeText": {
-                "type": "string"
-              },
-              "caption": {
-                "type": "string"
-              },
-              "width": {
-                "type": "integer"
-              },
-              "height": {
-                "type": "integer"
-              },
-              "formats": {
-                "type": "object"
-              },
-              "hash": {
-                "type": "string"
-              },
-              "ext": {
-                "type": "string"
-              },
-              "mime": {
-                "type": "string"
-              },
-              "size": {
-                "type": "number"
-              },
-              "url": {
-                "type": "string"
-              },
-              "previewUrl": {
-                "type": "string"
-              },
-              "provider": {
-                "type": "string"
-              },
-              "provider_metadata": {
-                "type": "object"
-              },
-              "related": {
-                "type": "string"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
-          },
-          "video_url": {
+          "icon": {
             "type": "string"
-          },
-          "views": {
-            "type": "integer",
-            "default": "0"
-          },
-          "likes": {
-            "type": "integer",
-            "default": "0"
           },
           "status": {
             "type": "boolean"
-          },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "article_category": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "category_name": {
-                "type": "string"
-              },
-              "color_code": {
-                "type": "string"
-              },
-              "icon": {
-                "type": "string"
-              },
-              "status": {
-                "type": "boolean"
-              },
-              "created_by": {
-                "type": "string"
-              },
-              "updated_by": {
-                "type": "string"
-              }
-            }
           },
           "created_by": {
             "required": [
@@ -733,36 +637,19 @@
           }
         }
       },
-      "NewArticles": {
+      "NewArticle-categories": {
         "properties": {
-          "title_en": {
+          "category_name": {
             "type": "string"
           },
-          "title_ar": {
+          "color_code": {
             "type": "string"
           },
-          "video_url": {
+          "icon": {
             "type": "string"
-          },
-          "views": {
-            "type": "integer",
-            "default": "0"
-          },
-          "likes": {
-            "type": "integer",
-            "default": "0"
           },
           "status": {
             "type": "boolean"
-          },
-          "desc_en": {
-            "type": "string"
-          },
-          "desc_ar": {
-            "type": "string"
-          },
-          "article_category": {
-            "type": "string"
           },
           "created_by": {
             "type": "string"
@@ -774,9 +661,5 @@
       }
     }
   },
-  "tags": [
-    {
-      "name": "Articles"
-    }
-  ]
+  "tags": []
 }

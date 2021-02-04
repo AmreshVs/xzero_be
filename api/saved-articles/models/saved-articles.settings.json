@@ -1,0 +1,24 @@
+{
+  "kind": "collectionType",
+  "collectionName": "saved_articles",
+  "info": {
+    "name": "Saved articles"
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true
+  },
+  "attributes": {
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "articles": {
+      "type": "text"
+    },
+    "status": {
+      "type": "boolean",
+      "default": true
+    }
+  }
+}

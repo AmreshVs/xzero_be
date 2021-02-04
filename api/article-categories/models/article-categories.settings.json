@@ -1,8 +1,8 @@
 {
   "kind": "collectionType",
-  "collectionName": "news_categories",
+  "collectionName": "article_categories",
   "info": {
-    "name": "News categories"
+    "name": "Article categories"
   },
   "options": {
     "increments": true,
@@ -15,9 +15,11 @@
     "color_code": {
       "type": "string"
     },
+    "icon": {
+      "type": "text"
+    },
     "status": {
-      "type": "boolean",
-      "default": true
+      "type": "boolean"
     }
   }
 }

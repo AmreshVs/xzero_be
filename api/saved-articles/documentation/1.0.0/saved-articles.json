@@ -1,12 +1,12 @@
 {
   "paths": {
-    "/news-categories": {
+    "/saved-articles": {
       "get": {
         "deprecated": false,
-        "description": "Find all the news-categories's records",
+        "description": "Find all the saved-articles's records",
         "responses": {
           "200": {
-            "description": "Retrieve news-categories document(s)",
+            "description": "Retrieve saved-articles document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -52,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "News-categories"
+          "Saved-articles"
         ],
         "parameters": [
           {
@@ -195,10 +195,10 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new news-categories record",
+        "description": "Create a new saved-articles record",
         "responses": {
           "200": {
-            "description": "Retrieve news-categories document(s)",
+            "description": "Retrieve saved-articles document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -244,7 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "News-categories"
+          "Saved-articles"
         ],
         "requestBody": {
           "description": "",
@@ -252,20 +252,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewNews-categories"
+                "$ref": "#/components/schemas/NewSaved-articles"
               }
             }
           }
         }
       }
     },
-    "/news-categories/count": {
+    "/saved-articles/count": {
       "get": {
         "deprecated": false,
-        "description": "Retrieve the numver of news-categories documents",
+        "description": "Retrieve the numver of saved-articles documents",
         "responses": {
           "200": {
-            "description": "Retrieve news-categories document(s)",
+            "description": "Retrieve saved-articles document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -311,18 +311,18 @@
         },
         "summary": "",
         "tags": [
-          "News-categories"
+          "Saved-articles"
         ],
         "parameters": []
       }
     },
-    "/news-categories/{id}": {
+    "/saved-articles/{id}": {
       "get": {
         "deprecated": false,
-        "description": "Find one news-categories record",
+        "description": "Find one saved-articles record",
         "responses": {
           "200": {
-            "description": "Retrieve news-categories document(s)",
+            "description": "Retrieve saved-articles document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -368,7 +368,7 @@
         },
         "summary": "",
         "tags": [
-          "News-categories"
+          "Saved-articles"
         ],
         "parameters": [
           {
@@ -385,10 +385,10 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single news-categories record",
+        "description": "Update a single saved-articles record",
         "responses": {
           "200": {
-            "description": "Retrieve news-categories document(s)",
+            "description": "Retrieve saved-articles document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -434,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "News-categories"
+          "Saved-articles"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewNews-categories"
+                "$ref": "#/components/schemas/NewSaved-articles"
               }
             }
           }
@@ -462,10 +462,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single news-categories record",
+        "description": "Delete a single saved-articles record",
         "responses": {
           "200": {
-            "description": "deletes a single news-categories based on the ID supplied",
+            "description": "deletes a single saved-articles based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -508,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "News-categories"
+          "Saved-articles"
         ],
         "parameters": [
           {
@@ -527,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "News-categories": {
+      "Saved-articles": {
         "required": [
           "id"
         ],
@@ -535,10 +535,109 @@
           "id": {
             "type": "string"
           },
-          "category_name": {
-            "type": "string"
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "notification_token": {
+                "type": "string"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "favourites": {
+                "type": "string"
+              },
+              "dob": {
+                "type": "string"
+              },
+              "birthday": {
+                "type": "datetime"
+              },
+              "platform": {
+                "type": "string"
+              },
+              "app_version": {
+                "type": "string"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "favourite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "membership": {
+                "type": "string"
+              },
+              "referral_code": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "enable_refer_and_earn": {
+                "type": "boolean"
+              },
+              "otp": {
+                "type": "string"
+              },
+              "otp_generated_at": {
+                "type": "string"
+              },
+              "device_id": {
+                "type": "string"
+              },
+              "show_popup": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
-          "color_code": {
+          "articles": {
             "type": "string"
           },
           "status": {
@@ -635,12 +734,12 @@
           }
         }
       },
-      "NewNews-categories": {
+      "NewSaved-articles": {
         "properties": {
-          "category_name": {
+          "user": {
             "type": "string"
           },
-          "color_code": {
+          "articles": {
             "type": "string"
           },
           "status": {
