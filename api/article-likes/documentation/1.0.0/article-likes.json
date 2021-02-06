@@ -1,12 +1,12 @@
 {
   "paths": {
-    "/article-categories": {
+    "/article-likes": {
       "get": {
         "deprecated": false,
-        "description": "Find all the article-categories's records",
+        "description": "Find all the article-likes's records",
         "responses": {
           "200": {
-            "description": "Retrieve article-categories document(s)",
+            "description": "Retrieve article-likes document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -52,7 +52,7 @@
         },
         "summary": "",
         "tags": [
-          "Article-categories"
+          "Article-likes"
         ],
         "parameters": [
           {
@@ -195,10 +195,10 @@
       },
       "post": {
         "deprecated": false,
-        "description": "Create a new article-categories record",
+        "description": "Create a new article-likes record",
         "responses": {
           "200": {
-            "description": "Retrieve article-categories document(s)",
+            "description": "Retrieve article-likes document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -244,7 +244,7 @@
         },
         "summary": "",
         "tags": [
-          "Article-categories"
+          "Article-likes"
         ],
         "requestBody": {
           "description": "",
@@ -252,20 +252,20 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewArticle-categories"
+                "$ref": "#/components/schemas/NewArticle-likes"
               }
             }
           }
         }
       }
     },
-    "/article-categories/count": {
+    "/article-likes/count": {
       "get": {
         "deprecated": false,
-        "description": "Retrieve the numver of article-categories documents",
+        "description": "Retrieve the numver of article-likes documents",
         "responses": {
           "200": {
-            "description": "Retrieve article-categories document(s)",
+            "description": "Retrieve article-likes document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -311,18 +311,18 @@
         },
         "summary": "",
         "tags": [
-          "Article-categories"
+          "Article-likes"
         ],
         "parameters": []
       }
     },
-    "/article-categories/{id}": {
+    "/article-likes/{id}": {
       "get": {
         "deprecated": false,
-        "description": "Find one article-categories record",
+        "description": "Find one article-likes record",
         "responses": {
           "200": {
-            "description": "Retrieve article-categories document(s)",
+            "description": "Retrieve article-likes document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -368,7 +368,7 @@
         },
         "summary": "",
         "tags": [
-          "Article-categories"
+          "Article-likes"
         ],
         "parameters": [
           {
@@ -385,10 +385,10 @@
       },
       "put": {
         "deprecated": false,
-        "description": "Update a single article-categories record",
+        "description": "Update a single article-likes record",
         "responses": {
           "200": {
-            "description": "Retrieve article-categories document(s)",
+            "description": "Retrieve article-likes document(s)",
             "content": {
               "application/json": {
                 "schema": {
@@ -434,7 +434,7 @@
         },
         "summary": "",
         "tags": [
-          "Article-categories"
+          "Article-likes"
         ],
         "requestBody": {
           "description": "",
@@ -442,7 +442,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/NewArticle-categories"
+                "$ref": "#/components/schemas/NewArticle-likes"
               }
             }
           }
@@ -462,10 +462,10 @@
       },
       "delete": {
         "deprecated": false,
-        "description": "Delete a single article-categories record",
+        "description": "Delete a single article-likes record",
         "responses": {
           "200": {
-            "description": "deletes a single article-categories based on the ID supplied",
+            "description": "deletes a single article-likes based on the ID supplied",
             "content": {
               "application/json": {
                 "schema": {
@@ -508,7 +508,7 @@
         },
         "summary": "",
         "tags": [
-          "Article-categories"
+          "Article-likes"
         ],
         "parameters": [
           {
@@ -527,7 +527,7 @@
   },
   "components": {
     "schemas": {
-      "Article-categories": {
+      "Article-likes": {
         "required": [
           "id"
         ],
@@ -535,13 +535,109 @@
           "id": {
             "type": "string"
           },
-          "category_name": {
-            "type": "string"
+          "user": {
+            "required": [
+              "id",
+              "username",
+              "email"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "username": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "provider": {
+                "type": "string"
+              },
+              "password": {
+                "type": "string"
+              },
+              "resetPasswordToken": {
+                "type": "string"
+              },
+              "confirmed": {
+                "type": "boolean"
+              },
+              "blocked": {
+                "type": "boolean"
+              },
+              "role": {
+                "type": "string"
+              },
+              "language": {
+                "type": "string"
+              },
+              "notification_token": {
+                "type": "string"
+              },
+              "mobile_number": {
+                "type": "integer"
+              },
+              "favourites": {
+                "type": "string"
+              },
+              "dob": {
+                "type": "string"
+              },
+              "birthday": {
+                "type": "datetime"
+              },
+              "platform": {
+                "type": "string"
+              },
+              "app_version": {
+                "type": "string"
+              },
+              "center_check_ins": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "favourite": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "membership": {
+                "type": "string"
+              },
+              "referral_code": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "enable_refer_and_earn": {
+                "type": "boolean"
+              },
+              "otp": {
+                "type": "string"
+              },
+              "otp_generated_at": {
+                "type": "string"
+              },
+              "device_id": {
+                "type": "string"
+              },
+              "show_popup": {
+                "type": "boolean"
+              },
+              "created_by": {
+                "type": "string"
+              },
+              "updated_by": {
+                "type": "string"
+              }
+            }
           },
-          "color_code": {
-            "type": "string"
-          },
-          "icon": {
+          "articles": {
             "type": "string"
           },
           "status": {
@@ -638,15 +734,12 @@
           }
         }
       },
-      "NewArticle-categories": {
+      "NewArticle-likes": {
         "properties": {
-          "category_name": {
+          "user": {
             "type": "string"
           },
-          "color_code": {
-            "type": "string"
-          },
-          "icon": {
+          "articles": {
             "type": "string"
           },
           "status": {

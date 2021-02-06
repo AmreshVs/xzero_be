@@ -1,21 +1,19 @@
 {
   "kind": "collectionType",
-  "collectionName": "article_categories",
+  "collectionName": "article_likes",
   "info": {
-    "name": "Article categories"
+    "name": "Article likes"
   },
   "options": {
     "increments": true,
     "timestamps": true
   },
   "attributes": {
-    "category_name": {
-      "type": "string"
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
     },
-    "color_code": {
-      "type": "string"
-    },
-    "icon": {
+    "articles": {
       "type": "text"
     },
     "status": {

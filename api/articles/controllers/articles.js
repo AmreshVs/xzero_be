@@ -5,4 +5,70 @@
  * to customize this controller
  */
 
-module.exports = {};
+module.exports = {
+  async GetArticles(condition, user = null) {
+    let recent = [];
+    let is_saved = false;
+    let is_liked = false;
+  
+    let allAtricles = await strapi.query('articles').find(condition.where);
+    if(user) {
+      var userSaved = await strapi.query('saved-articles').find({ user: user, _limit: -1  });
+      var userLiked = await strapi.query('article-likes').find({ user: user, _limit: -1  });
+      var allSaved = [].concat(...userSaved.map((userSave) => userSave.articles? userSave.articles.split(","):"0"  ));
+      var allLiked = [].concat(...userLiked.map((userLike) => userLike.articles? userLike.articles.split(","):"0"  ));
+    }
+
+    //let dateNow = await strapi.services['app-basic-information'].CurrentDateTime();
+    recent =  [...new Map(allAtricles.map((article) => [article["article"], article])).values(), ].slice(0, 4);
+    recent =  [...new Map(allAtricles.map((article) => [article["article"], article ])).values(), ].slice(0, 2);
+
+  
+    return Promise.all(allAtricles.map(async (article) => {
+      if(userSaved) {
+        let savedForlater = allSaved? allSaved: "";
+        is_saved = savedForlater.includes(String(article.id));
+      }
+
+      if(userLiked) {
+        let likes = allLiked? allLiked: "";
+        is_liked = likes.includes(String(article.id));
+      }
+
+      // get total seconds between the times
+      //console.log(article.created_at); return false;
+      var delta = Math.abs(new Date() - article.created_at) / 1000;
+
+      // calculate (and subtract) whole days
+      var days = Math.floor(delta / 86400);
+      delta -= days * 86400;
+
+      // calculate (and subtract) whole hours
+      var hours = Math.floor(delta / 3600) % 24;
+      delta -= hours * 3600;
+
+      // calculate (and subtract) whole minutes
+      var minutes = Math.floor(delta / 60) % 60;
+      delta -= minutes * 60;
+
+      // what's left is seconds
+      var seconds = delta % 60;  // in theory the modulus is not required
+      let added_on = days+" "+ hours+ " "+ minutes+ " " + Math.round(seconds);
+      added_on = minutes+ ":" + Math.round(seconds)+" minutes ago";
+      //console.log(days+" "+ hours+ " "+ minutes+ " " + Math.round(seconds)); return false;
+
+    //   ...new Map(allAtricles.map((article) => [article["article"], article])).values(),
+    // ].slice(0, 4),
+
+      return Promise  .resolve({
+        ...article,
+        is_saved,
+        is_liked,
+        added_on,
+        recent,
+
+      });
+
+    }));    
+  }
+};
