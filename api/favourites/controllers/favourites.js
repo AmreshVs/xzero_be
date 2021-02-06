@@ -111,7 +111,6 @@ module.exports = {
   async HomeCounts(ctx) {
     let params = ctx.request.body;
     let favorites = await strapi.query('favourites').find({ user: params.user });
-
     let favoriteConcatenated = [].concat(...favorites.map((fav) => fav.favourites? fav.favourites.split(","):""));
     favorites = favoriteConcatenated.length;
     let centers = await strapi.query('centers').count({ status: true });

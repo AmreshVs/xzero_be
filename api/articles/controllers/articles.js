@@ -10,8 +10,11 @@ module.exports = {
     let recent = [];
     let is_saved = false;
     let is_liked = false;
-  
+    
     let allAtricles = await strapi.query('articles').find(condition.where);
+
+    
+    
     if(user) {
       var userSaved = await strapi.query('saved-articles').find({ user: user, _limit: -1  });
       var userLiked = await strapi.query('article-likes').find({ user: user, _limit: -1  });
@@ -20,10 +23,15 @@ module.exports = {
     }
 
     //let dateNow = await strapi.services['app-basic-information'].CurrentDateTime();
-    recent =  [...new Map(allAtricles.map((article) => [article["article"], article])).values(), ].slice(0, 4);
-    recent =  [...new Map(allAtricles.map((article) => [article["article"], article ])).values(), ].slice(0, 2);
+    //recent =  [...new Map(allAtricles.map((article) => [article["article"], article])).values(), ].slice(0, 4);
+    //recent =  [...new Map(allAtricles.map((article) => [article["article"], article ])).values(), ].slice(0, 2);
 
-  
+    let recentArticle = await strapi.query('articles').find({ video_url_null: true, _sort: 'id:desc', _limit:4  });
+    let recentArticleWithVideo = await strapi.query('articles').find({ video_url_null: false, _sort: 'id:desc', _limit:2  });
+    recent.push(recentArticle);
+    recent.push(recentArticleWithVideo);
+
+
     return Promise.all(allAtricles.map(async (article) => {
       if(userSaved) {
         let savedForlater = allSaved? allSaved: "";
@@ -65,8 +73,7 @@ module.exports = {
         is_saved,
         is_liked,
         added_on,
-        recent,
-
+        recent
       });
 
     }));    
