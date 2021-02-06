@@ -6,7 +6,7 @@ module.exports = {
     `,
 
     query: 
-    `HomeBannerCounts (user: Int!):JSON`,
+    `HomeCounts (user: Int!):JSON`,
 
     resolver: {
         Mutation: {
@@ -28,14 +28,14 @@ module.exports = {
         },
 
         Query: {
-          HomeBannerCounts: {
+          HomeCounts: {
             description: 'finding the count of favourites',
             resolverOf: 'application::favourites.favourites.find',
             resolver: async (obj, options, { context }) => {
               context.request.body = _.toPlainObject(options);
               await strapi.api["favourites"].controllers[
                 "favourites"
-              ].HomeBannerCounts(context);
+              ].HomeCounts(context);
               let output = context.body.toJSON
                 ? context.body.toJSON()
                 : context.body;
