@@ -9,7 +9,7 @@
     "timestamps": true
   },
   "attributes": {
-    "category_name": {
+    "category_name_en": {
       "type": "string"
     },
     "color_code": {
@@ -21,6 +21,9 @@
     "status": {
       "type": "boolean",
       "default": true
+    },
+    "category_name_ar": {
+      "type": "string"
     }
   }
 }

@@ -623,7 +623,7 @@
               "id": {
                 "type": "string"
               },
-              "category_name": {
+              "category_name_en": {
                 "type": "string"
               },
               "color_code": {
@@ -634,6 +634,9 @@
               },
               "status": {
                 "type": "boolean"
+              },
+              "category_name_ar": {
+                "type": "string"
               },
               "created_by": {
                 "type": "string"

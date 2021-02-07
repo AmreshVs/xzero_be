@@ -24,8 +24,8 @@ module.exports = {
     delete queryParams['user'];  
     let allAtricles = await strapi.query('articles').find(queryParams);
     if(user) {
-      var userSaved = await strapi.query('saved-articles').find({ user: user, _limit: -1  });
-      var userLiked = await strapi.query('article-likes').find({ user: user, _limit: -1  });
+      var userSaved = await strapi.query('saved-articles').find({ user: user, _limit: -1 });
+      var userLiked = await strapi.query('article-likes').find({ user: user, _limit: -1 });
       var allSaved = [].concat(...userSaved.map((userSave) => userSave.articles ? userSave.articles.split(",") : "0"  ));
       var allLiked = [].concat(...userLiked.map((userLike) => userLike.articles ? userLike.articles.split(",") : "0"  ));
     }
