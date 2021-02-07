@@ -1,3 +1,4 @@
+const _ = require("lodash");
 module.exports = {
   definition: `
     type OfferWithFavourite {
@@ -55,7 +56,23 @@ module.exports = {
           );
         },
       },
+
+      HomeCounts: {
+        description: 'finding the count of centers, offers, favorites',
+        resolverOf: 'application::offers.offers.find',
+        resolver: async (obj, options, { context }) => {
+          context.request.body = _.toPlainObject(options);
+          await strapi.api["offers"].controllers[
+            "offers"
+          ].HomeCounts(context);
+          let output = context.body.toJSON
+            ? context.body.toJSON()
+            : context.body;
+          return output;
+        },
+      },
     },
+   
     Mutation: {
       addFavourite: {
         description: "Add Favourite Offer",

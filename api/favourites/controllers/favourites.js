@@ -107,18 +107,4 @@ module.exports = {
     return false;
   },
 
-  //Home page counts
-  async HomeCounts(ctx) {
-    let params = ctx.request.body;
-    let favorites = await strapi.query('favourites').find({ user: params.user });
-    let favoriteConcatenated = [].concat(...favorites.map((fav) => fav.favourites? fav.favourites.split(","):""));
-    favorites = favoriteConcatenated.length;
-    let centers = await strapi.query('centers').count({ status: true });
-    let offers = await strapi.query('offers').count({ status: true });
-    let specialists = await strapi.query('specialist').count();
-    let konoz = await strapi.query('vouchers').count({ status: true });
-    let counts = { centersCount: centers, offersCount: offers, specialistsCount: specialists, konozCount: konoz, favorites: favorites };
-    return ctx.send(counts);
-  }
-
 };
