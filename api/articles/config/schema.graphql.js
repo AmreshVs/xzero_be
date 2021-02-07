@@ -29,7 +29,7 @@ module.exports = {
       id: Int, 
       status: Boolean, 
       article_category: Int, 
-      user: Int 
+      user: Int
     }
 
 
