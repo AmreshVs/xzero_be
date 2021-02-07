@@ -2,7 +2,7 @@
 module.exports = {
   definition: `
     type AllArticles {
-       id: ID!
+      id: ID!
       created_at: DateTime!
       updated_at: DateTime!
       title_en: String
@@ -18,18 +18,43 @@ module.exports = {
       is_saved: Boolean
       is_liked: Boolean
       added_on: JSON
-      recent: JSON
-      
-    }`
+    }
+
+    type recent {
+      recentArticles: [Articles]
+      recentVideos: [Articles]
+    }
+
+    input ArticlesInputs {
+      id: Int, 
+      status: Boolean, 
+      article_category: Int, 
+      user: Int 
+    }
+
+
+    `
   ,
-  query: `GetArticles(where: JSON, user: Int): [AllArticles]`,
+  query: `
+    GetArticles(input: ArticlesInputs): [AllArticles],
+    RecentArticles: recent
+    
+    `,
   resolver: {
     Query: {
       GetArticles: {
         description: 'Return the articles',
         resolverOf: 'application::articles.articles.find',
         resolver: async (obj, options, ctx) => {
-          return await strapi.api["articles"].controllers["articles"].GetArticles(options||{}, options.user);
+          return await strapi.api["articles"].controllers["articles"].GetArticles(options||{});
+        },
+      },
+
+      RecentArticles: {
+        description: 'Return the articles',
+        resolverOf: 'application::articles.articles.find',
+        resolver: async (obj, options, ctx) => {
+          return await strapi.api["articles"].controllers["articles"].RecentArticles();
         },
       },
     },
