@@ -17,7 +17,7 @@ function extend(target) {
 
 module.exports = {
   async GetArticles(condition) {
-    var queryParams = extend({}, condition.input, { _sort: 'id:desc', _limit:1 });
+    var queryParams = extend({}, condition.input, { _sort: 'id:desc', _limit:-1 });
     let is_saved = false;
     let is_liked = false;
     let user = condition.input.user;
