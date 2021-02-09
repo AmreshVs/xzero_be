@@ -25,8 +25,6 @@ function numFormatter(num) {
       return num; // if value < 1000, nothing to do
   }
 }
-
-
   
 module.exports = {
   async GetArticles(condition) {
