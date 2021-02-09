@@ -25,10 +25,10 @@ function numFormatter(num) {
       return num; // if value < 1000, nothing to do
   }
 }
-  
+
 module.exports = {
   async GetArticles(condition) {
-    var queryParams = extend({}, condition.input, { _sort: 'id:desc', _limit:-1 });
+    var queryParams = extend({}, condition.input, { _sort: 'id:desc', _limit: -1 });
     let is_saved = false;
     let is_liked = false;
     let featured_img_base64;
@@ -41,14 +41,15 @@ module.exports = {
       var allSaved = [].concat(...userSaved.map((userSave) => userSave.articles ? userSave.articles.split(",") : "0"  ));
       var allLiked = [].concat(...userLiked.map((userLike) => userLike.articles ? userLike.articles.split(",") : "0"  ));
     }
-    
+  
+    //console.log(allAtricles); return false;
     return Promise.all(allAtricles.map(async (article) => {
       
       if(article.views !== null) {
         article.views = numFormatter(article.views);
       }
 
-      if(article.featured_img.url) {
+      if(article.featured_img !== null) {
         let img = fs.readFileSync("public"+article.featured_img.url);
         featured_img_base64 = img.toString('base64');
       }
@@ -97,6 +98,69 @@ module.exports = {
       });
 
     }));    
+  },
+
+  //function returns saved article by user
+  async SavedArticlesByUser(user) {
+    let featured_img_base64;
+    let is_liked;
+    let savedArticlesId = [];
+    let userSaved = await strapi.query('saved-articles').find({ user: user });
+
+    var userLiked = await strapi.query('article-likes').find({ user: user, _limit: -1 });
+    var allLiked = [].concat(...userLiked.map((userLike) => userLike.articles ? userLike.articles.split(",") : "0"  ));
+
+    let saved = [].concat(...userSaved.map((userSave) => userSave.articles? userSave.articles.split(","):"0" ));
+    if(userSaved) {
+      savedArticlesId = saved;
+    } 
+    let articles = await strapi.query('articles').find({ id_in: savedArticlesId });
+
+    return Promise.all(articles.map(async (article) => {
+  
+      if(article.views !== null) {
+        article.views = numFormatter(article.views);
+      }
+
+      if(article.featured_img !== null) {
+        let img = fs.readFileSync("public"+article.featured_img.url);
+        featured_img_base64 = img.toString('base64');
+      }
+    
+      if(userLiked) {
+        let likes = allLiked? allLiked: "";
+        is_liked = likes.includes(String(article.id));
+      }
+
+      // get total seconds between the times
+      //console.log(article.created_at); return false;
+      var delta = Math.abs(new Date() - article.created_at) / 1000;
+
+      // calculate (and subtract) whole days
+      var days = Math.floor(delta / 86400);
+      delta -= days * 86400;
+
+      // calculate (and subtract) whole hours
+      var hours = Math.floor(delta / 3600) % 24;
+      delta -= hours * 3600;
+
+      // calculate (and subtract) whole minutes
+      var minutes = Math.floor(delta / 60) % 60;
+      delta -= minutes * 60;
+
+      // what's left is seconds
+      var seconds = delta % 60;  // in theory the modulus is not required
+      let added_on = days+" "+ hours+ " "+ minutes+ " " + Math.round(seconds);
+      added_on = minutes+ ":" + Math.round(seconds)+" minutes ago";
+      //console.log(days+" "+ hours+ " "+ minutes+ " " + Math.round(seconds)); return false;
+  
+      return Promise .resolve({
+        ...article,
+        featured_img_base64,
+        is_liked,
+        added_on
+      });
+    })); 
   },
 
   async RecentArticles() {
