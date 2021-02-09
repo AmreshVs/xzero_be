@@ -19,6 +19,7 @@ module.exports = {
       is_liked: Boolean
       added_on: JSON
       featured_img_base64: String
+      total_views: String
     }
 
     type recent {

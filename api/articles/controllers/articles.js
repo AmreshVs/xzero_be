@@ -16,12 +16,25 @@ function extend(target) {
   return target;
 }
 
+function numFormatter(num) {
+  if(num > 999 && num < 1000000){
+      return (num/1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+  } else if(num > 1000000){
+      return (num/1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+  } else if(num < 900){
+      return num; // if value < 1000, nothing to do
+  }
+}
 
+
+  
 module.exports = {
   async GetArticles(condition) {
     var queryParams = extend({}, condition.input, { _sort: 'id:desc', _limit:-1 });
     let is_saved = false;
     let is_liked = false;
+    let featured_img_base64;
+    let total_views;
     let user = condition.input.user;
     delete queryParams['user'];
     let allAtricles = await strapi.query('articles').find(queryParams);
@@ -32,13 +45,16 @@ module.exports = {
       var allLiked = [].concat(...userLiked.map((userLike) => userLike.articles ? userLike.articles.split(",") : "0"  ));
     }
     
-    //base64 image
-
     return Promise.all(allAtricles.map(async (article) => {
+      
+      if(article.views !== null) {
+        total_views = numFormatter(article.views);
+      }
 
+    
       if(article.featured_img.url) {
         let img = fs.readFileSync("public"+article.featured_img.url);
-        var featured_img_base64 = img.toString('base64');
+        featured_img_base64 = img.toString('base64');
       }
     
       if(userSaved) {
@@ -80,6 +96,7 @@ module.exports = {
       return Promise .resolve({
         ...article,
         featured_img_base64,
+        total_views,
         is_saved,
         is_liked,
         added_on
