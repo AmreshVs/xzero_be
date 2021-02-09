@@ -1,4 +1,5 @@
 'use strict';
+var fs = require('fs');
 
 /**
  * Read the documentation (https://strapi.io/documentation/v3.x/concepts/controllers.html#core-controllers)
@@ -15,13 +16,14 @@ function extend(target) {
   return target;
 }
 
+
 module.exports = {
   async GetArticles(condition) {
     var queryParams = extend({}, condition.input, { _sort: 'id:desc', _limit:-1 });
     let is_saved = false;
     let is_liked = false;
     let user = condition.input.user;
-    delete queryParams['user'];  
+    delete queryParams['user'];
     let allAtricles = await strapi.query('articles').find(queryParams);
     if(user) {
       var userSaved = await strapi.query('saved-articles').find({ user: user, _limit: -1 });
@@ -29,8 +31,16 @@ module.exports = {
       var allSaved = [].concat(...userSaved.map((userSave) => userSave.articles ? userSave.articles.split(",") : "0"  ));
       var allLiked = [].concat(...userLiked.map((userLike) => userLike.articles ? userLike.articles.split(",") : "0"  ));
     }
-   
+    
+    //base64 image
+
     return Promise.all(allAtricles.map(async (article) => {
+
+      if(article.featured_img.url) {
+        let img = fs.readFileSync("public"+article.featured_img.url);
+        var featured_img_base64 = img.toString('base64');
+      }
+    
       if(userSaved) {
         let savedForlater = allSaved? allSaved: "";
         is_saved = savedForlater.includes(String(article.id));
@@ -66,8 +76,10 @@ module.exports = {
     //   ...new Map(allAtricles.map((article) => [article["article"], article])).values(),
     // ].slice(0, 4),
 
-      return Promise  .resolve({
+  
+      return Promise .resolve({
         ...article,
+        featured_img_base64,
         is_saved,
         is_liked,
         added_on

@@ -18,6 +18,7 @@ module.exports = {
       is_saved: Boolean
       is_liked: Boolean
       added_on: JSON
+      featured_img_base64: String
     }
 
     type recent {
