@@ -34,7 +34,6 @@ module.exports = {
     let is_saved = false;
     let is_liked = false;
     let featured_img_base64;
-    let total_views;
     let user = condition.input.user;
     delete queryParams['user'];
     let allAtricles = await strapi.query('articles').find(queryParams);
@@ -48,10 +47,9 @@ module.exports = {
     return Promise.all(allAtricles.map(async (article) => {
       
       if(article.views !== null) {
-        total_views = numFormatter(article.views);
+        article.views = numFormatter(article.views);
       }
 
-    
       if(article.featured_img.url) {
         let img = fs.readFileSync("public"+article.featured_img.url);
         featured_img_base64 = img.toString('base64');
@@ -91,12 +89,10 @@ module.exports = {
 
     //   ...new Map(allAtricles.map((article) => [article["article"], article])).values(),
     // ].slice(0, 4),
-
   
       return Promise .resolve({
         ...article,
         featured_img_base64,
-        total_views,
         is_saved,
         is_liked,
         added_on

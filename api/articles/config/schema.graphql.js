@@ -9,7 +9,7 @@ module.exports = {
       title_ar: String
       featured_img: UploadFile
       video_url: String
-      views: Long
+      views: String
       likes: Long
       status: Boolean
       desc_en: String
@@ -19,7 +19,7 @@ module.exports = {
       is_liked: Boolean
       added_on: JSON
       featured_img_base64: String
-      total_views: String
+      
     }
 
     type recent {
