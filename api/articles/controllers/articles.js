@@ -104,6 +104,7 @@ module.exports = {
   async SavedArticlesByUser(user) {
     let featured_img_base64;
     let is_liked;
+    let is_saved = true;
     let savedArticlesId = [];
     let userSaved = await strapi.query('saved-articles').find({ user: user });
 
@@ -158,6 +159,7 @@ module.exports = {
         ...article,
         featured_img_base64,
         is_liked,
+        is_saved,
         added_on
       });
     })); 
