@@ -21,11 +21,6 @@ module.exports = {
       featured_img_base64: String
     }
 
-    type recent {
-      recentArticles: [Articles]
-      recentVideos: [Articles]
-    }
-
     input ArticlesInputs {
       id: Int, 
       status: Boolean, 
@@ -37,7 +32,7 @@ module.exports = {
   ,
   query: `
     GetArticles(input: ArticlesInputs): [AllArticles],
-    RecentArticles: recent,
+    RecentArticles(user:Int): [AllArticles],
     SavedArticlesByUser(user:Int): [AllArticles]
     `,
   resolver: {
@@ -62,7 +57,7 @@ module.exports = {
         description: 'Return the articles',
         resolverOf: 'application::articles.articles.find',
         resolver: async (obj, options, ctx) => {
-          return await strapi.api["articles"].controllers["articles"].RecentArticles();
+          return await strapi.api["articles"].controllers["articles"].RecentArticles(options.user);
         },
       },
     },

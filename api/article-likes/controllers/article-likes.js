@@ -69,6 +69,12 @@ module.exports = {
         newLiked[0] : null,
           status: likeStatus,
       });
+
+      if(pop === false) {
+        let articleDetails = await strapi.query("articles").findOne({ id : article });
+        await strapi.query("articles").update({ id : article }, { likes: parseInt(articleDetails.likes)+1 });
+      }
+
       status = true;
     } else {
       await strapi
@@ -79,8 +85,12 @@ module.exports = {
           status: likeStatus,
         });
       status = true;
+      if(pop === false) {
+        let articleDetails = await strapi.query("articles").findOne({ id : article });
+        await strapi.query("articles").update({ id : article }, { likes: parseInt(articleDetails.likes)+1 });
+      }
     }
-  
+    status = pop;
     return {
       status,
     };

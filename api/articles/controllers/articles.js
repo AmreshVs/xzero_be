@@ -165,16 +165,73 @@ module.exports = {
     })); 
   },
 
-  async RecentArticles() {
-    let recent = [];
+  async RecentArticles(user) {
+    let is_saved = false;
+    let is_liked = false;
+    let featured_img_base64;
+
     let recentArticle = await strapi.query('articles').find({ video_url_null: true, _sort: 'id:desc', _limit:4  });
     let recentArticleWithVideo = await strapi.query('articles').find({ video_url_null: false, _sort: 'id:desc', _limit:2  });
-    // recent.push(recentArticle);
-    // recent.push(recentArticleWithVideo);
-    return {
-      recentArticles: recentArticle,
-      recentVideos: recentArticleWithVideo
-    }
-  }
 
+    if(user) {
+      var userSaved = await strapi.query('saved-articles').find({ user: user, _limit: -1 });
+      var userLiked = await strapi.query('article-likes').find({ user: user, _limit: -1 });
+      var allSaved = [].concat(...userSaved.map((userSave) => userSave.articles ? userSave.articles.split(",") : "0"  ));
+      var allLiked = [].concat(...userLiked.map((userLike) => userLike.articles ? userLike.articles.split(",") : "0"  ));
+    }
+
+    let allArticles = recentArticle.concat(recentArticleWithVideo);
+
+    return Promise.all(allArticles.map(async (article) => {
+      if(article.views !== null) {
+        article.views = numFormatter(article.views);
+      }
+
+      if(article.featured_img !== null) {
+        let img = fs.readFileSync("public"+article.featured_img.url);
+        featured_img_base64 = img.toString('base64');
+      }
+    
+      if(userLiked) {
+        let likes = allLiked? allLiked: "";
+        is_liked = likes.includes(String(article.id));
+      }
+
+      if(userSaved) {
+        let savedForlater = allSaved? allSaved: "";
+        is_saved = savedForlater.includes(String(article.id));
+      }
+      // get total seconds between the times
+      //console.log(article.created_at); return false;
+      var delta = Math.abs(new Date() - article.created_at) / 1000;
+
+      // calculate (and subtract) whole days
+      var days = Math.floor(delta / 86400);
+      delta -= days * 86400;
+
+      // calculate (and subtract) whole hours
+      var hours = Math.floor(delta / 3600) % 24;
+      delta -= hours * 3600;
+
+      // calculate (and subtract) whole minutes
+      var minutes = Math.floor(delta / 60) % 60;
+      delta -= minutes * 60;
+
+      // what's left is seconds
+      var seconds = delta % 60;  // in theory the modulus is not required
+      let added_on = days+" "+ hours+ " "+ minutes+ " " + Math.round(seconds);
+      added_on = minutes+ ":" + Math.round(seconds)+" minutes ago";
+      //console.log(days+" "+ hours+ " "+ minutes+ " " + Math.round(seconds)); return false;
+  
+      return Promise .resolve({
+        ...article,
+        featured_img_base64,
+        is_liked,
+        is_saved,
+        added_on
+      });
+
+    }));
+
+  }
 };
