@@ -17,7 +17,7 @@ module.exports = {
       article_category: ArticleCategories
       is_saved: Boolean
       is_liked: Boolean
-      added_on: JSON
+      added_on: String
       featured_img_base64: String
     }
 
